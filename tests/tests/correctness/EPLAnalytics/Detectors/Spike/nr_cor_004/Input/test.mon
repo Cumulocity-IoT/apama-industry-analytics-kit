@@ -1,0 +1,222 @@
+//*****************************************************************************
+// Title:         Spike test
+//*****************************************************************************
+
+package com.industry.analytics.bb_cor_004;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.detectors.Spike;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{
+											   
+		// Create the Spike - Zero input should fail
+		(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+															  new sequence<string>, 
+															  [ "Output1" ], 
+															  { Spike.TIMEWINDOW : "10.0",
+																Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+								  initComplete );
+
+		// Create the Spike - Single input should pass
+		on NextTest( testNum=2 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "Input1" ], 
+																  [ "Output1" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike - Check more than one input fails
+		on NextTest( testNum=3 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "Input1", "Input2" ], 
+																  [ "Output1" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike - Empty name for input should fail
+		on NextTest( testNum=4 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "" ], 
+																  [ "Output1" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike - blank name for input should fail
+		on NextTest( testNum=5 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "  " ], 
+																  [ "Output1" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike - Check more than one output fails
+		on NextTest( testNum=6 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "Input1" ], 
+																  [ "Output1", "Output2" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike - Check zero output fails
+		on NextTest( testNum=7 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "Input1" ], 
+																  new sequence<string>, 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike - Empty name for output should fail
+		on NextTest( testNum=8 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "Input1" ], 
+																  [ "" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike - blank name for output should fail
+		on NextTest( testNum=9 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "Input1" ], 
+																  [ "  " ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike - Check no inputs or outputs fails
+		on NextTest( testNum=10 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  new sequence<string>, 
+																  new sequence<string>, 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+		
+		// Create the Spike - Check two inputs/outputs - should fail
+		on NextTest( testNum=11 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "Input1", "Input2" ], 
+																  [ "Output1", "Output2" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+	
+		// Create the Spike - Check four inputs/outputs - should fail
+		on NextTest( testNum=12 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "Input1", "Input2", "Input3", "Input4" ], 
+																  [ "Output1", "Output2", "Output3", "Output4" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike - should pass as default will be used
+		on NextTest( testNum=13 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "Input1" ], 
+																  [ "Output1" ], 
+																  new dictionary<string,string> ), 
+									  initComplete );
+		}
+
+		// Create the Spike - should pass as default will be used
+		on NextTest( testNum=14 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "Input1" ], 
+																  [ "Output1" ], 
+																  { Spike.TIMEWINDOW : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike - should pass as default will be used
+		on NextTest( testNum=15 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "Input1" ], 
+																  [ "Output1" ], 
+																  { Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike - Check null value for Analytic name fails
+		on NextTest( testNum=16 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( "", 
+																 [ "Input1" ], 
+																 [ "Output1" ], 
+																 { Spike.TIMEWINDOW : "10.0",
+																   Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+ 		}
+
+		// Create the Spike- with invalid Analytic name fails
+		on NextTest( testNum=17 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( "foobar", 
+																  [ "Input1" ], 
+																  [ "Output1" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike- with invalid case for Analytic name fails
+		on NextTest( testNum=18 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME.toUpper(), 
+																  [ "Input1" ], 
+																  [ "Output1" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Create the Spike - with valid values should pass
+		on NextTest( testNum=19 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, 
+																  [ "Input1" ], 
+																  [ "Output1" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

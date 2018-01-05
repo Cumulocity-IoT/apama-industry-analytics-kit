@@ -1,0 +1,49 @@
+// Invalid expressions - Should use "abs()" for nested
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"||-1||"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"|1-|-2||"})
+
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output1"], {"expression":"|-1|"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output2"], {"expression":"|1|"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output3"], {"expression":"|1-2|"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output4"], {"expression":"|2-1|"})
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output5"], {"expression":"|0|"})
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output6"], {"expression":"|1-1|"})
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output7"], {"expression":"|-1+1|"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output8"], {"expression":"|(5-4)-2|"})
+
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output9"], {"expression":"|abs(-1)|"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output10"], {"expression":"|1-abs(-2)|"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output11"], {"expression":"abs(abs(-1))"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output12"], {"expression":"abs(1-abs(-2))"})
+
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output13"], {"expression":"abs(-1)"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output14"], {"expression":"abs(1)"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output15"], {"expression":"abs(1-2)"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output16"], {"expression":"abs(2-1)"})
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output17"], {"expression":"abs(0)"})
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output18"], {"expression":"abs(1-1)"})
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output19"], {"expression":"abs(-1+1)"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output20"], {"expression":"abs((5-4)-2)"})
+
+// Valid expression - should result in +infinity
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output21"], {"expression":"abs(-infinity)"})

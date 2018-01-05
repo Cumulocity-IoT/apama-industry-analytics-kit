@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bundle name="Industry Analytics Kit" type="monitorscript" singleton="true">
+	<version>
+		<id>1.0</id>
+		<date>2015-10-06</date>
+		<author>Software AG</author>
+		<comments/>
+	</version>
+	<description>
+		Apama Bundle for Industry Analytics Kit
+	</description>
+	<monitors>
+		<fileset dir=".">
+			<include name="Industry Analytics Kit.cdp"/>
+		</fileset>
+	</monitors>
+	<block-catalogs>
+	</block-catalogs>
+	<configurations>
+	</configurations>
+	<static-files>
+	</static-files>
+	<events>
+		<file name="../events/Ready.evt"/>
+	</events>
+	<libraries>
+	</libraries>
+	<jars>
+	</jars>
+	<dependencies>
+		<dependency bundle-filename="MemoryStore.bnd" catalog="${APAMA_HOME}/catalogs/bundles"/>
+		<dependency bundle-filename="DataViewService.bnd" catalog="${APAMA_HOME}/catalogs/bundles"/>
+	</dependencies>
+</bundle>

@@ -1,0 +1,105 @@
+//*****************************************************************************
+// Title:         DataSourceServiceTest002
+// $Copyright (c) 2015 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or Terracotta Inc., San Francisco, CA, USA, and/or Software AG (Canada) Inc., Cambridge, Ontario, Canada, and/or, Software AG (UK) Ltd., Derby, United Kingdom, and/or Software A.G. (Israel) Ltd., Or-Yehuda, Israel and/or their licensors.$
+// Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+//*****************************************************************************
+
+package com.industry.analytics;
+
+monitor DataSourceServiceTest002
+{
+	SourceIdsRequest  request;
+	SourceIdsResponse response;
+	
+	action onload()
+	{
+		monitor.subscribe(Constants.DATASOURCE_MGMT_CHANNEL);
+		
+		request.sourceId      := "T";
+		request.onlyLeafNodes := false;
+		log "SourceIds Request (all children): " + request.sourceId at INFO;
+		on SourceIdsResponse(sourceId=request.sourceId) :response
+		{
+			log "SourceIds Response (all children):" + response.sourceIds.toString() at INFO;
+			next1();
+		}
+		send request to Constants.DATASOURCE_MGMT_CHANNEL;
+	}
+	
+	action next1()
+	{
+		request.sourceId      := "N1";
+		request.onlyLeafNodes := false;
+		log "SourceIds Request (all children): " + request.sourceId at INFO;
+		on SourceIdsResponse(sourceId=request.sourceId) :response
+		{
+			log "SourceIds Response (all children):" + response.sourceIds.toString() at INFO;
+			next2();
+		}
+		send request to Constants.DATASOURCE_MGMT_CHANNEL;
+	}
+	
+	action next2()
+	{
+		request.sourceId      := "N3";
+		request.onlyLeafNodes := false;
+		log "SourceIds Request (all children): " + request.sourceId at INFO;
+		on SourceIdsResponse(sourceId=request.sourceId) :response
+		{
+			log "SourceIds Response (all children):" + response.sourceIds.toString() at INFO;
+			next3();
+		}
+		send request to Constants.DATASOURCE_MGMT_CHANNEL;
+	}
+	
+	action next3()
+	{
+		request.sourceId      := "T";
+		request.onlyLeafNodes := true;
+		log "SourceIds Request (just leaf nodes): " + request.sourceId at INFO;
+		on SourceIdsResponse(sourceId=request.sourceId) :response
+		{
+			log "SourceIds Response (just leaf nodes): " + response.sourceIds.toString() at INFO;
+			next4();
+		}
+		send request to Constants.DATASOURCE_MGMT_CHANNEL;
+	}
+	
+	action next4()
+	{
+		request.sourceId      := "N1";
+		request.onlyLeafNodes := true;
+		log "SourceIds Request (just leaf nodes): " + request.sourceId at INFO;
+		on SourceIdsResponse(sourceId=request.sourceId) :response
+		{
+			log "SourceIds Response (just leaf nodes): " + response.sourceIds.toString() at INFO;
+			next5();
+		}
+		send request to Constants.DATASOURCE_MGMT_CHANNEL;
+	}
+	
+	action next5()
+	{
+		request.sourceId      := "N3";
+		request.onlyLeafNodes := true;
+		log "SourceIds Request (just leaf nodes): " + request.sourceId at INFO;
+		on SourceIdsResponse(sourceId=request.sourceId) :response
+		{
+			log "SourceIds Response (just leaf nodes): " + response.sourceIds.toString() at INFO;
+			next6();
+		}
+		send request to Constants.DATASOURCE_MGMT_CHANNEL;
+	}
+	
+	action next6()
+	{
+		request.sourceId := "";
+		request.onlyLeafNodes := true;
+		log "SourceIds Request (just leaf nodes): " + request.sourceId at INFO;
+		on SourceIdsResponse(sourceId=request.sourceId) :response
+		{
+			log "SourceIds Response (just leaf nodes): " + response.sourceIds.toString() at INFO;
+		}
+		send request to Constants.DATASOURCE_MGMT_CHANNEL;
+	}
+}

@@ -1,0 +1,33 @@
+// Start suppressed
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 1.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 2.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 3.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 4.0, 0.0, "", 1.0, 2.0, 3.0, {})
+// Unsuppress
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 5.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger": ""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 6.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 7.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 8.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 9.0, 0.0, "", 1.0, 2.0, 3.0, {})
+// Re-suppress
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 10.0, 0.0, "", 1.0, 2.0, 3.0, {"reset":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 11.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 12.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 13.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 14.0, 0.0, "", 1.0, 2.0, 3.0, {})
+// Unsupress - wait 10 seconds
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 15.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger": ""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 16.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 17.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 18.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 19.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 20.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 21.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 22.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 23.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 24.0, 0.0, "", 1.0, 2.0, 3.0, {})
+// Automatically - resuppressed after timeWindow
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 25.0, 0.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 26.0, 0.0, "", 1.0, 2.0, 3.0, {})
+// End of test
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 27.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger": "", "endOfTest": ""})

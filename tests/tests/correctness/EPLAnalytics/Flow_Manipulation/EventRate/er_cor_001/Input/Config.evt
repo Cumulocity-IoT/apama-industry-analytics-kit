@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("EventRate", [], [], {})
+com.industry.analytics.Analytic("EventRate", ["Input"], ["Output"], {"useCorrelatorTime":"abc","publishRate":"abc","smoothingFactor":"abc","bySourceId":"abc"})
+com.industry.analytics.Analytic("EventRate", ["Input"], ["Output"], {"useCorrelatorTime":"","publishRate":"","smoothingFactor":"","bySourceId":""})
+com.industry.analytics.Analytic("EventRate", ["Input"], ["Output"], {})

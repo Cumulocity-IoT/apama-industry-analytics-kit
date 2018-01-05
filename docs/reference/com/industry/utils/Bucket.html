@@ -1,0 +1,201 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Bucket</TITLE>
+<META NAME="keywords" CONTENT="Bucket&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="Bucket";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/utils/Bucket.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Bucket.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/utils/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.utils</FONT>
+<BR>Event Bucket</H2>
+<HR>A Bucket of data<HR>
+<A NAME="member_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Member Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;float</CODE></FONT></TD><TD><CODE><B><A HREF="Bucket.html#start">start</A></B></CODE>
+<br>
+<br>The start value of the bucket (Usually the start time) - Inclusive</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;float</CODE></FONT></TD><TD><CODE><B><A HREF="Bucket.html#currentSize">currentSize</A></B></CODE>
+<br>
+<br>The current size of the bucket (if the bucket is the latest then this equals: "the latest value in the bucket" - "the start value of the bucket", otherwise this is the maxSize)</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;float</CODE></FONT></TD><TD><CODE><B><A HREF="Bucket.html#maxSize">maxSize</A></B></CODE>
+<br>
+<br>The maximum size of the bucket</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;any</CODE></FONT></TD><TD><CODE><B><A HREF="Bucket.html#data">data</A></B></CODE>
+<br>
+<br>The data stored in the bucket</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;boolean</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Bucket.html#containsValue()">containsValue</A></B>(float&nbsp;value)</CODE>
+<br>
+<br>Does the value fit into this bucket</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;float</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Bucket.html#currentEnd()">currentEnd</A></B>()</CODE>
+<br>
+<br>The current end of the bucket - Given the provided data (will grow until it equals finalEnd, at which point a new bucket will be created)</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;float</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Bucket.html#finalEnd()">finalEnd</A></B>()</CODE>
+<br>
+<br>The end of the bucket once it has been filled</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;boolean</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Bucket.html#isValueLarger()">isValueLarger</A></B>(float&nbsp;value)</CODE>
+<br>
+<br>Is the value larger than this bucket</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;boolean</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Bucket.html#isValueSmaller()">isValueSmaller</A></B>(float&nbsp;value)</CODE>
+<br>
+<br>Is the value smaller than this bucket</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="member_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Member Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="currentSize"></A>
+<H3>currentSize</H3>
+<PRE>float&nbsp;<B>currentSize</B>
+</PRE>The current size of the bucket (if the bucket is the latest then this equals: "the latest value in the bucket" - "the start value of the bucket", otherwise this is the maxSize)<HR>
+<A NAME="data"></A>
+<H3>data</H3>
+<PRE>any&nbsp;<B>data</B>
+</PRE>The data stored in the bucket<HR>
+<A NAME="maxSize"></A>
+<H3>maxSize</H3>
+<PRE>float&nbsp;<B>maxSize</B>
+</PRE>The maximum size of the bucket<HR>
+<A NAME="start"></A>
+<H3>start</H3>
+<PRE>float&nbsp;<B>start</B>
+</PRE>The start value of the bucket (Usually the start time) - Inclusive<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="containsValue()"></A>
+<H3>containsValue</H3>
+<PRE>boolean&nbsp;<B>containsValue</B>(float&nbsp;value)</PRE>Does the value fit into this bucket<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="currentEnd()"></A>
+<H3>currentEnd</H3>
+<PRE>float&nbsp;<B>currentEnd</B>()</PRE>The current end of the bucket - Given the provided data (will grow until it equals finalEnd, at which point a new bucket will be created)<HR>
+<A NAME="finalEnd()"></A>
+<H3>finalEnd</H3>
+<PRE>float&nbsp;<B>finalEnd</B>()</PRE>The end of the bucket once it has been filled<HR>
+<A NAME="isValueLarger()"></A>
+<H3>isValueLarger</H3>
+<PRE>boolean&nbsp;<B>isValueLarger</B>(float&nbsp;value)</PRE>Is the value larger than this bucket<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="isValueSmaller()"></A>
+<H3>isValueSmaller</H3>
+<PRE>boolean&nbsp;<B>isValueSmaller</B>(float&nbsp;value)</PRE>Is the value smaller than this bucket<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/utils/Bucket.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Bucket.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/utils/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

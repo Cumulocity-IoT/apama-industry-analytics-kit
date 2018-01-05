@@ -1,0 +1,27 @@
+
+// needs inputs outputs and mapping - FAIL
+com.industry.analytics.Analytic("Merger", [], [], {})
+
+// Not enough outputs - FAIL
+com.industry.analytics.Analytic("Merger", ["Input1"], [], {"mapping":"{\"dValue\":\"1\"}"})
+
+// not enough inputs - FAIL
+com.industry.analytics.Analytic("Merger", [], ["Output1"], {"mapping":"{\"dValue\":\"1\"}"})
+
+// Mapping must contain at least one value - FAIL
+com.industry.analytics.Analytic("Merger", ["Input1"], ["Output1"], {"mapping":"{}"})
+
+// too many outputs - FAIL
+com.industry.analytics.Analytic("Merger", ["Input1", "Input2"], ["Output1", "Output2"], {"mapping":"{\"dValue\":\"1\"}"})
+
+// invalid key for mapping - FAIL
+com.industry.analytics.Analytic("Merger", ["Input1", "Input2"], ["Output1"], {"bySourceId":"true", "mapping":"{\"dValue\":\"1\",\"invalid\":\"\"}"})
+
+// invalid value for mapping params (must be *) - FAIL
+com.industry.analytics.Analytic("Merger", ["Input1", "Input2"], ["Output1"], {"bySourceId":"true", "mapping":"{\"params\":\"abc\"}"})
+
+// can't use params for mapping when there's no merging channel - FAIL
+com.industry.analytics.Analytic("Merger", ["Input1"], ["Output1"], {"bySourceId":"true", "mapping":"{\"params\":\"*\"}"})
+
+// can't use mapping substitution when there's no merging channel - FAIL
+com.industry.analytics.Analytic("Merger", ["Input1"], ["Output1"], {"bySourceId":"true", "mapping":"{\"dValue\": \"${dValue}\"}"})

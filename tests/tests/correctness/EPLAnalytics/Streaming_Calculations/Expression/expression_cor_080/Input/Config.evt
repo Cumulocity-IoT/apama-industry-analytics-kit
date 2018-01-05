@@ -1,0 +1,16 @@
+// Invalid expressions - Should use "abs()" for nested
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"log10()"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"log10(abc)"})
+
+// Valid expression - should result in -infinity
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output1"], {"expression":"log10(0)"})
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output2"], {"expression":"log10(1)"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output3"], {"expression":"log10(10)"})
+// Valid expression - should result in 2
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output4"], {"expression":"log10(10*10)"})
+// Valid expression - should result in 2
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output5"], {"expression":"log10(10^2)"})
+// Valid expression - should result in NaN
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output6"], {"expression":"log10(-1)"})

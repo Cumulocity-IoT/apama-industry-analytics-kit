@@ -1,0 +1,10 @@
+// Delta: simple Analytic with no onDelete() action.
+// LifeCycleDummy: test Analytic with onDelete() action.
+// This should not die.
+com.industry.analytics.Analytic("Delta", ["Input"], ["Default"], {})
+com.industry.analytics.Analytic("LifecycleDummy", ["Input"], ["DefaultLC"], {})
+// These should die.
+com.industry.analytics.Analytic("Delta", ["Input"], ["KillMe"], {"managementId":"killMe"})
+com.industry.analytics.Analytic("Delta", ["Input"], ["KillMeSecond"], {"managementId":"killMeSecond"})
+com.industry.analytics.Analytic("LifecycleDummy", ["Input"], ["KillMeLC"], {"managementId":"killMe"})
+com.industry.analytics.Analytic("LifecycleDummy", ["Input"], ["KillMeSecondLC"], {"managementId":"killMeSecond"})

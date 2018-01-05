@@ -1,0 +1,263 @@
+//*****************************************************************************
+// Title:         Data Simulator
+// $Copyright (c) 2015 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or Terracotta Inc., San Francisco, CA, USA, and/or Software AG (Canada) Inc., Cambridge, Ontario, Canada, and/or, Software AG (UK) Ltd., Derby, United Kingdom, and/or Software A.G. (Israel) Ltd., Or-Yehuda, Israel and/or their licensors.$
+// Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+//*****************************************************************************
+
+package com.industry.analytics;
+
+using com.apama.correlator.jms.JMS;
+
+
+event StartSimulator
+{
+	decimal baseValue;
+	boolean runRealTime;
+	boolean useJMS;
+	boolean usePersistence;
+	integer sourceCount;
+}
+
+
+persistent monitor Data Simulator
+{
+	event PersistenceGap {}
+	
+	import "TimeFormatPlugin" as timeFormat;
+	
+	constant string Data Simulator := "DataSimulator";
+	
+	constant decimal BASE_RAND_VALUE := 100.0d;
+	constant decimal DELTA_RAND_VALUE := 2.0d;
+	constant decimal BASE_RAND_TIME := 60.0d;
+	constant decimal DELTA_RAND_TIME := 20.0d;
+	
+	decimal _baseTimeInterval;
+	
+	StartSimulator _startSimulator;
+	
+	JMSConnector _jmsConnector;
+	string _jmsChannel := "";
+	string _sensorContext := "";
+	
+	
+	action onload()
+	{
+		string discard := Data Simulator.intern();
+		
+		monitor.subscribe(Constants.DATASOURCE_MGMT_CHANNEL);
+		
+		on StartSimulator() :_startSimulator
+		{
+			log "Starting Data Simulator: " + _startSimulator.toString() at INFO;
+			if _startSimulator.useJMS then
+			{
+				_jmsConnector.init(_initComplete);
+			}
+			else
+			{
+				log "JMS not in use." at INFO;
+				startSimulatorStageTwo();
+			}
+		}
+	}
+		
+		
+	action _initComplete(string jmsChannel)
+	{
+		log "JMS Connector initialization complete for channel: " + jmsChannel at INFO;
+		_jmsChannel := jmsChannel;
+		startSimulatorStageTwo();
+	}
+	
+	
+	action startSimulatorStageTwo()
+	{
+		if _startSimulator.sourceCount <= 0 then
+		{
+			// Use sources as defined within the DataSourceService.
+			DATASOURCE_MGMT_CHANNEL sir;
+			on DATASOURCE_MGMT_CHANNEL(sourceId="") :sir
+			{
+				string sensorId;
+				for sensorId in sir.sensorIds
+				{
+					_sensorContext := "Sim_" + sensorId;
+					spawn _simulateSensor(sensorId) to context(_sensorContext);
+				}
+			}
+			send SensorIdsRequest("") to Constants.DATASOURCE_MGMT_CHANNEL;
+		}
+		else
+		{
+			// Use internally generated ids.
+			_simulateInternally();
+		}
+	}
+	
+	
+	integer _sensorIndex;
+	action _simulateInternally()
+	{
+		_sensorIndex := 1;
+		
+		// Using a single context, so let's just stay on the main context.
+		Data dataOut := new Data;
+		dataOut.name := Data Simulator;
+		dataOut.type := DataConstants.RAW;
+		dataOut.sourceId := _sensorIndex.toString();
+		dataOut.timestamp := timeFormat.getTime().toDecimal();
+		if _startSimulator.baseValue < 0.0d then
+		{
+			dataOut.dValue := BASE_RAND_VALUE.rand();
+		}
+		else
+		{
+			dataOut.dValue := _startSimulator.baseValue;
+		}
+		//dataOut.sValue := "";
+		sendData(dataOut);
+		
+		_baseTimeInterval := BASE_RAND_TIME.rand();
+		_nextInternalData(dataOut);
+	}
+	
+	
+	action _incrementSensorIndex()
+	{
+		_sensorIndex := _sensorIndex + 1;
+		if _sensorIndex > _startSimulator.sourceCount then
+		{
+			_sensorIndex := 1;
+		}
+	}
+	
+	
+	action _nextInternalData(Data dataOut)
+	{
+		_incrementSensorIndex();
+		dataOut.sourceId := _sensorIndex.toString();
+		decimal interval := _adjustData(dataOut);
+
+		if _startSimulator.runRealTime then
+		{			
+			on wait(interval.toFloat())
+			{
+				sendData(dataOut);
+				_nextData(dataOut);
+			}
+		}
+		else
+		{
+			if _startSimulator.usePersistence then
+			{
+				on PersistenceGap()
+				{
+					_nextData(dataOut);
+				}
+				sendData(dataOut);
+				// route won't allow a persistence write lock
+				send PersistenceGap() to "";
+			}
+			else
+			{
+				while true
+				{
+					sendData(dataOut);
+					_incrementSensorIndex();
+					dataOut.sourceId := _sensorIndex.toString();
+					interval := _adjustData(dataOut);
+				}
+			}
+		}
+	}
+	
+	
+	action _simulateSensor(string sensorId)
+	{
+		monitor.subscribe(_sensorContext);
+		
+		Data dataOut := new Data;
+		dataOut.name := Data Simulator;
+		dataOut.type := DataConstants.RAW;
+		dataOut.sourceId := sensorId;
+		dataOut.timestamp := timeFormat.getTime().toDecimal();
+		if _startSimulator.baseValue < 0.0d then
+		{
+			dataOut.dValue := BASE_RAND_VALUE.rand();
+		}
+		else
+		{
+			dataOut.dValue := _startSimulator.baseValue;
+		}
+		//dataOut.sValue := "";
+		sendData(dataOut);
+		
+		_baseTimeInterval := BASE_RAND_TIME.rand();
+		_nextData(dataOut);
+	}
+	
+	
+	action _nextData(Data dataOut)
+	{
+		decimal interval := _adjustData(dataOut);
+
+		if _startSimulator.runRealTime then
+		{			
+			on wait(interval.toFloat())
+			{
+				sendData(dataOut);
+				_nextData(dataOut);
+			}
+		}
+		else
+		{
+			if _startSimulator.usePersistence then
+			{
+				on PersistenceGap()
+				{
+					_nextData(dataOut);
+				}
+				sendData(dataOut);
+				// route won't allow a persistence write lock
+				send PersistenceGap() to _sensorContext;
+			}
+			else
+			{
+				while true
+				{
+					sendData(dataOut);
+					interval := _adjustData(dataOut);
+				}
+			}
+		}
+	}
+	
+	
+	action _adjustData(Data dataOut) returns decimal
+	{
+		decimal deltaTimeBaseInterval := _baseTimeInterval * DELTA_RAND_TIME / 100.0d;
+		decimal intervalDelta := deltaTimeBaseInterval.rand() - (deltaTimeBaseInterval / 2.0d);
+		decimal interval := _baseTimeInterval + intervalDelta;
+		dataOut.timestamp := dataOut.timestamp + interval;
+		
+		decimal deltaValueBaseInterval:= dataOut.dValue * DELTA_RAND_VALUE / 100.0d;
+		intervalDelta := deltaValueBaseInterval.rand() - (deltaValueBaseInterval / 2.0d);
+		dataOut.dValue := dataOut.dValue + intervalDelta;
+		
+		return interval;
+	}
+	
+	
+	action sendData(Data dataOut)
+	{
+		if _startSimulator.useJMS then
+		{
+			send dataOut to _jmsChannel;
+		}
+		else
+		{
+			send dataOut to Data Simulator;
+		}
+	}
+}

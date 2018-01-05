@@ -1,0 +1,2 @@
+com.industry.analytics.Data("Output","a","s1",75,13.83263069759969,"",0,0,0,{"anomalySource":"Threshold","direction":"rising","duration":"0"})
+com.industry.analytics.Data("Output","a","s1",80,2.72663461295671,"",0,0,0,{"anomalySource":"Threshold","direction":"falling","duration":"0"})

@@ -1,0 +1,2 @@
+// Just computed spread
+com.industry.analytics.Analytic("Spread", ["Input1", "Input2"], ["Computed"], {})

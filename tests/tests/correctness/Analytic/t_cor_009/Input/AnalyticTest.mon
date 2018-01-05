@@ -1,0 +1,72 @@
+//*****************************************************************************
+// Title:         AnalyticTest
+//*****************************************************************************
+
+package com.industry.analytics.Analytic_cor_009;
+using com.industry.analytics.Analytic;
+
+monitor AnalyticTest
+{
+	action onload() {
+		// Create a new Analyticer
+		Analytic c := Analytic("Test", ["Input1",  "Input2"],
+										 ["Output1", "Output2"],
+										 {"param01":"1",               // Invalid
+										  "param02":"0",               // Invalid
+										  "param03":"-1",              // Invalid
+										  "param04":"1.0",             // Invalid 
+										  "param05":"0.0",             // Invalid 
+										  "param06":"-1.0",            // Invalid
+										  "param07":"2",               // Invalid
+										  "param08":"0.66",            // Invalid
+										  "param09":"666",             // Invalid
+										  "param10":"true",            // Invalid
+										  "param11":"false",           // Invalid
+										  "param12":"Foo",             // Invalid
+										  "param13":"{}",              // Invalid
+										  "param14":"[",               // Invalid
+										  "param15":"]",               // Invalid
+										  "param16":"[]",              // Valid
+										  "param17":"[[]",             // Invalid
+										  "param18":"[]]",             // Valid (last closing bracket is dropped)
+										  "param19":"[1]",             // Invalid
+										  "param20":"[1.1]",           // Invalid
+										  "param21":"[foo]",           // Invalid
+										  "param22":"[foo,bar]",       // Invalid
+										  "param23":"[\"foo\"]",       // Valid
+										  "param24":"[\"foo\",\"1\"]", // Valid
+										  "param25":"[\"[]\"]",        // Valid
+										  "param26":"",                // Invalid
+										  "param27":"  "               // Invalid
+										  });
+		
+		// Create the set of types as all sequence<string>
+		sequence<string>  types           := new sequence<string>;
+		sequence<boolean> mandatory_false := new sequence<boolean>;
+		sequence<boolean> mandatory_true  := new sequence<boolean>;
+		string paramName;
+		for paramName in c.params.keys() {
+			types.append("sequence<string>");
+			mandatory_false.append(false);
+			mandatory_true.append(true);
+		} 
+		
+		// Validate the set of parameters
+		// Using non-mandatory params, but invalid values for params - SHOULD FAIL
+		boolean result := c.validateParams( "Test", -1, -1, 
+											c.params.keys(), types, mandatory_false );
+		log "TEST 1: " + result.toString() at INFO;
+		
+		// Using mandatory params, but invalid values for params - SHOULD FAIL
+		result := c.validateParams( "Test", -1, -1, 
+								    c.params.keys(), types, mandatory_true );
+		log "TEST 2: " + result.toString() at INFO;
+		
+		// Only specifying the valid values for params - SHOULD PASS
+		result := c.validateParams( "Test", -1, -1, 
+								    ["param16", "param23", "param24", "param25"], 
+									["sequence<string>","sequence<string>","sequence<string>","sequence<string>"], 
+									[false,false,false,false] );
+		log "TEST 3: " + result.toString() at INFO;
+	}
+}

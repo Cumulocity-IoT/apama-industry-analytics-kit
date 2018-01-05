@@ -1,0 +1,22 @@
+com.industry.analytics.Analytic("Mapper", [], [], {})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1", "Output2"], {"inputField":"dValue", "mapping":"{\"1.0d\":\"1.0d\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1", "Input2"], ["Output1"], {"inputField":"dValue", "mapping":"{\"1.0d\":\"1.0d\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"mapping":"{\"1.0d\":\"1.0d\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"dValue"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"INVALID", "mapping":"{\"1.0d\":\"1.0d\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"dValue", "outputField":"INVALID", "mapping":"{\"1.0d\":\"1.0d\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"param", "mapping":"{\"abc\":\"abc\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"dValue", "outputField":"param", "mapping":"{\"10.0d\":\"abc\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1", "Input2"], ["Output1"], {"inputField":"dValue", "mapping":"INVALID"})
+com.industry.analytics.Analytic("Mapper", ["Input1", "Input2"], ["Output1"], {"inputField":"dValue", "mapping":"{}"})
+
+// Invalid mapping types
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"dValue", "mapping":"{\"abc\":\"1\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"dValue", "mapping":"{\"1\":\"abc\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"xValue", "mapping":"{\"abc\":\"1\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"xValue", "mapping":"{\"1\":\"abc\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"yValue", "mapping":"{\"abc\":\"1\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"yValue", "mapping":"{\"1\":\"abc\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"zValue", "mapping":"{\"abc\":\"1\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input1"], ["Output1"], {"inputField":"zValue", "mapping":"{\"1\":\"abc\"}"})
+

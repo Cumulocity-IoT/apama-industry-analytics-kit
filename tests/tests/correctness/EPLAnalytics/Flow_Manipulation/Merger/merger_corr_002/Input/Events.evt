@@ -1,0 +1,3 @@
+"Input", com.industry.analytics.Data("Input", "r", "", 0.0, 0.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "a", "overwritten", 9.0, 9.0, "overwritten", 9.0, 9.0, 9.0, {"abc":"overwritten"})
+"Input", com.industry.analytics.Data("Input", "c", "", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"def":"kept"})

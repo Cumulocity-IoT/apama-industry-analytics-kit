@@ -1,0 +1,148 @@
+//*****************************************************************************
+// Title:         MissingData test
+//*****************************************************************************
+
+package com.industry.analytics.detectors.MissingData_cor_007;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.detectors.MissingData;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the MissingData - with valid values should pass
+		(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+															{ MissingData.INTERVAL : "1.0" } ), 
+								initComplete );
+
+		// Create the MissingData - with invalid values should fail
+		on NextTest( testNum=2 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL : "0.0" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with empty INTERVAL value - Should fail
+		on NextTest( testNum=3 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL : "" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL value - Should fail
+		on NextTest( testNum=4 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL : "  " } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL value - Should fail
+		on NextTest( testNum=5 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL : "foobar" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL value - Should fail
+		on NextTest( testNum=6 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL : "[]" } ), 
+									initComplete );
+		}		
+		
+		// Test minimal params with invalid INTERVAL value - Should fail
+		on NextTest( testNum=7 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL : "[1.0]" } ), 
+									initComplete );
+		}		
+
+		// Test minimal params with invalid INTERVAL value - Should fail
+		on NextTest( testNum=8 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL : "{}" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL value - Should fail
+		on NextTest( testNum=9 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL : "-1.0" } ), 
+									initComplete );
+		}
+
+		// Test minimal params with invalid INTERVAL value - Should fail
+		on NextTest( testNum=10 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL : "FALSE" } ), 
+									initComplete );
+		}
+
+		// Test minimal params with invalid INTERVAL value - Should fail
+		on NextTest( testNum=11 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL : "false" } ), 
+									initComplete );
+		}
+
+		// Test minimal params with invalid INTERVAL value - Should fail
+		on NextTest( testNum=12 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL : "TRUE" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL value - Should fail
+		on NextTest( testNum=13 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL : "true" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL name - Should pass as parameters are case insensitive
+		on NextTest( testNum=14 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ "INTERVAL" : "1.0" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL name - Should pass as parameters are case insensitive
+		on NextTest( testNum=15 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ "Interval" : "1.0" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with valid INTERVAL param name and value - Should pass 
+		on NextTest( testNum=16 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ "interval" : "1.0" } ), 
+									initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

@@ -1,0 +1,25 @@
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "c", "s2", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "a", "s3", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "a", "s4", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s5", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p1":"X"})
+"Input1", com.industry.analytics.Data("Input1", "r", "s5", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p2":"X"})
+"Input1", com.industry.analytics.Data("Input1", "r", "s5", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p3":"X"})
+"Input1", com.industry.analytics.Data("Input1", "r", "s5", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p4":"X"})
+"Input1", com.industry.analytics.Data("Input1", "r", "s5", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p5":"X"})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s2", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p1":"X"})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p1":"X"})
+"Input1", com.industry.analytics.Data("Input1", "c", "s2", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p1":"X"})
+"Input1", com.industry.analytics.Data("Input1", "r", "s2", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p2":"X"})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s4", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p3":"X"})
+"Input1", com.industry.analytics.Data("Input1", "c", "s4", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p3":"X"})
+"Input1", com.industry.analytics.Data("Input1", "r", "s3", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p3":"X"})
+"Input1", com.industry.analytics.Data("Input1", "r", "s4", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"p4":"X"})
+
+"Input1", com.industry.analytics.Data("Input1", "c", "s4", 0.0, 10.0, "a", 1.0, 2.0, 3.0, {"p3":"X"})
+"Input1", com.industry.analytics.Data("Input1", "c", "s4", 0.0, 10.0, "b", 1.0, 2.0, 3.0, {"p3":"X"})
+"Input1", com.industry.analytics.Data("Input1", "c", "s3", 0.0, 10.0, "c", 1.0, 2.0, 3.0, {"p3":"X"})
+"Input1", com.industry.analytics.Data("Input1", "c", "s4", 0.0, 10.0, "d", 1.0, 2.0, 3.0, {"p3":"X"})

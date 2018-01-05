@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("EventRate", ["Input"], ["Output"], {"bySourceId":"false","useCorrelatorTime":"true"})

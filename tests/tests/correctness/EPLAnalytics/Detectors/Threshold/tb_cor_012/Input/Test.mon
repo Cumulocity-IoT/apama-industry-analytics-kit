@@ -1,0 +1,49 @@
+//*****************************************************************************
+// Title:         Threshold012
+//*****************************************************************************
+
+package com.industry.analytics.detectors.Threshold012;
+
+using com.industry.analytics.detectors.Threshold;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	Threshold _threshold;
+	
+	action onload()
+	{
+		Analytic config := Analytic("Threshold", ["Input"], ["Output"], {"direction":"rising",
+																				 			"threshold":"2"});
+		_threshold.init(config, _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			Data currData := Data.init("Input", DataConstants.RAW, "asset1");
+			currData.dValue := 1.0d;
+			_threshold.processData( currData );
+			currData.sourceId := "asset2";
+			currData.dValue := 2.345d;
+			_threshold.processData( currData );
+			log "Threshold Pre-Reset State:" at INFO;
+			log "  _breaches: " + _threshold._breaches.toString() at INFO;
+			log "  _directions: " + _threshold._directions.toString() at INFO;
+			_threshold.reset();
+			log "Threshold Post-Reset State:" at INFO;
+			log "  _breaches: " + _threshold._breaches.toString() at INFO;
+			log "  _directions: " + _threshold._directions.toString() at INFO;
+		}
+		else
+		{
+			log "Error spawning Threshold instance." at ERROR;
+		}
+	}
+}

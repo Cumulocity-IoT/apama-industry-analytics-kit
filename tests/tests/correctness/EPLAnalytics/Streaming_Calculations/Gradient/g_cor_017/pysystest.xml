@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pysystest state="runnable" type="auto">
+	<description>
+		<title>Gradient 017</title>
+		<purpose>
+		<![CDATA[Single points, multiple assets. Repeat of 007 with large timestamps.]]>
+		</purpose>
+	</description>
+	<classification>
+		<groups>
+			<group>Gradient</group>
+			<group>Streaming_Calculations</group>
+			<group>Industry_Analytics</group>
+			<group>EPL</group>
+		</groups>
+	</classification>
+	<data>
+		<class module="run" name="PySysTest"></class>
+	</data>
+	<traceability>
+		<requirements>
+			<requirement></requirement>
+		</requirements>
+	</traceability>
+</pysystest>

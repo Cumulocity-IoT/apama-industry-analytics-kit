@@ -1,0 +1,119 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>com.industry.analytics.flow_manipulation</TITLE>
+<META NAME="keywords" CONTENT="com.industry.analytics.flow_manipulation package">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">
+          function windowTitle()
+          {
+          parent.document.title="com.industry.analytics.flow_manipulation";
+          }
+        </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"><FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/flow_manipulation/package-summary.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="package-summary.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>Package com.industry.analytics.flow_manipulation</H2>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Event Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Combiner.html" title="Event in com.industry.analytics.flow_manipulation">Combiner</A></B></TD><TD>The Combiner Analytic takes one or more input channels, combines the unmodified event received onto a single output channel. If the optional parameter <font face="courier" size="-1">aggregatedSourceId</font> is provided, the Combiner aggregates all incoming <font face="courier" size="-1">Data</font> events by modifying their <font face="courier" size="-1">sourceId</font> to the one provided. This then allows the data to be treated as a singular aggregated source.  For example, if a calculation is required in which the original source of the data values are irrelevant. If the <font face="courier" size="-1">Data</font> events type is <font face="courier" size="-1">RAW</font>, the original <font face="courier" size="-1">sourceId</font> is added to the generated <font face="courier" size="-1">Data</font> events <font face="courier" size="-1">params</font>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Duplicator.html" title="Event in com.industry.analytics.flow_manipulation">Duplicator</A></B></TD><TD>The Duplicator Analytic takes one input channel, and then duplicates the unmodified event received onto one or more output channels.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="EventRate.html" title="Event in com.industry.analytics.flow_manipulation">EventRate</A></B></TD><TD>The EventRate Analytic outputs the rate of arrival of events on the specified input channel. This rate can be derived based on either the correlator time or on the timestamps of the <font face="courier" size="-1">Data</font> events.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Filter.html" title="Event in com.industry.analytics.flow_manipulation">Filter</A></B></TD><TD>The Filter Analytic filters the Data events passed through it based on the configuration parameters given below. Appropriate use of the <font face="courier" size="-1">sValue</font> filters can create a stream with just float values or just string values if desired.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Mapper.html" title="Event in com.industry.analytics.flow_manipulation">Mapper</A></B></TD><TD>The Mapper Analytic will modify a field on each event in the input stream.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Merger.html" title="Event in com.industry.analytics.flow_manipulation">Merger</A></B></TD><TD>The Merger Analytic either adds static data or merges data from another channel onto a single data event on the output channel.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Repeater.html" title="Event in com.industry.analytics.flow_manipulation">Repeater</A></B></TD><TD>The Repeater Analytic takes <font face="courier" size="-1">Data</font> events from the input channel and repeats the Data received if an update was not received within the defined time interval.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Slicer.html" title="Event in com.industry.analytics.flow_manipulation">Slicer</A></B></TD><TD>The Slicer Analytic generates a set of 'X' new Data events for each incoming event, at 'Y' seconds apart and with value 'Z'. The value of 'Z' is defined by the behavior. The new events are generated every 'Y' seconds.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Sorter.html" title="Event in com.industry.analytics.flow_manipulation">Sorter</A></B></TD><TD>In a general use case the event ordering cannot be guaranteed. This may be because the events are batched in some way for different devices or network delays. For example, where vehicles take data readings every 5 minutes but only return the results as a batch every hour.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Suppressor.html" title="Event in com.industry.analytics.flow_manipulation">Suppressor</A></B></TD><TD>The Suppressor Analytic will suppress events from the defined input stream from appearing on the output stream name for a set duration following a trigger event. The trigger event will be passed through regardless allowing the prevention of repeated warnings, for example.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Throttler.html" title="Event in com.industry.analytics.flow_manipulation">Throttler</A></B></TD><TD>The Throttler Analytic removes repeated events from the output stream.</TD>
+</TR>
+</TABLE>
+<P></P>
+        &nbsp;
+        <HR>
+<P></P>
+        &nbsp;
+        <HR>
+<P></P>
+        &nbsp;
+        <HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"><FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/flow_manipulation/package-summary.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="package-summary.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

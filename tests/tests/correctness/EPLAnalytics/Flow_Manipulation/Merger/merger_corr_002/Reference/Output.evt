@@ -1,0 +1,3 @@
+com.industry.analytics.Data("Output","a","c",5,1,"b",2,3,4,{"abc":"d"})
+com.industry.analytics.Data("Output","a","c",5,1,"b",2,3,4,{"abc":"d"})
+com.industry.analytics.Data("Output","a","c",5,1,"b",2,3,4,{"abc":"d","def":"kept"})

@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("Volatility", ["Input1"], ["Variance"], {"timeWindow":"30.0", "bySourceId":"false"})
+com.industry.analytics.Analytic("Volatility", ["Input1"], ["StandardDeviation", "MovingAverage"], {"timeWindow":"30.0", "type":"stddev", "bySourceId":"false"})

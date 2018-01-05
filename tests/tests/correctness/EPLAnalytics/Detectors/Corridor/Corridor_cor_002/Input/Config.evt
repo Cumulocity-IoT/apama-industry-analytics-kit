@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Corridor", ["Input1"], ["OutputFalling"], {"upperThreshold":"10", "lowerThreshold":"5", "zone":"outside", "duration":"10"})

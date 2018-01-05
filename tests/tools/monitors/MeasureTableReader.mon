@@ -1,0 +1,48 @@
+//*****************************************************************************
+// Title:         DataTableReader
+// $Copyright (c) 2015 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or Terracotta Inc., San Francisco, CA, USA, and/or Software AG (Canada) Inc., Cambridge, Ontario, Canada, and/or, Software AG (UK) Ltd., Derby, United Kingdom, and/or Software A.G. (Israel) Ltd., Or-Yehuda, Israel and/or their licensors.$
+// Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+//*****************************************************************************
+
+package com.industry.analytics;
+
+using com.apama.memorystore.Iterator;
+using com.apama.memorystore.Row;
+
+
+monitor DataTableReader
+{
+	Cache _dataValueCache;
+	
+	
+	action onload()
+	{
+		_dataValueCache.init(Data.TABLE_NAME,
+							 Data.getFieldNames(),
+							 Data.getFieldTypes(),
+							 false,
+							 false,
+							 _cacheReady);
+	}
+	
+	
+	action _cacheReady()
+	{
+		log "DataTableReader cache ready." at INFO;
+		
+		on all DumpTable(tableName=Data.TABLE_NAME) or
+		   all DumpTable(tableName="")
+		{
+			log "Table: " + Data.TABLE_NAME at INFO;
+			Data currData := new Data;
+			Iterator iterator := _dataValueCache.getIterator();
+			while not iterator.done()
+			{
+				Row row := iterator.getRow();
+				currData.populateFromRow(row);
+				log currData.toString() at INFO;
+				iterator.step();
+			}
+		}
+	}
+}

@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("Average", ["InOrder"], ["InOrderMA"], {"timeWindow":"5.0"})
+com.industry.analytics.Analytic("Average", ["6thItemAfter10thItem"], ["6thItemAfter10thItemMA"], {"timeWindow":"5.0"})
+com.industry.analytics.Analytic("Average", ["3rdItemAfter7thItem"], ["3rdItemAfter7thItemMA"], {"timeWindow":"5.0"})
+com.industry.analytics.Analytic("Average", ["3rdItemAfter10thItem"], ["3rdItemAfter10thItemMA"], {"timeWindow":"5.0"})

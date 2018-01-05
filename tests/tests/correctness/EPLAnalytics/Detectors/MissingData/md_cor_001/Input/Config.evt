@@ -1,0 +1,3 @@
+com.industry.analytics.Analytic("MissingData", [], [], {})
+com.industry.analytics.Analytic("MissingData", ["Input1", "Input2"], ["Output1", "Output2"], {"repeats":"true", "bySourceId":"x", "interval":"true", "intervalType":"true", "timeFactor":"true"})
+com.industry.analytics.Analytic("MissingData", ["Input1"], ["Output1"], {"repeats":"-1", "bySourceId":"true", "interval":"0", "intervalType":"0", "timeFactor":"0"})

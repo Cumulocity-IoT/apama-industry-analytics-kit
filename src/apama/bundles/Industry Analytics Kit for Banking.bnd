@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bundle name="Industry Analytics Kit for Banking" type="monitorscript" singleton="true">
+	<version>
+		<id>1.0</id>
+		<date>2017-11-07</date>
+		<author>Software AG</author>
+		<comments/>
+	</version>
+	<description>
+		Apama Bundle for Industry Analytics Kit for Banking
+	</description>
+	<monitors>
+		<fileset dir="../monitors/analytics/Banking">
+		</fileset>
+	</monitors>
+	<block-catalogs>
+	</block-catalogs>
+	<configurations>
+	</configurations>
+	<static-files>
+	</static-files>
+	<events>
+	</events>
+	<libraries>
+	</libraries>
+	<jars>
+	</jars>
+	<dependencies>
+		<dependency bundle-filename="Industry Analytics Kit.bnd" catalog="."/>
+	</dependencies>
+</bundle>

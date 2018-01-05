@@ -1,0 +1,4 @@
+com.industry.analytics.Data("DVAL","c","source",0,1,"success",1,1,1,{})
+com.industry.analytics.Data("DVAL","c","source",0,2,"success",2,2,2,{})
+com.industry.analytics.Data("DVAL","c","source",0,3,"success",3,3,3,{})
+com.industry.analytics.Data("DVAL","c","source",0,1000,"success",1000,1000,1000,{})

@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Performance", ["PartProduced","MachineStatus"], ["Output"], {"timeWindow":"10", "smoothingFactor": "5","minCycleTime":"1"})

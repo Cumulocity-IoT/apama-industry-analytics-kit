@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("geofence", ["Input"], ["Output"], {"geoFenceOffset":"10", "geoFenceLatitudeParam":"x", "geoFenceLongitudeParam":"y", "enableEntry":"true"})
+com.industry.analytics.Analytic("GEOFENCE", ["Input"], ["Output"], {"geoFenceOffset":"10", "geoFenceLatitudeParam":"x", "geoFenceLongitudeParam":"y", "enableEntry":"true"})
+com.industry.analytics.Analytic("GeOfEnCe", ["Input"], ["Output"], {"geoFenceOffset":"10", "geoFenceLatitudeParam":"x", "geoFenceLongitudeParam":"y", "enableEntry":"true"})
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {"geoFenceOffset":"10", "geoFenceLatitudeParam":"x", "geoFenceLongitudeParam":"y", "enableEntry":"true"})

@@ -1,0 +1,363 @@
+<!-- Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License. -->
+
+<project name="Industry Analytics Kit Macros" default="usage" basedir=".">
+	<description>
+		Industry Analytics Kit ANT macros/targets.
+	</description>
+
+	<!-- Get the directory of this ANT script file -->
+	<dirname property="IAK.basedir" file="${ant.file.Industry Analytics Kit Macros}"/>
+	
+	<!-- Grab the reference to the environment -->
+	<property environment="env"/>
+	
+	<!-- Load the Ant Contrib libraries -->
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>	
+	
+	<!-- Load .properties files from the current dir -->
+	<property file="settings.properties"/>
+
+	<!-- The SoftwareAG product installation directory -->
+	<property name="sag.install.dir"   value="${env.APAMA_HOME}/.."/>
+
+	<!-- Global properties for the build -->
+	<property name="INDUSTRY_ANALYTICS_KIT_HOME" location="${IAK.basedir}/../Industry Analytics Kit"/>
+	
+	<!-- ######################################## -->
+	<!-- #### PROPERTIES FOR APAMA CORRELATOR ### -->
+	<!-- ######################################## -->
+	<property name="apama.home"        value="${sag.install.dir}${file.separator}Apama"/>
+	<property name="correlator.host"   value="localhost"/>
+	<property name="correlator.port"   value="15903"/>
+	
+	<!-- ############################################### -->
+	<!-- #### IMPORT APAMA MACROS FOR HELPER TARGETS ### -->
+	<!-- ############################################### -->
+	<import file="${apama.home}${file.separator}etc${file.separator}apama-macros.xml"/>
+	
+
+	<!--
+	Default target prints out the usage of this ant file
+	-->
+	<target name="usage" >
+		<echo message="Industry Analytics Kit" />
+		<echo message="" />
+		<echo message="Usage: ant target" />
+		<echo message="" />
+		<echo message="where target can be :" />
+		<echo message="" />
+		<echo message="  deploy                         - Deploys artifacts for SoftwareAG Designer" />
+		<echo message="  analytics-kit-bundle           - Inject the bundle" />
+		<echo message="  analytics-kit-bundle-with-PMML - Inject the bundle with Predictive Analytics" />
+		<echo message="" />
+	</target>
+	
+	<!-- ########################################## -->
+	<!-- #### TARGETS TO DEPLOY/INSTALL THE KIT ### -->
+	<!-- ########################################## -->
+	<target name="deploy">
+		<echo message="Deploying the Industry Analytics Kit configuration for SoftwareAG Designer." />
+	
+		<!-- Perform string substitution on the STE file before copying it -->
+		<copy file=".${file.separator}default_iak.ste"
+			  tofile="${sag.install.dir}${file.separator}Designer${file.separator}extensions${file.separator}iak.ste"
+			  overwrite="true">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</copy>	
+
+		<echo message="NOTE: Please make sure that you restart SoftwareAG Designer now." />
+	</target>
+
+	<!-- ################################## -->
+	<!-- #### TARGETS TO INJECT BUNDLES ### -->
+	<!-- ################################## -->
+	
+	<!-- Industry Analytics Kit bundle -->
+	<target name="analytics-kit-bundle-with-PMML"
+			depends="predictive-analytics-bundle, 
+					 analytics-kit-bundle-PMML-eventdefs"/>
+
+	<target name="analytics-kit-bundle"	
+			depends="analytics-kit-bundle-common"/>
+			
+	<target name="analytics-kit-bundle-common"
+			depends="dataview-service-bundle,
+					 memorystore-support-bundle"
+		    unless="onlyMonitors">
+		<if><not><isset property="INDUSTRY_ANALYTICS_KIT_HOME" /></not>
+		<then>
+			<echo message="Property INDUSTRY_ANALYTICS_KIT_HOME not set, cannot inject Industry Analytics Kit" />
+		</then>
+		<else>
+			<echo message="Injecting Industry Analytics Kit from ${INDUSTRY_ANALYTICS_KIT_HOME}" />
+
+			<set-host-and-port port="${port}" host="${host}"/>
+
+			<!-- Inject the core of the Industry Analytics Kit -->
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.eventdefinitions" />
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.interfaces" />
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.caches" />
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.objects" />
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.reflectors" />
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.components" />
+			
+			<!-- Inject the Industry Analytics Kit Analytics -->
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.detector.analytics" />
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.flow.analytics" />
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.geolocation.analytics" />
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.streaming.analytics" />
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.utilities.analytics" />
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.combined.analytics" />
+		</else>
+		</if>
+	</target> 
+	
+	<target name="analytics-kit-bundle-PMML-eventdefs"
+			depends="analytics-kit-bundle-common" 
+			unless="onlyMonitors">
+		<if><not><isset property="INDUSTRY_ANALYTICS_KIT_HOME" /></not>
+		<then>
+			<echo message="Property INDUSTRY_ANALYTICS_KIT_HOME not set, cannot inject Industry Analytics Kit" />
+		</then>
+		<else>
+			<set-host-and-port port="${port}" host="${host}"/>
+
+			<!-- PMML Specific eventdefinitions -->
+			<engine-inject-filelistid host="${host}" port="${port}" filelistid="iak.kit.extensions.analytics" />
+		</else>
+		</if>
+	</target>
+
+	<target name="analytics-kit-bundle-ready">
+		<if><not><isset property="INDUSTRY_ANALYTICS_KIT_HOME" /></not>
+		<then>
+			<echo message="Property INDUSTRY_ANALYTICS_KIT_HOME not set, cannot inject Industry Analytics Kit" />
+		</then>
+		<else>
+			<set-host-and-port port="${port}" host="${host}"/>
+			<!-- The event file for Industry Analytics Kit -->
+			<engine-send host="${host}" port="${port}" file="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}events${file.separator}Ready.evt"/>
+		</else>
+		</if>
+	</target> 	
+
+	<!-- MemoryStore support bundle -->
+	<target name="memorystore-support-bundle"
+			depends="scenario-service-bundle, memorystore-support-bundle-events"
+			unless="ignore.apama.dependancies, memorystore.bundle.injected"/>
+		
+	<target name="memorystore-support-bundle-events" 
+			unless="onlyMonitors, ignore.apama.dependancies, memorystore.bundle.injected">
+		<set-host-and-port port="${port}" host="${host}"/>
+		<engine-inject host="${host}" port="${port}" file ="${apama.home}/monitors/data_storage/MemoryStore.mon"/>
+		<engine-inject host="${host}" port="${port}" file ="${apama.home}/monitors/data_storage/MemoryStoreScenarioImpl.mon"/>
+	</target>
+	
+	<!-- Dataview support bundle -->
+	<target name="dataview-service-bundle" 
+			depends="scenario-service-bundle"
+			unless="ignore.apama.dependancies, dataview.service.bundle.injected" >
+		<set-host-and-port port="${port}" host="${host}"/>
+		<engine-inject host="${host}" port="${port}" file ="${apama.home}/monitors/DataViewService_Interface.mon"/>
+		<engine-inject host="${host}" port="${port}" file ="${apama.home}/monitors/DataViewService_Impl_Dict.mon"/>
+	</target>
+
+	<!-- Scenario support bundle -->
+	<target name="scenario-service-bundle"
+			unless="ignore.apama.dependancies, scenario.service.bundle.injected">
+		<set-host-and-port port="${port}" host="${host}"/>
+		<engine-inject host="${host}" port="${port}" file ="${apama.home}/monitors/ScenarioService.mon"/>
+		<engine-inject host="${host}" port="${port}" file ="${apama.home}/monitors/scenario_support/ScenarioDeleterSupport.mon"/>
+		
+		<!-- Set a property to indicate it was injected -->
+		<property name="scenario.service.bundle.injected" value="true"/>
+	</target>
+
+	<!-- Predictive Analytics Plugin bundle -->
+	<target name="predictive-analytics-bundle"
+			unless="ignore.apama.dependancies, predictive.analytics.bundle.injected">
+		<set-host-and-port port="${port}" host="${host}"/>
+			
+		<engine-inject host="${host}" port="${port}" java="true" file="${apama.home}/adapters/lib/Predictive-Analytics-Plugin.jar"/>
+		<engine-inject host="${host}" port="${port}" cdp="true" file="${apama.home}/adapters/monitors/predictive_analytics_plugin_monitors.cdp"/>
+	</target>
+
+	<!-- ########################################### -->
+	<!-- #### FILE LIST DEFINITIONS FOR EPL CODE ### -->
+	<!-- ########################################### -->
+
+	<!-- File list for Industry Analytics Kit eventdefinitions -->	
+	<filelist id="iak.kit.eventdefinitions" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}eventdefinitions">
+		<file name="DataSource.mon"/>
+		<file name="Ready.mon"/>
+		<file name="Constants.mon"/>
+		<file name="Analytic.mon"/>
+		<file name="Data.mon"/>
+	</filelist>
+	
+	<!-- File list for Industry Analytics Kit interface definitions -->	
+	<filelist id="iak.kit.interfaces" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}monitors${file.separator}interfaces">
+		<file name="AnalyticInterface.mon"/>
+	</filelist>
+
+	<!-- File list for Industry Analytics Kit cache monitors -->	
+	<filelist id="iak.kit.caches" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}monitors${file.separator}cache">
+		<file name="MemStoreUtil.mon"/>
+		<file name="Cache.mon"/>
+		<file name="DataSourceService.mon"/>
+		<file name="DataView.mon"/>
+	</filelist>
+
+	<!-- File list for Industry Analytics Kit cache monitors -->	
+	<filelist id="iak.kit.objects" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}monitors${file.separator}objects">
+		<file name="AnalyticObject.mon"/>
+		<file name="VersioningService.mon"/>
+	</filelist>
+
+	<!-- File list for Industry Analytics Kit reflectors -->	
+	<filelist id="iak.kit.reflectors" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}monitors${file.separator}reflectors">
+		<file name="Reflector.mon"/>
+		<file name="DataViewReflector.mon"/>
+	</filelist>
+
+	<!-- File list for Industry Analytics Kit components -->	
+	<filelist id="iak.kit.components" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}monitors${file.separator}components">
+		<file name="BucketSystem.mon"/>
+		<file name="TimeWeightedMovingAverage.mon"/>
+		<file name="TimeWeightedVariance.mon"/>
+		<file name="TimeWeightedBollinger.mon"/>
+		<file name="GeoUtil.mon"/>
+	</filelist>
+			
+	<!-- File list for Industry Analytics Kit Detector Analytics -->	
+	<filelist id="iak.kit.detector.analytics" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}monitors${file.separator}analytics${file.separator}core${file.separator}Detectors">
+		<file name="Corridor.mon"/>
+		<file name="CorridorService.mon"/>
+		<file name="Drift.mon"/>
+		<file name="DriftService.mon"/>
+		<file name="MissingData.mon"/>
+		<file name="MissingDataService.mon"/>
+		<file name="Spike.mon"/>
+		<file name="SpikeService.mon"/>
+		<file name="Threshold.mon"/>
+		<file name="ThresholdService.mon"/>
+	</filelist>
+			
+	<!-- File list for Industry Analytics Kit Flow Manipulation Analytics -->	
+	<filelist id="iak.kit.flow.analytics" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}monitors${file.separator}analytics${file.separator}core${file.separator}Flow_Manipulation">
+		<file name="Combiner.mon"/>
+		<file name="CombinerService.mon"/>
+		<file name="Duplicator.mon"/>
+		<file name="DuplicatorService.mon"/>
+		<file name="EventRate.mon"/>
+		<file name="EventRateService.mon"/>
+		<file name="Filter.mon"/>
+		<file name="FilterService.mon"/>
+		<file name="Mapper.mon"/>
+		<file name="MapperService.mon"/>
+		<file name="Merger.mon"/>
+		<file name="MergerService.mon"/>
+		<file name="Repeater.mon"/>
+		<file name="RepeaterService.mon"/>
+		<file name="Slicer.mon"/>
+		<file name="SlicerService.mon"/>
+		<file name="Sorter.mon"/>
+		<file name="SorterService.mon"/>
+		<file name="Suppressor.mon"/>
+		<file name="SuppressorService.mon"/>
+		<file name="Throttler.mon"/>
+		<file name="ThrottlerService.mon"/>
+	</filelist>
+			
+	<!-- File list for Industry Analytics Kit GeoLocation Analytics -->
+	<filelist id="iak.kit.geolocation.analytics" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}monitors${file.separator}analytics${file.separator}core${file.separator}GeoLocation">
+		<file name="GeoFence.mon"/>
+		<file name="GeoFenceService.mon"/>
+		<file name="Speed.mon"/>
+		<file name="SpeedService.mon"/>
+		<file name="Distance.mon"/>
+		<file name="DistanceService.mon"/>
+	</filelist>
+	
+	<!-- File list for Industry Analytics Kit Extensions Analytics -->
+	<filelist id="iak.kit.extensions.analytics" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}monitors${file.separator}analytics${file.separator}core${file.separator}Extensions">
+		<file name="Prediction.mon"/>
+		<file name="PredictionService.mon"/>
+	</filelist>
+			
+	<!-- File list for Industry Analytics Kit Streaming Calculations Analytics -->
+	<filelist id="iak.kit.streaming.analytics" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}monitors${file.separator}analytics${file.separator}core${file.separator}Streaming_Calculations">
+		<file name="Average.mon"/>
+		<file name="AverageService.mon"/>
+		<file name="Delta.mon"/>
+		<file name="DeltaService.mon"/>
+		<file name="Expression.mon"/>
+		<file name="ExpressionService.mon"/>
+		<file name="FFTAnalysis.mon"/>
+		<file name="FFTAnalysisService.mon"/>
+		<file name="Gradient.mon"/>
+		<file name="GradientService.mon"/>
+		<file name="MinMax.mon"/>
+		<file name="MinMaxService.mon"/>
+		<file name="Mode.mon"/>
+		<file name="ModeService.mon"/>
+		<file name="Spread.mon"/>
+		<file name="SpreadService.mon"/>
+		<file name="Sum.mon"/>
+		<file name="SumService.mon"/>
+		<file name="Volatility.mon"/>
+		<file name="VolatilityService.mon"/>
+	</filelist>
+	
+	<!-- File list for Industry Analytics Kit Utilities Analytics -->	
+	<filelist id="iak.kit.utilities.analytics" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}monitors${file.separator}analytics${file.separator}core${file.separator}Utilities">
+		<file name="DataSimulator.mon"/>
+		<file name="DataSimulatorService.mon"/>
+		<file name="DataViewer.mon"/>
+		<file name="DataViewerService.mon"/>
+		<file name="MemoryStore.mon"/>
+		<file name="MemoryStoreService.mon"/>
+		<file name="Logger.mon"/>
+		<file name="LoggerService.mon"/>
+	</filelist>
+	
+	<!-- File list for Industry Analytics Kit Analytics that use a combination of the other Analytics -->
+	<filelist id="iak.kit.combined.analytics" dir="${INDUSTRY_ANALYTICS_KIT_HOME}${file.separator}monitors${file.separator}analytics${file.separator}core${file.separator}Detectors">
+		<file name="Detectors${file.separator}PeerAnalysis.mon"/>
+		<file name="Detectors${file.separator}PeerAnalysisService.mon"/>
+	</filelist>
+
+	<!-- Macro to set the host and port to right values before injecting bundles-->
+	<macrodef name="set-host-and-port">
+		<attribute name="host" />
+		<attribute name="port" />
+			
+		<sequential>		
+		<condition property="host" value="${correlator.host}">
+			<not>  
+				<isset property="host"/>
+			</not>
+		</condition>		
+		<condition property="port" value="${correlator.port}">
+			<not>  
+				<isset property="port"/>
+			</not>
+		</condition>
+		</sequential>
+	</macrodef>
+		
+</project>

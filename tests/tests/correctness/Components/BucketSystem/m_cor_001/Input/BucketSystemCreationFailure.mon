@@ -1,0 +1,122 @@
+using com.industry.utils.BucketSystemBuilder;
+using com.industry.utils.BucketSystem;
+using com.industry.utils.Bucket;
+
+using com.apama.exceptions.Exception;
+
+monitor BucketSystemCreationFailure {
+  action onload() {
+    // Only 1 size provided
+    buildExpectException(BucketSystemBuilder.create()
+                          .updateBucket(addItemToBucket)
+                          //.totalSize(10.0)
+                          //.bucketCount(10)
+                          //.bucketSize(1.0)
+                          .onBucketCreated(initializeBucket));
+
+    // Only 1 size provided
+    buildExpectException(BucketSystemBuilder.create()
+                          .updateBucket(addItemToBucket)
+                          .totalSize(10.0)
+                          //.bucketCount(10)
+                          //.bucketSize(1.0)
+                          .onBucketCreated(initializeBucket));
+
+    // Only 1 size provided
+    buildExpectException(BucketSystemBuilder.create()
+                          .updateBucket(addItemToBucket)
+                          //.totalSize(10.0)
+                          .bucketCount(10)
+                          //.bucketSize(1.0)
+                          .onBucketCreated(initializeBucket));
+    
+    // Only 1 size provided
+    buildExpectException(BucketSystemBuilder.create()
+                          .updateBucket(addItemToBucket)
+                          //.totalSize(10.0)
+                          //.bucketCount(10)
+                          .bucketSize(1.0)
+                          .onBucketCreated(initializeBucket));
+
+    // Invalid totalSize
+    buildExpectException(BucketSystemBuilder.create()
+                          .updateBucket(addItemToBucket)
+                          .totalSize(-10.0)
+                          .bucketCount(10)
+                          //.bucketSize(1.0)
+                          .onBucketCreated(initializeBucket));
+    // Invalid totalSize
+    buildExpectException(BucketSystemBuilder.create()
+                          .updateBucket(addItemToBucket)
+                          .totalSize(0.0)
+                          .bucketCount(10)
+                          //.bucketSize(1.0)
+                          .onBucketCreated(initializeBucket));
+
+    // Invalid bucketCount
+    buildExpectException(BucketSystemBuilder.create()
+                          .updateBucket(addItemToBucket)
+                          .totalSize(10.0)
+                          .bucketCount(0)
+                          //.bucketSize(1.0)
+                          .onBucketCreated(initializeBucket));
+    
+    // Invalid bucketCount
+    buildExpectException(BucketSystemBuilder.create()
+                          .updateBucket(addItemToBucket)
+                          .totalSize(10.0)
+                          .bucketCount(-10)
+                          //.bucketSize(1.0)
+                          .onBucketCreated(initializeBucket));
+    
+    // Invalid bucketSize
+    buildExpectException(BucketSystemBuilder.create()
+                          .updateBucket(addItemToBucket)
+                          .totalSize(10.0)
+                          //.bucketCount(0)
+                          .bucketSize(-1.0)
+                          .onBucketCreated(initializeBucket));
+    
+    // Invalid bucketSize
+    buildExpectException(BucketSystemBuilder.create()
+                          .updateBucket(addItemToBucket)
+                          .totalSize(10.0)
+                          //.bucketCount(0)
+                          .bucketSize(0.0)
+                          .onBucketCreated(initializeBucket));
+    
+
+    // No update function provided
+    buildExpectException(BucketSystemBuilder.create()
+                          //.updateBucket(addItemToBucket)
+                          .totalSize(10.0)
+                          .bucketCount(10)
+                          //.bucketSize(1.0)
+                          .onBucketCreated(initializeBucket));
+    
+    log "Test finished" at INFO;
+  }
+  
+  action buildExpectException(BucketSystemBuilder bsb) {
+    try {
+      BucketSystem ignore := bsb.build();
+      log "Test Failed" at ERROR;
+    } catch (Exception e) {
+      log "Successfully threw exception: " + e.getMessage() at INFO;
+    }
+  }
+  
+  action getF(any item) returns float {
+    log "getF called" at INFO;
+    return 1.0;
+  }
+  
+  action initializeBucket(Bucket b) {
+    log "initialize called" at INFO;
+  }
+  
+  action addItemToBucket(Bucket b, any item) returns any {
+    log "add item to bucket called" at INFO;
+    return item;
+  }
+}

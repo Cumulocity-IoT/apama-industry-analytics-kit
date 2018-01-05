@@ -1,0 +1,49 @@
+//*****************************************************************************
+// Title:         DataViewer004
+//*****************************************************************************
+
+package com.industry.analytics.utilities.DataViewer004;
+
+using com.industry.analytics.utilities.DataViewer;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	DataViewer _dataviewer;
+	
+	action onload()
+	{
+		// Need to spawn else the reflectors on the main context will start looping.
+		spawn _setup to context("DataViewer");
+	}
+	
+	
+	action _setup()
+	{
+		Analytic config := Analytic("DataViewer", ["Input"], new sequence<string>, new dictionary<string, string>);
+		_dataviewer.init(config, _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			Data currData := Data.init("Input", DataConstants.RAW, "asset1");
+			currData.dValue := 1.0d;
+			_dataviewer.processData( currData );
+			currData.sourceId := "asset2";
+			currData.dValue := 2.345d;
+			_dataviewer.processData( currData );
+			_dataviewer.reset();
+		}
+		else
+		{
+			log "Error spawning DataViewer instance." at ERROR;
+		}
+	}
+}

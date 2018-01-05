@@ -1,0 +1,120 @@
+//*****************************************************************************
+// Title:         AnalyticObjectTest
+//*****************************************************************************
+
+package com.industry.analytics.Analyticobj_cor_021;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Data;
+
+event NextStep { 
+}
+
+monitor AnalyticObjectTest {
+
+	action onload()	{
+		monitor.subscribe("mainCtx");
+
+		// Create the Analytic event
+		Analytic t := Analytic("Test", ["Input1"], ["Output1"],
+								 {"boolean_param":"true",
+								  "decimal_param":"1.0",
+								  "float_param":"2.0",
+								  "integer_param":"3",
+								  "string_param":"a_string"});
+
+		// Create a new Analytic object
+		(new AnalyticObject).initExtended( t,
+		                            processData,
+		                            new action<dictionary<string, Data> >,
+		                            false,
+		                            new action<>,
+		                            new action<>,
+		                            initComplete );
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti )	{
+		
+		if( success ) then {
+			Data currData1 := Data( "Input1", com.industry.analytics.DataConstants.RAW,
+			                             "TEST_ASSET_1", currentTime.toDecimal(), 111.1d, "TEST_STRING_1",
+			                             1.0, 2.0, 3.0,
+			                             new dictionary<string, string> );
+			Data currData2 := Data( "Input1", com.industry.analytics.DataConstants.RAW,
+			                             "TEST_ASSET_2", currentTime.toDecimal(), 222.2d, "TEST_STRING_2",
+			                             1.0, 2.0, 3.0,
+			                             new dictionary<string, string> );
+			Data currData3 := Data( "Input2", com.industry.analytics.DataConstants.RAW,
+			                             "TEST_ASSET_3", currentTime.toDecimal(), 333.3d, "TEST_STRING_3",
+			                             1.0, 2.0, 3.0,
+			                             new dictionary<string, string> );
+			Data currData4 := Data( "Input2", com.industry.analytics.DataConstants.RAW,
+			                             "TEST_ASSET_4", currentTime.toDecimal(), 444.4d, "TEST_STRING_4",
+			                             1.0, 2.0, 3.0,
+			                             new dictionary<string, string> );
+			
+			// Send the data events into the new Analytic.
+			// This should not do anything as we've not started the Analytic
+			send currData1 to "Input1";
+			send currData2 to "Input1";
+			send currData3 to "Input1";
+			send currData4 to "Input1";
+			
+			// Start the Analytic 
+			// We send the internal event to ensure we are starting 
+			// the Analytic after the data events above are sent
+			send NextStep() to "mainCtx";
+			on NextStep() {
+				// Start the Analytic
+				ti.start();
+
+				// Send the data events into the new Analytic again
+				// These events should be handled
+				send currData1 to "Input1";
+				send currData2 to "Input1";
+				send currData3 to "Input1";
+				send currData4 to "Input1";
+
+				// We send the internal event to ensure we are starting 
+				// the next step after the data events above are sent
+				send NextStep() to "mainCtx";
+				on NextStep() {
+					// Enable the Input channel
+					ti.getInputFromChannel( true );
+				
+					// Send the data events into the new Analytic again
+					// These events should be handled
+					send currData1 to "Input1";
+					send currData2 to "Input1";
+					send currData3 to "Input1";
+					send currData4 to "Input1";
+	
+					// Disable the input channel
+					// We send the internal event to ensure we are starting 
+					// the next step after the data events above are sent
+					send NextStep() to "mainCtx";
+					on NextStep() {
+						// Disable the Input channel
+						ti.getInputFromChannel( false );
+						
+						// Send the data events into the new Analytic again
+						// These events should be ignored
+						send currData1 to "Input1";
+						send currData2 to "Input1";
+						send currData3 to "Input1";
+						send currData4 to "Input1";
+					}
+				}
+			}
+			
+		} else {
+			log "FAILED TO CREATE ANALYTICER INTERFACE" at ERROR; 
+		}
+    }
+	
+	action processData( Data currData ) {
+		log "PROCESS DATA CALLED: "+currData.toString();
+	}
+}

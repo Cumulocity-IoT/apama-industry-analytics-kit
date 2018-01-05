@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("throttler", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("THROTTLER", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("ThRoTtLeR", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("Throttler", ["Input"], ["Output"], {})

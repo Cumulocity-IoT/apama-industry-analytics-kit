@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("average", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("AVERAGE", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("AvErAgE", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("Average", ["Input"], ["Output"], {})

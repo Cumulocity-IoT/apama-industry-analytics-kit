@@ -1,0 +1,233 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>DataSimulator</TITLE>
+<META NAME="keywords" CONTENT="DataSimulator&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="DataSimulator";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/utilities/DataSimulator.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="DataSimulator.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/utilities/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics.utilities</FONT>
+<BR>Event DataSimulator</H2>
+<HR>The Data Simulator Analytic generates a set of data for use in an Industry Analytics Kit network.<br>
+<br> The Data Simulator has two main modes of generating data patterns. The first is brownian motion which produces data with a random variation within a specified maximum delta. The second is a random which produces a random Data value within the defined range.<br>
+<br> The Data Simulator can be configured to generate events at a specified data rante. The valid data rates are number of events 'perSecond', 'perMinute' or 'perHour'. The default value for data rate unit is 60.<br>
+<br> The Data Simulator will generate data for one or more sources. The data for these sources are generated in a staggered fashion. Bear in mind that although the timestamps will be generated accurately, the actual output of the events will be subject to the usual limitations of time resolution within the correlator.<br>
+<br> Brownian:</br> if stepType = percentage then val = ((rangeUpper - rangeLower)/100))* stepValue </br> else val = stepValue </br> delta = val.rand() - val.rand() </br> if (f(n-1)+delta > rangeUpper) OR (f(n-1)+delta < rangeLower) then delta = delta * -1 </br> f(n) = f(n-1) +  delta<br>
+<br> Random : random := (rangeUpper - rangeLower).rand()<br>
+<br> <dl><dt><b>Input Data events:</b></dt> <dd>There is no input data events as simulator generates Data events and send on output channel.</dd> </dl> <dl><dt><b>Output Data events:</b></dt> <dd>Only a single output Data stream name must be provided. All the <font face="courier" size="-1">params</font> from the input Data are copied to the delta Data.</dd> </dl> <dl><dt><b>Params:</b></dt> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr> <tr><td><b>simulationType</b></td><td>The Type of simulation data to be generated.</td> <td>One of <font face="courier" size="-1">"brownian", "random", "sin", "sawRising", "sawFalling", "square", "triangle"</font></td><td>String</td><td>False</td><td><font face="courier" size="-1">brownian</font></td></tr> <tr><td><b>rangeUpper</b></td><td>Defines the upper range of data value.</td> <td>> <font face="courier" size="-1">rangeLower</font></td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">100.0d</font></td></tr> <tr><td><b>rangeLower</b></td><td>Defines the upper range of data value.</td> <td> < <font face="courier" size="-1">rangeUpper</font></td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">0.0</font></td></tr> <tr><td><b>sourceIdPrefix</b></td><td>Defines the sourceId prefix to be used in generated data.</td> <td>String</td><td>String</td><td>False</td><td><font face="courier" size="-1">simulator_</font></td></tr> <tr><td><b>sourceIdCount</b></td><td>Defines the number of sourceIds for which data will be generated.</td> <td> > 0 </td> <td>Integer</td><td>False</td><td><font face="courier" size="-1">1</font></td></tr> <tr><td><b>dataRateUnit</b></td><td>The units to be used for data rate generation.</td> <td><font face="courier" size="-1">perSecond, perMinute, perHour</font></td><td>String</td><td>False</td><td><font face="courier" size="-1">perMinute</font></td></tr> <tr><td><b>dataRateValue</b></td><td>The value to be specified for dataRateUnit param. The events will be generated per sourceId at specified rate.</td> <td> > 0 </td><td>Integer</td><td>False</td><td><font face="courier" size="-1">60</font></td></tr> <tr><td><b>stepType</b></td><td>Step type for simulated data.</td> <td><font face="courier" size="-1">percentage or absolute</font></td><td>String</td><td>False</td><td><font face="courier" size="-1">percentage</font></td></tr> <tr><td><b>stepValue</b></td><td>Defines the size of the step between each Data value.</td> <td> > 0</td><td>String</td><td>False</td><td><font face="courier" size="-1">5.0</font></td></tr> <tr><td><b>eventsPerCycle</b></td><td>Defines the number of Data points to be generated per cycle.</td> <td> > 0</td><td>String</td><td>False</td><td><font face="courier" size="-1">30</font></td></tr> </table></dd> </dl> <dl><dt><b>Example usage:</b></dt> <dd><pre><br>//Define a DataSimulator Analytic which will publish Data events on  <br>//the output channel "Output1". The values it will generate will range between <br>//50.0 and 100.0. Events are published by default every second<br>send com.industry.analytics.Analytic("DataSimulator", new sequence&ltstring&gt, ["Output1"], {"rangeUpper":"100.0d", "rangeLower":"50.0d"} ) to "";<br>
+<br>//Define a DataSimulator Analytic which will publish Data events on  <br>//the output channel "Output1". The  values it will generate will range between <br>//0.0 and 100.0 for 3 source ids. Events are published every 5 seconds per source id.<br>send com.industry.analytics.Analytic("DataSimulator", new sequence&ltstring&gt, ["Output1"], {"rangeUpper":"100.0d", "rangeLower":"50.0d", "sourceIdCount":"3", "dataRateUnit":"perMinute", "dataRateValue":"12"} ) to "";<br></pre></dd> </dl><HR>
+<A NAME="constant_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Constant Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="DataSimulator.html#DATA_RATE_UNIT">DATA_RATE_UNIT</A> := "dataRateUnit"</B></CODE>
+<br>
+<br>This constant defines the data generation rate units</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="DataSimulator.html#DATA_RATE_VALUE">DATA_RATE_VALUE</A> := "dataRateValue"</B></CODE>
+<br>
+<br>This constant defines thedata generation unit value</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="DataSimulator.html#EVENTS_PER_CYCLE">EVENTS_PER_CYCLE</A> := "eventsPerCycle"</B></CODE>
+<br>
+<br>This constant defines the number of Data points that are to be generated per cycle</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="DataSimulator.html#NAME">NAME</A> := "DataSimulator"</B></CODE>
+<br>
+<br>This constant defines the name of the Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="DataSimulator.html#RANGE_LOWER">RANGE_LOWER</A> := "rangeLower"</B></CODE>
+<br>
+<br>This constant defines the lower range for Data dValue</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="DataSimulator.html#RANGE_UPPER">RANGE_UPPER</A> := "rangeUpper"</B></CODE>
+<br>
+<br>This constant defines the upper range of dValue</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="DataSimulator.html#SIMULATION_TYPE">SIMULATION_TYPE</A> := "simulationType"</B></CODE>
+<br>
+<br>This constant defines the type of simulated data</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="DataSimulator.html#SOURCE_ID_COUNT">SOURCE_ID_COUNT</A> := "sourceIdCount"</B></CODE>
+<br>
+<br>This constant defines the sourceId count to be used</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="DataSimulator.html#SOURCE_ID_PREFIX">SOURCE_ID_PREFIX</A> := "sourceIdPrefix "</B></CODE>
+<br>
+<br>This constant defines the sourceId prefix to be used</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="DataSimulator.html#STEP_TYPE">STEP_TYPE</A> := "stepType"</B></CODE>
+<br>
+<br>This constant defines the the step type (absolute or percentage) that the step value should be treated as.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="DataSimulator.html#STEP_VALUE">STEP_VALUE</A> := "stepValue"</B></CODE>
+<br>
+<br>This constant defines the size of the step between each Data value</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="DataSimulator.html#init()">init</A></B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="constant_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Constant Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="DATA_RATE_UNIT"></A>
+<H3>DATA_RATE_UNIT</H3>
+<PRE>constant string&nbsp;<B>DATA_RATE_UNIT := "dataRateUnit"</B>
+</PRE>This constant defines the data generation rate units<HR>
+<A NAME="DATA_RATE_VALUE"></A>
+<H3>DATA_RATE_VALUE</H3>
+<PRE>constant string&nbsp;<B>DATA_RATE_VALUE := "dataRateValue"</B>
+</PRE>This constant defines thedata generation unit value<HR>
+<A NAME="EVENTS_PER_CYCLE"></A>
+<H3>EVENTS_PER_CYCLE</H3>
+<PRE>constant string&nbsp;<B>EVENTS_PER_CYCLE := "eventsPerCycle"</B>
+</PRE>This constant defines the number of Data points that are to be generated per cycle<HR>
+<A NAME="NAME"></A>
+<H3>NAME</H3>
+<PRE>constant string&nbsp;<B>NAME := "DataSimulator"</B>
+</PRE>This constant defines the name of the Analytic.<HR>
+<A NAME="RANGE_LOWER"></A>
+<H3>RANGE_LOWER</H3>
+<PRE>constant string&nbsp;<B>RANGE_LOWER := "rangeLower"</B>
+</PRE>This constant defines the lower range for Data dValue<HR>
+<A NAME="RANGE_UPPER"></A>
+<H3>RANGE_UPPER</H3>
+<PRE>constant string&nbsp;<B>RANGE_UPPER := "rangeUpper"</B>
+</PRE>This constant defines the upper range of dValue<HR>
+<A NAME="SIMULATION_TYPE"></A>
+<H3>SIMULATION_TYPE</H3>
+<PRE>constant string&nbsp;<B>SIMULATION_TYPE := "simulationType"</B>
+</PRE>This constant defines the type of simulated data<HR>
+<A NAME="SOURCE_ID_COUNT"></A>
+<H3>SOURCE_ID_COUNT</H3>
+<PRE>constant string&nbsp;<B>SOURCE_ID_COUNT := "sourceIdCount"</B>
+</PRE>This constant defines the sourceId count to be used<HR>
+<A NAME="SOURCE_ID_PREFIX"></A>
+<H3>SOURCE_ID_PREFIX</H3>
+<PRE>constant string&nbsp;<B>SOURCE_ID_PREFIX := "sourceIdPrefix "</B>
+</PRE>This constant defines the sourceId prefix to be used<HR>
+<A NAME="STEP_TYPE"></A>
+<H3>STEP_TYPE</H3>
+<PRE>constant string&nbsp;<B>STEP_TYPE := "stepType"</B>
+</PRE>This constant defines the the step type (absolute or percentage) that the step value should be treated as.<HR>
+<A NAME="STEP_VALUE"></A>
+<H3>STEP_VALUE</H3>
+<PRE>constant string&nbsp;<B>STEP_VALUE := "stepValue"</B>
+</PRE>This constant defines the size of the step between each Data value<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration that will be used for this instance</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The action callback to call when the new Analytic has been created, or if an error occured.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration event object.</DD>
+<DD>
+<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that can be used to interact with the Analytic.</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/utilities/DataSimulator.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="DataSimulator.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/utilities/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

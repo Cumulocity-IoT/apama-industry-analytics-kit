@@ -1,0 +1,2 @@
+// Offset
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Fixed Offset"], {"geoFenceOffset":"10000", "geoFenceLatitude":"0", "geoFenceLongitude":"0", "enableEntry":"true", "enableExit":"true", "enableInside":"true", "enableOutside":"true", "enableDwell":"true", "dwellTime":"2.0", "realtimeDwell":"false", "useHypertree":"false"})

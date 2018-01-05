@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("Gradient", [], [], {})
+com.industry.analytics.Analytic("Gradient", ["Input"], ["Output"], {"timeWindow":"true", "bucketCount":"c"})

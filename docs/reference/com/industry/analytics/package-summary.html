@@ -1,0 +1,176 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>com.industry.analytics</TITLE>
+<META NAME="keywords" CONTENT="com.industry.analytics package">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">
+          function windowTitle()
+          {
+          parent.document.title="com.industry.analytics";
+          }
+        </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"><FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/package-summary.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="package-summary.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>Package com.industry.analytics</H2>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Event Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="AddDataSource.html" title="Event in com.industry.analytics">AddDataSource</A></B></TD><TD>The com.industry.analytics.AddDataSource event requests that a DataSource should be added to the hierachy of DataSources. This is used to define the relationships/grouping of different DataSources, so that they can be later referenced as a set of DataSources or as an individual DataSource.  For example, an DataSource could be non-physical parent node which defines the set of sensors for a specific machine, this then has a set of physical devices associated with it.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="AmplitudeFrequency.html" title="Event in com.industry.analytics">AmplitudeFrequency</A></B></TD><TD>
+            &nbsp;
+          </TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Analytic.html" title="Event in com.industry.analytics">Analytic</A></B></TD><TD>The intent is to have a set of delivered computation Analytics which can be chained together as desired with the framework, and to allow customers to easily create their own Analytics.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="AnalyticInterface.html" title="Event in com.industry.analytics">AnalyticInterface</A></B></TD><TD>The AnalyticObject event is used to create instances of the AnalyticInterface object that can be used to manage and implement an instance of a Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="AnalyticManagement.html" title="Event in com.industry.analytics">AnalyticManagement</A></B></TD><TD>This event exists to allow dynamic management of Analytics created using the Analytic event.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="AnalyticObject.html" title="Event in com.industry.analytics">AnalyticObject</A></B></TD><TD>The AnalyticObject event defines the base functionality that is common across all Analytic implementations.  This object provides functionality to setup any listeners that are required, and to send generated Data events to the set of places required.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="CheckVersion.html" title="Event in com.industry.analytics">CheckVersion</A></B></TD><TD>Applications can send this event to the Versioning Service on the Analytics Management Channel to check that the version that they are using is compatible with this version of the Industry Analytics Kit.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="ComplexType.html" title="Event in com.industry.analytics">ComplexType</A></B></TD><TD>This event provides functionality to support complex number (numbers with real and imaginary components) arithmetic. This is currently used by the Fast Fourier Transformation calculations.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Constants.html" title="Event in com.industry.analytics">Constants</A></B></TD><TD>The Constants event object defines the set of commonly used strings that are used in the Industry Analytics Kit which may be useful for User Applications to use.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="CurrentVersion.html" title="Event in com.industry.analytics">CurrentVersion</A></B></TD><TD>This event is sent from the Versioning Service in response to the the CheckVersion event that requests the current version and whether the version provided in the request is compatible with this version of the Industry Analytics Kit.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Data.html" title="Event in com.industry.analytics">Data</A></B></TD><TD>The Data event is a normalized event structure which is used within the framework for passing around values. Events coming into the Correlator from external sources will need to be converted prior to use within the framework. The structure of the event that carries both incoming (raw) data and the computed data within a Analytic network.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="DataConstants.html" title="Event in com.industry.analytics">DataConstants</A></B></TD><TD>The DataConstants event object defines a set of constant string values for the different types of Data that are supported.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="DataDetails.html" title="Event in com.industry.analytics">DataDetails</A></B></TD><TD>
+            &nbsp;
+          </TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="DataSource.html" title="Event in com.industry.analytics">DataSource</A></B></TD><TD>The com.industry.analytics.DataSource event defines a specific DataSource that is being monitored. Each DataSource can also define the relationships/grouping of different DataSources, so that they can be later referenced as a set of DataSources or as an individual DataSource.  For example, an DataSource could be non-physical parent node which defines the set of sensors for a specific machine, this then has a set of physical devices associated with it.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="DisableDataReflector.html" title="Event in com.industry.analytics">DisableDataReflector</A></B></TD><TD>This event disables the Data reflector (if it was enabled previously) so that any Data events that received on the main context, are no longer sent to the Data context (defined by the Data events <font face="courier" size="-1">name</font> parameter)</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="EnableDataReflector.html" title="Event in com.industry.analytics">EnableDataReflector</A></B></TD><TD>This event enables the Data reflector so that any Data events that received on the main context, are sent to the Data context (defined by the Data events <font face="courier" size="-1">name</font> parameter)</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="FFT.html" title="Event in com.industry.analytics">FFT</A></B></TD><TD>This event provides functionality to calculate Fast-Fourier Transformations using the Cooley-Tukey algorithm. Fourier analysis converts data from a time-domain to a representation in the frequency domain (and vice versa).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="GeoUtil.html" title="Event in com.industry.analytics">GeoUtil</A></B></TD><TD>This event provides common geolocation calculations and constant values.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Ready.html" title="Event in com.industry.analytics">Ready</A></B></TD><TD>This event is sent when the Industry Analytics Kit is ready to be used. This is used internally by the Industry Analytics Kit to create any pending Analytic requests that have been requested by the user appliication.  This is required to prevent requests to create new Analytics being sent prior to the relevant Analytic being injected into the Correlator.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="SourceIdsRequest.html" title="Event in com.industry.analytics">SourceIdsRequest</A></B></TD><TD>This request should be sent to the DataSourceService channel "DATASOURCE_MGMT_CHANNEL" when requesting the set of child DataSources that are associated with the DataSource specified.  Note that the entire hierachy of associated child DataSources are returned in the response, not just the direct children of a specified DataSource.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="SourceIdsResponse.html" title="Event in com.industry.analytics">SourceIdsResponse</A></B></TD><TD>This event is sent in response to the to the <font face="courier" size="-1">com.industry.analytics.DataSourceIdsRequest</font> on the DataSource Service channel (I.E. "DATASOURCE_MGMT_CHANNEL") which requests the set of associated DataSources for the one specified. Note that the entire hierachy of associated child DataSources are returned in the response, not just the direct children of a specified DataSource.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="TimeWeightedBollinger.html" title="Event in com.industry.analytics">TimeWeightedBollinger</A></B></TD><TD>This event handles the storage and calculations for time weighted bollinger bands. Internally the TimeWeightedVariance event is used.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="TimeWeightedMovingAverage.html" title="Event in com.industry.analytics">TimeWeightedMovingAverage</A></B></TD><TD>This event handles the storage and calculations for a time weighted moving average.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="TimeWeightedVariance.html" title="Event in com.industry.analytics">TimeWeightedVariance</A></B></TD><TD>This event handles the storage and calculations for a time weighted variance. Internally the TimeWeightedMovingAverage event is used.</TD>
+</TR>
+</TABLE>
+<P></P>
+        &nbsp;
+        <HR>
+<P></P>
+        &nbsp;
+        <HR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Monitor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="DataViewReflector.html" title="Monitor in com.industry.analytics">DataViewReflector</A></B></TD><TD>This monitor reflects Data events from the main context to the DATAVIEW_CHANNEL. This is required for the DataViewer analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Reflector.html" title="Monitor in com.industry.analytics">Reflector</A></B></TD><TD>This monitor reflects Data events from the main context to the context defined by the Data events <font face="courier" size="-1">name</font> parameter.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="VersioningService.html" title="Monitor in com.industry.analytics">VersioningService</A></B></TD><TD>The Versioning Service allows you to request the current version of the Industry Analytics Kit, and to check that the version that you are requesting is compatible with the application you are using.</TD>
+</TR>
+</TABLE>
+<P></P>
+        &nbsp;
+        <HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"><FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/package-summary.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="package-summary.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

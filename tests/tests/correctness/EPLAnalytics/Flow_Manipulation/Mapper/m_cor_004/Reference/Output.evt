@@ -1,0 +1,8 @@
+com.industry.analytics.Data("Output","c","source",0,1,"up",0,0,0,{})
+com.industry.analytics.Data("Output","c","source",0,-1,"down",0,0,0,{})
+com.industry.analytics.Data("Output","c","source",0,0,"left",0,0,0,{})
+com.industry.analytics.Data("Output","c","source",0,0,"right",0,0,0,{})
+com.industry.analytics.Data("Output","c","source",0,1,"up",0,0,0,{})
+com.industry.analytics.Data("Output","c","source",0,1,"up",0,0,0,{})
+com.industry.analytics.Data("Output","c","source",0,-1,"down",0,0,0,{})
+com.industry.analytics.Data("Output","c","source",0,-1,"down",0,0,0,{})

@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Combiner", ["Input1", "Input2", "Input3"], ["Output1"], {})

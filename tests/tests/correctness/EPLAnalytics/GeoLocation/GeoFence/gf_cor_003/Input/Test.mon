@@ -1,0 +1,129 @@
+//*****************************************************************************
+// Title:         Test
+//*****************************************************************************
+
+package com.industry.analytics.test003;
+
+using com.industry.analytics.geolocation.Polygon;
+
+
+monitor Test
+{
+	action onload()
+	{
+		Polygon p;
+
+		// _parseVertices()
+		// Empty sequence
+		p := Polygon._parseVertices(new sequence<string>);
+		log "Empty sequence: valid: " + p.isValid().toString() at INFO;
+
+		// One empty string
+		p := Polygon._parseVertices([""]);
+		log "One string: valid: " + p.isValid().toString() at INFO;
+
+		// Two empty strings
+		p := Polygon._parseVertices(["", ""]);
+		log "Two empty strings: valid: " + p.isValid().toString() at INFO;
+
+		// Three empty strings
+		p := Polygon._parseVertices(["", "", ""]);
+		log "Three empty strings: valid: " + p.isValid().toString() at INFO;
+
+		// Three single strings
+		p := Polygon._parseVertices(["32", "64", "96"]);
+		log "Three empty strings: valid: " + p.isValid().toString() at INFO;
+
+		// Three valid strings
+		p := Polygon._parseVertices(["32,48", "64 72", "96, 144"]);
+		log "Three valid strings: valid: " + p.isValid().toString() at INFO;
+		log "  Vertices: " + p._vertices.toString() at INFO;
+		
+		// initAbsolute()
+		// Cartesian, outside lat/long bounds
+		p := Polygon.initAbsolute(["0, -91", "0, 91", "-181, 0", "181, 0"], true);
+		log "Cartesian, outside lat/long bounds: valid: " + p.isValid().toString() at INFO;
+		log "  Vertices: " + p._vertices.toString() at INFO;
+		log "  Bounding: " + p.getLocation().toString() at INFO;
+		
+		// Lat/Long, outside lat/long bounds
+		p := Polygon.initAbsolute(["0, -91", "0, 91", "-181, 0", "181, 0"], false);
+		log "Lat/Long, outside lat/long bounds: valid: " + p.isValid().toString() at INFO;
+		log "  Vertices: " + p._vertices.toString() at INFO;
+		log "  Bounding: " + p.getLocation().toString() at INFO;
+		
+		// Lat/Long, inside lat/long bounds
+		p := Polygon.initAbsolute(["0, -90", "0, 90", "-80, 0", "80, 0"], false);
+		log "Lat/Long, outside lat/long bounds: valid: " + p.isValid().toString() at INFO;
+		log "  Vertices: " + p._vertices.toString() at INFO;
+		log "  Bounding: " + p.getLocation().toString() at INFO;
+		
+		// Three valid strings init
+		p := Polygon.initAbsolute(["32,48", "64 72", "96, 144"], true);
+		log "Three valid strings init: valid: " + p.isValid().toString() at INFO;
+		log "  Vertices: " + p._vertices.toString() at INFO;
+		log "  Bounding: " + p.getLocation().toString() at INFO;
+		
+		// Across dateline, starting positive, but cartesian
+		p := Polygon.initAbsolute(["170, 10", "-170, 20", "-170, -20", "170, -10"], true);
+		log "Across dateline, starting positive, but cartesian: valid: " + p.isValid().toString() at INFO;
+		log "  Vertices: " + p._vertices.toString() at INFO;
+		log "  Bounding: " + p.getLocation().toString() at INFO;
+		
+		// Across dateline, starting positive
+		p := Polygon.initAbsolute(["170, 10", "-170, 20", "-170, -20", "170, -10"], false);
+		log "Across dateline, starting positive, but cartesian: valid: " + p.isValid().toString() at INFO;
+		log "  Vertices: " + p._vertices.toString() at INFO;
+		log "  Bounding: " + p.getLocation().toString() at INFO;
+		// Check points
+		log "  170, 20: " + p.isPointInPolygon(170.0d, 20.0d).toString() at INFO;
+		log "  170, 10: " + p.isPointInPolygon(170.0d, 10.0d).toString() at INFO;
+		log "  180, 10: " + p.isPointInPolygon(180.0d, 10.0d).toString() at INFO;
+		log "  -180, 10: " + p.isPointInPolygon(-180.0d, 10.0d).toString() at INFO;
+		log "  -170, 10: " + p.isPointInPolygon(-180.0d, 10.0d).toString() at INFO;
+		log "  -170, 20: " + p.isPointInPolygon(-180.0d, 20.0d).toString() at INFO;
+		
+		// Complex absolute polygon
+		p := Polygon.initAbsolute(["-10, 10", "10, 30", "30, 10", "30, -40", "20, -40", "20, 0", "0, 0", "0, -40", "-10, -40"], false);
+		log "Complex absolute polygon: valid: " + p.isValid().toString() at INFO;
+		log "  Vertices: " + p._vertices.toString() at INFO;
+		log "  Bounding: " + p.getLocation().toString() at INFO;
+		// Check points
+		log "  -20, -10: " + p.isPointInPolygon(-20.0d, -10.0d).toString() at INFO;
+		log "  -10, -10: " + p.isPointInPolygon(-10.0d, -10.0d).toString() at INFO;
+		log "  -5, -10: " + p.isPointInPolygon(-5.0d, -10.0d).toString() at INFO;
+		log "  -0, -10: " + p.isPointInPolygon(-0.0d, -10.0d).toString() at INFO;
+		log "  10, -10: " + p.isPointInPolygon(10.0d, -10.0d).toString() at INFO;
+		log "  20, -10: " + p.isPointInPolygon(20.0d, -10.0d).toString() at INFO;
+		log "  25, -10: " + p.isPointInPolygon(25.0d, -10.0d).toString() at INFO;
+		log "  30, -10: " + p.isPointInPolygon(30.0d, -10.0d).toString() at INFO;
+		log "  35, -10: " + p.isPointInPolygon(35.0d, -10.0d).toString() at INFO;
+		
+		// Complex relative polygon
+		p := Polygon.initRelative(10.0d, 10.0d, ["-20, 0", "0, 20", "20, 0", "20, -50", "10, -50", "10, -10", "-10, -10", "-10, -50", "-20, -50"], false);
+		log "Complex relative polygon: valid: " + p.isValid().toString() at INFO;
+		log "  Vertices: " + p._vertices.toString() at INFO;
+		log "  Bounding: " + p.getLocation().toString() at INFO;
+		// Check points
+		log "  -20, -10: " + p.isPointInPolygon(-20.0d, -10.0d).toString() at INFO;
+		log "  -10, -10: " + p.isPointInPolygon(-10.0d, -10.0d).toString() at INFO;
+		log "  -5, -10: " + p.isPointInPolygon(-5.0d, -10.0d).toString() at INFO;
+		log "  -0, -10: " + p.isPointInPolygon(-0.0d, -10.0d).toString() at INFO;
+		log "  10, -10: " + p.isPointInPolygon(10.0d, -10.0d).toString() at INFO;
+		log "  20, -10: " + p.isPointInPolygon(20.0d, -10.0d).toString() at INFO;
+		log "  25, -10: " + p.isPointInPolygon(25.0d, -10.0d).toString() at INFO;
+		log "  30, -10: " + p.isPointInPolygon(30.0d, -10.0d).toString() at INFO;
+		log "  35, -10: " + p.isPointInPolygon(35.0d, -10.0d).toString() at INFO;
+		
+		// 004's polygonn
+		p := Polygon.initAbsolute(["0, 0.09", "0.09, 0", "0, -0.09", "-0.09, 0"], false);
+		log "004's polygon: valid: " + p.isValid().toString() at INFO;
+		log "  Vertices: " + p._vertices.toString() at INFO;
+		log "  Bounding: " + p.getLocation().toString() at INFO;
+		// Check points
+		log "  -0.0455, 0.0455: " + p.isPointInPolygon(-0.0455d, 0.0455d).toString() at INFO;
+		log "  -0.0445, 0.0445: " + p.isPointInPolygon(-0.0445d, 0.0445d).toString() at INFO;
+		log "  0.0445, -0.0445: " + p.isPointInPolygon(0.0445d, -0.0445d).toString() at INFO;
+		log "  0.0455, -0.0455: " + p.isPointInPolygon(0.0455d, -0.0455d).toString() at INFO;
+	}
+}

@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Sum", ["Input"], ["Output"], {"calculationType": "timeWindow", "calculationValue":"20.0d", "smoothingFactor":"4.0d", "paramName":"xvalue"})

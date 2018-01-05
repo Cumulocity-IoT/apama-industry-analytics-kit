@@ -1,0 +1,93 @@
+//*****************************************************************************
+// Title:         Spike test
+//*****************************************************************************
+
+package com.industry.analytics.spike_cor_009;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.detectors.Spike;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload() {
+   
+		// Test full params - Should pass
+		(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input1" ], [ "Output1", "lower:LBChannel", "upper:UBChannel", "avg:MAChannel", "stddev:SDChannel"], 
+															  { Spike.TIMEWINDOW : "10.0",
+																Spike.STANDARD_DEVIATION_MULTIPLE : "10.0"} ), 
+								  initComplete );
+
+		// Test full params - invalid Moving Average output channel name value - Should fail
+		on NextTest( testNum=2 ) {
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input1" ], [ "Output1", "avg:" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0"} ), 
+									  initComplete );
+		}
+
+		// Test full params - invalid Moving Average output channel name value - Should fail
+		on NextTest( testNum=3 ) {
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input1" ], [ "Output1", "avg:  " ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0"} ), 
+									  initComplete );
+		}
+
+		// Test minimal params with uppercase Moving Average output channel name prefix - Should pass as the prefix isn't case sensitive
+		on NextTest( testNum=4 ) {
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input1" ], [ "Output1", "AVG:MAChannel"  ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0"} ), 
+									  initComplete );
+		}
+
+		// Test minimal params with titlecase Moving Average output channel name prefix - Should pass as the prefix isn't case sensitive
+		on NextTest( testNum=5 ) {
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input1" ], [ "Output1", "Avg:MAChannel" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0"} ), 
+									  initComplete );
+		}
+			
+		// Test minimal params with two Moving Average output channel names defined - Should fail as multiple output channels are not supported
+		on NextTest( testNum=6 ) {
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input1" ], [ "Output1", "avg:MAChannel1", "avg:MAChannel2" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0"} ), 
+									  initComplete );
+		}
+
+		// Test minimal params with lowercase Moving Average output channel name prefix - Should pass as the prefix isn't case sensitive
+		on NextTest( testNum=6 ) {
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input1" ], [ "Output1", "avg:MAChannel" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0"} ), 
+									  initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}
+

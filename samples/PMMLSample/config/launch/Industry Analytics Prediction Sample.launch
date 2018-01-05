@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.apama.text.launcher.monitorscriptApplication">
+<stringAttribute key="com.apama.launch.dirty" value="1478690689827"/>
+<stringAttribute key="com.apama.text.CONFIG_LOCATION" value="\Industry Analytics Prediction Sample\config\launch\Industry Analytics Prediction Sample.deploy"/>
+<intAttribute key="com.apama.text.CONFIG_VERSION" value="3"/>
+<stringAttribute key="com.apama.text.PROJECT_ATTR" value="Industry Analytics Prediction Sample"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/Industry Analytics Prediction Sample"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="CLASSPATH" value="./model"/>
+</mapAttribute>
+<stringAttribute key="org.eclipse.debug.ui.ATTR_CONSOLE_ENCODING" value="UTF-8"/>
+<stringAttribute key="process_factory_id" value="com.apama.launching.core.processFactory"/>
+</launchConfiguration>

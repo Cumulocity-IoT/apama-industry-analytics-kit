@@ -1,0 +1,6 @@
+// Check match
+"Input", com.industry.analytics.Data("Input", "r", "source", 0.0, 1.0, "abc", 2.0, 3.0, 4.0, {"input":"def"})
+// Check not match
+"Input", com.industry.analytics.Data("Input", "a", "source", 0.0, 2.0, "zyx", 3.0, 4.0, 5.0, {"input":"wvu"})
+"Input", com.industry.analytics.Data("Input", "", "", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"input":""})
+"Input", com.industry.analytics.Data("Input", "", "", 0.0, 0.0, "", 0.0, 0.0, 0.0, {})

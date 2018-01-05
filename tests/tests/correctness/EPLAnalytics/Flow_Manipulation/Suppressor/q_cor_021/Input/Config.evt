@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("suppressor", ["Input"], ["Output"], {"triggerParam":"a", "triggerParamValue":""})
+com.industry.analytics.Analytic("SUPPRESSOR", ["Input"], ["Output"], {"triggerParam":"a", "triggerParamValue":""})
+com.industry.analytics.Analytic("SuPpReSsOr", ["Input"], ["Output"], {"triggerParam":"a", "triggerParamValue":""})
+com.industry.analytics.Analytic("Suppressor", ["Input"], ["Output"], {"triggerParam":"a", "triggerParamValue":""})

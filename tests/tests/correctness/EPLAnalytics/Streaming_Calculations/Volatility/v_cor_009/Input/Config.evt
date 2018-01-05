@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Volatility", ["Input1"], ["Variance"], {"timeWindow":"1.0"})

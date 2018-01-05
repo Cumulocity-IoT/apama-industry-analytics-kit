@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Sum", ["Input"], ["Output"], {"calculationType":"timeWindow", "calculationValue":"30.0d"})

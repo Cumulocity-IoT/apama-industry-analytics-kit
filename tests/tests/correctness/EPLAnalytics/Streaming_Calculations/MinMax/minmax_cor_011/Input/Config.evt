@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("MinMax", ["Input"], ["Output"], {"timeWindow":"30.0","onlyOnChanges":"true"})

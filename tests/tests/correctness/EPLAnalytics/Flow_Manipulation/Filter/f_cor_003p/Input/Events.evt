@@ -1,0 +1,18 @@
+"Input1", com.industry.analytics.Data("Input1", "c", "T", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "c", "N1", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "c", "N2", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "c", "N3", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "c", "S1", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "c", "S2", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "c", "S3", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "c", "S4", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "c", "S5", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "c", "S6", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "c", "S7", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+
+// Should be ignored
+"Input1", com.industry.analytics.Data("Input1", "c", "U", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "c", "N3", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "c", "S7", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})

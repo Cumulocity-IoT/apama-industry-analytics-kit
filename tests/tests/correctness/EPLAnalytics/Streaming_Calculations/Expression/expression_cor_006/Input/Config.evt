@@ -1,0 +1,16 @@
+// Invalid expression because of the + at the start without a left side value
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output"], {"expression":"+48-29"})
+// Invalid expression because of the missing curly bracket for the substitution
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output"], {"expression":"${DVALUE + 20"})
+// Invalid expression because of the missing dollar sign for the substitution
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output"], {"expression":"66+{XVALUE}"})
+// Invalid expression because of the use of a string in the expression that is not a substitution
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output"], {"expression":"DVALUE+10"})
+// Invalid expression because of the invalid name for the substitution
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output"], {"expression":"${DVALUE}+${VALUE}"})
+// Invalid expression because no operator was provided
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output"], {"expression":"${DVALUE}${XVALUE}"})
+// Invalid expression because of missing brackets
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output"], {"expression":"(10+20"})
+// Invalid expression because of missing brackets
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output"], {"expression":"10+20)"})

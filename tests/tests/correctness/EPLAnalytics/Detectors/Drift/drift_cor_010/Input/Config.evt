@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("drift", ["Input"], ["OutputValue"], {"offset":"2", "offsetType":"absolute"})
+com.industry.analytics.Analytic("DRIFT", ["Input"], ["OutputValue"], {"offset":"2", "offsetType":"absolute"})
+com.industry.analytics.Analytic("DrIfT", ["Input"], ["OutputValue"], {"offset":"2", "offsetType":"absolute"})
+com.industry.analytics.Analytic("Drift", ["Input"], ["OutputValue"], {"offset":"2", "offsetType":"absolute"})

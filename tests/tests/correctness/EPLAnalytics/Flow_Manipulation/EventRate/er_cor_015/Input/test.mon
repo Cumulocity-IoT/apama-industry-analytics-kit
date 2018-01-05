@@ -1,0 +1,61 @@
+//*****************************************************************************
+// Title:         EventRate test
+//*****************************************************************************
+
+package com.industry.analytics.flow_manipulation.EventRate_cor_015;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.flow_manipulation.EventRate;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	sequence<string> sourceIds := ["s1","s2","s3"];
+	integer totalEvents := 0;
+	integer index := 0;
+	
+	action onload() {
+		// Create the EventRate Analytic
+		(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+														  [ "Input" ], 
+														  [ "Output" ], 
+														  { EventRate.USE_CORRELATOR_TIME : "true",
+															EventRate.BY_SOURCEID : "false" } ), 
+							   initComplete );
+	}
+	
+	action initComplete( boolean success, AnalyticInterface tInterface ) {
+		if( success ) then {
+			tInterface.start();
+			
+			listener dataListener := on all wait( 0.1 ) {
+				com.industry.analytics.Data dataOut := com.industry.analytics.Data("Input", "r", sourceIds[ index ], currentTime.toDecimal(), 10.0d, "", 1.0, 2.0, 3.0, new dictionary<string,string> );
+				send dataOut to "";
+
+				// Increment the total event count and index
+				totalEvents := totalEvents +1;
+				index       := index +1;
+				
+				// Wait until we have 10 events generated
+				if( totalEvents > 110 ) then { 
+					// Kill the listener
+					dataListener.quit();
+					
+					// Log that we have completed the test
+					log "TEST COMPLETE";
+					die;
+				}
+				// Cycle over the sourceIds
+				if( index >= sourceIds.size() ) then {
+					index := 0;
+				}
+			}
+
+		} else {
+			log "FAILED TO CREATE ANALYTIC" at ERROR; 
+		}
+    }
+}

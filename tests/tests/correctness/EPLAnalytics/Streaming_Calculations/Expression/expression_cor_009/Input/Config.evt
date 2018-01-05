@@ -1,0 +1,8 @@
+// Invalid expression because of the ^ at the start without a left side value
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output1"], {"expression":"^^20"})
+// Invalid expression because of the ^ at the start without a left side value
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output2"], {"expression":"^20"})
+// Invalid expression because of the ^ at the start without a left side value
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output3"], {"expression":"^^${DVALUE}"})
+// Invalid expression because of the ^ at the start without a left side value
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output4"], {"expression":"^${DVALUE}"})

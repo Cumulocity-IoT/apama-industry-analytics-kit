@@ -1,0 +1,46 @@
+//*****************************************************************************
+// Title:         GeoFence010
+//*****************************************************************************
+
+package com.industry.analytics.geolocation.GeoFence010;
+
+using com.industry.analytics.geolocation.GeoFence;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	GeoFence _geoFence;
+	
+	action onload()
+	{
+		Analytic config := Analytic("GeoFence", ["Input"], ["Output"], {"geoFenceLatitude":"0", "geoFenceLongitude":"0", "geoFenceOffset":"10000", "enableExit":"true", "useHypertree":"false"});
+		_geoFence.init(config, _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			Data currData := Data.init("Input", DataConstants.RAW, "asset1");
+			currData.xValue := 0.0;
+			currData.yValue := 0.0;
+			_geoFence.processData( currData );
+			currData.sourceId := "asset2";
+			_geoFence.processData( currData );
+			log "GeoFence Pre-Reset State:" at INFO;
+			log "  _cacheLocationUpdates: " + _geoFence._cacheLocationUpdates.toString() at INFO;
+			_geoFence.reset();
+			log "GeoFence Post-Reset State:" at INFO;
+			log "  _cacheLocationUpdates: " + _geoFence._cacheLocationUpdates.toString() at INFO;
+		}
+		else
+		{
+			log "Error spawning GeoFence instance." at ERROR;
+		}
+	}
+}

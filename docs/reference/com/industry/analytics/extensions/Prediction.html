@@ -1,0 +1,194 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Prediction</TITLE>
+<META NAME="keywords" CONTENT="Prediction&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="Prediction";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/extensions/Prediction.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Prediction.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/extensions/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;<A HREF="#import_summary">IMPORT</A>&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;<A HREF="#import_detail">IMPORT</A>&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics.extensions</FONT>
+<BR>Event Prediction</H2>
+<HR>The Prediction Analytic takes the specified input Data values and inputs them into a defined Predictive (PMML) model, gets the result from the Apama Predictive Analytics plugin and generates the specified Data events with the results. The Apama Predictive Analytics plugin must also be installed (a separate license may also be required).<br>
+<br> In addition to the parameters specified below the Analytic will also pass through the following plugin parameters to the plugin setup. Please see the Apama Predictive Analytics plugin documentation for more details on these parameters: configDirectory, workDirectory, recordLatency, logLatency.<br>
+<br> <dl><dt><b>Input Data events:</b></dt> <dd>At least one input Data stream name must be provided.</dd> </dl> <dl><dt><b>Output Data events:</b></dt> <dd>At least one output Data stream name must be provided.<br></dd> </dl> <dl><dt><b>Params:</b></dt> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr> <tr><td><b>combineParams</b></td><td>Defines whether the output Data events have a combination of all the params in the Data events used for the calculation (true) or just the params from the input Data from the alphabetically first input stream (false). The latter is more performant.</td> <td>Stringified boolean</font></td><td>boolean</td><td>False</td><td>false</td></tr> <tr><td><b>modelName</b></td><td>The name of the model to be used within the PMML file.</td> <td>Non-Empty String</td><td>String</td><td>True</td><td></td></tr> <tr><td><b>pmmlFileDirectory</b></td><td>The directory containing the PMML model.</td> <td>Non-Empty String</td><td>String</td><td>False.</td><td>Current working directory.</td></tr> <tr><td><b>pmmlFileName</b></td><td>The file containing the PMML model.</td> <td>Non-Empty String</td><td>String</td><td>True</td><td></td></tr> <tr><td><b>synchronous</b></td><td>Whether the input stream Data events should be dealt with synchronously or as they arrive.</td> <td>True / False</td><td>Boolean</td><td>False</td><td>True</td></tr> <tr><td><b>&lt;input parameter name&gt;</b></td><td>The mapping of an input parameter to the PMML model to a value within one of the input Data events. These parameters use the syntax "<channel_name>.[DVALUE|SVALUE|XVALUE|YVALUE|ZVALUE|PVALUE.<param_name>]". For example, "Input1.DVALUE" would use the "dValue" parameter of Data events received on the input channel "Input1" for the value of the named input parameter. Whereas "Input2.PVALUE.myValue" would use the parameter "myValue" in the "params" of Data events received on the input channel "Input2" for the value of the named input parameter. If necessary the parameter can be prefixed by 'input.' to avoid confusion when a model uses the same name for both an input and output parameter.</td> <td>Non-Empty String</td><td>String</td><td>True when mandatory in the model.</td><td></td></tr> <tr><td><b>&lt;output parameter name&gt;</b></td><td>The mapping of an output parameter to the PMML model to a value within one of the output Data events. These parameters use the syntax "<channel_name>.[DVALUE|SVALUE|XVALUE|YVALUE|ZVALUE|PVALUE.<param_name>]". For example, "Output1.DVALUE" would put the value from the named output parameter into the "dValue" parameter of Data events and publish them on the output channel "Output1".  Whereas "Output2.PVALUE.myValue" would put the value from the named output parameter into a parameter called "myValue" in the "params" of Data events that are sent on the output channel "Output2". If necessary the parameter can be prefixed by 'output.' to avoid confusion when a model uses the same name for both an input and output parameters.</td> <td>Non-Empty String</td><td>String</td><td>True when mandatory in the model.</td><td></td></tr> </table></dd> </dl> <dl><dt><b>Example usage:</b></dt> <dd><pre><br>// Define a Prediction Analytic to pass Data events on the channel "Input1"<br>// to a specified PMML model (the "PredictedEngineStatus" model defined in  <br>// the "Engine.pmml" file) and generate a Data event with the results of <br>// the model in the "dValue" parameter and send to the channel "PMMLRESULT".<br>// The model is defined to take the Temperature, Pressure and RPM values from <br>// the "xValue", "yValue" and "zValue" parameters of the incoming Data event.<br>send com.industry.analytics.Analytic("Prediction", ["Input1"], ["PMMLRESULT"],<br>								{"modelName":"PredictedEngineStatus",<br>								 "pmmlFileName":"Engine.pmml",<br>								 "pmmlFileDirectory":"./model",<br>								 "Temperature":"Input1.XVALUE",<br>								 "Pressure":"Input1.YVALUE",<br>								 "RPM":"Input1.ZVALUE",<br>								 "model_output":"PMMLRESULT.DVALUE"}) to "";<br></pre></dd> </dl><HR>
+<A NAME="import_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Import Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;TimeFormatPlugin</CODE></FONT></TD><TD><CODE><B><A HREF="Prediction.html#timeFormat">timeFormat</A></B></CODE>
+<br>
+<br>TimeFormat event for timestamps.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="constant_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Constant Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Prediction.html#COMBINE_PARAMS">COMBINE_PARAMS</A> := "combineParams"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether params should be combined instead of being taken from the last Data in a gradient calculation.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Prediction.html#MODEL_NAME">MODEL_NAME</A> := "modelName"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name giving the model name within the PMML file.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Prediction.html#NAME">NAME</A> := "Prediction"</B></CODE>
+<br>
+<br>This constant defines the name of the Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Prediction.html#PMML_FILE_DIRECTORY">PMML_FILE_DIRECTORY</A> := "pmmlFileDirectory"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name giving the directory containing the PMML model.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Prediction.html#PMML_FILE_NAME">PMML_FILE_NAME</A> := "pmmlFileName"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name giving the filename containing the PMML model.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Prediction.html#init()">init</A></B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="import_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Import Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="timeFormat"></A>
+<H3>timeFormat</H3>
+<PRE>TimeFormatPlugin&nbsp;<B>timeFormat</B>
+</PRE>TimeFormat event for timestamps.<HR>
+<A NAME="constant_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Constant Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="COMBINE_PARAMS"></A>
+<H3>COMBINE_PARAMS</H3>
+<PRE>constant string&nbsp;<B>COMBINE_PARAMS := "combineParams"</B>
+</PRE>This constant defines the configuration parameter name that defines whether params should be combined instead of being taken from the last Data in a gradient calculation.<HR>
+<A NAME="MODEL_NAME"></A>
+<H3>MODEL_NAME</H3>
+<PRE>constant string&nbsp;<B>MODEL_NAME := "modelName"</B>
+</PRE>This constant defines the configuration parameter name giving the model name within the PMML file.<HR>
+<A NAME="NAME"></A>
+<H3>NAME</H3>
+<PRE>constant string&nbsp;<B>NAME := "Prediction"</B>
+</PRE>This constant defines the name of the Analytic.<HR>
+<A NAME="PMML_FILE_DIRECTORY"></A>
+<H3>PMML_FILE_DIRECTORY</H3>
+<PRE>constant string&nbsp;<B>PMML_FILE_DIRECTORY := "pmmlFileDirectory"</B>
+</PRE>This constant defines the configuration parameter name giving the directory containing the PMML model.<HR>
+<A NAME="PMML_FILE_NAME"></A>
+<H3>PMML_FILE_NAME</H3>
+<PRE>constant string&nbsp;<B>PMML_FILE_NAME := "pmmlFileName"</B>
+</PRE>This constant defines the configuration parameter name giving the filename containing the PMML model.<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration that will be used for this instance</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The action callback to call when the new Analytic has been created, or if an error occured.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration event object.</DD>
+<DD>
+<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that can be used to interact with the Analytic.</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/extensions/Prediction.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Prediction.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/extensions/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;<A HREF="#import_summary">IMPORT</A>&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;<A HREF="#import_detail">IMPORT</A>&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

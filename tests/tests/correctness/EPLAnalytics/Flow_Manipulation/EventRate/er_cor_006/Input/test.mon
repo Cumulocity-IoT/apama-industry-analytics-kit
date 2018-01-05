@@ -1,0 +1,175 @@
+//*****************************************************************************
+// Title:         EventRate test
+//*****************************************************************************
+
+package com.industry.analytics.flow_manipulation.EventRate_cor_006;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.flow_manipulation.EventRate;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the EventRate - with valid values should pass
+		(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+														  [ "Input1" ], 
+														  [ "Output1" ], 
+		 												  { EventRate.USE_CORRELATOR_TIME : "true",
+															EventRate.PUBLISH_RATE : "10.0" } ), 
+		                       initComplete );
+
+		// Test minimal params with empty PUBLISH_RATE value - Should fail
+		on NextTest( testNum=2 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																EventRate.PUBLISH_RATE : "" } ), 
+								   initComplete );
+		}
+		
+		// Test minimal params with invalid PUBLISH_RATE value - Should fail
+		on NextTest( testNum=3 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																EventRate.PUBLISH_RATE : "  " } ), 
+								   initComplete );
+		}
+		
+		// Test minimal params with invalid PUBLISH_RATE value - Should fail
+		on NextTest( testNum=4 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																EventRate.PUBLISH_RATE : "TRUE" } ), 
+								   initComplete );
+		}
+		
+		// Test minimal params with invalid PUBLISH_RATE value - Should fail
+		on NextTest( testNum=5 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																EventRate.PUBLISH_RATE : "foobar" } ), 
+								   initComplete );
+		}		
+				
+		// Test minimal params with invalid PUBLISH_RATE value - Should fail
+		on NextTest( testNum=6 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																EventRate.PUBLISH_RATE : "-1" } ), 
+								   initComplete );
+		}
+
+		// Test minimal params with valid PUBLISH_RATE value - Should pass
+		on NextTest( testNum=7 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																EventRate.PUBLISH_RATE : "1" } ), 
+								   initComplete );
+		}
+		
+		// Test minimal params with valid PUBLISH_RATE value - Should pass
+		on NextTest( testNum=8 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																EventRate.PUBLISH_RATE : "0" } ), 
+								   initComplete );
+		}		
+		
+		// Test minimal params with invalid PUBLISH_RATE value - Should fail
+		on NextTest( testNum=9 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																EventRate.PUBLISH_RATE : "-1.0" } ), 
+								   initComplete );
+		}
+
+		// Test minimal params with valid PUBLISH_RATE value - Should pass
+		on NextTest( testNum=10 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																EventRate.PUBLISH_RATE : "1.0" } ), 
+								   initComplete );
+		}
+		
+		// Test minimal params with valid PUBLISH_RATE value - Should pass
+		on NextTest( testNum=11 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																EventRate.PUBLISH_RATE : "0.0" } ), 
+								   initComplete );
+		}
+		
+		// Test minimal params with valid PUBLISH_RATE name - Should pass as the param name is unrecognised and not mandatory
+		on NextTest( testNum=12 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																"PUBLISHRATE" : "1.0" } ), 
+								   initComplete );
+		}
+		
+		// Test minimal params with invalid PUBLISH_RATE name - Should pass as the param name is unrecognised and not mandatory
+		on NextTest( testNum=13 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																"publishrate" : "1.0" } ), 
+								   initComplete );
+		}
+		
+		// Test minimal params with valid PUBLISH_RATE name and value - Should pass
+		on NextTest( testNum=14 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																"publishRate" : "1.0" } ), 
+								   initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

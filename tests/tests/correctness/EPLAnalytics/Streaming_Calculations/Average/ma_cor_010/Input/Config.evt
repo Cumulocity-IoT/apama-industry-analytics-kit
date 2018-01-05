@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Average", ["Input1"], ["Output1"], {"bySourceId":"true","timeWindow":"1.0"})

@@ -1,0 +1,11 @@
+package com.industry.analytics.manufacturing;
+
+event MachineStatus {
+	constant string UP := "up";
+	constant string DOWN := "down";
+	constant string STOPPED := "stopped";
+}
+
+event ProductStatus {
+	constant string DEFECT := "defect";
+}

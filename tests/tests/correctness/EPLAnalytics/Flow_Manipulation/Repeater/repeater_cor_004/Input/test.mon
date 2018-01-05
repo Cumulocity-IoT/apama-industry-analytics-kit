@@ -1,0 +1,117 @@
+//*****************************************************************************
+// Title:         Repeater test
+//*****************************************************************************
+
+package com.industry.analytics.flow_manipulation.Repeater_cor_004;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.flow_manipulation.Repeater;
+
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the Repeater - Missing the parameter - should pass as it's not required
+		(new Repeater).init( com.industry.analytics.Analytic( Repeater.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  new dictionary<string,string> ), 
+		                       initComplete );
+		
+		// Create the Repeater - valid value for the optional parameter - should pass
+		on NextTest( testNum=2 ) { 
+			(new Repeater).init( com.industry.analytics.Analytic( Repeater.NAME, 
+																 [ "Input1" ], 
+																 [ "Output1" ], 
+																 { Repeater.BY_SOURCEID : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the Repeater - valid value for the optional parameter - should pass
+		on NextTest( testNum=3 ) { 
+			(new Repeater).init( com.industry.analytics.Analytic( Repeater.NAME, 
+																 [ "Input1" ], 
+																 [ "Output1" ], 
+																 { Repeater.BY_SOURCEID : "false" } ), 
+								   initComplete );
+		}
+		
+		// Create the Repeater - invalid values defined for optional param - should fail
+		on NextTest( testNum=4 ) { 
+			(new Repeater).init( com.industry.analytics.Analytic( Repeater.NAME, 
+																 [ "Input1" ], 
+																 [ "Output1" ], 
+																 { Repeater.BY_SOURCEID : "1234" } ), 
+								   initComplete );
+		}
+
+		// Create the Repeater - invalid values defined for optional param - should fail
+		on NextTest( testNum=5 ) { 
+			(new Repeater).init( com.industry.analytics.Analytic( Repeater.NAME, 
+																 [ "Input1" ], 
+																 [ "Output1" ], 
+																 { Repeater.BY_SOURCEID : "" } ), 
+								   initComplete );
+		}
+		
+		// Create the Repeater - invalid values defined for optional param - should fail
+		on NextTest( testNum=6 ) { 
+			(new Repeater).init( com.industry.analytics.Analytic( Repeater.NAME, 
+																 [ "Input1" ], 
+																 [ "Output1" ], 
+																 { Repeater.BY_SOURCEID : " " } ), 
+								   initComplete );
+		}
+
+		// Create the Repeater - Invalid case for optional parameter (which will be ignored) - should pass
+		on NextTest( testNum=7 ) { 
+			(new Repeater).init( com.industry.analytics.Analytic( Repeater.NAME, 
+																 [ "Input1" ], 
+																 [ "Output1" ], 
+																 { "BYSOURCEID" : "true" } ), 
+								   initComplete );
+		}
+
+		// Create the Repeater - Invalid case for optional parameter (which will be ignored) - should pass
+		on NextTest( testNum=8 ) { 
+			(new Repeater).init( com.industry.analytics.Analytic( Repeater.NAME, 
+																 [ "Input1" ], 
+																 [ "Output1" ], 
+																 { "bysourceid" : "true" } ), 
+								   initComplete );
+		}
+
+		// Create the Repeater - Correct case for required parameter - should pass
+		on NextTest( testNum=9 ) { 
+			(new Repeater).init( com.industry.analytics.Analytic( Repeater.NAME, 
+																 [ "Input1" ], 
+																 [ "Output1" ], 
+																 { "bySourceId" : "true" } ), 
+									   initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

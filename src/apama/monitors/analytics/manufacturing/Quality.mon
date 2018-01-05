@@ -1,0 +1,297 @@
+//*****************************************************************************
+// Title: Quality Analytic implementation
+//
+// Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or its licensors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//*****************************************************************************
+
+package com.industry.analytics.manufacturing;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Constants;
+
+using com.industry.utils.Bucket;
+using com.industry.utils.BucketSystem;
+using com.industry.utils.BucketSystemBuilder;
+
+using com.apama.exceptions.Exception;
+
+event QualityBucket {
+	decimal good;
+	decimal bad;
+}
+
+/* @AnalyticDefinition
+{
+	"name": "Quality",
+	"description": "Calculates the quality from a series of product status events.",
+	"group": "Manufacturing",
+	"documentation": "com/industry/analytics/manufacturing/Quality.html",
+	"inputChannels": [
+		{
+			"name": "Product Status",
+			"description": "The channel containing product status quantities",
+			"dataProperties": ["dValue", "sValue"]
+		}
+	],
+	"outputChannels": [
+		{
+			"name": "Quality",
+			"description": "Quality data channel",
+			"dataProperties": ["+dValue"]
+		}
+	],
+	"properties": [
+		{
+			"name": "timeWindow",
+			"description": "The period of time to calculate the quality over.",
+			"type": "decimal",
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }",
+			"postfix": "(Seconds)"
+		},{
+			"name": "smoothingFactor",
+			"description": "The number of buckets to divide the timeWindow into.",
+			"type": "integer",
+			"defaultValue": 10,
+			"optional": true,
+			"advanced": true
+		},{
+			"name": "bySourceId",
+			"description": "Calculate separate Availabilities by sourceId",
+			"type": "boolean",
+			"defaultValue": true,
+			"optional": true,
+			"advanced": true
+		},{
+            "name": "managementId",
+            "description": "The id used for management of the analytic",
+            "type": "string",
+            "optional": true,
+            "advanced": true
+        }
+	]
+}
+*/
+/**
+ *  The Quality Analytic calculates machine quality from a stream of product status quantity.
+ *
+ * 	This is calculated by dividing the number of non-defective products by the total produced.
+ *
+ *  <dl><dt><b>Input Data events:</b></dt>
+ *  <dd>Only a single input Data stream name must be provided.</dd>
+ * 	<dd>Must contain an sValue indicating the status of the product ("defect" for defective products or anything else for non-defective). And a dValue indicating the number produced with this status (as a delta, not a cummulative total)</dd>
+ *  </dl>
+ *  <dl><dt><b>Output Data events:</b></dt>
+ *  <dd>Only a single output Data stream name must be provided.</dd>
+ * 	<dd>Contains the calculated quality in the dValue field. (All other fields from the incoming data event are copied)</dd>
+ *  </dl>
+ *  <dl><dt><b>Params:</b></dt>
+ *  <dd>
+ *  <table border="1" style="border-collapse: collapse;width:100%">
+ *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
+ *  <tr><td><b>timeWindow</b></td><td>The maximum time window over which to calculate the quality (Quality will be calculated over a shorter time window if this has not yet ellapsed).</td>
+ *      <td>Stringified decimal <font face="courier" size="-1">>0.0d</font></td><td>Decimal</td><td>True</td><td></td></tr>
+ *  <tr><td><b>smoothingFactor</b></td><td>The number of buckets in which to divide the timeWindow and aggregate the data (The oldest bucket is replaced when the timeWindow ellapses).</td>
+ *      <td>true or false</td><td>String</td><td>False</td><td>False</td></tr>
+ *  <tr><td><b>bySourceId</b></td><td>Calculate separate qualities for each sourceId</td>
+ *      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr>
+ *  </table></dd>
+ *  </dl>
+ *  <dl><dt><b>Example usage:</b></dt>
+ <dd><code>
+// Create an Availability Analytic which takes status Data events on the channel "MachineStatus"  
+// an output them to the channel "Availability". This is calculated for a maximum time period of 8Hours (Until 8 Hours is reached it will be the ellapsed time).
+send com.industry.analytics.Analytic("Availability", ["Product Status"], ["Quality"], { "timeWindow": (8.0d * 60.0d * 60.0d).toString() } ) to "";
+</code></dd>
+ *</dl>
+ */
+event Quality {
+	/** The name of the analytic. */
+	constant string NAME := "Quality";
+
+	constant string TIMEWINDOW := "timeWindow";
+	constant string SMOOTHING_FACTOR := "smoothingFactor";
+	
+	/** This constant defines the configuration parameter name
+	 *  that defines whether or not the drift calculation will be
+	 *  partitioned by the <font face="courier" size="-1">sourceId</font>*/
+	constant string BY_SOURCEID := "bySourceId";
+	
+	constant string INTERNAL_SOURCEID := "__internal_shared_sourceId";
+		
+	/** @private */
+	string _outputStreamName;
+
+	float _timeWindow;
+	integer _smoothingFactor;
+	boolean _bySourceId;
+	
+	dictionary<string, BucketSystem> _bucketSystemBySourceId;
+	
+	  
+	/** The Analytic Base Object implementation 
+	 *  @private */
+	AnalyticObject _analyticObject;
+
+	/** 
+	 *  This action creates a new instance of the Analytic.
+	 *  Typically, this is called internally by the associated Analytics 
+	 *  service monitor when a com.industry.analytics.Analytic event is 
+	 *  sent for this type of Analytic.
+	 *
+	 *  @param  config        The Analytic configuration that 
+	 *                        will be used for this instance
+	 *  @param  initComplete  The action callback to call when the new Analytic  
+	 *                        has been created, or if an error occured.
+     *
+	 *  @see com.industry.analytics.Analytic           The Analytic configuration event object.
+	 *  @see com.industry.analytics.AnalyticInterface  The action interface that can be used 
+	 *                                            to interact with the Analytic.
+	 */
+	action init(Analytic config, action<boolean, AnalyticInterface> initComplete) {
+		if( not _validateConfiguration( config ) ) then {
+			initComplete( false, new AnalyticInterface );
+			return;
+		}
+		
+		_analyticObject := new AnalyticObject;
+		_analyticObject.init( config,
+		                      processData,
+		                      new action<>,
+		                      initComplete );
+	}
+	
+	/** 
+	 *  This helper action validates configuration that was
+	 *  used when trying to create a new instance of the Analytic.
+	 *  This is called internally, and should not be called directly by 
+	 *  the Users application.
+	 *  
+	 *  @param   config  The Analytic configuration object that is being validated
+	 *  @returns A boolean value indicating whether the configuration was valid or not.
+	 * 
+	 *  @private
+	 */
+	action _validateConfiguration(Analytic config) returns boolean {
+		boolean result := config.validateParams( NAME, 1, 1, 
+		                                       [ TIMEWINDOW, SMOOTHING_FACTOR ],
+		      		                           [ Constants.FLOAT, Constants.INTEGER ],
+		      		                           [ true, false ] );
+		
+		// Only check the specific params if the validation was okay
+		if result {
+			_outputStreamName := config.outputDataNames[0];
+			
+			_timeWindow := config.getFloat(TIMEWINDOW);
+			if _timeWindow <= 0.0 {
+				log "  Param "+ TIMEWINDOW +" must be > 0." at ERROR;
+				result := false;
+			}
+			
+			_smoothingFactor := config.getOrInteger(SMOOTHING_FACTOR, 10);
+			if _smoothingFactor <= 0 {
+				log "  Param "+ SMOOTHING_FACTOR +" must be an integer > 0." at ERROR;
+				result := false;
+			}
+			
+			_bySourceId := config.getOrBoolean( BY_SOURCEID, true );
+		}
+
+		return result;
+	}
+	
+	
+	/**
+	 *  This action implements the Analytic function itself. 
+	 *  This is called internally by the Analytic Object, and  
+	 *  should not be called directly by the Users application.
+	 *  If the application has created this Analytic using the 
+	 *  #init() action directly, then the <font face="courier" size="-1">processData</font>
+	 *  action on the <font face="courier" size="-1">com.industry.analytics.AnalyticInterface</font> 
+	 *  that was returned should be used instead.
+	 *
+	 *  @param   dataIn  The input Data event to be processed by this Analytic
+	 * 
+	 *  @private
+	 */
+	action processData(Data dataIn) {
+		log "Processing " + dataIn.toString() at DEBUG;
+		
+		string sourceId := INTERNAL_SOURCEID;
+		if _bySourceId {
+			sourceId := dataIn.sourceId;
+		}
+
+		if not _bucketSystemBySourceId.hasKey(sourceId) {
+			_bucketSystemBySourceId.add(sourceId, BucketSystemBuilder.create()
+                                        .toValue(getTimestampFromData)
+                                        .updateBucket(addDataToBucket)
+                                        .totalSize(_timeWindow)
+                                        .bucketCount(_smoothingFactor)
+			                            .onBucketCreated(createEmptyQualityBucket)
+                                        .build());
+		}
+		BucketSystem bucketSystem := _bucketSystemBySourceId[sourceId];
+		
+		bucketSystem.add(dataIn);
+		
+		QualityBucket qualityBucket := <QualityBucket> bucketSystem.reduce(reduceQualityBucketsToSingle, new QualityBucket);
+
+    decimal bucketTotal := qualityBucket.good + qualityBucket.bad;
+    
+    if bucketTotal > 0.0d {
+      decimal quality := qualityBucket.good / bucketTotal;
+      
+      Data dataOut := dataIn.clone();
+      dataOut.dValue := quality;
+    
+      dataOut.streamName := _outputStreamName;
+      _analyticObject.sendData(dataOut);
+    }
+	}
+	
+	action getTimestampFromData(any data) returns float {
+		return (<Data> data).timestamp.toFloat();
+	}
+	
+	action addDataToBucket(Bucket bucket, any dataAsAny) returns any {
+		Data data := <Data> dataAsAny;
+		
+		// This is safe as we are always setting a value in the onBucketCreated callback
+		QualityBucket result := <QualityBucket> bucket.data;
+		
+		if data.sValue.toLower() = ProductStatus.DEFECT {
+			result.bad := result.bad + data.dValue;
+		} else {
+			result.good := result.good + data.dValue;
+		}
+		return result;
+	}
+	
+	action createEmptyQualityBucket(Bucket b) {
+		b.data := QualityBucket(0.0d, 0.0d);
+	}
+	
+	action reduceQualityBucketsToSingle(any accumulator, Bucket bucket) returns any {
+		QualityBucket acc := <QualityBucket> accumulator;
+		QualityBucket current := <QualityBucket>bucket.data;
+		acc.good := acc.good + current.good;
+		acc.bad := acc.bad + current.bad;
+		return acc;
+	}
+}

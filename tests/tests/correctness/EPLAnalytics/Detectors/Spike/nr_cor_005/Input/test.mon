@@ -1,0 +1,188 @@
+//*****************************************************************************
+// Title:         Spike test
+//*****************************************************************************
+
+package com.industry.analytics.bb_cor_005;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.detectors.Spike;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload() {
+   
+		// Test minimal params - Should pass
+		(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input1" ], [ "Output1" ], 
+															  { Spike.TIMEWINDOW : "10.0",
+																Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+								  initComplete );
+
+		// Test minimal params with empty TIMEWINDOW value - Should fail
+		on NextTest( testNum=2 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input2" ], [ "Output2" ], 
+																  { Spike.TIMEWINDOW : "",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with empty TIMEWINDOW value - Should fail
+		on NextTest( testNum=3 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input3" ], [ "Output3" ], 
+																  { Spike.TIMEWINDOW : "  ",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Test minimal params - invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=4 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input4" ], [ "Output4" ], 
+																  { Spike.TIMEWINDOW : "0.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Test minimal params - invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=5 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input5" ], [ "Output5" ], 
+																  { Spike.TIMEWINDOW : "-1.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Test minimal params - invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=6 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input6" ], [ "Output6" ], 
+																  { Spike.TIMEWINDOW : "foobar",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Test minimal params - invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=7 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input7" ], [ "Output7" ], 
+																  { Spike.TIMEWINDOW : "true",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Test minimal params with invalid TIMEWINDOW name - Should fail as the mandatory param name is unrecognised 
+		on NextTest( testNum=8 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input8" ], [ "Output8" ], 
+																  { "TIMEWINDOW" : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+
+		// Test minimal params with invalid TIMEWINDOW name - Should fail as the mandatory param name is unrecognised 
+		on NextTest( testNum=9 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input9" ], [ "Output9" ], 
+																  { "timewindow" : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with valid TIMEWINDOW name and value - Should pass
+		on NextTest( testNum=10 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input10" ], [ "Output10" ], 
+																  { "timeWindow" : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "10.0" } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with empty STANDARD_DEVIATION_MULTIPLE value - Should fail
+		on NextTest( testNum=11 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input11" ], [ "Output11" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "" } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with empty STANDARD_DEVIATION_MULTIPLE value - Should fail
+		on NextTest( testNum=12 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input12" ], [ "Output12" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "  " } ), 
+									  initComplete );
+		}
+
+		// Test minimal params - invalid STANDARD_DEVIATION_MULTIPLE value - Should fail
+		on NextTest( testNum=13 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input13" ], [ "Output13" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "0.0" } ), 
+									  initComplete );
+		}
+
+		// Test minimal params - invalid STANDARD_DEVIATION_MULTIPLE value - Should fail
+		on NextTest( testNum=14 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input14" ], [ "Output14" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "-10.0" } ), 
+									  initComplete );
+		}
+
+		// Test minimal params - invalid STANDARD_DEVIATION_MULTIPLE value - Should fail
+		on NextTest( testNum=15 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input15" ], [ "Output15" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "foobar" } ), 
+									  initComplete );
+		}
+
+		// Test minimal params - invalid STANDARD_DEVIATION_MULTIPLE value - Should fail
+		on NextTest( testNum=16 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input16" ], [ "Output16" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	Spike.STANDARD_DEVIATION_MULTIPLE : "true" } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with invalid STANDARD_DEVIATION_MULTIPLE name - Should fail as the mandatory param name is unrecognised 
+		on NextTest( testNum=17 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input17" ], [ "Output17" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	"STANDARDDEVIATIONMULTIPLE" : "10.0"} ), 
+									  initComplete );
+		}
+
+		// Test minimal params with invalid STANDARD_DEVIATION_MULTIPLE name - Should fail as the mandatory param name is unrecognised 
+		on NextTest( testNum=18 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input18" ], [ "Output18" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	"standarddeviationmultiple" : "10.0" } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with valid STANDARD_DEVIATION_MULTIPLE name and value - Should pass
+		on NextTest( testNum=19 ) { 
+			(new Spike).init( com.industry.analytics.Analytic( Spike.NAME, [ "Input19" ], [ "Output19" ], 
+																  { Spike.TIMEWINDOW : "10.0",
+																	"standardDeviationMultiple" : "10.0" } ), 
+									  initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

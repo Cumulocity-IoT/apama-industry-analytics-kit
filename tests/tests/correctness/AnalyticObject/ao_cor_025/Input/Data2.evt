@@ -1,0 +1,3 @@
+"TestInputData1", com.industry.analytics.Data("TestInputData1", "r", "sensor1", 5.0, 7.0, "", 0.0, 0.0, 0.0, {})
+"TestInputData2", com.industry.analytics.Data("TestInputData2", "r", "sensor2", 5.0, 8.0, "", 0.0, 0.0, 0.0, {})
+"TestInputData3", com.industry.analytics.Data("TestInputData3", "r", "sensor3", 5.0, 9.0, "", 0.0, 0.0, 0.0, {})

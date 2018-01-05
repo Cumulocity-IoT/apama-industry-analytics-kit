@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bundle name="Industry Analytics Kit with Prediction" type="monitorscript" singleton="true">
+	<version>
+		<id>1.0</id>
+		<date>2016-11-22</date>
+		<author>Software AG</author>
+		<comments/>
+	</version>
+	<description>
+		Apama Bundle for Industry Analytics Kit with Predictive Analytics support
+	</description>
+	<monitors>
+		<fileset dir=".">
+			<include name="Industry Analytics Kit With Prediction.cdp"/>
+		</fileset>
+	</monitors>
+	<block-catalogs>
+	</block-catalogs>
+	<configurations>
+	</configurations>
+	<static-files>
+	</static-files>
+	<events>
+	</events>
+	<libraries>
+	</libraries>
+	<jars>
+	</jars>
+	<dependencies>
+		<dependency bundle-filename="PredictiveAnalyticsPlugin.bnd" catalog="${APAMA_HOME}/adapters/catalogs/bundles"/>
+		<dependency bundle-filename="Industry Analytics Kit CDP.bnd" catalog="."/>
+	</dependencies>
+</bundle>

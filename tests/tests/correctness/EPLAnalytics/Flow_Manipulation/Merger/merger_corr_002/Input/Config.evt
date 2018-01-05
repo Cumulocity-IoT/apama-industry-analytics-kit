@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Merger", ["Input"], ["Output"], {"mapping":"{\"dValue\":\"1\",\"sValue\":\"b\",\"xValue\":\"2\",\"yValue\":\"3\",\"zValue\":\"4\",\"type\":\"a\",\"timestamp\":\"5\",\"sourceId\":\"c\",\"param.abc\":\"d\"}"})

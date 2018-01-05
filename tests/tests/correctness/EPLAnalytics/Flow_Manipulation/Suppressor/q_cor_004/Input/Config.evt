@@ -1,0 +1,2 @@
+// Param with value
+com.industry.analytics.Analytic("Suppressor", ["Input1"], ["Output1"], {"triggerParam":"param", "triggerParamValue":"trigger", "triggerExtension":"true", "timeWindow":"10"})

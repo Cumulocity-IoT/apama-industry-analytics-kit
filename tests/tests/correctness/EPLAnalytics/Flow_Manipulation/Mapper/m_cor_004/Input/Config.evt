@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Mapper", ["Input"], ["Output"], {"inputField":"sValue", "outputField":"dValue", "mapping":"{\"up\":\"1\",\"down\":\"-1\"}"})

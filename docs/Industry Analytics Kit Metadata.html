@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <style>
+            .code {
+                white-space: pre;
+                font-family: monospace;
+                min-width: 100%;
+            }
+            .code:hover {
+                background-color: #ebf6f9;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Industry Analytics Kit - Metadata Development Guide</h1>
+        <hr>
+        <p>"@AnalyticDefinition"s are metadata used by the Analytic builder to determine the structure of an analytic.<br/>
+            Generally @AnalyticsDefinitions are compiled into a single metadata.json file and loaded all at once. This is how the built-in analytics are loaded.<br/>
+            They can also be loaded individually via an upload option in the Analytic Builder.</p>
+        <hr>
+        <h2>Structure of an @AnalyticDefinition</h2>
+        <p>The structure of an @AnalyticDefintion is a comment with a special annotation and then json. For example:<br/>
+           Important Note: Json cannot contain comments so the '//' comments should be removed</p>
+        <div class="code">/* @AnalyticDefinition                                                                              <span style="color:darkgreen">// A comment with an @AnalyticDefinition marks the start</span></div>
+        <div class="code">{                                                                                                   <span style="color:darkgreen">// The start of the json</span></div>
+        <div class="code">    "name": "MyFirstAnalytic",</div>
+        <div class="code">    "description": "Brief description of the analytic",</div>
+        <div class="code">    "group": "AGroupName",                                                                          <span style="color:darkgreen">// Optional: A grouping for the analytic in the UI</span></div>
+        <div class="code">    "documentation": "&lt;p&gt;Some html documentation&lt;/p&gt;",                                              <span style="color:darkgreen">// Optional: Some html to show in the documentation tab. Note: The built in analytics use a relative path which gets compiled into html, this option is not available to custom analytics</span></div>
+        <div class="code">    "inputChannels": [                                                                              <span style="color:darkgreen">// Optional: An array of input channels</span></div>
+        <div class="code">        {</div>
+        <div class="code">            "name": "InChanName",</div>
+        <div class="code">            "description": "A brief description of what the channel is for",</div>
+        <div class="code">            "optional": false,                                                                      <span style="color:darkgreen">// Optional: Whether the channel is optional</span></div>
+        <div class="code">            "repeated": false,                                                                      <span style="color:darkgreen">// Optional: Whether multiple channels can be connected</span></div>
+        <div class="code">            "dataProperties": ["dValue"]                                                            <span style="color:darkgreen">// Optional: An array of any required properties of the incoming Data event. Valid values: "dValue", "sValue", "xValue", "yValue", "zValue", "params"</span></div>
+        <div class="code">        }</div>
+        <div class="code">    ],</div>
+        <div class="code">    "outputChannels": [                                                                              <span style="color:darkgreen">// Optional: An array of output channels</span></div>
+        <div class="code">        {</div>
+        <div class="code">            "name": "OutChanName",</div>
+        <div class="code">            "description": "A brief description of what the channel is for",</div>
+        <div class="code">            "optional": false,                                                                      <span style="color:darkgreen">// Optional: Whether the channel is optional</span></div>
+        <div class="code">            "repeated": false,                                                                      <span style="color:darkgreen">// Optional: Whether multiple channels can be connected</span></div>
+        <div class="code">            "prefix": "movingAverage:"                                                              <span style="color:darkgreen">// Optional: A prefix to be added to a channel name</span></div>
+        <div class="code">            "dataProperties": ["+dValue", "-sValue", "-xValue", "-yValue", "-zValue", "-params"]    <span style="color:darkgreen">// Optional: Expected properties on an outgoing Data event. </span></div>
+        <div class="code">                                                                                                    <span style="color:darkgreen">// By default all properties are assumed to be copied from the incoming Data event. </span></div>
+        <div class="code">                                                                                                    <span style="color:darkgreen">// '+dValue' means that the dValue has been added or modified from the incoming event</span></div>
+        <div class="code">                                                                                                    <span style="color:darkgreen">// '-sValue' means that the sValue has been removed from the incoming event</span></div>
+        <div class="code">        }</div>
+        <div class="code">    ],</div>
+        <div class="code">    "properties": [</div>
+        <div class="code">        {</div>
+        <div class="code">            "name": "param1",                                                                       <span style="color:darkgreen">// The name of the analytic's param</span></div>
+        <div class="code">            "description": "A brief description of what the param is for",</div>
+        <div class="code">            "type": "integer",                                                                      <span style="color:darkgreen">// The apama type of the param. (ignoring the fact that it will be stringified), valid values: "string" (eg. "Seconds"), "decimal" (eg. "1.23d"), "float" (eg. "1.23f"), "integer" (eg. "3"), "boolean" (eg. "true")</span></div>
+        <div class="code">            "defaultValue": 1,                                                                      <span style="color:darkgreen">// Optional: A label to display if the param is optional and a value is not defined by the user</span></div>
+        <div class="code">                                                                                                    <span style="color:darkgreen">// Can also be a stringified javascript function, eg: </span></div>
+        <div class="code">                                                                                                    <span style="color:darkgreen">// example1: "function(value, analytic) { return analytic.getProperty('param2').value }"</span></div>
+        <div class="code">            "optional": false,                                                                      <span style="color:darkgreen">// Optional: Whether this param is optional</span></div>
+        <div class="code">            "repeated": false,                                                                      <span style="color:darkgreen">// Optional: Whether this param is a placeholder for lots of params each named by the user</span></div>
+        <div class="code">            "validValues": [1, 2, 3, 4]                                                             <span style="color:darkgreen">// Optional: An array of values that will be selectable from a drop-down</span></div>
+        <div class="code">            "validator": "function(value) { return value >=1 || 'must be >= 1' }"                   <span style="color:darkgreen">// Optional: A javascript validator for the property. </span></div>
+        <div class="code">                                                                                                    <span style="color:darkgreen">// The validation function should return true if the value is valid. If a string is returned then it will be displayed as the error text</span></div>
+        <div class="code">                                                                                                    <span style="color:darkgreen">// Example: "function(value, analytic) { return analytic.getProperty('param2').value === undefined || 'cannot set both param1 and param2'}"</span></div>
+        <div class="code">        }</div>
+        <div class="code">    ]</div>
+        <div class="code">}</div>
+        <div class="code">*/</div>
+    </body>
+</html>

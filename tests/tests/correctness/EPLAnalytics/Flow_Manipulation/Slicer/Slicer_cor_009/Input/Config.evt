@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("Slicer", ["Input"], ["Output"], {"sliceType":"sliceCount", "sliceValue":"10.0",  "timeInterval":"1.0"})
+com.industry.analytics.Analytic("Slicer", ["Input1"], ["Output1"], {"sliceType":"sliceSize", "sliceValue":"2.0",  "timeInterval":"1.0"})

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pysystest state="runnable" type="auto">
+	<description>
+		<title>~Basic functionality test</title>
+		<purpose>
+		<![CDATA[Functionality test.]]>
+		</purpose>
+	</description>
+	<classification>
+		<groups>
+			<group>Delta</group>
+			<group>Streaming_Calculations</group>
+			<group>Industry_Analytics</group>
+			<group>EPL</group>
+		</groups>
+	</classification>
+	<data>
+		<class module="run" name="PySysTest"></class>
+	</data>
+	<traceability>
+		<requirements>
+			<requirement></requirement>
+		</requirements>
+	</traceability>
+</pysystest>

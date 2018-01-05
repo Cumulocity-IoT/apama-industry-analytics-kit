@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Throttler", ["Input"], ["Output"], {"timeWindow":"2.0", "matchZValue":"true"})

@@ -1,0 +1,144 @@
+//*****************************************************************************
+// Title:         MinMax test
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.MinMax_cor_002;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.streaming_calculations.MinMax;
+
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the MinMax - Zero input should fail
+		(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+		                                                   new sequence<string>, 
+		 		                                           [ "Output1" ], 
+		 												   { MinMax.TIME_WINDOW : "10.0" } ), 
+		                       initComplete );
+		
+		// Create the MinMax without a required parameter - should fail
+		on NextTest( testNum=2 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+
+		// Create the MinMax - Empty name for input should fail
+		on NextTest( testNum=3 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the MinMax - blank name for input should fail
+		on NextTest( testNum=4 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "  " ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the MinMax - Check more than one input fails
+		on NextTest( testNum=5 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1", "Input2" ], 
+															   [ "Output1", "Output2" ], 
+															   { MinMax.TIME_WINDOW : "10.0" }  ), 
+								   initComplete );
+		}
+
+		// Create the MinMax - Check zero output fails
+		on NextTest( testNum=6 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { MinMax.TIME_WINDOW : "10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the MinMax - Empty name for output should fail
+		on NextTest( testNum=7 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   [ "" ], 
+															   { MinMax.TIME_WINDOW : "10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the MinMax - blank name for output should fail
+		on NextTest( testNum=8 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   [ "  " ], 
+															   { MinMax.TIME_WINDOW : "10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the MinMax - Check null value for Analytic name fails
+		on NextTest( testNum=9 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( "", 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0" } ), 
+								   initComplete );
+ 		}
+
+		// Create the MinMax - with invalid Analytic name fails
+		on NextTest( testNum=10 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( "foobar", 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the MinMax - with invalid case for Analytic name fails
+		on NextTest( testNum=11 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( "MINMAX", 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0" } ), 
+								   initComplete );
+		}
+		
+		// Create the MinMax - with valid values should pass
+		on NextTest( testNum=12 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0" } ), 
+								   initComplete );
+	
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

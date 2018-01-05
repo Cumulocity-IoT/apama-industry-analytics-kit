@@ -1,0 +1,127 @@
+//*****************************************************************************
+// Title:         AnalyticObjectTest
+//*****************************************************************************
+
+package com.industry.analytics.Analyticobj_cor_007;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Data;
+
+event SetupComplete { 
+	string handlerChannelName;
+}
+
+monitor AnalyticObjectTest {
+
+	action onload()	{
+		monitor.subscribe("mainCtx");
+		
+		// Spawn handlers to different channels
+		spawn dataHandler("com.apama.queries") to context("ctx1",false);
+		spawn dataHandler("TEST_DATA_1")      to context("ctx2",false);
+		spawn dataHandler("TEST_DATA_2")     to context("ctx3",false);
+		spawn dataHandler("TEST_DATA_3")     to context("ctx4",false);
+		
+		// Wait until all the Data handlers have been setup
+		on  SetupComplete( handlerChannelName="TEST_DATA_1" )
+		and SetupComplete( handlerChannelName="TEST_DATA_2" )
+		and SetupComplete( handlerChannelName="TEST_DATA_3" )
+		and SetupComplete( handlerChannelName="com.apama.queries" ) {
+			// Create the Analytic event
+			Analytic t := Analytic("Test", ["Input1", "Input2"],
+									 ["Output1", "Output2"],
+									 {"boolean_param":"true",
+									  "decimal_param":"1.0",
+									  "float_param":"2.0",
+									  "integer_param":"3",
+									  "string_param":"a_string",
+									  AnalyticObject.SEND_TO_CHANNEL:"true",
+									  AnalyticObject.SEND_TO_QUERY_CHANNEL:"true"});
+	
+			// Create a new Analytic object
+			(new AnalyticObject).initExtended( t,
+			                            processData,
+			                            new action<dictionary<string, Data> >,
+			                            false,
+			                            new action<>,
+			                            new action<>,
+			                            initComplete );
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti )	{
+		
+		if( success ) then {
+			Data currData1 := Data( "TEST_DATA_1",
+			                            com.industry.analytics.DataConstants.RAW,
+			                            "TEST_ASSET",
+			                            currentTime.toDecimal(),
+			                            666.6d,
+			                            "TEST_STRING",
+			                            1.0,
+			                            2.0,
+			                            3.0,
+			                            new dictionary<string, string> );
+			Data currData2 := currData1.clone();
+			currData2.streamName := "TEST_DATA_2";
+
+			Data currData3 := currData1.clone();
+			currData3.streamName := "TEST_DATA_3";
+			
+			// Call the user-defined Process Data action 
+			ti.processData( currData1 );
+			
+			// Send the Data events - These should be sent to the data name channel
+			ti.sendData( currData1 );  
+			ti.sendData( currData2 );
+			ti.sendData( currData3 );
+			
+			// Add a callback for the 2nd Test data event
+			ti.addOutputConnection( "TEST_DATA_2", dataCallback1 );
+			
+			// Send the Data event - Data 1 and 2 will go to the listener, ONLY Data 3 should go to the callbacks
+			ti.sendData( currData1 );
+			ti.sendData( currData2 );
+			ti.sendData( currData3 );
+			
+			// Add a callback for the 3rd Test data event
+			ti.addOutputConnection( "TEST_DATA_3", dataCallback2 );
+			
+			// Send the Data event - Data1 will go to the listener, ONLY Datas 2 and 3 should go to the callbacks
+			ti.sendData( currData1 );
+			ti.sendData( currData2 );
+			ti.sendData( currData3 );
+			
+			log "TEST COMPLETE";
+			
+		} else {
+			log "FAILED TO CREATE ANALYTICER INTERFACE" at ERROR; 
+		}
+    }
+
+	action processData( Data currData ) {
+		log "PROCESS DATA CALLED: "+currData.toString();
+	}
+
+	action dataCallback1( Data currData ) {
+		log "DATA CALLBACK 1 CALLED: "+currData.toString();
+	}
+	
+	action dataCallback2( Data currData ) {
+		log "DATA CALLBACK 2 CALLED: "+currData.toString();
+	}
+
+	action dataHandler( string channelName ) {
+	
+		// Subscribe to the queries channel
+		monitor.subscribe( channelName );
+		
+		Data currData;
+		on all Data():currData {
+			log "RECEIVED DATA ON "+channelName+": "+currData.toString();
+		}
+		
+		send SetupComplete(channelName) to "mainCtx";
+	}
+}

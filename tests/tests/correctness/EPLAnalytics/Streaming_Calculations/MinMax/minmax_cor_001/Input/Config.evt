@@ -1,0 +1,8 @@
+com.industry.analytics.Analytic("MinMax", [], [], {})
+com.industry.analytics.Analytic("MinMax", ["Input1"], [], {"timeWindow":"60.0"})
+com.industry.analytics.Analytic("MinMax", [], ["Output1"], {"timeWindow":"60.0"})
+com.industry.analytics.Analytic("MinMax", ["Input1", "Input2"], ["Output1"], {"timeWindow":"60.0"})
+com.industry.analytics.Analytic("MinMax", ["Input1"], ["Output1", "Output2"], {"timeWindow":"60.0"})
+com.industry.analytics.Analytic("MinMax", ["Input1"], ["Output1"], {})
+com.industry.analytics.Analytic("MinMax", ["Input1"], ["Output1"], {"timeWindow":"-1.0"})
+com.industry.analytics.Analytic("MinMax", ["Input1"], ["Output1"], {"timeWindow":"60.0"})

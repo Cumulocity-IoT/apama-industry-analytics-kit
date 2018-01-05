@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("threshold", ["Input"], ["Output"], {"threshold":"0"})
+com.industry.analytics.Analytic("THRESHOLD", ["Input"], ["Output"], {"threshold":"0"})
+com.industry.analytics.Analytic("ThReShOlD", ["Input"], ["Output"], {"threshold":"0"})
+com.industry.analytics.Analytic("Threshold", ["Input"], ["Output"], {"threshold":"0"})

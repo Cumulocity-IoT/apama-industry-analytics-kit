@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("datasimulator", [], ["Output"], {})
+com.industry.analytics.Analytic("DATASIMULATOR", [], ["Output"], {})
+com.industry.analytics.Analytic("DaTaSiMuLaToR", [], ["Output"], {})
+com.industry.analytics.Analytic("DataSimulator", [], ["Output"], {})

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:jms="http://www.apama.com/schema/correlator-jms"
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.apama.com/schema/correlator-jms http://www.apama.com/schema/correlator-jms.xsd"
+> 
+
+	<jms:classpath classpath="${classpath.UniversalMessaging}">
+		<jms:connection id="UniversalMessaging">
+
+			<property name="clientId" value="${clientId.UniversalMessaging}" />
+
+			<property name="connectionAuthentication.username" value="${connectionAuthentication.username.UniversalMessaging}" />
+			<property name="connectionAuthentication.password" value="${connectionAuthentication.password.UniversalMessaging}" />
+
+			<property name="staticReceiverList" value="${staticReceiverList.UniversalMessaging}" />
+			
+			<property name="defaultReceiverReliability" value="${defaultReceiverReliability.UniversalMessaging}"/>
+			<property name="defaultSenderReliability" value="${defaultSenderReliability.UniversalMessaging}"/>
+			<property name="connectionFactory.jndiName" value="${connectionFactory.jndiName.UniversalMessaging}" />
+			<property name="jndiContext.environment">
+				<value>${jndiContext.environment.UniversalMessaging}</value>
+			</property>
+			<property name="jndiContext.jndiAuthentication.username" value="${jndiContext.jndiAuthentication.username.UniversalMessaging}" />
+			<property name="jndiContext.jndiAuthentication.password" value="${jndiContext.jndiAuthentication.password.UniversalMessaging}" />
+			
+		</jms:connection>	
+	</jms:classpath>
+</beans>

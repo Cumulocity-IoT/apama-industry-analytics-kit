@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("speed", ["Input"], ["Output"], {"speedUnit":"KMPH"})
+com.industry.analytics.Analytic("SPEED", ["Input"], ["Output"], {"speedUnit":"KMPH"})
+com.industry.analytics.Analytic("SpEeD", ["Input"], ["Output"], {"speedUnit":"KMPH"})
+com.industry.analytics.Analytic("Speed", ["Input"], ["Output"], {"speedUnit":"KMPH"})

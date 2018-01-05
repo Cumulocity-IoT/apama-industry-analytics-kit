@@ -1,0 +1,6 @@
+com.industry.analytics.Analytic("Prediction", ["SEPAL_LE", "SEPAL_WI", "PETAL_LE", "PETAL_WI"], ["predictedValue_CLASS", "Cluster ID", "Cluster Affinity for predicted", "Cluster Affinity for setosa", "Cluster Affinity for versic", "Cluster Affinity for virgin"], {"SEPAL_LE":"SEPAL_LE.DVALUE", "SEPAL_WI":"SEPAL_WI.DVALUE", "PETAL_LE":"PETAL_LE.DVALUE", "PETAL_WI":"PETAL_WI.DVALUE", "predictedValue_CLASS":"predictedValue_CLASS.SVALUE", "Cluster ID":"Cluster ID.SVALUE", "Cluster Affinity for predicted":"Cluster Affinity for predicted.DVALUE", "Cluster Affinity for setosa":"Cluster Affinity for setosa.DVALUE", "Cluster Affinity for versic":"Cluster Affinity for versic.DVALUE", "Cluster Affinity for virgin":"Cluster Affinity for virgin.DVALUE", "modelName":"Iris_KM", "pmmlFileName":"Iris_KM.pmml", "pmmlFileDirectory":"'+self.PMMLMODELS+'"})')
+
+com.industry.analytics.Analytic("threshold", ["Input"], ["Output"], {"threshold":"0"})
+com.industry.analytics.Analytic("THRESHOLD", ["Input"], ["Output"], {"threshold":"0"})
+com.industry.analytics.Analytic("ThReShOlD", ["Input"], ["Output"], {"threshold":"0"})
+com.industry.analytics.Analytic("Threshold", ["Input"], ["Output"], {"threshold":"0"})

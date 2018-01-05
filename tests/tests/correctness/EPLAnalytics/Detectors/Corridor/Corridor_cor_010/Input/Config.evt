@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("corridor", ["Input1"], ["Output1"], {"upperThreshold":"30", "lowerThreshold":"20", "zone":"outside"})
+com.industry.analytics.Analytic("CORRIDOR", ["Input1"], ["Output1"], {"upperThreshold":"30", "lowerThreshold":"20", "zone":"outside"})
+com.industry.analytics.Analytic("CoRrIdOr", ["Input1"], ["Output1"], {"upperThreshold":"30", "lowerThreshold":"20", "zone":"outside"})
+com.industry.analytics.Analytic("Corridor", ["Input1"], ["Output1"], {"upperThreshold":"30", "lowerThreshold":"20", "zone":"outside"})

@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("memorystore", ["Input1"], [], {})
+com.industry.analytics.Analytic("MEMORYSTORE", ["Input2"], [], {})
+com.industry.analytics.Analytic("MeMoRyStOrE", ["Input3"], [], {})
+com.industry.analytics.Analytic("MemoryStore", ["Input4"], [], {})

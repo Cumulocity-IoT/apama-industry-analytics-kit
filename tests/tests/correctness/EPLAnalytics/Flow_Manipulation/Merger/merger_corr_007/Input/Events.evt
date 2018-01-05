@@ -1,0 +1,2 @@
+"In1", com.industry.analytics.Data("In1", "r", "source1", 0, 0, "", 0, 0, 0, {"existingField1":"pass1","existingField2":"pass2","existingField3":"pass"})
+"In2", com.industry.analytics.Data("In2", "a", "source1", 0, 0, "", 0, 0, 0, {"existingField2":"AHHH TEST FAILURE","existingField3":"AHHH TEST FAILURE","nonExistent1":"AHHH TEST FAILURE","nonExistent2":"added"})

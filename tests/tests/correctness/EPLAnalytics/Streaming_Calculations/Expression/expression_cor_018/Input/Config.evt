@@ -1,0 +1,36 @@
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output1"], {"expression":"${DVALUE}"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output2"], {"expression":"-${DVALUE}"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output3"], {"expression":"1e3+${DVALUE}"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output4"], {"expression":"1e-3+${DVALUE}"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output5"], {"expression":"-1e3+${DVALUE}"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output6"], {"expression":"-1e-3+${DVALUE}"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output7"], {"expression":"1e3-${DVALUE}"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output8"], {"expression":"1e-3-${DVALUE}"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output9"], {"expression":"-1e3-${DVALUE}"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output10"], {"expression":"-1e-3-${DVALUE}"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output11"], {"expression":"${DVALUE}+1e3"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output12"], {"expression":"${DVALUE}+1e-3"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output13"], {"expression":"${DVALUE}+-1e3"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output14"], {"expression":"${DVALUE}+-1e-3"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output15"], {"expression":"${DVALUE}-1e3"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output16"], {"expression":"${DVALUE}-1e-3"})
+// Invalid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output17"], {"expression":"${DVALUE}--1e3"})
+// Invalid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output18"], {"expression":"${DVALUE}--1e-3"})

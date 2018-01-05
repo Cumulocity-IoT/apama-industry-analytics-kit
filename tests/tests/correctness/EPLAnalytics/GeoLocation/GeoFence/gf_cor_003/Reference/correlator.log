@@ -1,0 +1,326 @@
+2017-01-01 22:43:03.151 ##### [18136] - Correlator, version 9.12.0.0.289801 (build rel/9.12.0.x@289801 on amd64-win), started.
+2017-01-01 22:43:03.151 ##### [18136] - Running on host 'MCNICA03.eur.ad.sag'.
+2017-01-01 22:43:03.151 ##### [18136] - Running on platform 'Windows 7 (Service Pack 1)'.
+2017-01-01 22:43:03.151 ##### [18136] - Running on CPU 'GenuineIntel family 6 model 12 stepping 3 Intel(R) Core(TM) i7-4800MQ CPU @ 2.70GHz'.
+2017-01-01 22:43:03.151 ##### [18136] - Running with process Id 16052.
+2017-01-01 22:43:03.151 ##### [18136] - Running with 16289.08MB of physical memory.
+2017-01-01 22:43:03.151 ##### [18136] - There are 8 CPU(s)
+2017-01-01 22:43:03.151 ##### [18136] - Correlator command line: C:\SoftwareAG_912\Apama\bin\correlator --name correlator -p 50617 -l C:\Projects_912\license\ApamaServerLicense.xml -f correlator.log -v INFO -Xclock --inputLog input.log
+2017-01-01 22:43:03.151 ##### [18136] - Current Working Directory: C:\Projects_912\IoT\tests\tests\correctness\EPLAnalytics\GeoFence\gf_cor_003\Output\win32
+2017-01-01 22:43:03.151 ##### [18136] - Current UTC time: 2017-01-01 22:43:03, local timezone: GMT Standard Time
+2017-01-01 22:43:03.151 ##### [18136] - Input value - port                     = 50617
+2017-01-01 22:43:03.151 ##### [18136] - Input value - output queue size        = 10000
+2017-01-01 22:43:03.151 ##### [18136] - Input value - output queue batch size  = 100
+2017-01-01 22:43:03.151 ##### [18136] - Input value - output queue mode        = blocking
+2017-01-01 22:43:03.152 ##### [18136] - Input value - environment variable     = APAMA_LIBRARY_VERSION=9.12
+2017-01-01 22:43:03.152 ##### [18136] - Input value - environment variable     = APAMA_ENVSET=9.12:C:\SoftwareAG_912\Apama:amd64-win
+2017-01-01 22:43:03.152 ##### [18136] - Input value - environment variable     = APAMA_CORRELATOR_HOME=C:\SoftwareAG_912\Apama
+2017-01-01 22:43:03.152 ##### [18136] - Input value - environment variable     = APAMA_WORK=C:\Projects_912
+2017-01-01 22:43:03.152 ##### [18136] - Input value - environment variable     = APAMA_JRE=C:\SoftwareAG_912\jvm\jvm\jre
+2017-01-01 22:43:03.152 ##### [18136] - Input value - environment variable     = APAMA_PLATFORM=amd64-win
+2017-01-01 22:43:03.152 ##### [18136] - Input value - environment variable     = APAMA_MANAGEMENT_HOME=C:\SoftwareAG_912\Apama
+2017-01-01 22:43:03.152 ##### [18136] - Input value - environment variable     = APAMA_COMMON_JRE=C:\SoftwareAG_912\jvm\jvm\jre
+2017-01-01 22:43:03.152 ##### [18136] - Input value - environment variable     = APAMA_DASHBOARD_HOME=C:\SoftwareAG_912\Apama
+2017-01-01 22:43:03.152 ##### [18136] - Input value - environment variable     = APAMA_DEV_HOME=C:\SoftwareAG_912\Apama
+2017-01-01 22:43:03.152 ##### [18136] - Input value - environment variable     = APAMA_HOME=C:\SoftwareAG_912\Apama
+2017-01-01 22:43:03.152 ##### [18136] - Using memory allocator                 = TBB scalable allocator
+2017-01-01 22:43:03.152 ##### [18136] - License File: C:\Projects_912\license\ApamaServerLicense.xml
+2017-01-01 22:43:03.156 ##### [18136] - ================= Software AG License Data =================
+2017-01-01 22:43:03.156 ##### [18136] - Sales Information
+2017-01-01 22:43:03.156 ##### [18136] -      Serial Number      : 0000306131
+2017-01-01 22:43:03.156 ##### [18136] -      Customer ID        : 3150000
+2017-01-01 22:43:03.156 ##### [18136] -      Customer Name      : Software AG for Salesweb Internal USE ONLY
+2017-01-01 22:43:03.156 ##### [18136] - Product Information
+2017-01-01 22:43:03.156 ##### [18136] -      Product Name       : Apama Server
+2017-01-01 22:43:03.156 ##### [18136] -      Product Code       : PAMCO
+2017-01-01 22:43:03.156 ##### [18136] -      Operating System   : win
+2017-01-01 22:43:03.156 ##### [18136] -      Product Version    : 9.12
+2017-01-01 22:43:03.156 ##### [18136] -      Product Usage      : 
+2017-01-01 22:43:03.156 ##### [18136] -      Expiration Date    : 2017/10/19
+2017-01-01 22:43:03.156 ##### [18136] - License Information
+2017-01-01 22:43:03.156 ##### [18136] -      License Type       : 
+2017-01-01 22:43:03.156 ##### [18136] -      Price Unit         : ST
+2017-01-01 22:43:03.156 ##### [18136] -      Price Quantity     : 1
+2017-01-01 22:43:03.156 ##### [18136] -      Extended Rights    : 
+2017-01-01 22:43:03.156 ##### [18136] -      License Version    : 1.2
+2017-01-01 22:43:03.156 ##### [18136] - Physical Hardware
+2017-01-01 22:43:03.156 ##### [18136] -      Model              : Intel(R) Core(TM) i7-4800MQ CPU @ 2.70GHz
+2017-01-01 22:43:03.156 ##### [18136] -      Sockets            : 1
+2017-01-01 22:43:03.156 ##### [18136] -      Physical cores     : 4
+2017-01-01 22:43:03.156 ##### [18136] -      Logical cores      : 8
+2017-01-01 22:43:03.156 ##### [18136] -      Performance Bucket : CoreB
+2017-01-01 22:43:03.156 ##### [18136] -      Virtualization     : no
+2017-01-01 22:43:03.156 ##### [18136] - ==================== End License Data ======================
+2017-01-01 22:43:03.156 ##### [18136] - 
+2017-01-01 22:43:03.157 ##### [18136] - Input value - pidfile                  = 
+2017-01-01 22:43:03.157 ##### [18136] - Input value - per receiver queue size  = 10 s
+2017-01-01 22:43:03.157 ##### [18136] - Input value - per receiver queue size  = 10240 kb
+2017-01-01 22:43:03.157 ##### [18136] - Input value - input queue size         = 20000
+2017-01-01 22:43:03.157 ##### [18136] - Java application support               = disabled
+2017-01-01 22:43:03.157 ##### [18136] - External clocking                      = enabled
+2017-01-01 22:43:03.157 ##### [18136] - Input value - logfile                  = correlator.log
+2017-01-01 22:43:03.157 ##### [18136] - Input value - loglevel                 = INFO
+2017-01-01 22:43:03.157 ##### [18136] - Input value - inputLog                 = input.log
+2017-01-01 22:43:03.157 ##### [18136] - Compiler optimizations                 = enabled - the debugger cannot be used; specify command line option "-g" to use it.
+2017-01-01 22:43:03.157 ##### [18136] - Using EPL runtime                      = interpreted
+2017-01-01 22:43:03.160 CRIT  [18136] - Opening new input log: input.log
+2017-01-01 22:43:03.161 INFO  [18136] - Will log queue size every 5.000000 seconds
+2017-01-01 22:43:03.162 INFO  [18136] - Starting scheduler with 8 threads (determined from hardware)
+2017-01-01 22:43:03.164 INFO  [18136] - Server socket opened listening on 0.0.0.0:50617
+2017-01-01 22:43:03.165 ##### [18136] - Component ID: correlator (correlator/6370770444847725311/6370770444847725311)
+2017-01-01 22:43:03.165 ##### [18136] - Correlator, version 9.12.0.0.289801, running
+2017-01-01 22:43:03.720 INFO  [18280] - Sender engine_send (00000000052E00C0) (component ID 6370770444409420543/6370488969432709887) connected from 127.0.0.1:58917
+2017-01-01 22:43:03.721 INFO  [4212] - Set time to 0.00
+2017-01-01 22:43:03.728 INFO  [18280] - Receiver engine_receive (000000000540F8E0) (component ID 6370770444822821631/6370488969846110975) connected from 127.0.0.1:58920
+2017-01-01 22:43:03.728 INFO  [18280] - Receiver engine_receive (000000000540F8E0) initially subscribed to <no channels>
+2017-01-01 22:43:03.728 INFO  [18280] - Blocking receiver engine_receive (000000000540F8E0) will be blocked after 10.000000 seconds or 10240 kb if slow
+2017-01-01 22:43:03.728 INFO  [5580] - Receiver engine_receive (000000000540F8E0) unsubscribed from all channels
+2017-01-01 22:43:03.728 INFO  [5580] - Receiver engine_receive (000000000540F8E0) added subscriptions to [TEST_OUT]
+2017-01-01 22:43:03.797 INFO  [18280] - Sender engine_inject (0000000001188880) (component ID 6370770445013924607/6370488970037213951) connected from 127.0.0.1:58923
+2017-01-01 22:43:03.843 INFO  [11720] - Added monitor com.apama.scenario.ScenarioService
+2017-01-01 22:43:03.843 INFO  [11720] - Added monitor com.apama.scenario.RequestInstancesHandler
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.ScenarioServiceUpdaterMultipleInstances
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.ScenarioServiceUpdaterSingleInstance
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.ScenarioServiceUpdaterBase
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.CallbackHelper
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.ScenarioServiceLibrary
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.AllConfiguration
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.GetAllConfiguration
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.ScenarioProcessedUpdates
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.OperationCompleted
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.Configuration
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.GetConfiguration
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.ParallelStarting
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.RequestInstancesParallelDone
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.RequestInstancesParallel
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.FinishedScenarioRecovery
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.StartScenarioRecovery
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.ScenarioFinished
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.RequestInstancesInternal
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.SendQueuedUpdatesNow
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.ConfigureUpdates
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.SetThrottlingPeriod
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.ScenarioServiceUnloaded
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.ScenarioServiceLoaded
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.Instance
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.ScenarioUnloaded
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.Scenario
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.RequestInstancesDone
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.RequestInstancesOnChannelByUser
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.RequestInstancesOnChannel
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.RequestScenariosAck
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.RequestScenariosDone
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.RequestScenarios
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.StateChange
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.Acknowledge
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.Update
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.InstanceDied
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.Deleted
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.Delete
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.Edited
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.Edit
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.ParentChildRelationship
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.Created
+2017-01-01 22:43:03.843 INFO  [11720] - Added type com.apama.scenario.Create
+2017-01-01 22:43:03.843 INFO  [11720] - Injected MonitorScript from file C:\SoftwareAG_912\Apama\monitors\ScenarioService.mon (b3b59061005a275408f6e71afdf967bf), size 74870 bytes, compile time 0.04 seconds
+2017-01-01 22:43:03.845 INFO  [18200] - com.apama.scenario.ScenarioService [1] ScenarioService interface loaded. MetaData: {"interface.fileName":"ScenarioService.mon","interface.fullVersion":"rel/9.12.0.x@289801","interface.language":"MonitorScript","interface.name":"ScenarioService","interface.package":"com.apama.scenario","interface.vendor":"Apama","interface.version":"9.12.0.0.289801"}
+2017-01-01 22:43:03.846 INFO  [5580] - Sender engine_inject (0000000001188880) (component ID 6370770445013924607/6370488970037213951) disconnected cleanly: Other party requested disconnection
+2017-01-01 22:43:03.953 INFO  [18280] - Sender engine_inject (0000000001188880) (component ID 6370770444898056959/6370488969921346303) connected from 127.0.0.1:58926
+2017-01-01 22:43:03.959 INFO  [18856] - MemoryStorePlugin version 9.12.0.0.289801 (build rel/9.12.0.x@289801 on amd64-win), loaded.
+2017-01-01 22:43:03.964 INFO  [18856] - Plugin library MemoryStorePlugin (C++ API v9.0) loaded OK
+2017-01-01 22:43:03.968 INFO  [19028] - Added type com.apama.memorystore.Storage
+2017-01-01 22:43:03.968 INFO  [19028] - Added type com.apama.memorystore.Store
+2017-01-01 22:43:03.968 INFO  [19028] - Added type com.apama.memorystore.Table
+2017-01-01 22:43:03.968 INFO  [19028] - Added type com.apama.memorystore.Iterator
+2017-01-01 22:43:03.968 INFO  [19028] - Added type com.apama.memorystore.RowChanged
+2017-01-01 22:43:03.968 INFO  [19028] - Added type com.apama.memorystore.Row
+2017-01-01 22:43:03.968 INFO  [19028] - Added type com.apama.memorystore.Schema
+2017-01-01 22:43:03.968 INFO  [19028] - Added type com.apama.memorystore.Finished
+2017-01-01 22:43:03.968 INFO  [19028] - Injected MonitorScript from file C:\SoftwareAG_912\Apama\monitors\data_storage\MemoryStore.mon (8735fe52fb5f5e3d4129636ba90b47c7), size 42249 bytes, compile time 0.01 seconds
+2017-01-01 22:43:03.969 INFO  [5580] - Sender engine_inject (0000000001188880) (component ID 6370770444898056959/6370488969921346303) disconnected cleanly: Other party requested disconnection
+2017-01-01 22:43:04.029 INFO  [18280] - Sender engine_inject (000000000996ECA0) (component ID 6370770449245453055/6370488974268742399) connected from 127.0.0.1:58929
+2017-01-01 22:43:04.038 INFO  [11720] - Added monitor com.apama.memorystore.MemoryStoreScenarioImpl
+2017-01-01 22:43:04.038 INFO  [11720] - Added type com.apama.memorystore.ForwardMemoryStoreUpdatesTo
+2017-01-01 22:43:04.038 INFO  [11720] - Injected MonitorScript from file C:\SoftwareAG_912\Apama\monitors\data_storage\MemoryStoreScenarioImpl.mon (d6fd01295e03b209b5219f5f07b4174c), size 10652 bytes, compile time 0.01 seconds
+2017-01-01 22:43:04.038 INFO  [5580] - Sender engine_inject (000000000996ECA0) (component ID 6370770449245453055/6370488974268742399) disconnected cleanly: Other party requested disconnection
+2017-01-01 22:43:04.085 INFO  [18280] - Sender engine_inject (000000000996ECA0) (component ID 6370770449037572863/6370488974060862207) connected from 127.0.0.1:58932
+2017-01-01 22:43:04.087 INFO  [19028] - Added monitor com.industry.analytics.InternConstants
+2017-01-01 22:43:04.087 INFO  [19028] - Added type com.industry.analytics.Constants
+2017-01-01 22:43:04.087 INFO  [19028] - Injected MonitorScript from file C:\Projects_912\IoT\tests\..\src\apama\eventdefinitions\Constants.mon (3bf2902655c49ee8948cf12c6b715a29), size 4181 bytes, compile time 0.00 seconds
+2017-01-01 22:43:04.087 INFO  [5580] - Sender engine_inject (000000000996ECA0) (component ID 6370770449037572863/6370488974060862207) disconnected cleanly: Other party requested disconnection
+2017-01-01 22:43:04.088 INFO  [17008] - Interning ALERT_CHANNEL
+2017-01-01 22:43:04.088 INFO  [17008] - Interning DATASOURCE_MGMT_CHANNEL
+2017-01-01 22:43:04.088 INFO  [17008] - Interning boolean
+2017-01-01 22:43:04.088 INFO  [17008] - Interning decimal
+2017-01-01 22:43:04.088 INFO  [17008] - Interning float
+2017-01-01 22:43:04.088 INFO  [17008] - Interning integer
+2017-01-01 22:43:04.088 INFO  [17008] - Interning string
+2017-01-01 22:43:04.088 INFO  [17008] - Interning sequence<string>
+2017-01-01 22:43:04.088 INFO  [17008] - Interning _
+2017-01-01 22:43:04.088 INFO  [17008] - Interning IOT
+2017-01-01 22:43:04.161 INFO  [18280] - Sender engine_inject (000000000996ECA0) (component ID 6370770448874519295/6370488973897808639) connected from 127.0.0.1:58935
+2017-01-01 22:43:04.174 INFO  [11720] - Added monitor com.industry.analytics.InternMemStoreUtil
+2017-01-01 22:43:04.174 INFO  [11720] - Added type com.industry.analytics.MemStoreUtil
+2017-01-01 22:43:04.174 INFO  [11720] - Added type com.industry.analytics.TableReady
+2017-01-01 22:43:04.174 INFO  [11720] - Added type com.industry.analytics.StoreProxy
+2017-01-01 22:43:04.174 INFO  [11720] - Added type com.industry.analytics.SchemaProxy
+2017-01-01 22:43:04.174 INFO  [11720] - Added type com.industry.analytics.TableProxy
+2017-01-01 22:43:04.174 INFO  [11720] - Injected MonitorScript from file C:\Projects_912\IoT\tests\..\src\apama\monitors\cache\MemStoreUtil.mon (115c40eb864766ee3e0e007cad82d65c), size 14146 bytes, compile time 0.01 seconds
+2017-01-01 22:43:04.175 INFO  [18200] - Interning IN_MEMORY
+2017-01-01 22:43:04.175 INFO  [18200] - Interning DISTRIBUTED
+2017-01-01 22:43:04.175 INFO  [18200] - Interning CORRELATOR_PERSISTENT
+2017-01-01 22:43:04.178 INFO  [11720] - Added type com.industry.analytics.Cache
+2017-01-01 22:43:04.178 INFO  [11720] - Added type com.industry.analytics.ClearCache
+2017-01-01 22:43:04.178 INFO  [11720] - Injected MonitorScript from file C:\Projects_912\IoT\tests\..\src\apama\monitors\cache\Cache.mon (31937d044a58c94dfbd374412cbfcb2f), size 3958 bytes, compile time 0.00 seconds
+2017-01-01 22:43:04.179 INFO  [5580] - Sender engine_inject (000000000996ECA0) (component ID 6370770448874519295/6370488973897808639) disconnected cleanly: Other party requested disconnection
+2017-01-01 22:43:04.248 INFO  [18280] - Sender engine_inject (000000000996ECA0) (component ID 6370770448523246335/6370488973546535679) connected from 127.0.0.1:58938
+2017-01-01 22:43:04.252 INFO  [19028] - Added monitor com.industry.analytics.InternData
+2017-01-01 22:43:04.252 INFO  [19028] - Added type com.industry.analytics.Data
+2017-01-01 22:43:04.252 INFO  [19028] - Added type com.industry.analytics.DataDetails
+2017-01-01 22:43:04.252 INFO  [19028] - Added type com.industry.analytics.DataConstants
+2017-01-01 22:43:04.252 INFO  [19028] - Injected MonitorScript from file C:\Projects_912\IoT\tests\..\src\apama\eventdefinitions\Data.mon (db091295659c3b1bd6d2658d6f60a542), size 7651 bytes, compile time 0.00 seconds
+2017-01-01 22:43:04.252 INFO  [17008] - Interning Data
+2017-01-01 22:43:04.252 INFO  [17008] - Interning name
+2017-01-01 22:43:04.252 INFO  [17008] - Interning type
+2017-01-01 22:43:04.252 INFO  [17008] - Interning sourceId
+2017-01-01 22:43:04.252 INFO  [17008] - Interning timestamp
+2017-01-01 22:43:04.252 INFO  [17008] - Interning dValue
+2017-01-01 22:43:04.252 INFO  [17008] - Interning sValue
+2017-01-01 22:43:04.252 INFO  [17008] - Interning xValue
+2017-01-01 22:43:04.252 INFO  [17008] - Interning yValue
+2017-01-01 22:43:04.252 INFO  [17008] - Interning zValue
+2017-01-01 22:43:04.252 INFO  [17008] - Interning params
+2017-01-01 22:43:04.252 INFO  [17008] - Interning a
+2017-01-01 22:43:04.252 INFO  [17008] - Interning c
+2017-01-01 22:43:04.252 INFO  [17008] - Interning r
+2017-01-01 22:43:04.257 INFO  [19028] - Added type com.industry.analytics.Analytic
+2017-01-01 22:43:04.258 INFO  [19028] - Injected MonitorScript from file C:\Projects_912\IoT\tests\..\src\apama\eventdefinitions\Analytic.mon (3fe79f05a28306253fc5c617f967ef31), size 26596 bytes, compile time 0.00 seconds
+2017-01-01 22:43:04.259 INFO  [19028] - Added type com.industry.analytics.Ready
+2017-01-01 22:43:04.259 INFO  [19028] - Injected MonitorScript from file C:\Projects_912\IoT\tests\..\src\apama\eventdefinitions\Ready.mon (c3a0635e76289116ff70954f2a5c12a4), size 1285 bytes, compile time 0.00 seconds
+2017-01-01 22:43:04.259 INFO  [5580] - Sender engine_inject (000000000996ECA0) (component ID 6370770448523246335/6370488973546535679) disconnected cleanly: Other party requested disconnection
+2017-01-01 22:43:04.305 INFO  [18280] - Sender engine_inject (000000000996ECA0) (component ID 6370770449055922943/6370488974079212287) connected from 127.0.0.1:58941
+2017-01-01 22:43:04.307 INFO  [11720] - Added type com.industry.analytics.AnalyticInterface
+2017-01-01 22:43:04.307 INFO  [11720] - Injected MonitorScript from file C:\Projects_912\IoT\tests\..\src\apama\monitors\interfaces\AnalyticInterface.mon (2d6b22fe966d115199d3840f308de135), size 4118 bytes, compile time 0.00 seconds
+2017-01-01 22:43:04.308 INFO  [5580] - Sender engine_inject (000000000996ECA0) (component ID 6370770449055922943/6370488974079212287) disconnected cleanly: Other party requested disconnection
+2017-01-01 22:43:04.381 INFO  [18280] - Sender engine_inject (000000000996ECA0) (component ID 6370770449269832447/6370488974293121791) connected from 127.0.0.1:58944
+2017-01-01 22:43:04.387 INFO  [19028] - Added monitor com.industry.analytics.InternAnalyticObject
+2017-01-01 22:43:04.387 INFO  [19028] - Added type com.industry.analytics.AnalyticObject
+2017-01-01 22:43:04.387 INFO  [19028] - Added type com.industry.analytics.KillInputChannelListeners
+2017-01-01 22:43:04.387 INFO  [19028] - Injected MonitorScript from file C:\Projects_912\IoT\tests\..\src\apama\monitors\objects\AnalyticObject.mon (159a20ed394f20e256449915b23bbb1a), size 18205 bytes, compile time 0.00 seconds
+2017-01-01 22:43:04.388 INFO  [18200] - Interning com.apama.queries
+2017-01-01 22:43:04.388 INFO  [18200] - Interning sendResultToChannel
+2017-01-01 22:43:04.388 INFO  [18200] - Interning sendResultToQueryChannel
+2017-01-01 22:43:04.388 INFO  [5580] - Sender engine_inject (000000000996ECA0) (component ID 6370770449269832447/6370488974293121791) disconnected cleanly: Other party requested disconnection
+2017-01-01 22:43:04.500 INFO  [18280] - Sender engine_inject (000000000996ECA0) (component ID 6370770449131158271/6370488974154447615) connected from 127.0.0.1:58947
+2017-01-01 22:43:04.524 INFO  [11720] - Added monitor com.industry.analytics.InternGeofence
+2017-01-01 22:43:04.524 INFO  [11720] - Added type com.industry.analytics.geolocation.GeoFence
+2017-01-01 22:43:04.524 INFO  [11720] - Added type com.industry.analytics.Polygon
+2017-01-01 22:43:04.524 INFO  [11720] - Added type com.industry.analytics.geolocation.Point
+2017-01-01 22:43:04.524 INFO  [11720] - Added type com.industry.analytics.Exit
+2017-01-01 22:43:04.524 INFO  [11720] - Injected MonitorScript from file C:\Projects_912\IoT\tests\..\src\apama\monitors\Analytics\GeoFence.mon (e5bf90f01cdfa2eef3c814512680233c), size 45326 bytes, compile time 0.02 seconds
+2017-01-01 22:43:04.524 INFO  [9632] - Interning GeoFence
+2017-01-01 22:43:04.524 INFO  [9632] - Interning enableEntry
+2017-01-01 22:43:04.524 INFO  [9632] - Interning enableExit
+2017-01-01 22:43:04.524 INFO  [9632] - Interning enableDwell
+2017-01-01 22:43:04.524 INFO  [9632] - Interning enableInside
+2017-01-01 22:43:04.524 INFO  [9632] - Interning enableOutside
+2017-01-01 22:43:04.524 INFO  [9632] - Interning ENTERED
+2017-01-01 22:43:04.524 INFO  [9632] - Interning EXITED
+2017-01-01 22:43:04.524 INFO  [9632] - Interning DWELLED
+2017-01-01 22:43:04.524 INFO  [9632] - Interning INSIDE
+2017-01-01 22:43:04.524 INFO  [9632] - Interning OUTSIDE
+2017-01-01 22:43:04.525 INFO  [9632] - Interning dwellTime
+2017-01-01 22:43:04.525 INFO  [9632] - Interning geoFenceLatitudeParam
+2017-01-01 22:43:04.525 INFO  [9632] - Interning geoFenceLongitudeParam
+2017-01-01 22:43:04.525 INFO  [9632] - Interning geoFenceOffset
+2017-01-01 22:43:04.525 INFO  [9632] - Interning geoFenceRadius
+2017-01-01 22:43:04.525 INFO  [9632] - Interning geoFencePolygon
+2017-01-01 22:43:04.525 INFO  [9632] - Interning useCartesianCoords
+2017-01-01 22:43:04.525 INFO  [9632] - Interning useHypertree
+2017-01-01 22:43:04.525 INFO  [9632] - Interning realtimeDwell
+2017-01-01 22:43:04.526 WARN  [18856] - A persistent monitor com.industry.analytics.geolocation.GeoFenceService injected into a non-persistent correlator
+2017-01-01 22:43:04.528 INFO  [11720] - Added monitor com.industry.analytics.geolocation.GeoFenceService
+2017-01-01 22:43:04.528 INFO  [11720] - Injected MonitorScript from file C:\Projects_912\IoT\tests\..\src\apama\monitors\Analytics\GeoFenceService.mon (5aa17a1420b1ef5cec43385bc89af7ce), size 1777 bytes, compile time 0.00 seconds
+2017-01-01 22:43:04.528 INFO  [5580] - Sender engine_inject (000000000996ECA0) (component ID 6370770449131158271/6370488974154447615) disconnected cleanly: Other party requested disconnection
+2017-01-01 22:43:04.586 INFO  [18280] - Sender engine_inject (000000000996ECA0) (component ID 6370770449290803967/6370488974314093311) connected from 127.0.0.1:58950
+2017-01-01 22:43:04.591 INFO  [19028] - Added monitor com.industry.analytics.test003.Test
+2017-01-01 22:43:04.591 INFO  [19028] - Injected MonitorScript from file C:\Projects_912\IoT\tests\tests\correctness\EPLAnalytics\GeoFence\gf_cor_003\Input\Test.mon (6abb10233d6c88c30db3222dbd6e6f1b), size 6598 bytes, compile time 0.00 seconds
+2017-01-01 22:43:04.591 ERROR [9632] - com.industry.analytics.test003.Test [12] A GeoFence polygon must have at least three vertices. 0 supplied: []
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12] Empty sequence: valid: false
+2017-01-01 22:43:04.592 ERROR [9632] - com.industry.analytics.test003.Test [12] A GeoFence polygon must have at least three vertices. 1 supplied: [""]
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12] One string: valid: false
+2017-01-01 22:43:04.592 ERROR [9632] - com.industry.analytics.test003.Test [12] A GeoFence polygon must have at least three vertices. 2 supplied: ["",""]
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12] Two empty strings: valid: false
+2017-01-01 22:43:04.592 ERROR [9632] - com.industry.analytics.test003.Test [12] There must be two values in the string to be parsed: ''.
+2017-01-01 22:43:04.592 ERROR [9632] - com.industry.analytics.test003.Test [12] Unable to successfully parse Polygon from: ["","",""]
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12] Three empty strings: valid: false
+2017-01-01 22:43:04.592 ERROR [9632] - com.industry.analytics.test003.Test [12] There must be two values in the string to be parsed: '32'.
+2017-01-01 22:43:04.592 ERROR [9632] - com.industry.analytics.test003.Test [12] Unable to successfully parse Polygon from: ["32","64","96"]
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12] Three empty strings: valid: false
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12] Three valid strings: valid: true
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Vertices: [com.industry.analytics.geolocation.Point(32,48),com.industry.analytics.geolocation.Point(64,72),com.industry.analytics.geolocation.Point(96,144)]
+2017-01-01 22:43:04.592 INFO  [5580] - Sender engine_inject (000000000996ECA0) (component ID 6370770449290803967/6370488974314093311) disconnected cleanly: Other party requested disconnection
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12] Cartesian, outside lat/long bounds: valid: true
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Vertices: [com.industry.analytics.geolocation.Point(0,-91),com.industry.analytics.geolocation.Point(0,91),com.industry.analytics.geolocation.Point(-181,0),com.industry.analytics.geolocation.Point(181,0)]
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Bounding: (-181,91,181,-91)
+2017-01-01 22:43:04.592 ERROR [9632] - com.industry.analytics.test003.Test [12] Invalid lat/long vertex: 0, -91
+2017-01-01 22:43:04.592 ERROR [9632] - com.industry.analytics.test003.Test [12] Invalid lat/long vertex: 0, 91
+2017-01-01 22:43:04.592 ERROR [9632] - com.industry.analytics.test003.Test [12] Invalid lat/long vertex: -181, 0
+2017-01-01 22:43:04.592 ERROR [9632] - com.industry.analytics.test003.Test [12] Invalid lat/long vertex: 181, 0
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12] Lat/Long, outside lat/long bounds: valid: false
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Vertices: []
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Bounding: (NaN,NaN,NaN,NaN)
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12] Lat/Long, outside lat/long bounds: valid: true
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Vertices: [com.industry.analytics.geolocation.Point(0,-90),com.industry.analytics.geolocation.Point(0,90),com.industry.analytics.geolocation.Point(-80,0),com.industry.analytics.geolocation.Point(80,0)]
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Bounding: (-80,90,80,-90)
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12] Three valid strings init: valid: true
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Vertices: [com.industry.analytics.geolocation.Point(32,48),com.industry.analytics.geolocation.Point(64,72),com.industry.analytics.geolocation.Point(96,144)]
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Bounding: (32,144,96,48)
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12] Across dateline, starting positive, but cartesian: valid: true
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Vertices: [com.industry.analytics.geolocation.Point(170,10),com.industry.analytics.geolocation.Point(-170,20),com.industry.analytics.geolocation.Point(-170,-20),com.industry.analytics.geolocation.Point(170,-10)]
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Bounding: (-170,20,170,-20)
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12] Across dateline, starting positive, but cartesian: valid: true
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Vertices: [com.industry.analytics.geolocation.Point(170,10),com.industry.analytics.geolocation.Point(190,20),com.industry.analytics.geolocation.Point(190,-20),com.industry.analytics.geolocation.Point(170,-10)]
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   Bounding: (170,20,190,-20)
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   170, 20: false
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   170, 10: false
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   180, 10: true
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   -180, 10: true
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   -170, 10: true
+2017-01-01 22:43:04.592 INFO  [9632] - com.industry.analytics.test003.Test [12]   -170, 20: false
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12] Complex absolute polygon: valid: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   Vertices: [com.industry.analytics.geolocation.Point(-10,10),com.industry.analytics.geolocation.Point(10,30),com.industry.analytics.geolocation.Point(30,10),com.industry.analytics.geolocation.Point(30,-40),com.industry.analytics.geolocation.Point(20,-40),com.industry.analytics.geolocation.Point(20,0),com.industry.analytics.geolocation.Point(0,0),com.industry.analytics.geolocation.Point(0,-40),com.industry.analytics.geolocation.Point(-10,-40)]
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   Bounding: (-10,30,30,-40)
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   -20, -10: false
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   -10, -10: false
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   -5, -10: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   -0, -10: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   10, -10: false
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   20, -10: false
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   25, -10: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   30, -10: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   35, -10: false
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12] Complex relative polygon: valid: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   Vertices: [com.industry.analytics.geolocation.Point(-10,10),com.industry.analytics.geolocation.Point(10,30),com.industry.analytics.geolocation.Point(30,10),com.industry.analytics.geolocation.Point(30,-40),com.industry.analytics.geolocation.Point(20,-40),com.industry.analytics.geolocation.Point(20,0),com.industry.analytics.geolocation.Point(0,0),com.industry.analytics.geolocation.Point(0,-40),com.industry.analytics.geolocation.Point(-10,-40)]
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   Bounding: (-10,30,30,-40)
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   -20, -10: false
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   -10, -10: false
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   -5, -10: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   -0, -10: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   10, -10: false
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   20, -10: false
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   25, -10: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   30, -10: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   35, -10: false
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12] 004's polygon: valid: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   Vertices: [com.industry.analytics.geolocation.Point(0,0.09),com.industry.analytics.geolocation.Point(0.09,0),com.industry.analytics.geolocation.Point(0,-0.09),com.industry.analytics.geolocation.Point(-0.09,0)]
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   Bounding: (-.09,.09,.09,-.09)
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   -0.0455, 0.0455: false
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   -0.0445, 0.0445: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   0.0445, -0.0445: true
+2017-01-01 22:43:04.593 INFO  [9632] - com.industry.analytics.test003.Test [12]   0.0455, -0.0455: false
+2017-01-01 22:43:04.721 ##### [19028] - Shutting down correlator in response to client (127.0.0.1:58952) request: Shutdown requested by test
+2017-01-01 22:43:04.726 INFO  [18136] - MemoryStorePlugin unloaded.
+2017-01-01 22:43:04.726 INFO  [18136] - MessageSenderImpl.Shutdown() - Disconnecting remote receiver 6370770444822821631:6370488969846110975
+2017-01-01 22:43:04.727 INFO  [18136] - MessageReceiverImpl.Shutdown() - Disconnecting remote sender 6370770444409420543:6370488969432709887
+2017-01-01 22:43:04.728 INFO  [18136] - Correlator shutdown is complete

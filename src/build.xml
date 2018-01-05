@@ -1,0 +1,449 @@
+<!-- Copyright (c) 2015-2016 Software AG, Darmstadt, Germany and/or its licensors.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License. -->
+
+<project name="Industry Analytics Kit" default="usage" basedir=".">
+	<description>
+		Industry Analytics Kit build project file.
+	</description>
+
+	<!-- Grab the reference to the environment -->
+	<property environment="env"/>
+	
+	<!-- Global properties for the build -->
+	<property name="INDUSTRY_ANALYTICS_KIT" value="."/>
+
+	<!-- Tell ANT to load .properties files from the current dir -->
+	<property file="${INDUSTRY_ANALYTICS_KIT}${file.separator}build.properties"/>
+
+	<!-- Packaging names -->
+	<property name="BASE_INPUT_ZIPFILE_NAME"            value="Industry_Analytics_Kit"/>
+	<property name="BASE_DEPLOYMENT_DIR_NAME"           value="Industry Analytics Kit"/>
+	<property name="CORE_INPUT_ZIPFILE_NAME"            value="${BASE_INPUT_ZIPFILE_NAME}_${IAK_VERSION}"/>
+	<property name="CORE_DEPLOYMENT_DIR_NAME"           value="${BASE_DEPLOYMENT_DIR_NAME} ${IAK_VERSION}"/>
+	<property name="RETAIL_INPUT_ZIPFILE_NAME"          value="${BASE_INPUT_ZIPFILE_NAME}_for_Retail_${IAK_VERSION}"/>
+	<property name="RETAIL_DEPLOYMENT_DIR_NAME"         value="${BASE_DEPLOYMENT_DIR_NAME} for Retail ${IAK_VERSION}"/>
+	<property name="MANUFACTURING_INPUT_ZIPFILE_NAME"   value="${BASE_INPUT_ZIPFILE_NAME}_for_Manufacturing_${IAK_VERSION}"/>
+	<property name="MANUFACTURING_DEPLOYMENT_DIR_NAME"  value="${BASE_DEPLOYMENT_DIR_NAME} for Manufacturing ${IAK_VERSION}"/>
+	<property name="BANKING_INPUT_ZIPFILE_NAME"         value="${BASE_INPUT_ZIPFILE_NAME}_for_Banking_${IAK_VERSION}"/>
+	<property name="BANKING_DEPLOYMENT_DIR_NAME"        value="${BASE_DEPLOYMENT_DIR_NAME} for Banking ${IAK_VERSION}"/>
+
+	<!-- Build properties -->
+	<property name="apama.dir"                    location="${INDUSTRY_ANALYTICS_KIT}${file.separator}apama"/>
+	<property name="doc.dir"                      location="${INDUSTRY_ANALYTICS_KIT}${file.separator}..${file.separator}docs"/>
+	<property name="metadata.dir"                 location="${INDUSTRY_ANALYTICS_KIT}${file.separator}..${file.separator}metadata"/>
+	<property name="metadata.samples.dir"         location="${INDUSTRY_ANALYTICS_KIT}${file.separator}metadataSamples"/>
+	<property name="metadata.template.file"       location="${INDUSTRY_ANALYTICS_KIT}${file.separator}metadataTemplate.json"/>
+	<property name="apama.doc.dir"                location="${doc.dir}${file.separator}reference"/>
+	<property name="output.dir"                   value="${INDUSTRY_ANALYTICS_KIT}${file.separator}..${file.separator}output"/>
+	<property name="samples.dir"                  value="${INDUSTRY_ANALYTICS_KIT}${file.separator}..${file.separator}samples"/>
+	<property name="utilities.dir"                value="${INDUSTRY_ANALYTICS_KIT}${file.separator}..${file.separator}utilities"/>
+	<property name="versionservice.monitor.dir"   value="${file.separator}monitors${file.separator}objects${file.separator}VersioningService.mon"/>
+	
+	<!-- Import the Apama-Macros -->
+	<import file="${env.APAMA_HOME}${file.separator}etc${file.separator}apama-macros.xml"/>
+	
+	<osfamily property="osfamily" />
+	
+	<fail unless="env.APAMA_LIBRARY_VERSION" message="Please run the bin/apama_env script before attempting to build this sample."/>
+
+	<property name="deployment.root.dir"          value="${output.dir}${file.separator}${osfamily}"/>
+	<property name="core.deployment.dir"          value="${deployment.root.dir}${file.separator}${CORE_DEPLOYMENT_DIR_NAME}"/>
+	<property name="retail.deployment.dir"        value="${deployment.root.dir}${file.separator}${RETAIL_DEPLOYMENT_DIR_NAME}"/>
+	<property name="manufacturing.deployment.dir" value="${deployment.root.dir}${file.separator}${MANUFACTURING_DEPLOYMENT_DIR_NAME}"/>
+	<property name="banking.deployment.dir"       value="${deployment.root.dir}${file.separator}${BANKING_DEPLOYMENT_DIR_NAME}"/>
+	
+	<!--
+	Default target prints out the usage of this ant file
+	-->
+	<target name="usage" >
+		<echo message="Industry Industry Analytics Kit." />
+		<echo message="" />
+		<echo message="Usage: ant target" />
+		<echo message="" />
+		<echo message="where target can be :" />
+		<echo message="" />
+		<echo message="    build     - Performs a full build as source code" />
+		<echo message="    buildCDP  - Performs a full build as CDP" />
+		<echo message="    clean     - Cleans the output and build directories" />
+		<echo message="    package   - Creates a distributable zip file for the Industry Analytics Kit" />
+		<echo message="" />
+	</target>
+		
+	<!-- Build the Industry Analytics Kit -->
+	<target name="build" depends="clean,createApamaDocumentation,copyToOutput,buildMetadata,buildIndustryVerticalKits,package">
+	</target>	
+	
+	<!-- Create the documentation for the Industry Vertical Kits -->
+	<target name="buildIndustryVerticalKits" depends="copyIndustryVerticalKitsToOutput,createDocForIndustryVerticals,buildMetadataForIndustryVerticals"/>
+
+	
+	<!-- Build the Industry Analytics Kit -->
+	<target name="buildCDP" depends="clean,copyDocsToOutput">
+		<!-- Get the set of source EPL and create a space-separated file list
+		     We wrap the results in quotes to allow support for spaces in the filenames -->
+		<path id="src.files">
+			<fileset  dir="${apama.dir}">
+				<include name="events/*.evt"/>
+			</fileset>
+			<fileset  dir="${apama.dir}">
+				<include name="eventdefinitions/*.mon"/>
+			</fileset>
+			<fileset dir="${apama.dir}">
+				<include name="monitors/cache/MemStoreUtil.mon"/>
+				<include name="monitors/components/TimeWeightedMovingAverage.mon"/>
+			</fileset>
+			<fileset dir="${apama.dir}">
+				<include name="monitors/cache/Cache.mon"/>
+				<include name="monitors/components/TimeWeightedVariance.mon"/>
+			</fileset>
+			<fileset dir="${apama.dir}">
+				<include name="monitors/components/GeoUtil.mon"/>
+				<include name="monitors/components/TimeWeightedBollinger.mon"/>
+				<include name="monitors/cache/DataSourceService.mon"/>
+				<include name="monitors/interfaces/*.mon"/>
+				<include name="monitors/objects/*.mon"/>
+				<include name="monitors/reflectors/*.mon"/>
+				<include name="monitors/analytics/core/*.mon"/>
+				<include name="monitors/analytics/core/**/*.mon"/>
+			</fileset>
+		</path>
+		<pathconvert pathsep='" "' property="src.files.csv" refid="src.files"/>
+		
+		<path id="pmml.src.files">
+			<fileset dir="${apama.dir}">
+				<include name="monitors/analytics/Prediction*.mon"/>
+			</fileset>
+		</path>
+		<pathconvert pathsep='" "' property="pmml.src.files.csv" refid="pmml.src.files"/>
+
+ 		<!-- We call the "Engine_package" executable directly, as the 
+		     Apama-Macros version does not support spaces in filenames -->
+		<exec executable="${apama.bin}${file.separator}engine_package${bin.ext}">
+			<arg line='--output "${core.deployment.dir}${file.separator}${CORE_DEPLOYMENT_DIR_NAME}.cdp"'/>
+			<arg line='"${src.files.csv}"' />
+		</exec>
+		<exec executable="${apama.bin}${file.separator}engine_package${bin.ext}">
+			<arg line='--output "${core.deployment.dir}${file.separator}${CORE_DEPLOYMENT_DIR_NAME} With Prediction.cdp"'/>
+			<arg line='"${pmml.src.files.csv}"' />
+		</exec>
+
+		<!-- Copy the Bundle Definition File to the output directory -->
+		<copy file="${apama.dir}${file.separator}bundles${file.separator}Industry Analytics Kit CDP.bnd" 
+			  tofile="${core.deployment.dir}${file.separator}bundles${file.separator}Industry Analytics Kit.bnd"/>
+		<copy file="${apama.dir}${file.separator}bundles${file.separator}Industry Analytics Kit With Prediction CDP.bnd" 
+			  tofile="${core.deployment.dir}${file.separator}bundles${file.separator}Industry Analytics Kit With Prediction.bnd"/>
+		
+		<!-- Call the packaging target now that we have all the artifacts -->
+		<antcall target="package"/>
+		
+	</target>
+
+	<!-- Clean target removes all the class and jar files from this -->
+	<!-- location downwards recursively -->
+	<target name="clean">	
+		<echo message="Cleaning project output" />
+		<delete dir="${output.dir}"/>
+		
+		<!-- Recreate the output directory -->
+		<mkdir dir="${output.dir}" />
+	</target>
+
+	<!-- Copy the Industry Analytics Kit components to the output directory -->
+	<target name="copyToOutput" depends="copyDocsToOutput">	
+		<!-- Copy the bundle config and associated Apama artifacts to the output directory -->
+		<copy todir="${core.deployment.dir}${file.separator}Industry Analytics Kit" >
+			<fileset dir="${apama.dir}">
+				<exclude name="**/Industry Analytics Kit*CDP.bnd"/>
+				<exclude name="**/Industry Analytics Kit for *.bnd"/>
+				<exclude name="monitors/analytics/retail/"/>
+				<exclude name="monitors/analytics/manufacturing/"/>
+				<exclude name="monitors/analytics/banking/"/>
+			</fileset>
+		</copy>
+		<!-- Copy the Samples to the output directory -->
+		<copy todir="${core.deployment.dir}${file.separator}samples" >
+			<fileset dir="${samples.dir}">
+			</fileset>
+		</copy>		
+		<!-- Copy the SoftwareAG Designer Bundle path definition file to the output directory -->
+		<copy todir="${core.deployment.dir}${file.separator}utilities" >
+			<fileset dir="${utilities.dir}">
+			</fileset>
+		</copy>
+		<!-- Move the SoftwareAG Designer deployer to the root of the output directory -->
+		<move file="${core.deployment.dir}${file.separator}utilities${file.separator}deploy.bat"
+			  todir="${core.deployment.dir}" >
+		</move>
+		
+		<!-- Update the Versioning Service Monitor to use the latest versions defined in the build.properties file -->
+		<copy file="${apama.dir}${versionservice.monitor.dir}"
+			  tofile="${core.deployment.dir}${file.separator}Industry Analytics Kit${file.separator}${versionservice.monitor.dir}"
+			  overwrite="true">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</copy>	
+		<!-- Copy the metadata to the output directory -->
+		<copy todir="${core.deployment.dir}${file.separator}utilities" >
+			<fileset dir="${metadata.dir}">
+				<include name="metadata.json"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	
+	<!-- Create the documentation for the Industry Vertical Kits -->
+	<target name="copyIndustryVerticalKitsToOutput" depends="copyRetailKitToOutput,copyManufacturingKitToOutput,copyBankingKitToOutput"/>
+	
+	<!-- Copy the Industry Analytics Kit for Retail components to the output directory -->
+	<target name="copyRetailKitToOutput">
+		
+		<!-- Copy the Core version of the Kit as a base for the Retail Kit -->
+		<copy todir="${retail.deployment.dir}" >
+			<fileset dir="${core.deployment.dir}">
+			</fileset>
+		</copy>
+
+		<!-- Copy the bundle config and associated Apama artifacts to the output directory -->
+		<copy todir="${retail.deployment.dir}${file.separator}Industry Analytics Kit" >
+			<fileset dir="${apama.dir}">
+				<include name="monitors/analytics/retail/**"/>
+				<include name="**/Industry Analytics Kit for Retail.bnd"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Copy the Industry Analytics Kit for Manufacturing components to the output directory -->
+	<target name="copyManufacturingKitToOutput">
+		
+		<!-- Copy the Core version of the Kit as a base for the Manufacturing Kit -->
+		<copy todir="${manufacturing.deployment.dir}" >
+			<fileset dir="${core.deployment.dir}">
+			</fileset>
+		</copy>
+			
+		<!-- Copy the bundle config and associated Apama artifacts to the output directory -->
+		<copy todir="${manufacturing.deployment.dir}${file.separator}Industry Analytics Kit" >
+			<fileset dir="${apama.dir}">
+				<include name="monitors/analytics/manufacturing/**"/>
+				<include name="**/Industry Analytics Kit for Manufacturing.bnd"/>
+			</fileset>
+		</copy>
+	</target>	
+	
+	<!-- Copy the Industry Analytics Kit for Banking components to the output directory -->
+	<target name="copyBankingKitToOutput">
+		
+		<!-- Copy the Core version of the Kit as a base for the Banking Kit -->
+		<copy todir="${banking.deployment.dir}" >
+			<fileset dir="${core.deployment.dir}">
+			</fileset>
+		</copy>
+			
+		<!-- Copy the bundle config and associated Apama artifacts to the output directory -->
+		<copy todir="${banking.deployment.dir}${file.separator}Industry Analytics Kit" >
+			<fileset dir="${apama.dir}">
+				<include name="monitors/analytics/banking/**"/>
+				<include name="**/Industry Analytics Kit for Banking.bnd"/>
+			</fileset>
+		</copy>
+		
+	</target>
+		
+	<!-- Create the documentation. -->
+	<target name="createApamaDocumentation">
+		<delete dir="${apama.doc.dir}"/>
+		<mkdir dir="${apama.doc.dir}"/>
+		<generate-apamadoc outputDir="${apama.doc.dir}">
+			<fileset dir="${apama.dir}${file.separator}monitors">
+				<include name="**/*.mon"/>
+				<exclude name="analytics/retail/"/>
+				<exclude name="analytics/manufacturing/"/>
+				<exclude name="analytics/banking/"/>
+			</fileset>
+			<fileset dir="${apama.dir}${file.separator}eventdefinitions">
+				<include name="**/*.mon"/>
+			</fileset>
+		</generate-apamadoc>
+	</target>
+	
+	<!-- Create the documentation for the Industry Vertical Kits -->
+	<target name="createDocForIndustryVerticals">
+		<antcall inheritAll="false" target="createApamaDocForRetail"/>
+		<antcall inheritAll="false" target="createApamaDocForManufacturing"/>
+		<antcall inheritAll="false" target="createApamaDocForBanking"/>
+	</target>
+	
+	<!-- Create the documentation for the Retail Kit -->
+	<target name="createApamaDocForRetail">
+		<mkdir dir="${retail.deployment.dir}${file.separator}docs${file.separator}reference"/>
+		<generate-apamadoc outputDir="${retail.deployment.dir}${file.separator}docs${file.separator}reference">
+			<fileset dir="${retail.deployment.dir}${file.separator}Industry Analytics Kit">
+				<include name="**/*.mon"/>
+			</fileset>
+		</generate-apamadoc>
+	</target>
+	
+	<!-- Create the documentation for the Manufacturing Kit -->
+	<target name="createApamaDocForManufacturing">
+		<mkdir dir="${manufacturing.deployment.dir}${file.separator}docs${file.separator}reference"/>
+		<generate-apamadoc outputDir="${manufacturing.deployment.dir}${file.separator}docs${file.separator}reference">
+			<fileset dir="${manufacturing.deployment.dir}${file.separator}Industry Analytics Kit">
+				<include name="**/*.mon"/>
+			</fileset>
+		</generate-apamadoc>
+	</target>
+	
+	<!-- Create the documentation for the Banking Kit -->
+	<target name="createApamaDocForBanking">
+		<mkdir dir="${banking.deployment.dir}${file.separator}docs${file.separator}reference"/>
+		<generate-apamadoc outputDir="${banking.deployment.dir}${file.separator}docs${file.separator}reference">
+			<fileset dir="${banking.deployment.dir}${file.separator}Industry Analytics Kit">
+				<include name="**/*.mon"/>
+			</fileset>
+		</generate-apamadoc>
+	</target>
+	
+	
+	<!-- Copy the Documentation to the output directory -->
+	<target name="copyDocsToOutput">
+		<echo file="${doc.dir}${file.separator}version.info"
+			  message="Industry Analytics Kit Version: ${IAK_VERSION}"/>
+			  
+		<copy todir="${core.deployment.dir}${file.separator}docs" >
+			<fileset dir="${doc.dir}">
+				<exclude name="start.htm"/>
+				<exclude name="Industry Analytics Kit Development.html"/>
+				<exclude name="*.bak"/>
+			</fileset>
+		</copy>
+		<copy todir="${core.deployment.dir}${file.separator}docs" 
+			  file="${doc.dir}${file.separator}start.htm" >
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</copy>
+
+		<!-- Copy the Licensing information to the output directory -->
+		<copy file="${INDUSTRY_ANALYTICS_KIT}${file.separator}..${file.separator}license.txt" 
+			  tofile="${core.deployment.dir}${file.separator}license.txt"/>
+		<copy file="${INDUSTRY_ANALYTICS_KIT}${file.separator}..${file.separator}Third-Party Notices.pdf" 
+			  tofile="${core.deployment.dir}${file.separator}Third-Party Notices.pdf"/>
+		<copy file="${INDUSTRY_ANALYTICS_KIT}${file.separator}..${file.separator}Readme.pdf" 
+			  tofile="${core.deployment.dir}${file.separator}Readme.pdf"/>
+	</target>
+		
+	<!-- build the metadata.json used by the AnalyticsBuilder -->
+	<target name="buildMetadata">
+		<createMetadataFile baseDir="${core.deployment.dir}"/>
+	</target>
+
+	<target name="buildMetadataForIndustryVerticals">
+		<createMetadataFile baseDir="${retail.deployment.dir}"/>
+		<createMetadataFile baseDir="${manufacturing.deployment.dir}"/>
+		<createMetadataFile baseDir="${banking.deployment.dir}"/>
+	</target>
+	
+	<!-- Macro for creating the metadata.json used by the AnalyticsBuilder -->
+	<macrodef name="createMetadataFile">
+		<attribute name="baseDir"   default=""/>
+		<attribute name="sourceDir" default=""/>
+		<attribute name="docDir"    default=""/>
+		<attribute name="outputDir" default=""/>
+		<sequential>
+			<local name="localSrcDir"/>
+			<if><equals arg1="@{sourceDir}" arg2=""/><then>
+				<property name="localSrcDir" value="@{baseDir}${file.separator}Industry Analytics Kit${file.separator}monitors"/>
+			</then><else>
+				<property name="localSrcDir" value="@{sourcedir}"/>
+			</else>
+			</if>
+
+			<local name="localDocDir"/>
+			<if><equals arg1="@{docDir}" arg2=""/><then>
+				<property name="localDocDir" value="@{baseDir}${file.separator}docs${file.separator}reference"/>
+			</then><else>
+				<property name="localDocDir" value="@{docDir}"/>
+			</else>
+			</if>
+
+			<local name="localOutputDir"/>
+			<if><equals arg1="@{outputDir}" arg2=""/><then>
+				<property name="localOutputDir" value="@{baseDir}${file.separator}utilities"/>
+			</then><else>
+				<property name="localOutputDir" value="@{outputDir}"/>
+			</else>
+			</if>
+
+			<java jar="${INDUSTRY_ANALYTICS_KIT}/../metadataBuilder/out/metadataBuilder.jar" fork="true" failonerror="true">
+				<arg value="-s"/><arg value="${localSrcDir}"/>
+				<arg value="-d"/><arg value="${localDocDir}"/>
+				<arg value="-o"/><arg value="${localOutputDir}"/>
+				<arg value="-v"/><arg value="${IAK_VERSION}"/>
+				<arg value="-t"/><arg value="${metadata.template.file}"/>
+				<arg value="-x"/><arg value="${metadata.samples.dir}"/>
+			</java>
+		</sequential>
+	</macrodef>
+	
+	<!-- Get the SVN Version if needed -->	
+	<target name="getSVNVersion">
+		<delete file="${output.dir}${file.separator}svn.properties"/>
+		<exec output="${output.dir}${file.separator}svn.properties" executable="svnversion"/>
+		<replaceregexp file="${output.dir}${file.separator}svn.properties" match="(.*)" replace="SVN_REVISION=\1"/>
+		<replaceregexp file="${output.dir}${file.separator}svn.properties" match=":" replace="_"/>
+		<property file="${output.dir}${file.separator}svn.properties" />
+		<echo>SVN Revision: ${SVN_REVISION}</echo>
+	</target>
+
+	<!-- Build a zip file to package the Industry Analytics Kit for deployment -->
+	<target name="package" depends="getSVNVersion">
+		<zipOutput filename="${CORE_INPUT_ZIPFILE_NAME}"          srcDir="${core.deployment.dir}"          prefixDir="${CORE_DEPLOYMENT_DIR_NAME}"/>
+		<zipOutput filename="${RETAIL_INPUT_ZIPFILE_NAME}"        srcDir="${retail.deployment.dir}"        prefixDir="${RETAIL_DEPLOYMENT_DIR_NAME}"/>
+		<zipOutput filename="${MANUFACTURING_INPUT_ZIPFILE_NAME}" srcDir="${manufacturing.deployment.dir}" prefixDir="${MANUFACTURING_DEPLOYMENT_DIR_NAME}"/>
+		<zipOutput filename="${BANKING_INPUT_ZIPFILE_NAME}"       srcDir="${banking.deployment.dir}"       prefixDir="${BANKING_DEPLOYMENT_DIR_NAME}"/>
+	</target>
+	
+	<!-- Macro for creating the metadata.json used by the AnalyticsBuilder -->
+	<macrodef name="zipOutput">
+		<attribute name="fileName"/>
+		<attribute name="srcDir"/>
+		<attribute name="prefixDir"/>
+		<sequential>
+			<if>
+				<equals arg1="${env.suppress_svn_details}" arg2="true" />
+				<then>
+					<property name="packageExtension" value=""/>
+				</then>
+				<else>
+					<property name="packageExtension" value="_${SVN_REVISION}"/>
+				</else>
+			</if>
+			<if> <!-- Windows build -->
+				<equals arg1="${osfamily}" arg2="windows"/>
+				<then>
+					<!-- Package everything up -->
+					<zip destfile="${output.dir}${file.separator}${osfamily}${file.separator}@{fileName}${packageExtension}.zip">
+						<zipfileset prefix="@{prefixDir}" dir="@{srcDir}"/>
+					</zip>
+				</then>
+			<else> <!-- Linux build -->
+				<tar compression="gzip" destfile="${output.dir}${file.separator}${osfamily}${file.separator}@{fileName}${packageExtension}.tar.gz" longfile="gnu">
+					<tarfileset prefix="@{prefixDir}" dir="@{srcDir}"/>
+				</tar>
+			</else> 
+			</if>
+		</sequential>
+	</macrodef>
+</project>

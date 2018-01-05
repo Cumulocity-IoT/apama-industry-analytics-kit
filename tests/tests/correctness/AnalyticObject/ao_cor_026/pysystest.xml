@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pysystest state="runnable" type="auto">
+	<description>
+		<title>Check management DELETE command with stand alone monitor</title>
+		<purpose>
+		<![CDATA[Uses the Delta Analytic as a simple pre-existing Analytic example.]]>
+		</purpose>
+	</description>
+	<classification>
+		<groups>
+			<group>Industry_Analytics</group>
+			<group>EPL</group>
+		</groups>
+	</classification>
+	<data>
+		<class module="run" name="PySysTest"></class>
+	</data>
+	<traceability>
+		<requirements>
+			<requirement></requirement>
+		</requirements>
+	</traceability>
+</pysystest>

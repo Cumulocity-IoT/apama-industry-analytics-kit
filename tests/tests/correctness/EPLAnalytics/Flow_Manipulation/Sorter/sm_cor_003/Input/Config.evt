@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("Sorter", ["Input1"], ["Output1"], {"timeWindow":"30.0"})
+com.industry.analytics.Analytic("Sorter", ["Input2"], ["Output2"], {"timeWindow":"30.0"})

@@ -1,0 +1,17 @@
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 10.0, "", 0.0, 0.0, 0.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 20.0, "", 0.0, 0.0, 0.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 30.0, "", 0.0, 0.0, 0.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 1.0, 10.0, "", 0.0, 0.0, 0.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 1.0, 20.0, "", 0.0, 0.0, 0.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 1.0, 30.0, "", 0.0, 0.0, 0.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 2.0, 30.0, "", 0.0, 0.0, 0.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 2.0, 20.0, "", 0.0, 0.0, 0.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 2.0, 10.0, "", 0.0, 0.0, 0.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 3.0, 10.0, "", 0.0, 0.0, 0.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 3.0, 20.0, "", 0.0, 0.0, 0.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 3.0, 30.0, "", 0.0, 0.0, 0.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 3.0, 25.0, "", 0.0, 0.0, 0.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 3.0, 15.0, "", 0.0, 0.0, 0.0, {})

@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("volatility", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("VOLATILITY", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("VoLaTiLiTy", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("Volatility", ["Input"], ["Output"], {})

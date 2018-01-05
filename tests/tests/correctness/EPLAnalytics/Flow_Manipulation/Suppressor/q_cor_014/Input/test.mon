@@ -1,0 +1,255 @@
+//*****************************************************************************
+// Title:         Suppressor test
+//*****************************************************************************
+
+package com.industry.analytics.flow_manipulation.Suppressor_cor_014;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.flow_manipulation.Suppressor;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload() {
+   
+		// Test minimal params - Should pass
+		(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+														{ Suppressor.TIMEWINDOW     : "10.0",
+														  Suppressor.TRIGGER_PARAM  : "triggerParamName",
+														  Suppressor.RESET_PARAM   : "resetParamName" } ), 
+							initComplete );
+								  
+		// Test minimal params - invalid ACTION_PARAM value - Should pass - Treated as "no reset"
+		on NextTest( testNum=2 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM  : "triggerParamName",
+															  Suppressor.RESET_PARAM : ""} ), 
+								initComplete );
+		}
+
+		// Test minimal params - invalid ACTION_PARAM value - Should pass - Treated as "no reset" as the string will be trimmed.
+		on NextTest( testNum=3 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM  : "triggerParamName",
+															  Suppressor.RESET_PARAM : "  "} ), 
+								initComplete );
+		}
+
+		// Test minimal params with invalid RESET_PARAM name - Should pass as the param name is unrecognised and is NOT mandatory
+		on NextTest( testNum=4 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM  : "triggerParamName",
+															  "ACTIONPARAM" : "resetParamName"} ), 
+								initComplete );
+		}
+
+		// Test minimal params with invalid RESET_PARAM name - Should pass as the param name is unrecognised and is NOT mandatory 
+		on NextTest( testNum=5 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM  : "triggerParamName",
+															  "actionparam" : "resetParamName"} ), 
+								initComplete );
+		}
+
+		// Test full params - Valid RESET_PARAM name and value - Should pass
+		on NextTest( testNum=6 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM  : "triggerParamName",
+															  "actionParam": "resetParamName"} ), 
+								initComplete );
+		}
+		
+		// Test full params - Valid RESET_PARAM value (using constant) - Should pass
+		on NextTest( testNum=7 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM  : "triggerParamName",
+															  Suppressor.RESET_PARAM    : "resetParamName"} ), 
+								initComplete );
+		}
+		
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM same as RESET_PARAM - Should fail - Values will both be empty strings
+		on NextTest( testNum=8 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW    : "10.0",
+															  Suppressor.TRIGGER_PARAM : "triggerParamName",
+															  Suppressor.RESET_PARAM   : "triggerParamName" } ), 
+								initComplete );
+		}
+		
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM same as RESET_PARAM with DIFFERENT values - Should pass
+		on NextTest( testNum=9 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW          : "10.0",
+															  Suppressor.TRIGGER_PARAM       : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue",
+															  Suppressor.RESET_PARAM         : "triggerParamName",
+															  Suppressor.RESET_PARAM_VALUE   : "resetParamValue" } ), 
+								initComplete );
+		}
+
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM same as RESET_PARAM with SAME values - Should fail
+		on NextTest( testNum=10 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW          : "10.0",
+															  Suppressor.TRIGGER_PARAM       : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue",
+															  Suppressor.RESET_PARAM         : "triggerParamName",
+															  Suppressor.RESET_PARAM_VALUE   : "triggerParamValue" } ), 
+								initComplete );
+		}
+
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM and RESET_PARAM different with DIFFERENT values - Should pass
+		on NextTest( testNum=11 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW          : "10.0",
+															  Suppressor.TRIGGER_PARAM       : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue",
+															  Suppressor.RESET_PARAM         : "resetParamName",
+															  Suppressor.RESET_PARAM_VALUE   : "resetParamValue" } ), 
+								initComplete );
+		}
+
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM and RESET_PARAM different with SAME values - Should pass
+		on NextTest( testNum=12 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW          : "10.0",
+															  Suppressor.TRIGGER_PARAM       : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue",
+															  Suppressor.RESET_PARAM         : "resetParamName",
+															  Suppressor.RESET_PARAM_VALUE   : "triggerParamValue" } ), 
+								initComplete );
+		}
+		
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM+ACTION_PARAM same as RESET_PARAM - Should pass
+		on NextTest( testNum=13 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW    : "10.0",
+															  Suppressor.TRIGGER_PARAM : "triggerParamName",
+															  Suppressor.ACTION_PARAM  : "triggerParamName",
+															  Suppressor.RESET_PARAM   : "triggerParamName" } ), 
+								initComplete );
+		}
+		
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM+ACTION_PARAM same as RESET_PARAM with DIFFERENT values - Should pass
+		on NextTest( testNum=14 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW          : "10.0",
+															  Suppressor.TRIGGER_PARAM       : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue",
+															  Suppressor.ACTION_PARAM        : "triggerParamName",
+															  Suppressor.ACTION_PARAM_VALUE  : "actionParamValue",
+															  Suppressor.RESET_PARAM         : "triggerParamName",
+															  Suppressor.RESET_PARAM_VALUE   : "resetParamValue" } ), 
+								initComplete );
+		}
+
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM+ACTION_PARAM same as RESET_PARAM with SAME values - Should fail
+		on NextTest( testNum=15 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW          : "10.0",
+															  Suppressor.TRIGGER_PARAM       : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue",
+															  Suppressor.ACTION_PARAM        : "triggerParamName",
+															  Suppressor.ACTION_PARAM_VALUE  : "triggerParamValue",
+															  Suppressor.RESET_PARAM         : "triggerParamName",
+															  Suppressor.RESET_PARAM_VALUE   : "triggerParamValue" } ), 
+								initComplete );
+		}
+
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM different but ACTION_PARAM same as RESET_PARAM with SAME values - Should fail
+		on NextTest( testNum=16 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW          : "10.0",
+															  Suppressor.TRIGGER_PARAM       : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue",
+															  Suppressor.ACTION_PARAM        : "actionParamName",
+															  Suppressor.ACTION_PARAM_VALUE  : "actionParamValue",
+															  Suppressor.RESET_PARAM         : "actionParamName",
+															  Suppressor.RESET_PARAM_VALUE   : "actionParamValue" } ), 
+								initComplete );
+		}
+
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM+ACTION_PARAM and RESET_PARAM different with DIFFERENT values - Should pass
+		on NextTest( testNum=17 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW          : "10.0",
+															  Suppressor.TRIGGER_PARAM       : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue",
+															  Suppressor.ACTION_PARAM        : "triggerParamName",
+															  Suppressor.ACTION_PARAM_VALUE  : "triggerParamValue",
+															  Suppressor.RESET_PARAM         : "resetParamName",
+															  Suppressor.RESET_PARAM_VALUE   : "resetParamValue" } ), 
+								initComplete );
+		}
+		
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM different but ACTION_PARAM same as RESET_PARAM with DIFFERENT values - Should pass
+		on NextTest( testNum=18 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW          : "10.0",
+															  Suppressor.TRIGGER_PARAM       : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue",
+															  Suppressor.ACTION_PARAM        : "actionParamName",
+															  Suppressor.ACTION_PARAM_VALUE  : "actionParamValue",
+															  Suppressor.RESET_PARAM         : "actionParamName",
+															  Suppressor.RESET_PARAM_VALUE   : "resetParamValue" } ), 
+								initComplete );
+		}
+
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM+ACTION_PARAM and RESET_PARAM different with SAME values - Should pass
+		on NextTest( testNum=19 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW          : "10.0",
+															  Suppressor.TRIGGER_PARAM       : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue",
+															  Suppressor.ACTION_PARAM        : "actionParamName",
+															  Suppressor.ACTION_PARAM_VALUE  : "actionParamValue",
+															  Suppressor.RESET_PARAM         : "resetParamName",
+															  Suppressor.RESET_PARAM_VALUE   : "triggerParamValue" } ), 
+								initComplete );
+		}
+
+
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM+ACTION_PARAM+RESET_PARAM different with SAME values - Should pass
+		on NextTest( testNum=20 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW          : "10.0",
+															  Suppressor.TRIGGER_PARAM       : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue",
+															  Suppressor.ACTION_PARAM        : "actionParamName",
+															  Suppressor.ACTION_PARAM_VALUE  : "actionParamValue",
+															  Suppressor.RESET_PARAM         : "resetParamName",
+															  Suppressor.RESET_PARAM_VALUE   : "actionParamValue" } ), 
+								initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}
+

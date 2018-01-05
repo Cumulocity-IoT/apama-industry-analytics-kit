@@ -1,0 +1,15 @@
+com.industry.analytics.Analytic("Distance", [], [], {})
+com.industry.analytics.Analytic("Distance", ["Input1"], ["Output1"], {})
+
+com.industry.analytics.Analytic("Distance", ["Input2"], ["Output2"], {"LATITUDE": "-152.36524896", "LONGITUDE" : "-202.01234"})
+
+com.industry.analytics.Analytic("Distance", ["Input3"], ["Output3"], {"LATITUDE": "152.36524896", "LONGITUDE" : "202.01234"})
+
+com.industry.analytics.Analytic("Distance", ["Input4"], ["Output4"], {"LATITUDE": "51.494824", "LONGITUDE" : "-0.109177"})
+
+com.industry.analytics.Analytic("Distance", ["Input5"], ["Output4"], {"LATITUDE": "51.494824", "LONGITUDE" : "-0.109177", "distanceUnit":"ASD"})
+
+com.industry.analytics.Analytic("Distance", ["Input6"], ["Output4"], {"LATITUDE": "51.494824", "LONGITUDE" : "-0.109177", "distanceUnit":"KMS"})
+
+com.industry.analytics.Analytic("Distance", ["Input7"], ["Output4"], {"LATITUDE": "51.494824", "LONGITUDE" : "-0.109177", "distanceUnit":"MILES"})
+

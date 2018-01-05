@@ -1,0 +1,58 @@
+// Note: correlator time is independent of event timestamps
+
+// In order for each channel
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 1.0, "", 1.0, 2.0, 3.0, {})
+"Input2", com.industry.analytics.Data("Input2", "r", "s2", 0.0, 2.0, "", 1.0, 2.0, 3.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 10.0, 1.10, "", 1.0, 2.0, 3.0, {})
+"Input2", com.industry.analytics.Data("Input2", "r", "s2", 10.0, 2.10, "", 1.0, 2.0, 3.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 20.0, 1.20, "", 1.0, 2.0, 3.0, {})
+"Input2", com.industry.analytics.Data("Input2", "r", "s2", 20.0, 2.20, "", 1.0, 2.0, 3.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 30.0, 1.30, "", 1.0, 2.0, 3.0, {})
+"Input2", com.industry.analytics.Data("Input2", "r", "s2", 30.0, 2.30, "", 1.0, 2.0, 3.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 40.0, 1.40, "", 1.0, 2.0, 3.0, {})
+"Input2", com.industry.analytics.Data("Input2", "r", "s2", 40.0, 2.40, "", 1.0, 2.0, 3.0, {})
+
+// Let this lot time out and get sent
+&TIME(3.0)
+&TIME(6.0)
+&TIME(9.0)
+&TIME(12.0)
+&TIME(15.0)
+&TIME(18.0)
+&TIME(21.0)
+&TIME(24.0)
+&TIME(27.0)
+&TIME(30.0)
+&TIME(33.0)
+&TIME(40.0)
+
+// Empty cache, so should see no further firing of the wait listener until a new Data arrives.
+&TIME(50.0)
+
+// Now some out of order
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 90.0, 1.90, "", 1.0, 2.0, 3.0, {})
+"Input2", com.industry.analytics.Data("Input2", "r", "s2", 90.0, 2.90, "", 1.0, 2.0, 3.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 110.0, 1.10, "", 1.0, 2.0, 3.0, {})
+"Input2", com.industry.analytics.Data("Input2", "r", "s2", 120.0, 2.10, "", 1.0, 2.0, 3.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 100.0, 1.20, "", 1.0, 2.0, 3.0, {})
+"Input2", com.industry.analytics.Data("Input2", "r", "s2", 110.0, 2.20, "", 1.0, 2.0, 3.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 160.0, 1.30, "", 1.0, 2.0, 3.0, {})
+"Input2", com.industry.analytics.Data("Input2", "r", "s2", 150.0, 2.30, "", 1.0, 2.0, 3.0, {})
+
+// Time out: will act the same as above, but now the point is made we'll let the correlator
+// fire the wait listeners by itself.
+&TIME(92.0)
+
+// Anomalies
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 1.30, "", 1.0, 2.0, 3.0, {})
+"Input2", com.industry.analytics.Data("Input2", "r", "s2", 160.0, 2.30, "", 1.0, 2.0, 3.0, {})
+// The above event is altered from 170.0 in sm_cor_002 as with each instance now being on a separate context
+// and the realtime clock iterations being additive and relative to the last received event timestamp,
+// the expiry date gets out of sync for each instance.

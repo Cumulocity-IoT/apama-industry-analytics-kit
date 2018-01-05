@@ -1,0 +1,242 @@
+2015-10-27 09:06:24.980 ##### [7272] - Correlator, version 5.3.0.4.262688 (build rel/5.3.0.x@262688 on amd64-win), started.
+2015-10-27 09:06:24.980 ##### [7272] - Running on host 'MCNICA02.eur.ad.sag'.
+2015-10-27 09:06:24.980 ##### [7272] - Running on platform 'Windows 7 (Service Pack 1)'.
+2015-10-27 09:06:24.980 ##### [7272] - Running on CPU 'GenuineIntel family 6 model 12 stepping 3 Intel(R) Core(TM) i7-4800MQ CPU @ 2.70GHz'.
+2015-10-27 09:06:24.980 ##### [7272] - Running with process Id 9804.
+2015-10-27 09:06:24.980 ##### [7272] - Running with 16289.12MB of physical memory.
+2015-10-27 09:06:24.980 ##### [7272] - There are 8 CPU(s)
+2015-10-27 09:06:24.980 ##### [7272] - Correlator command line: C:\Program Files\SoftwareAG\Apama 5.3\bin\correlator -p 11052 -f correlator.log --inputLog input.log
+2015-10-27 09:06:24.980 ##### [7272] - Current Working Directory: C:\Projects_53\IoT\tests\correctness\EPLAnalytics\Spike\bb_cor_003\Output\win32
+2015-10-27 09:06:24.980 ##### [7272] - Current UTC time: 2015-10-27 09:06:24, local timezone: GMT Standard Time
+2015-10-27 09:06:24.980 ##### [7272] - Input value - port                     = 11052
+2015-10-27 09:06:24.980 ##### [7272] - Input value - output queue size        = 10000
+2015-10-27 09:06:24.980 ##### [7272] - Input value - output queue batch size  = 100
+2015-10-27 09:06:24.980 ##### [7272] - Input value - output queue mode        = blocking
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_HOME=C:\Program Files\SoftwareAG\Apama 5.3
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_LIBRARY_VERSION=5.3
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_ENVSET=5.3:C:\Program Files\SoftwareAG\Apama 5.3:amd64-win
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_CORRELATOR_HOME=C:\Program Files\SoftwareAG\Apama 5.3
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_WORK=C:\Projects_53
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_JRE=C:\Program Files\SoftwareAG\Apama 5.3\third_party\jre
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_PLATFORM=amd64-win
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_MACHTYPE=amd64-win64-msvc9
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_MANAGEMENT_HOME=C:\Program Files\SoftwareAG\Apama 5.3
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_COMMON_JRE=C:\Program Files\SoftwareAG\Apama 5.3\third_party\jre
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_DEV_HOME=C:\Program Files\SoftwareAG\Apama 5.3
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_FOUNDATION_HOME="TT"
+2015-10-27 09:06:24.980 ##### [7272] - Input value - environment variable     = APAMA_DASHBOARD_HOME=C:\Program Files\SoftwareAG\Apama 5.3
+2015-10-27 09:06:24.980 ##### [7272] - Using memory allocator                 = TBB scalable allocator
+2015-10-27 09:06:24.980 CRIT  [7272] - Warning: started without a license file, shutting down at 2015.10.27 09:36
+2015-10-27 09:06:24.980 ##### [7272] - License information:
+2015-10-27 09:06:24.980 ##### [7272] -   Expiration date:   2015.10.27 09:36
+2015-10-27 09:06:24.980 ##### [7272] -   Monitor limit:     unlimited
+2015-10-27 09:06:24.980 ##### [7272] -   Context limit:     unlimited
+2015-10-27 09:06:24.980 ##### [7272] -   Event rate limit:  unlimited
+2015-10-27 09:06:24.980 ##### [7272] -   Connect Allowed:   true
+2015-10-27 09:06:24.980 ##### [7272] -   Version prefix:    "5"
+2015-10-27 09:06:24.980 ##### [7272] -   Platforms:        
+2015-10-27 09:06:24.980 ##### [7272] -     "Windows"
+2015-10-27 09:06:24.980 ##### [7272] - Input value - per receiver queue size  = 10 s
+2015-10-27 09:06:24.980 ##### [7272] - Input value - per receiver queue size  = 10240 kb
+2015-10-27 09:06:24.980 ##### [7272] - Input value - input queue size         = 20000
+2015-10-27 09:06:24.980 ##### [7272] - Java application support               = disabled
+2015-10-27 09:06:24.980 ##### [7272] - External clocking                      = disabled
+2015-10-27 09:06:24.980 ##### [7272] - Input value - logfile                  = correlator.log
+2015-10-27 09:06:24.980 ##### [7272] - Input value - loglevel                 = INFO
+2015-10-27 09:06:24.980 ##### [7272] - Input value - inputLog                = input.log
+2015-10-27 09:06:24.980 ##### [7272] - Compiler optimizations                 = enabled - the debugger cannot be used; specify command line option "-g" to use it.
+2015-10-27 09:06:24.980 ##### [7272] - Using EPL runtime                      = interpreted
+2015-10-27 09:06:24.982 CRIT  [7272] - Opening new input log: input.log
+2015-10-27 09:06:24.982 INFO  [7272] - Will log queue size every 5.000000 seconds
+2015-10-27 09:06:24.985 ##### [7272] - Component ID: correlator (correlator/6210251200005950719/6210251200005950719)
+2015-10-27 09:06:24.986 ##### [7272] - Correlator, version 5.3.0.4.262688, running
+2015-10-27 09:06:24.986 CRIT  [7272] - *************************************************************************
+2015-10-27 09:06:24.986 CRIT  [7272] - *** License file not specified.                                       ***
+2015-10-27 09:06:24.986 CRIT  [7272] - *** Correlator will run for 30 minutes and accept only local clients. ***
+2015-10-27 09:06:24.986 CRIT  [7272] - *************************************************************************
+2015-10-27 09:06:26.677 INFO  [6576] - Sender engine_inject (0000000005A5FA10) (component ID 6210251208077888767/6209969733101178111) connected from 127.0.0.1:55667
+2015-10-27 09:06:26.721 INFO  [14248] - Added monitor com.apama.scenario.ScenarioService
+2015-10-27 09:06:26.721 INFO  [14248] - Added monitor com.apama.scenario.RequestInstancesHandler
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.ScenarioServiceUpdaterMultipleInstances
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.ScenarioServiceUpdaterSingleInstance
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.ScenarioServiceUpdaterBase
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.CallbackHelper
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.ScenarioServiceLibrary
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.AllConfiguration
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.GetAllConfiguration
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.ScenarioProcessedUpdates
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.OperationCompleted
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.Configuration
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.GetConfiguration
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.ParallelStarting
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.RequestInstancesParallelDone
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.RequestInstancesParallel
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.FinishedScenarioRecovery
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.StartScenarioRecovery
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.ScenarioFinished
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.RequestInstancesInternal
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.SendQueuedUpdatesNow
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.ConfigureUpdates
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.SetThrottlingPeriod
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.ScenarioServiceUnloaded
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.ScenarioServiceLoaded
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.Instance
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.ScenarioUnloaded
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.Scenario
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.RequestInstancesDone
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.RequestInstancesOnChannelByUser
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.RequestInstancesOnChannel
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.RequestScenariosAck
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.RequestScenariosDone
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.RequestScenarios
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.StateChange
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.Acknowledge
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.Update
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.InstanceDied
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.Deleted
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.Delete
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.Edited
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.Edit
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.ParentChildRelationship
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.Created
+2015-10-27 09:06:26.721 INFO  [14248] - Added type com.apama.scenario.Create
+2015-10-27 09:06:26.721 INFO  [14248] - Injected MonitorScript from file C:\Program Files\SoftwareAG\Apama 5.3\monitors\ScenarioService.mon (ef1e8ccb7ae029561fa5e655efa434a4), size 75034 bytes, compile time 0.03 seconds
+2015-10-27 09:06:26.722 INFO  [13676] - com.apama.scenario.ScenarioService [1] ScenarioService interface loaded. MetaData: {"interface.fileName":"ScenarioService.mon","interface.fullVersion":"rel/5.3.0.x@262688","interface.language":"MonitorScript","interface.name":"ScenarioService","interface.package":"com.apama.scenario","interface.vendor":"Apama","interface.version":"5.3.0.4.262688"}
+2015-10-27 09:06:26.723 INFO  [9824] - Sender engine_inject (0000000005A5FA10) (component ID 6210251208077888767/6209969733101178111) disconnected cleanly: Other party requested disconnection
+2015-10-27 09:06:26.782 INFO  [6576] - Sender engine_inject (0000000006F93CA0) (component ID 6210251208701005055/6209969733724294399) connected from 127.0.0.1:55670
+2015-10-27 09:06:26.788 INFO  [13772] - MemoryStorePlugin version 5.3.0.4.262688 (build rel/5.3.0.x@262688 on amd64-win), loaded.
+2015-10-27 09:06:26.797 INFO  [13772] - Plugin library MemoryStorePlugin (C++ API v9.0) loaded OK
+2015-10-27 09:06:26.800 INFO  [4496] - Added type com.apama.memorystore.Storage
+2015-10-27 09:06:26.800 INFO  [4496] - Added type com.apama.memorystore.Store
+2015-10-27 09:06:26.800 INFO  [4496] - Added type com.apama.memorystore.Table
+2015-10-27 09:06:26.800 INFO  [4496] - Added type com.apama.memorystore.Iterator
+2015-10-27 09:06:26.800 INFO  [4496] - Added type com.apama.memorystore.RowChanged
+2015-10-27 09:06:26.800 INFO  [4496] - Added type com.apama.memorystore.Row
+2015-10-27 09:06:26.800 INFO  [4496] - Added type com.apama.memorystore.Schema
+2015-10-27 09:06:26.800 INFO  [4496] - Added type com.apama.memorystore.Finished
+2015-10-27 09:06:26.800 INFO  [4496] - Injected MonitorScript from file C:\Program Files\SoftwareAG\Apama 5.3\monitors\data_storage\MemoryStore.mon (cbd3c88b69f6e5ad540dc281c4d9c996), size 41329 bytes, compile time 0.01 seconds
+2015-10-27 09:06:26.801 INFO  [6860] - Sender engine_inject (0000000006F93CA0) (component ID 6210251208701005055/6209969733724294399) disconnected cleanly: Other party requested disconnection
+2015-10-27 09:06:26.853 INFO  [14540] - Sender engine_inject (00000000059D3CE0) (component ID 6210251208624983295/6209969733648272639) connected from 127.0.0.1:55673
+2015-10-27 09:06:26.863 INFO  [4496] - Added monitor com.apama.memorystore.MemoryStoreScenarioImpl
+2015-10-27 09:06:26.863 INFO  [4496] - Added type com.apama.memorystore.ForwardMemoryStoreUpdatesTo
+2015-10-27 09:06:26.863 INFO  [4496] - Injected MonitorScript from file C:\Program Files\SoftwareAG\Apama 5.3\monitors\data_storage\MemoryStoreScenarioImpl.mon (c57c22e6a59a94bdc043e58c7126aff8), size 10703 bytes, compile time 0.01 seconds
+2015-10-27 09:06:26.864 INFO  [13380] - Sender engine_inject (00000000059D3CE0) (component ID 6210251208624983295/6209969733648272639) disconnected cleanly: Other party requested disconnection
+2015-10-27 09:06:27.007 INFO  [6576] - Sender engine_inject (00000000059D3CE0) (component ID 6210251212673273087/6209969737696562431) connected from 127.0.0.1:55676
+2015-10-27 09:06:27.010 INFO  [4496] - Added monitor com.industry.analytics.InternConstants
+2015-10-27 09:06:27.010 INFO  [4496] - Added type com.industry.analytics.Constants
+2015-10-27 09:06:27.010 INFO  [4496] - Injected MonitorScript from file C:\Projects_53\IoT\tests\..\monitors\eventdefinitions\Constants.mon (5b49a33cbd32792c73f0a664e4211347), size 1728 bytes, compile time 0.00 seconds
+2015-10-27 09:06:27.010 INFO  [13676] - Interning ALERT_CHANNEL
+2015-10-27 09:06:27.010 INFO  [13676] - Interning DATASOURCE_MGMT_CHANNEL
+2015-10-27 09:06:27.010 INFO  [13676] - Interning boolean
+2015-10-27 09:06:27.010 INFO  [13676] - Interning decimal
+2015-10-27 09:06:27.010 INFO  [13676] - Interning float
+2015-10-27 09:06:27.010 INFO  [13676] - Interning integer
+2015-10-27 09:06:27.010 INFO  [13676] - Interning string
+2015-10-27 09:06:27.010 INFO  [13676] - Interning sequence<string>
+2015-10-27 09:06:27.010 INFO  [13676] - Interning _
+2015-10-27 09:06:27.010 INFO  [13676] - Interning IOT
+2015-10-27 09:06:27.010 INFO  [9824] - Sender engine_inject (00000000059D3CE0) (component ID 6210251212673273087/6209969737696562431) disconnected cleanly: Other party requested disconnection
+2015-10-27 09:06:27.130 INFO  [14300] - Sender engine_inject (00000000041CFC80) (component ID 6210251212488461567/6209969737511750911) connected from 127.0.0.1:55679
+2015-10-27 09:06:27.141 INFO  [4496] - Added monitor com.industry.analytics.InternMemStoreUtil
+2015-10-27 09:06:27.141 INFO  [4496] - Added type com.industry.analytics.MemStoreUtil
+2015-10-27 09:06:27.141 INFO  [4496] - Added type com.industry.analytics.TableReady
+2015-10-27 09:06:27.141 INFO  [4496] - Added type com.industry.analytics.StoreProxy
+2015-10-27 09:06:27.141 INFO  [4496] - Added type com.industry.analytics.SchemaProxy
+2015-10-27 09:06:27.141 INFO  [4496] - Added type com.industry.analytics.TableProxy
+2015-10-27 09:06:27.141 INFO  [4496] - Injected MonitorScript from file C:\Projects_53\IoT\tests\..\monitors\cache\MemStoreUtil.mon (56cbfa9d343100fe47c240a5d3a0df98), size 12972 bytes, compile time 0.01 seconds
+2015-10-27 09:06:27.142 INFO  [11504] - Interning IN_MEMORY
+2015-10-27 09:06:27.142 INFO  [11504] - Interning DISTRIBUTED
+2015-10-27 09:06:27.142 INFO  [11504] - Interning CORRELATOR_PERSISTENT
+2015-10-27 09:06:27.145 INFO  [4496] - Added type com.industry.analytics.Cache
+2015-10-27 09:06:27.145 INFO  [4496] - Added type com.industry.analytics.ClearCache
+2015-10-27 09:06:27.145 INFO  [4496] - Injected MonitorScript from file C:\Projects_53\IoT\tests\..\monitors\cache\Cache.mon (b69af37c172849f8bf9fedcb2d3e05c0), size 3872 bytes, compile time 0.00 seconds
+2015-10-27 09:06:27.146 INFO  [6860] - Sender engine_inject (00000000041CFC80) (component ID 6210251212488461567/6209969737511750911) disconnected cleanly: Other party requested disconnection
+2015-10-27 09:06:27.250 INFO  [14540] - Sender engine_inject (0000000005A9AF50) (component ID 6210251212474305791/6209969737497595135) connected from 127.0.0.1:55682
+2015-10-27 09:06:27.253 INFO  [4496] - Added monitor com.industry.analytics.InternData
+2015-10-27 09:06:27.253 INFO  [4496] - Added type com.industry.analytics.Data
+2015-10-27 09:06:27.253 INFO  [4496] - Added type com.industry.analytics.DataDetails
+2015-10-27 09:06:27.253 INFO  [4496] - Added type com.industry.analytics.DataConstants
+2015-10-27 09:06:27.254 INFO  [4496] - Injected MonitorScript from file C:\Projects_53\IoT\tests\..\monitors\eventdefinitions\Data.mon (6b59e368f5493287c6395aef336eca44), size 3055 bytes, compile time 0.00 seconds
+2015-10-27 09:06:27.254 INFO  [11504] - Interning Data
+2015-10-27 09:06:27.254 INFO  [11504] - Interning name
+2015-10-27 09:06:27.254 INFO  [11504] - Interning type
+2015-10-27 09:06:27.254 INFO  [11504] - Interning sourceId
+2015-10-27 09:06:27.254 INFO  [11504] - Interning timestamp
+2015-10-27 09:06:27.254 INFO  [11504] - Interning dValue
+2015-10-27 09:06:27.254 INFO  [11504] - Interning sValue
+2015-10-27 09:06:27.254 INFO  [11504] - Interning params
+2015-10-27 09:06:27.254 INFO  [11504] - Interning a
+2015-10-27 09:06:27.254 INFO  [11504] - Interning c
+2015-10-27 09:06:27.254 INFO  [11504] - Interning r
+2015-10-27 09:06:27.257 INFO  [4496] - Added type com.industry.analytics.Analytic
+2015-10-27 09:06:27.257 INFO  [4496] - Injected MonitorScript from file C:\Projects_53\IoT\tests\..\monitors\eventdefinitions\Analytic.mon (940e1b8a649512cea16e62bf9a8ccba5), size 3757 bytes, compile time 0.00 seconds
+2015-10-27 09:06:27.258 INFO  [13380] - Sender engine_inject (0000000005A9AF50) (component ID 6210251212474305791/6209969737497595135) disconnected cleanly: Other party requested disconnection
+2015-10-27 09:06:27.344 INFO  [14544] - Sender engine_inject (000000000A950820) (component ID 6210251212701060351/6209969737724349695) connected from 127.0.0.1:55685
+2015-10-27 09:06:27.346 INFO  [4496] - Added type com.industry.analytics.AnalyticInterface
+2015-10-27 09:06:27.346 INFO  [4496] - Injected MonitorScript from file C:\Projects_53\IoT\tests\..\monitors\interfaces\AnalyticInterface.mon (a94bbc4be67decb61a6c9a15adbf71c1), size 951 bytes, compile time 0.00 seconds
+2015-10-27 09:06:27.346 INFO  [9824] - Sender engine_inject (000000000A950820) (component ID 6210251212701060351/6209969737724349695) disconnected cleanly: Other party requested disconnection
+2015-10-27 09:06:27.441 INFO  [6576] - Sender engine_inject (000000000A950820) (component ID 6210251212811685119/6209969737834974463) connected from 127.0.0.1:55688
+2015-10-27 09:06:27.446 INFO  [4496] - Added monitor com.industry.analytics.InternAnalyticObject
+2015-10-27 09:06:27.446 INFO  [4496] - Added type com.industry.analytics.AnalyticObject
+2015-10-27 09:06:27.446 INFO  [4496] - Added type com.industry.analytics.KillInputChannelListeners
+2015-10-27 09:06:27.446 INFO  [4496] - Injected MonitorScript from file C:\Projects_53\IoT\tests\..\monitors\objects\AnalyticObject.mon (d31ffffb91b9b30eff61d31e7af5cfb7), size 4526 bytes, compile time 0.00 seconds
+2015-10-27 09:06:27.446 INFO  [14480] - Interning com.apama.queries
+2015-10-27 09:06:27.446 INFO  [14480] - Interning sendResultToChannel
+2015-10-27 09:06:27.446 INFO  [14480] - Interning sendResultToQueryChannel
+2015-10-27 09:06:27.446 INFO  [6860] - Sender engine_inject (000000000A950820) (component ID 6210251212811685119/6209969737834974463) disconnected cleanly: Other party requested disconnection
+2015-10-27 09:06:27.559 INFO  [13360] - Sender engine_inject (000000000A950820) (component ID 6210251213184978175/6209969738208267519) connected from 127.0.0.1:55691
+2015-10-27 09:06:27.567 INFO  [4496] - Added monitor com.industry.analytics.InternSpike
+2015-10-27 09:06:27.567 INFO  [4496] - Added type com.industry.analytics.detectors.Spike
+2015-10-27 09:06:27.567 INFO  [4496] - Added type com.industry.analytics.detectors.SpikeData
+2015-10-27 09:06:27.567 INFO  [4496] - Injected MonitorScript from file C:\Projects_53\IoT\tests\..\monitors\Analytics\Spike.mon (7a3b4a1e84d57376002843a1a5237e98), size 9685 bytes, compile time 0.00 seconds
+2015-10-27 09:06:27.567 INFO  [13676] - Interning Spike
+2015-10-27 09:06:27.567 INFO  [13676] - Interning timeWindow
+2015-10-27 09:06:27.567 INFO  [13676] - Interning standardDeviationChannel
+2015-10-27 09:06:27.567 INFO  [13676] - Interning standardDeviationMultiple
+2015-10-27 09:06:27.567 INFO  [13676] - Interning movingAverageChannel
+2015-10-27 09:06:27.567 INFO  [13676] - Interning lowerBollingerChannel
+2015-10-27 09:06:27.567 INFO  [13676] - Interning upperBollingerChannel
+2015-10-27 09:06:27.567 INFO  [13676] - Interning VolatilityChannel
+2015-10-27 09:06:27.567 INFO  [13676] - Interning outputNominal
+2015-10-27 09:06:27.568 WARN  [13772] - A persistent monitor com.industry.analytics.detectors.SpikeService injected into a non-persistent correlator
+2015-10-27 09:06:27.569 INFO  [4496] - Added monitor com.industry.analytics.detectors.SpikeService
+2015-10-27 09:06:27.569 INFO  [4496] - Injected MonitorScript from file C:\Projects_53\IoT\tests\..\monitors\Analytics\SpikeService.mon (fc818e6db7006fdcfc56fa3c81ba4735), size 1313 bytes, compile time 0.00 seconds
+2015-10-27 09:06:27.569 INFO  [13380] - Sender engine_inject (000000000A950820) (component ID 6210251213184978175/6209969738208267519) disconnected cleanly: Other party requested disconnection
+2015-10-27 09:06:27.662 INFO  [14300] - Receiver engine_receive (000000000AB74BF0) (component ID 6210251212698176767/6209969737721466111) connected from 127.0.0.1:55694
+2015-10-27 09:06:27.662 INFO  [14300] - Receiver engine_receive (000000000AB74BF0) initially subscribed to <no channels>
+2015-10-27 09:06:27.662 INFO  [14300] - Blocking receiver engine_receive (000000000AB74BF0) will be blocked after 10.000000 seconds or 10240 kb if slow
+2015-10-27 09:06:27.662 INFO  [13380] - Receiver engine_receive (000000000AB74BF0) unsubscribed from all channels
+2015-10-27 09:06:27.662 INFO  [2328] - Receiver engine_receive (000000000AB74BF0) added subscriptions to [BollingerResult]
+2015-10-27 09:06:28.670 INFO  [9576] - Receiver engine_receive (000000000A7AF2B0) (component ID 6210251217305357567/6209969742328646911) connected from 127.0.0.1:55697
+2015-10-27 09:06:28.670 INFO  [9576] - Receiver engine_receive (000000000A7AF2B0) initially subscribed to <no channels>
+2015-10-27 09:06:28.670 INFO  [9576] - Blocking receiver engine_receive (000000000A7AF2B0) will be blocked after 10.000000 seconds or 10240 kb if slow
+2015-10-27 09:06:28.670 INFO  [2328] - Receiver engine_receive (000000000A7AF2B0) unsubscribed from all channels
+2015-10-27 09:06:28.670 INFO  [6860] - Receiver engine_receive (000000000A7AF2B0) added subscriptions to [MovingAverage]
+2015-10-27 09:06:29.674 INFO  [14540] - Receiver engine_receive (00000000041CFC80) (component ID 6210251221571226879/6209969746594516223) connected from 127.0.0.1:55700
+2015-10-27 09:06:29.674 INFO  [14540] - Receiver engine_receive (00000000041CFC80) initially subscribed to <no channels>
+2015-10-27 09:06:29.674 INFO  [14540] - Blocking receiver engine_receive (00000000041CFC80) will be blocked after 10.000000 seconds or 10240 kb if slow
+2015-10-27 09:06:29.675 INFO  [6860] - Receiver engine_receive (00000000041CFC80) unsubscribed from all channels
+2015-10-27 09:06:29.675 INFO  [13768] - Receiver engine_receive (00000000041CFC80) added subscriptions to [Variance]
+2015-10-27 09:06:30.218 INFO  [13900] - Correlator Status: sm=11 nctx=3 ls=31 rq=0 eq=0 iq=0 oq=0 icq=0 lcn="<none>" lcq=0 lct=0.0 rx=0 tx=0 rt=3 nc=3 vm=159792 runq=0 si=0.0 so=0.0 srn="<none>" srq=0
+2015-10-27 09:06:30.727 INFO  [14544] - Receiver engine_receive (000000000946A700) (component ID 6210251226073287935/6209969751096577279) connected from 127.0.0.1:55703
+2015-10-27 09:06:30.727 INFO  [14544] - Receiver engine_receive (000000000946A700) initially subscribed to <no channels>
+2015-10-27 09:06:30.727 INFO  [14544] - Blocking receiver engine_receive (000000000946A700) will be blocked after 10.000000 seconds or 10240 kb if slow
+2015-10-27 09:06:30.727 INFO  [13768] - Receiver engine_receive (000000000946A700) unsubscribed from all channels
+2015-10-27 09:06:30.727 INFO  [9824] - Receiver engine_receive (000000000946A700) added subscriptions to [StandardDeviation]
+2015-10-27 09:06:31.720 INFO  [6576] - Receiver engine_receive (000000000A557280) (component ID 6210251230288563455/6209969755311852799) connected from 127.0.0.1:55706
+2015-10-27 09:06:31.720 INFO  [6576] - Receiver engine_receive (000000000A557280) initially subscribed to <no channels>
+2015-10-27 09:06:31.720 INFO  [6576] - Blocking receiver engine_receive (000000000A557280) will be blocked after 10.000000 seconds or 10240 kb if slow
+2015-10-27 09:06:31.720 INFO  [9824] - Receiver engine_receive (000000000A557280) unsubscribed from all channels
+2015-10-27 09:06:31.720 INFO  [13568] - Receiver engine_receive (000000000A557280) added subscriptions to [LowerBollinger]
+2015-10-27 09:06:32.737 INFO  [13360] - Receiver engine_receive (000000000995BF40) (component ID 6210251233891208447/6209969758914497791) connected from 127.0.0.1:55709
+2015-10-27 09:06:32.737 INFO  [13360] - Receiver engine_receive (000000000995BF40) initially subscribed to <no channels>
+2015-10-27 09:06:32.737 INFO  [13360] - Blocking receiver engine_receive (000000000995BF40) will be blocked after 10.000000 seconds or 10240 kb if slow
+2015-10-27 09:06:32.738 INFO  [6860] - Receiver engine_receive (000000000995BF40) unsubscribed from all channels
+2015-10-27 09:06:32.738 INFO  [13768] - Receiver engine_receive (000000000995BF40) added subscriptions to [UpperBollinger]
+2015-10-27 09:06:33.775 INFO  [14300] - Sender engine_send (00000000071E90F0) (component ID 6210251238582275327/6209969763605564671) connected from 127.0.0.1:55712
+2015-10-27 09:06:33.779 INFO  [13676] - com.industry.analytics.detectors.SpikeService [12] Validating com.industry.analytics.Analytic("Spike",["Input1"],["SpikeResult"],{"standardDeviationMultiple":"2","timeWindow":"30.0"})
+2015-10-27 09:06:33.779 INFO  [13676] - Interning Input1
+2015-10-27 09:06:33.780 INFO  [13676] - com.industry.analytics.detectors.SpikeService [12] Analytic Spike started for inputDataNames ["Input1"]
+2015-10-27 09:06:33.874 INFO  [9824] - Sender engine_send (00000000071E90F0) (component ID 6210251238582275327/6209969763605564671) disconnected cleanly: Other party requested disconnection
+2015-10-27 09:06:33.986 INFO  [14540] - Sender engine_send (00000000071E90F0) (component ID 6210251238782291199/6209969763805580543) connected from 127.0.0.1:55715
+2015-10-27 09:06:34.076 INFO  [13768] - Sender engine_send (00000000071E90F0) (component ID 6210251238782291199/6209969763805580543) disconnected cleanly: Other party requested disconnection

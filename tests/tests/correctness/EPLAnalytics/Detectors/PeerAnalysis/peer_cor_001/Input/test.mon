@@ -1,0 +1,162 @@
+//*****************************************************************************
+// Title:         PeerAnalysis test
+//*****************************************************************************
+
+package com.industry.analytics.detectors.PeerAnalysis_cor_001;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.detectors.PeerAnalysis;
+
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the PeerAnalysis - Zero input should fail
+		(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, 
+																  new sequence<string>, 
+																  [ "Output1" ], 
+																  { "threshold":"10.0" } ), 
+		                       initComplete );
+
+		// Create the PeerAnalysis - Single input/output should pass
+		on NextTest( testNum=2 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, 
+																	  [ "Input1" ], 
+																	  [ "Output1" ], 
+																	  { "threshold":"10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the PeerAnalysis - Empty name for input should fail
+		on NextTest( testNum=3 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, 
+																	  [ "" ], 
+																	  [ "Output1" ], 
+																	  { "threshold":"10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the PeerAnalysis - blank name for input should fail
+		on NextTest( testNum=4 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, 
+																	  [ "  " ], 
+																	  [ "Output1" ], 
+																	  { "threshold":"10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the PeerAnalysis - Check more than one input fails
+		on NextTest( testNum=5 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, 
+															   [ "Input1", "Input2" ], 
+															   [ "Output1" ], 
+															   { "threshold":"10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the PeerAnalysis - Check zero output fails
+		on NextTest( testNum=6 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { "threshold":"10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the PeerAnalysis - Empty name for output should fail
+		on NextTest( testNum=7 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, 
+															   [ "Input1" ], 
+															   [ "" ], 
+															   { "threshold":"10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the PeerAnalysis - blank name for output should fail
+		on NextTest( testNum=8 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, 
+															   [ "Input1" ], 
+															   [ "  " ], 
+															   { "threshold":"10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the PeerAnalysis - Check null value for Analytic name fails
+		on NextTest( testNum=9 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( "", 
+																	 [ "Input1" ], 
+																	 [ "Output1" ], 
+																	 { "threshold":"10.0" } ), 
+								   initComplete );
+ 		}
+
+		// Create the PeerAnalysis - with invalid Analytic name fails
+		on NextTest( testNum=10 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( "foobar", 
+																	 [ "Input1" ], 
+																	 [ "Output1" ], 
+																	 { "threshold":"10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the PeerAnalysis - with invalid case for Analytic name fail
+		on NextTest( testNum=11 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( "PEERANALYSIS", 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { "threshold":"10.0" } ), 
+								   initComplete );
+		}
+		
+		// Create the PeerAnalysis - with invalid case for Analytic name should pass as long as its lowercase
+		on NextTest( testNum=12 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( "peeranalysis", 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { "threshold":"10.0" } ), 
+								   initComplete );
+		}
+
+		// Create the PeerAnalysis - with missing mandatory param should fail
+		on NextTest( testNum=13 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( "peeranalysis", 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the PeerAnalysis - with valid values should pass
+		on NextTest( testNum=14 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { "threshold":"10.0" } ), 
+								   initComplete );
+	
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

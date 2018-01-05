@@ -1,0 +1,24 @@
+//*****************************************************************************
+// Title:         Simulator023
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.Simulator023;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+
+monitor Test {
+	action onload() {
+		send com.industry.analytics.Analytic( "DataSimulator", new sequence<string>, ["OutputData"], 
+											 { "simulationType":"sawrising",
+											   "rangeUpper":"50", "rangeLower":"10" }) to "";
+
+		monitor.subscribe("OutputData");
+		on all Data() as currData {
+			emit "Received Data: "+currData.dValue.toString() to "OUTPUT_DATA_ONLY";
+			if( currData.dValue < 10.0d or currData.dValue > 50.0d ) then {
+				emit "INVALID DATA RECEIVED! sourceId:"+currData.sourceId+" dValue:"+currData.dValue.toString() to "OUTPUT_DATA_ONLY";
+			}
+		}
+	}
+}

@@ -1,0 +1,181 @@
+//*****************************************************************************
+// Title:         EventRate test
+//*****************************************************************************
+
+package com.industry.analytics.flow_manipulation.EventRate_cor_004;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.flow_manipulation.EventRate;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the EventRate - Zero input should fail
+		(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+														  new sequence<string>, 
+														  [ "Output1" ], 
+														  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+		                       initComplete );
+
+		// Create the EventRate - Single input should pass
+		on NextTest( testNum=2 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															 [ "Input1" ], 
+															 [ "Output1" ], 
+															 { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the EventRate - Check more than one input fails
+		on NextTest( testNum=3 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1", "Input2" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the EventRate - Empty name for input should fail
+		on NextTest( testNum=4 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the EventRate - blank name for input should fail
+		on NextTest( testNum=5 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "  " ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the EventRate - Check more than one output fails
+		on NextTest( testNum=6 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1", "Output2" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the EventRate - Check zero output fails
+		on NextTest( testNum=7 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  new sequence<string>, 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the EventRate - Empty name for output should fail
+		on NextTest( testNum=8 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the EventRate - blank name for output should fail
+		on NextTest( testNum=9 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "  " ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+				
+		// Create the EventRate - Check no inputs or outputs fails
+		on NextTest( testNum=10 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  new sequence<string>, 
+															  new sequence<string>, 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the EventRate - Check two inputs/outputs - should fail
+		on NextTest( testNum=11 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1", "Input2" ], 
+															  [ "Output1", "Output2" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+	
+		// Create the EventRate - Check four inputs/outputs - should fail
+		on NextTest( testNum=12 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1", "Input2", "Input3", "Input4" ], 
+															  [ "Output1", "Output2", "Output3", "Output4" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+
+		// Create the EventRate - Check null value for Analytic name fails
+		on NextTest( testNum=13 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( "", 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the EventRate - with invalid Analytic name fails
+		on NextTest( testNum=14 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( "foobar", 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the EventRate - with invalid case for Analytic name fails
+		on NextTest( testNum=15 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( "EVENTRATE", 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the EventRate - with configuration values should pass
+		on NextTest( testNum=16 ) { 
+			(new EventRate).init( com.industry.analytics.Analytic( EventRate.NAME, 
+															  [ "Input1" ], 
+															  [ "Output1" ], 
+															  { EventRate.USE_CORRELATOR_TIME : "true",
+																EventRate.PUBLISH_RATE : "10.0",
+																EventRate.BY_SOURCEID : "true" } ), 
+								   initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

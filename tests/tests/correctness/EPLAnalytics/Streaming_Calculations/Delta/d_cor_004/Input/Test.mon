@@ -1,0 +1,46 @@
+//*****************************************************************************
+// Title:         Delta004
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.Delta004;
+
+using com.industry.analytics.streaming_calculations.Delta;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	Delta _delta;
+	
+	action onload()
+	{
+		Analytic config := Analytic("Delta", ["Input"], ["Output"], new dictionary<string, string>);
+		_delta.init(config, _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			Data currData := Data.init("Input", DataConstants.RAW, "asset1");
+			currData.dValue := 1.0d;
+			_delta.processData( currData );
+			currData.sourceId := "asset2";
+			currData.dValue := 2.345d;
+			_delta.processData( currData );
+			log "Delta Pre-Reset State:" at INFO;
+			log "  _lastValues: " + _delta._lastValues.toString() at INFO;
+			_delta.reset();
+			log "Delta Post-Reset State:" at INFO;
+			log "  _lastValues: " + _delta._lastValues.toString() at INFO;
+		}
+		else
+		{
+			log "Error spawning Delta instance." at ERROR;
+		}
+	}
+}

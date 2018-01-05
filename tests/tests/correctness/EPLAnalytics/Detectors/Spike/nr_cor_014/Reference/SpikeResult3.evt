@@ -1,0 +1,6 @@
+com.industry.analytics.Data("SpikeResult3","a","s1",4,-2.22349212730092,"",0,0,0,{"anomalySource":"Spike"})
+com.industry.analytics.Data("SpikeResult3","a","s2",4,-2.22349212730092,"",0,0,0,{"anomalySource":"Spike"})
+com.industry.analytics.Data("SpikeResult3","a","s3",4,-2.22349212730092,"",0,0,0,{"anomalySource":"Spike"})
+com.industry.analytics.Data("SpikeResult3","a","s1",10,2.99071666291756,"",0,0,0,{"anomalySource":"Spike"})
+com.industry.analytics.Data("SpikeResult3","a","s2",10,2.990716662917561,"",0,0,0,{"anomalySource":"Spike"})
+com.industry.analytics.Data("SpikeResult3","a","s3",10,2.990716662917561,"",0,0,0,{"anomalySource":"Spike"})

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pysystest state="runnable" type="auto">
+	<description>
+		<title>Suppressor - Test verification of TRIGGER_PARAM config param</title>
+		<purpose>
+		<![CDATA[Test verification of config params]]>
+		</purpose>
+	</description>
+	<classification>
+		<groups>
+			<group>Suppressor</group>
+			<group>Flow_Manipulation</group>
+			<group>Industry_Analytics</group>
+			<group>EPL</group>
+		</groups>
+	</classification>
+	<data>
+		<class module="run" name="PySysTest"></class>
+	</data>
+	<traceability>
+		<requirements>
+			<requirement></requirement>
+		</requirements>
+	</traceability>
+</pysystest>

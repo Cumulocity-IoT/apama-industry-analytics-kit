@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("mode", ["Input"], ["Output"], {"timeWindow":"10"})
+com.industry.analytics.Analytic("MODE", ["Input"], ["Output"], {"timeWindow":"10"})
+com.industry.analytics.Analytic("MoDe", ["Input"], ["Output"], {"timeWindow":"10"})
+com.industry.analytics.Analytic("Mode", ["Input"], ["Output"], {"timeWindow":"10"})

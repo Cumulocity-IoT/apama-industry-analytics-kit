@@ -1,0 +1,6 @@
+com.industry.analytics.Data("OutputParam","c","s5",0,10,"",1,2,3,{"p1":"X"})
+com.industry.analytics.Data("OutputParam","c","s5",0,10,"",1,2,3,{"p2":"X"})
+com.industry.analytics.Data("OutputParam","c","s2",0,10,"",1,2,3,{"p1":"X"})
+com.industry.analytics.Data("OutputParam","c","s1",0,10,"",1,2,3,{"p1":"X"})
+com.industry.analytics.Data("OutputParam","c","s2",0,10,"",1,2,3,{"p1":"X"})
+com.industry.analytics.Data("OutputParam","c","s2",0,10,"",1,2,3,{"p2":"X"})

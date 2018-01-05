@@ -1,0 +1,183 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>MissingData</TITLE>
+<META NAME="keywords" CONTENT="MissingData&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="MissingData";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/detectors/MissingData.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="MissingData.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/detectors/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics.detectors</FONT>
+<BR>Event MissingData</H2>
+<HR>The MissingData Analytic computation generates an Anomaly type of Data when no data is being received on the input channel. The period is a multiple of either a fixed time period in the configuration or a weighted average calculated from the timings of events which have been received. The computation will give out a set number of repeated anomalies after each subsequent multiple of the timeout period and can also calculate the timeout based for each individual source or calculated across all the sources combined.<br>
+<br> <dl><dt><b>Input Data events:</b></dt> <dd>Only a single input Data stream name must be provided.</dd> </dl> <dl><dt><b>Output Data events:</b></dt> <dd>Only a single output Data stream name must be provided. Only Data events of Anomaly type are generated. No params are populated as by definition there are no input Mreasures when the output is generated.</dd> </dl> <dl><dt><b>Params:</b></dt> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr> <tr><td><b>interval</b></td><td>Defines the time window that data must be received within. The actual units are based on the value of the <font face="courier" size="-1">intervalType</font> parameter</td> <td>Stringified decimal value <font face="courier" size="-1">> 0.0d</font></td><td>Decimal</td> <td>False</td><td>4.0d</td></tr> <tr><td><b>intervalType</b></td><td>Defines the unit type of the <font face="courier" size="-1">interval</font> parameter.</td> <td><font face="courier" size="-1">"seconds"</font> or <font face="courier" size="-1">"stddev"</font></font></td><td>String</td> <td>False</td><td><font face="courier" size="-1">"stddev"</font></td></tr> <tr><td><b>repeats</b></td><td>Defines the number of times an Anomaly Data is generated for missing data before stopping checking until another event for that sourceId is received again.</td> <td>Stringified integer value <font face="courier" size="-1">>= 0</font></td><td>Integer</td> <td>False</td><td><font face="courier" size="-1">1</font></td></tr> <tr><td><b>timeFactor</b></td><td>Defines a scaling factor for the time window. This is applied regardless of if the EWMA or a fixed time period is configured</td> <td>Stringified decimal value <font face="courier" size="-1">> 0</font></td><td>Decimal</td> <td>False</td><td><font face="courier" size="-1">3</font></td></tr> <tr><td><b>bySourceId</b></td><td>If defined, the Missing Data calculations are partitioned based on the sourceId parameter of the input data stream</td> <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr> </table></dd> </dl> <dl><dt><b>Example usage:</b></dt> <dd><pre><br>// Define a MissingData Analytic for Data events on the channel "Input1"<br>// and generate an anomaly Data event on the channel "Output1" if another event<br>// from that sourceId has not been received on the input channel within a 10 second time period<br>send com.industry.analytics.Analytic("MissingData", ["Input1"], ["Output1"], {"interval":"10.0"} ) to "";<br>
+<br>// Define a MissingData Analytic for Data events on the channel "Input2"<br>// and generate an anomaly Data event on the channel "Output2" if another event<br>// from that sourceId has not been received on the input channel within a time period calculated from the  <br>// exponentially weighted moving average (EWMA) time between previous events on the same stream<br>send com.industry.analytics.Analytic("MissingData", ["Input2"], ["Output2"], new dictionary&ltstring,string&gt ) to "";<br>                                          <br>// Define a MissingData Analytic for Data events on the channel "Input3"<br>// and generate an anomaly Data event on the channel "Output3" if another event <br>// has not been received for the ANY sourceId on the input channel within a 10 second time period <br>send com.industry.analytics.Analytic("MissingData", ["Input3"], ["Output3"], {"interval":"10.0", "bySourceId":"false"} ) to "";<br></pre></dd> </dl><HR>
+<A NAME="constant_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Constant Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="MissingData.html#BY_SOURCEID">BY_SOURCEID</A> := "bySourceId"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether or not the missing data calculation will be partitioned by the <font face="courier" size="-1">sourceId</font></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="MissingData.html#INTERVAL">INTERVAL</A> := "interval"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the time window value that data must be received within.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="MissingData.html#INTERVAL_TYPE">INTERVAL_TYPE</A> := "intervalType"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the type of the interval value defined.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="MissingData.html#NAME">NAME</A> := "MissingData"</B></CODE>
+<br>
+<br>This constant defines the name of the Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="MissingData.html#REPEATS">REPEATS</A> := "repeats"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the number of repeating times data is missed before terminating the check.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="MissingData.html#TIMEFACTOR">TIMEFACTOR</A> := "timeFactor"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies a scaling factor for the time window.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="MissingData.html#init()">init</A></B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="constant_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Constant Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="BY_SOURCEID"></A>
+<H3>BY_SOURCEID</H3>
+<PRE>constant string&nbsp;<B>BY_SOURCEID := "bySourceId"</B>
+</PRE>This constant defines the configuration parameter name that defines whether or not the missing data calculation will be partitioned by the <font face="courier" size="-1">sourceId</font><HR>
+<A NAME="INTERVAL"></A>
+<H3>INTERVAL</H3>
+<PRE>constant string&nbsp;<B>INTERVAL := "interval"</B>
+</PRE>This constant defines the configuration parameter name that specifies the time window value that data must be received within.<HR>
+<A NAME="INTERVAL_TYPE"></A>
+<H3>INTERVAL_TYPE</H3>
+<PRE>constant string&nbsp;<B>INTERVAL_TYPE := "intervalType"</B>
+</PRE>This constant defines the configuration parameter name that specifies the type of the interval value defined.<HR>
+<A NAME="NAME"></A>
+<H3>NAME</H3>
+<PRE>constant string&nbsp;<B>NAME := "MissingData"</B>
+</PRE>This constant defines the name of the Analytic.<HR>
+<A NAME="REPEATS"></A>
+<H3>REPEATS</H3>
+<PRE>constant string&nbsp;<B>REPEATS := "repeats"</B>
+</PRE>This constant defines the configuration parameter name that specifies the number of repeating times data is missed before terminating the check.<HR>
+<A NAME="TIMEFACTOR"></A>
+<H3>TIMEFACTOR</H3>
+<PRE>constant string&nbsp;<B>TIMEFACTOR := "timeFactor"</B>
+</PRE>This constant defines the configuration parameter name that specifies a scaling factor for the time window.<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration that will be used for this instance</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The action callback to call when the new Analytic has been created, or if an error occured.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration event object.</DD>
+<DD>
+<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that can be used to interact with the Analytic.</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/detectors/MissingData.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="MissingData.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/detectors/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

@@ -1,0 +1,3 @@
+// Nothing should happen to the Analytic.
+"ANALYTICS_MANAGEMENT_CHANNEL", com.industry.analytics.AnalyticManagement("killMe", "", {})
+"ANALYTICS_MANAGEMENT_CHANNEL", com.industry.analytics.AnalyticManagement("killMe", "DUMMY_COMMAND", {})

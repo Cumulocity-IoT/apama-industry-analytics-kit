@@ -1,0 +1,6 @@
+// Moving Average
+com.industry.analytics.Analytic("Average", ["Input"], ["MovingAverage"], {"timeWindow":"15.0"})
+// Event Rate triggered every event: gives us some jiggling numbers.
+com.industry.analytics.Analytic("EventRate", ["MovingAverage"], ["Input"], {"measurementPeriod":"-1.0", "correlatorOrTimestamp":"timestamp"})
+// Actual event rate measure
+com.industry.analytics.Analytic("EventRate", ["Input"], ["EventRate"], {"measurementPeriod":"1.0", "correlatorOrTimestamp":"correlator"})

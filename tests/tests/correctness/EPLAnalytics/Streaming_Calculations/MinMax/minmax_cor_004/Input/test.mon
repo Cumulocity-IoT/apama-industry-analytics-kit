@@ -1,0 +1,125 @@
+//*****************************************************************************
+// Title:         MinMax test
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.MinMax_cor_004;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.streaming_calculations.MinMax;
+
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the MinMax - Missing the parameter - should pass as it's not required
+		(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+		                                                   [ "Input1" ], 
+		 		                                           [ "Output1" ], 
+		 												   { MinMax.TIME_WINDOW : "10.0" } ), 
+		                       initComplete );
+		
+		// Create the MinMax - valid value for the optional parameter - should pass
+		on NextTest( testNum=2 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0", 
+															     MinMax.BY_SOURCEID : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the MinMax - valid value for the optional parameter - should pass
+		on NextTest( testNum=3 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0", 
+															     MinMax.BY_SOURCEID : "false" } ), 
+								   initComplete );
+		}
+		
+		// Create the MinMax - invalid values defined for optional param - should fail
+		on NextTest( testNum=4 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0", 
+															     MinMax.BY_SOURCEID : "1234" } ), 
+								   initComplete );
+		}
+
+		// Create the MinMax - invalid values defined for optional param - should fail
+		on NextTest( testNum=5 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0", 
+															     MinMax.BY_SOURCEID : "" } ), 
+								   initComplete );
+		}
+		
+		// Create the MinMax - invalid values defined for optional param - should fail
+		on NextTest( testNum=6 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0", 
+															     MinMax.BY_SOURCEID : " " } ), 
+								   initComplete );
+		}
+
+		// Create the MinMax - Invalid case for optional parameter (which will be ignored) - should pass
+		on NextTest( testNum=7 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0", 
+															     "BYSOURCEID" : "true" } ), 
+								   initComplete );
+		}
+
+		// Create the MinMax - Invalid case for optional parameter (which will be ignored) - should pass
+		on NextTest( testNum=8 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0",
+																 "bysourceid" : "true" } ), 
+								   initComplete );
+		}
+
+		// Create the MinMax - Correct case for required parameter - should pass
+		on NextTest( testNum=9 ) { 
+			(new MinMax).init( com.industry.analytics.Analytic( MinMax.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { MinMax.TIME_WINDOW : "10.0",
+																 "bySourceId" : "true" } ), 
+									   initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

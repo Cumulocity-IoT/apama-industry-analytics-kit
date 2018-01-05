@@ -1,0 +1,14 @@
+// Entry
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0, 0, "", 0, 0, 0, {"latitude":"0", "longitude":"0"})
+// Inside
+"Input", com.industry.analytics.Data("Input", "r", "s1", 1, 0, "", 0, 0, 0, {"latitude":"0", "longitude":"0"})
+// Exit
+"Input", com.industry.analytics.Data("Input", "r", "s1", 2, 0, "", 0.1, 0.1, 0, {"latitude":"0", "longitude":"0"})
+// Entry
+"Input", com.industry.analytics.Data("Input", "r", "s1", 3, 0, "", 0, 0, 0, {"latitude":"0", "longitude":"0"})
+// Inside
+"Input", com.industry.analytics.Data("Input", "r", "s1", 4, 0, "", 0, 0, 0, {"latitude":"0", "longitude":"0"})
+//Inside & Dwell
+"Input", com.industry.analytics.Data("Input", "r", "s1", 5, 0, "", 0, 0, 0, {"latitude":"0", "longitude":"0"})
+//Inside, no further dwells
+"Input", com.industry.analytics.Data("Input", "r", "s1", 6, 0, "", 0, 0, 0, {"latitude":"0", "longitude":"0"})

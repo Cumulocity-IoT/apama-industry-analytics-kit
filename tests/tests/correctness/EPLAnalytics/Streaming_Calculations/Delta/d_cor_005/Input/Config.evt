@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("delta", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("DELTA", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("DeLtA", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("Delta", ["Input"], ["Output"], {})

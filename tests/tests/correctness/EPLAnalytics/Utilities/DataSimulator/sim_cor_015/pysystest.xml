@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pysystest state="runnable" type="auto">
+	<description>
+		<title>Test Sine wave Data simulator with negative upper and negative lower range, 1 sourceId, 1 event per-second</title>
+		<purpose>
+		<![CDATA[Test jiggle.]]>
+		</purpose>
+	</description>
+	<classification>
+		<groups>
+			<group>DataSimulator</group>
+			<group>Utilities</group>
+			<group>Industry_Analytics</group>
+			<group>EPL</group>
+		</groups>
+	</classification>
+	<data>
+		<class module="run" name="PySysTest"></class>
+	</data>
+	<traceability>
+		<requirements>
+			<requirement></requirement>
+		</requirements>
+	</traceability>
+</pysystest>

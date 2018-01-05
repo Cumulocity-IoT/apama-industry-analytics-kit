@@ -1,0 +1,117 @@
+//*****************************************************************************
+// Title:         Suppressor test
+//*****************************************************************************
+
+package com.industry.analytics.flow_manipulation.Suppressor_cor_010;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.flow_manipulation.Suppressor;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload() {
+   
+		// Test minimal params - Should pass
+		(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+														{ Suppressor.TIMEWINDOW : "10.0",
+														  Suppressor.TRIGGER_PARAM : "triggerParamName",
+														  Suppressor.TRIGGER_PARAM_VALUE  : "triggerParamValue" } ), 
+							initComplete );
+								  
+		// Test minimal params - empty TRIGGER_PARAM_VALUE value - Should pass
+		on NextTest( testNum=2 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : ""} ), 
+									  initComplete );
+		}
+
+		// Test minimal params - blank TRIGGER_PARAM_VALUE value - Should pass
+		on NextTest( testNum=3 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE : "  "} ), 
+									  initComplete );
+		}
+
+		// Test minimal params with invalid TRIGGER_PARAM_VALUE name - Should pass as the param name is unrecognised and is NOT mandatory
+		on NextTest( testNum=4 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM : "triggerParamName",
+															  "TRIGGERPARAMVALUE" : "triggerParamValue"} ), 
+									  initComplete );
+		}
+
+		// Test minimal params with invalid TRIGGER_PARAM_VALUE name - Should pass as the param name is unrecognised and is NOT mandatory 
+		on NextTest( testNum=5 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM : "triggerParamName",
+															  "triggerparamvalue" : "triggerParamValue"} ), 
+									  initComplete );
+		}
+
+		// Test full params - Valid TRIGGER_PARAM_VALUE name and value - Should pass
+		on NextTest( testNum=6 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM : "triggerParamName",
+															  "triggerParamValue": "triggerParamValue"} ), 
+									  initComplete );
+		}
+		
+		// Test full params - Valid TRIGGER_PARAM_VALUE name and value - Should pass
+		on NextTest( testNum=7 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM : "triggerParamName",
+															  Suppressor.TRIGGER_PARAM_VALUE: "triggerParamValue"} ), 
+									  initComplete );
+		}
+		
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM not specified - Should fail
+		on NextTest( testNum=8 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue"} ), 
+									  initComplete );
+		}
+
+		// Test interaction with TRIGGER_PARAM - TRIGGER_PARAM specified but invalid - Should fail
+		on NextTest( testNum=9 ) {
+			(new Suppressor).init( com.industry.analytics.Analytic( Suppressor.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Suppressor.TIMEWINDOW : "10.0",
+															  Suppressor.TRIGGER_PARAM : "",
+															  Suppressor.TRIGGER_PARAM_VALUE : "triggerParamValue"} ), 
+									  initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}
+

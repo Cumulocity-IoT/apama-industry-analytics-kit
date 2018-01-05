@@ -1,0 +1,116 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>com.industry.analytics.streaming_calculations</TITLE>
+<META NAME="keywords" CONTENT="com.industry.analytics.streaming_calculations package">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">
+          function windowTitle()
+          {
+          parent.document.title="com.industry.analytics.streaming_calculations";
+          }
+        </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"><FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/streaming_calculations/package-summary.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="package-summary.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>Package com.industry.analytics.streaming_calculations</H2>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Event Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Average.html" title="Event in com.industry.analytics.streaming_calculations">Average</A></B></TD><TD>The Average Analytic computation generates a Data containing a moving average calculation for each input Data received.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Delta.html" title="Event in com.industry.analytics.streaming_calculations">Delta</A></B></TD><TD>The Delta Analytic calculates a new Data event from the difference between the value on the current Data and the value on the previously received Data.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Expression.html" title="Event in com.industry.analytics.streaming_calculations">Expression</A></B></TD><TD>The Expression Analytic computation generates a Data event containing the results of the Expression calculation provided for each input Data received. As well as the basic arithmetic operators for add (+), subtraction (-), multiplication (*) and division (/), the Expression Analytic also supports the modulus operator (%) and power (^) operators.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="FFTAnalysis.html" title="Event in com.industry.analytics.streaming_calculations">FFTAnalysis</A></B></TD><TD>The FFT Analytic performs a Fast Fourier Transformation calculation based on the incoming Data over the defined time window and sampling frequency.  It then publishes a set of Data events for the (set of) highest peaks that in the results. The actual number of peaks to publish is configurable. The frequency value is published in the dValue parameter, and the amplitude is published in the xValue parameter of the Data event.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Gradient.html" title="Event in com.industry.analytics.streaming_calculations">Gradient</A></B></TD><TD>The Gradient Analytic derives the gradient for the data passing through. This is achieved by setting up a defined number of buckets (default 6) which cover a defined time window. No gradient is output until all the buckets are in use. Within each bucket the timestamps and values are averaged to give a single data point. The gradient is then calculated as the least mean square between these buckets data points. The gradient is calculated at the point a Data is received which has a timestamp beyond the time window covered by the current bucket. Once that has been done, the oldest bucket is discarded and the triggering Data becomes the first data point in the new bucket. This requires that at least the size of the defined bucket count number of events are received within the defined time window.  If the time window is set to zero, then the calculation is done for every data point received, although due to the algorithm in place the gradient produced is one point behind the incoming data.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="MinMax.html" title="Event in com.industry.analytics.streaming_calculations">MinMax</A></B></TD><TD>The MinMax Analytic calculates the minimum and maximum values for an input data stream over a defined time window. This is achieved by creating a defined number of "buckets" (default 6) which cover the defined time window. The minimum and maximum values are kept for each buckets worth of time, which can then be used to quickly calculate the overall values for long time ranges. The minimum and maximum values are published on the output channel. If the optional parameter <font face="courier" size="-1">bySourceId</font> is provided, the MinMax partitions all incoming <font face="courier" size="-1">Data</font> events by the <font face="courier" size="-1">sourceId</font> parameter value. The output <font face="courier" size="-1">Data</font> event <font face="courier" size="-1">dValue</font> contains the new MIN or MAX value, <font face="courier" size="-1">xValue</font> contains newly calculated MIN value and <font face="courier" size="-1">yValue</font> contains newly calculated MAX value. </br> NOTE: In case of both Min and Max value changes after end of timeWindow, Max value will be contained in output <font face="courier" size="-1">Data</font> event <font face="courier" size="-1">dValue</font>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Mode.html" title="Event in com.industry.analytics.streaming_calculations">Mode</A></B></TD><TD>The Mode Analytic finds the mode of the data passing through. This is achieved by setting up a defined number of buckets (default 5) which cover a defined time window. Mode is output end of each bucket. The mode is calculated at the point a Data is received which has a timestamp beyond the time window covered by the current bucket. Once that has been done, the oldest bucket is discarded and the triggering Data becomes the first data point in the new bucket. If the time window is set to zero, then this calculation is done for every data point received, although due to the algorithm in place the mode produced is one point behind the incoming data. It there are two mode values then the one smaller is returned as mode.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Spread.html" title="Event in com.industry.analytics.streaming_calculations">Spread</A></B></TD><TD>The Spread Analytic calculates a new Data event from the spread between the latest values of Data events on two input streams.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Sum.html" title="Event in com.industry.analytics.streaming_calculations">Sum</A></B></TD><TD>The Sum Analytic computation generates a Data containing a moving sum calculation for each input Data received. The sum is calculated based on the number of events recieved within a time window (in seconds) or last 'N' events. A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br> NOTE: The smoothing factor should be less than or equal to calculationValue parameter.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Volatility.html" title="Event in com.industry.analytics.streaming_calculations">Volatility</A></B></TD><TD>The Volatility Analytic computation generates a Data containing a Volatility calculation for each input Data received.</TD>
+</TR>
+</TABLE>
+<P></P>
+        &nbsp;
+        <HR>
+<P></P>
+        &nbsp;
+        <HR>
+<P></P>
+        &nbsp;
+        <HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"><FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/streaming_calculations/package-summary.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="package-summary.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

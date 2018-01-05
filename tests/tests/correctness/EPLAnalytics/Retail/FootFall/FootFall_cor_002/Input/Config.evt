@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("FootFall", ["Input"], ["Output"], {"geoFenceLatitude": "52.204004", "geoFenceLongitude":"0.121794","geoFenceRadius": "60.0","timeWindow": "60.0", "smoothingFactor":"10.0"})

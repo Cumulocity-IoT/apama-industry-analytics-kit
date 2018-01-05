@@ -1,0 +1,2 @@
+com.industry.analytics.Data("OutputCrossing","a","s1",60,15,"",1,2,3,{"anomalySource":"Threshold","direction":"rising","duration":"0"})
+com.industry.analytics.Data("OutputCrossing","a","s1",120,5,"",1,2,3,{"anomalySource":"Threshold","direction":"falling","duration":"0"})

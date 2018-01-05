@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("logger", ["Input"], [], {})
+com.industry.analytics.Analytic("LOGGER", ["Input"], [], {})
+com.industry.analytics.Analytic("LoGgEr", ["Input"], [], {})
+com.industry.analytics.Analytic("Logger", ["Input"], [], {})

@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("peeranalysis", ["Input"], ["Output"], {"threshold":"0"})
+com.industry.analytics.Analytic("PEERANALYSIS", ["Input"], ["Output"], {"threshold":"0"})
+com.industry.analytics.Analytic("PeErAnAlYsIs", ["Input"], ["Output"], {"threshold":"0"})
+com.industry.analytics.Analytic("PeerAnalysis", ["Input"], ["Output"], {"threshold":"0"})

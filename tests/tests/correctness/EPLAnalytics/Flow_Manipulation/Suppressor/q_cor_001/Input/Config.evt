@@ -1,0 +1,5 @@
+com.industry.analytics.Analytic("Suppressor", [], [], {})
+com.industry.analytics.Analytic("Suppressor", ["Input1", "Input2"], ["Output1", "Output2"], {"triggerParam":"", "timeWindow":""})
+com.industry.analytics.Analytic("Suppressor", ["Input1"], ["Output1"], {"triggerParam":"a", "triggerParamValue":"", "triggerExtension":"true", "actionParam":"", "actionParamValue":"", "resetParam":"a", "resetParamValue":"", "bySourceId":"", "timeWindow":"0"})
+com.industry.analytics.Analytic("Suppressor", ["Input1"], ["Output1"], {"triggerParam":"type", "triggerParamValue":"", "actionParam":"type", "actionParamValue":"", "resetParam":"type", "resetParamValue":"", "timeWindow":"10"})
+com.industry.analytics.Analytic("Suppressor", ["Input1"], ["Output1"], {"triggerParam":"type", "actionParam":"type", "resetParam":"type", "timeWindow":"10"})

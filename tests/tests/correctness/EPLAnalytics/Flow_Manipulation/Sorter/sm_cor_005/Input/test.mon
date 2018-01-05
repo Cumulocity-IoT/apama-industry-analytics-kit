@@ -1,0 +1,120 @@
+//*****************************************************************************
+// Title:         Sorter test
+//*****************************************************************************
+
+package com.industry.analytics.flow_manipulation.Sorter_cor_005;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.flow_manipulation.Sorter;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the Sorter - with valid values should pass
+		(new Sorter).init( com.industry.analytics.Analytic( Sorter.NAME, [ "Input1" ], [ "Output1" ], 
+															{ Sorter.TIMEWINDOW : "1.0" } ), 
+								  initComplete );
+
+		// Test minimal params with empty TIMEWINDOW value - Should fail
+		on NextTest( testNum=2 ) { 
+			(new Sorter).init( com.industry.analytics.Analytic( Sorter.NAME, [ "Input1" ], [ "Output1" ], 
+																{ Sorter.TIMEWINDOW : "" } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=3 ) { 
+			(new Sorter).init( com.industry.analytics.Analytic( Sorter.NAME, [ "Input1" ], [ "Output1" ], 
+																{ Sorter.TIMEWINDOW : "  " } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=4 ) { 
+			(new Sorter).init( com.industry.analytics.Analytic( Sorter.NAME, [ "Input1" ], [ "Output1" ], 
+																{ Sorter.TIMEWINDOW : "foobar" } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=5 ) { 
+			(new Sorter).init( com.industry.analytics.Analytic( Sorter.NAME, [ "Input1" ], [ "Output1" ], 
+																{ Sorter.TIMEWINDOW : "[]" } ), 
+									  initComplete );
+		}		
+		
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=6 ) { 
+			(new Sorter).init( com.industry.analytics.Analytic( Sorter.NAME, [ "Input1" ], [ "Output1" ], 
+																{ Sorter.TIMEWINDOW : "[1.0]" } ), 
+									  initComplete );
+		}		
+
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=7 ) { 
+			(new Sorter).init( com.industry.analytics.Analytic( Sorter.NAME, [ "Input1" ], [ "Output1" ], 
+																{ Sorter.TIMEWINDOW : "{}" } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=8 ) { 
+			(new Sorter).init( com.industry.analytics.Analytic( Sorter.NAME, [ "Input1" ], [ "Output1" ], 
+																{ Sorter.TIMEWINDOW : "0.0" } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=9 ) { 
+			(new Sorter).init( com.industry.analytics.Analytic( Sorter.NAME, [ "Input1" ], [ "Output1" ], 
+																{ Sorter.TIMEWINDOW : "-1.0" } ), 
+									  initComplete );
+		}
+		
+
+		// Test minimal params with invalid TIMEWINDOW name - Should pass as parameters are case insensitive
+		on NextTest( testNum=10 ) { 
+			(new Sorter).init( com.industry.analytics.Analytic( Sorter.NAME, [ "Input1" ], [ "Output1" ], 
+																{ "TIMEWINDOW" : "0.1" } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with invalid TIMEWINDOW name - Should pass as parameters are case insensitive
+		on NextTest( testNum=11 ) { 
+			(new Sorter).init( com.industry.analytics.Analytic( Sorter.NAME, [ "Input1" ], [ "Output1" ], 
+																{ "timewindow" : "0.1" } ), 
+									  initComplete );
+		}
+		
+		// Test minimal params with valid TIMEWINDOW name and value - Should pass
+		on NextTest( testNum=12 ) { 
+			(new Sorter).init( com.industry.analytics.Analytic( Sorter.NAME, [ "Input1" ], [ "Output1" ], 
+																{ "timeWindow" : "0.1" } ), 
+									  initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

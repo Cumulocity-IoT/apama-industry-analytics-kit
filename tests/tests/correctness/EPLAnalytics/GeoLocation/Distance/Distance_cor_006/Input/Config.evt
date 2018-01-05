@@ -1,0 +1,2 @@
+// United States
+com.industry.analytics.Analytic("Distance",["Input"],["Output"],{"latitude":"37.09024","longitude":"-95.712891","distanceUnit":"KMS"})

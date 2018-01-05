@@ -1,0 +1,14 @@
+// Try to create a known Analytic 
+com.industry.analytics.Analytic("Delta", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("Average", ["Input"], ["Output"], {})
+
+// Try to create an unknown Analytic 
+com.industry.analytics.Analytic("MyTestAnalytic", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("FOO", ["Input"], ["Output"], {})
+
+// Try creating a known Analytic with a different case
+// These are also tested in each set of unit tests
+com.industry.analytics.Analytic("delta", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("DELTA", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("average", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("AVERAGE", ["Input"], ["Output"], {})

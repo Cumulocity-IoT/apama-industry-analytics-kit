@@ -1,0 +1,148 @@
+//*****************************************************************************
+// Title:         MissingData test
+//*****************************************************************************
+
+package com.industry.analytics.detectors.MissingData_cor_006;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.detectors.MissingData;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the MissingData - with valid values should pass
+		(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+															{ MissingData.BY_SOURCEID : "true" } ), 
+								initComplete );
+
+		// Create the MissingData - with valid values should pass
+		on NextTest( testNum=2 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.BY_SOURCEID : "false" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with empty BY_SOURCEID value - Should fail
+		on NextTest( testNum=3 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.BY_SOURCEID : "" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid BY_SOURCEID value - Should fail
+		on NextTest( testNum=4 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.BY_SOURCEID : "  " } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid BY_SOURCEID value - Should fail
+		on NextTest( testNum=5 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.BY_SOURCEID : "foobar" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid BY_SOURCEID value - Should fail
+		on NextTest( testNum=6 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.BY_SOURCEID : "[]" } ), 
+									initComplete );
+		}		
+		
+		// Test minimal params with invalid BY_SOURCEID value - Should fail
+		on NextTest( testNum=7 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.BY_SOURCEID : "[1.0]" } ), 
+									initComplete );
+		}		
+
+		// Test minimal params with invalid BY_SOURCEID value - Should fail
+		on NextTest( testNum=8 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.BY_SOURCEID : "{}" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid BY_SOURCEID value - Should fail
+		on NextTest( testNum=9 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.BY_SOURCEID : "-1.0" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid BY_SOURCEID value - Should pass as parameters are case insensitive
+		on NextTest( testNum=10 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.BY_SOURCEID : "FALSE" } ), 
+									initComplete );
+		}
+
+		// Test minimal params with invalid BY_SOURCEID value - Should pass as parameters are case insensitive
+		on NextTest( testNum=11 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.BY_SOURCEID : "False" } ), 
+									initComplete );
+		}
+
+		// Test minimal params with invalid BY_SOURCEID value - Should pass as parameters are case insensitive
+		on NextTest( testNum=12 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.BY_SOURCEID : "TRUE" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid BY_SOURCEID value - Should pass as parameters are case insensitive
+		on NextTest( testNum=13 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.BY_SOURCEID : "True" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid BY_SOURCEID name - Should pass as the param name is case-insensitive
+		on NextTest( testNum=14 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ "BYSOURCEID" : "TRUE" } ), 
+									initComplete );
+		}
+
+		// Test minimal params with invalid BY_SOURCEID name - Should pass as the param name is case-insensitive 
+		on NextTest( testNum=15 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ "bysourceid" : "TRUE" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with valid BY_SOURCEID param name and value - Should pass 
+		on NextTest( testNum=16 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ "bySourceId" : "true" } ), 
+									initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

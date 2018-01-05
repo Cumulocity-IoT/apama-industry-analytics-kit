@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<apama-project>
+	<dependency>
+		<dependencyentry path="" kind="src"/>
+	</dependency>
+	<catalogs>
+		<catalog path="catalogs/Generated scenario blocks" type="block"/>
+		<catalog path="catalogs/AnalyticTemplate blocks" type="block"/>
+		<catalog path="catalogs/AnalyticTemplate functions" type="function"/>
+	</catalogs>
+	<bundles>
+		<bundle file="Industry Analytics Kit.bnd" origin-path="INDUSTRY_ANALYTICS_KIT_HOME\bundles" origin="VARIABLE">
+			<instance name=""/>
+			<config-files>
+			</config-files>
+			<bundle-instance-files>
+			</bundle-instance-files>
+			<static-files>
+			</static-files>
+			<dashboard-files>
+			</dashboard-files>
+			<evt-files>
+				<file name="../events/Ready.evt" timestamp="1495531325642"/>
+			</evt-files>
+		</bundle>
+	</bundles>
+</apama-project>

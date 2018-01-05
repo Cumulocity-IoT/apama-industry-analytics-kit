@@ -1,0 +1,209 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>FFTAnalysis</TITLE>
+<META NAME="keywords" CONTENT="FFTAnalysis&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="FFTAnalysis";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/streaming_calculations/FFTAnalysis.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="FFTAnalysis.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/streaming_calculations/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics.streaming_calculations</FONT>
+<BR>Event FFTAnalysis</H2>
+<HR>The FFT Analytic performs a Fast Fourier Transformation calculation based on the incoming Data over the defined time window and sampling frequency.  It then publishes a set of Data events for the (set of) highest peaks that in the results. The actual number of peaks to publish is configurable. The frequency value is published in the dValue parameter, and the amplitude is published in the xValue parameter of the Data event.<br>
+<br> <dl><dt><b>Input Data events:</b></dt> <dd>Only a single input Data stream name must be provided.</dd> </dl> <dl><dt><b>Output Data events:</b></dt> <dd>Only a single output Data stream name must be provided.</dd> </dl> <dl><dt><b>Params:</b></dt> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr> <tr><td><b>timeWindow</b></td><td>Defines the time window to calculate the FFT over</td> <td>Stringified decimal <font face="courier" size="-1">>0.0d</font></td><td>Decimal</td><td>True</td><td></td></tr> <tr><td><b>sampleFrequency</b></td><td>Defines the number of samples per-second that the FFT is calculated on</td> <td>Stringified integer <font face="courier" size="-1">>0</font></td><td>Integer</td><td>True</td><td></td></tr> <tr><td><b>peakCount</b></td><td>Defines the number of highest amplitude peaks that will be published by the Analytic</td> <td>Stringified integer <font face="courier" size="-1">>0</font></td><td>Integer</td><td>false</td><td><font face="courier" size="-1">3</font></td></tr> <tr><td><b>exposeDataview</b></td><td>Defines whether or not a Dataview will be created holding all of the results from the FFT calculation.</td> <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">false</font></td></tr> <tr><td><b>dataviewName</b></td><td>The name of the DataView table where the incoming Data event data will be stored</td> <td>A non-empty string</td><td>String</td><td>False</td><td>The input Data channel name</td></tr> <tr><td><b>dataviewOwner</b></td><td>The identifier used as the owner of the DataView table that will be created. Defaults to access for all users</td> <td>A non-empty string</td><td>String</td><td>False</td><td><font face="courier" size="-1">*</font></td></tr> <tr><td><b>bySourceId</b></td><td>If defined, the FFT calculations are partitioned based on the <font face="courier" size="-1">sourceId</font> of the <font face="courier" size="-1">Data</font> events</td> <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr> </table></dd> </dl> <dl><dt><b>Example usage:</b></dt> <dd><pre><br>// Define a FFT Analytic which takes Data events on the channel "Input1"  <br>// and calculates the Fast Fourier Transformation over a 10 second time window<br>// of 20 events per-second. It publishes a Data event for each of the top 3 highest<br>// amplitude peaks (which is the default value) on the output channel "Output1".   <br>send com.industry.analytics.Analytic("FFT", ["Input1"], ["Output1"], {"timeWindow":"10.0","sampleFrequency":"20.0"} ) to "";<br>
+<br>// Define a FFT Analytic which takes Data events on the channel "Input2"  <br>// and calculates the Fast Fourier Transformation over a 10 second time window<br>// of 20 events per-second. It publishes a Data event for each of the top 3 highest<br>// amplitude peaks (which is the default value) on the output channel "Output2".<br>// It also creates a new Apama Dataview that contains all of the FFT results<br>// so that the user can visualise the results in Apama Dashboards or Mashzone<br>send com.industry.analytics.Analytic("FFT", ["Input2"], ["Output2"], {"timeWindow":"10.0","sampleFrequency":"20.0","exposeDataview":"true"} ) to "";<br></pre></dd> </dl><HR>
+<A NAME="constant_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Constant Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="FFTAnalysis.html#BY_SOURCEID">BY_SOURCEID</A> := "bySourceId"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether or not the Average calculation will be partitioned by the <font face="courier" size="-1">sourceId</font></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="FFTAnalysis.html#DATAVIEW_NAME">DATAVIEW_NAME</A> := "dataviewName"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the name of the DataView to create</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="FFTAnalysis.html#DATAVIEW_OWNERID">DATAVIEW_OWNERID</A> := "dataviewOwner"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the ownerId of the DataView to create</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="FFTAnalysis.html#EXPOSE_DATAVIEW">EXPOSE_DATAVIEW</A> := "exposeDataview"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies whether or not to create an Apama DataView for the calculated FFT values</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="FFTAnalysis.html#NAME">NAME</A> := "FFT"</B></CODE>
+<br>
+<br>This constant defines the name of the Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="FFTAnalysis.html#PEAK_COUNT">PEAK_COUNT</A> := "peakCount"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the number of highest peaks to publish</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="FFTAnalysis.html#SAMPLE_FREQUENCY">SAMPLE_FREQUENCY</A> := "sampleFrequency"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the sample frequency of the sample data to calculate the FFT over</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="FFTAnalysis.html#TIMEWINDOW">TIMEWINDOW</A> := "timeWindow"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the time window to calculate the FFT over</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="FFTAnalysis.html#init()">init</A></B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="FFTAnalysis.html#reset()">reset</A></B>()</CODE>
+<br>
+<br>Optional action to reset the state of the Analytic instance back to its initialisation state. This is called internally by the Analytic Object, and should not be called directly by the Users application.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="constant_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Constant Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="BY_SOURCEID"></A>
+<H3>BY_SOURCEID</H3>
+<PRE>constant string&nbsp;<B>BY_SOURCEID := "bySourceId"</B>
+</PRE>This constant defines the configuration parameter name that defines whether or not the Average calculation will be partitioned by the <font face="courier" size="-1">sourceId</font><HR>
+<A NAME="DATAVIEW_NAME"></A>
+<H3>DATAVIEW_NAME</H3>
+<PRE>constant string&nbsp;<B>DATAVIEW_NAME := "dataviewName"</B>
+</PRE>This constant defines the configuration parameter name that specifies the name of the DataView to create<HR>
+<A NAME="DATAVIEW_OWNERID"></A>
+<H3>DATAVIEW_OWNERID</H3>
+<PRE>constant string&nbsp;<B>DATAVIEW_OWNERID := "dataviewOwner"</B>
+</PRE>This constant defines the configuration parameter name that specifies the ownerId of the DataView to create<HR>
+<A NAME="EXPOSE_DATAVIEW"></A>
+<H3>EXPOSE_DATAVIEW</H3>
+<PRE>constant string&nbsp;<B>EXPOSE_DATAVIEW := "exposeDataview"</B>
+</PRE>This constant defines the configuration parameter name that specifies whether or not to create an Apama DataView for the calculated FFT values<HR>
+<A NAME="NAME"></A>
+<H3>NAME</H3>
+<PRE>constant string&nbsp;<B>NAME := "FFT"</B>
+</PRE>This constant defines the name of the Analytic.<HR>
+<A NAME="PEAK_COUNT"></A>
+<H3>PEAK_COUNT</H3>
+<PRE>constant string&nbsp;<B>PEAK_COUNT := "peakCount"</B>
+</PRE>This constant defines the configuration parameter name that specifies the number of highest peaks to publish<HR>
+<A NAME="SAMPLE_FREQUENCY"></A>
+<H3>SAMPLE_FREQUENCY</H3>
+<PRE>constant string&nbsp;<B>SAMPLE_FREQUENCY := "sampleFrequency"</B>
+</PRE>This constant defines the configuration parameter name that specifies the sample frequency of the sample data to calculate the FFT over<HR>
+<A NAME="TIMEWINDOW"></A>
+<H3>TIMEWINDOW</H3>
+<PRE>constant string&nbsp;<B>TIMEWINDOW := "timeWindow"</B>
+</PRE>This constant defines the configuration parameter name that specifies the time window to calculate the FFT over<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration that will be used for this instance</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The action callback to call when the new Analytic has been created, or if an error occured.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration event object.</DD>
+<DD>
+<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that can be used to interact with the Analytic.</DD>
+</DL>
+<HR>
+<A NAME="reset()"></A>
+<H3>reset</H3>
+<PRE>void&nbsp;<B>reset</B>()</PRE>Optional action to reset the state of the Analytic instance back to its initialisation state. This is called internally by the Analytic Object, and should not be called directly by the Users application.<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/streaming_calculations/FFTAnalysis.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="FFTAnalysis.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/streaming_calculations/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

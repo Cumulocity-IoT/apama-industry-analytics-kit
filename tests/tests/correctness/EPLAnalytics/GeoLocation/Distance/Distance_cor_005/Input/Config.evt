@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("distance", ["Input"], ["Output"], {"LATITUDE": "51.494824", "LONGITUDE" : "-0.109177", "distanceUnit":"KMS"})
+com.industry.analytics.Analytic("DISTANCE", ["Input"], ["Output"], {"LATITUDE": "51.494824", "LONGITUDE" : "-0.109177", "distanceUnit":"KMS"})
+com.industry.analytics.Analytic("DiStAnCe", ["Input"], ["Output"], {"LATITUDE": "51.494824", "LONGITUDE" : "-0.109177", "distanceUnit":"KMS"})
+com.industry.analytics.Analytic("Distance", ["Input"], ["Output"], {"LATITUDE": "51.494824", "LONGITUDE" : "-0.109177", "distanceUnit":"KMS"})

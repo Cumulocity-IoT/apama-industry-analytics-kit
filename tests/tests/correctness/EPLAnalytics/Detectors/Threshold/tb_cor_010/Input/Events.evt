@@ -1,0 +1,14 @@
+// Falling will be triggered after duration by threshold change.
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 10.0, "", 0.0, 0.0, 0.0, {})
+
+"ThresholdRising", com.industry.analytics.Data("ThresholdRising", "r", "", 11.0, 5.0, "", 0.0, 0.0, 0.0, {})
+"ThresholdFalling", com.industry.analytics.Data("ThresholdFalling", "r", "", 11.0, 15.0, "", 0.0, 0.0, 0.0, {})
+"ThresholdCrossing", com.industry.analytics.Data("ThresholdCrossing", "r", "", 11.0, 5.0, "", 0.0, 0.0, 0.0, {})
+
+"ThresholdRising", com.industry.analytics.Data("ThresholdRising", "r", "", 12.0, 15.0, "", 0.0, 0.0, 0.0, {})
+"ThresholdFalling", com.industry.analytics.Data("ThresholdFalling", "r", "", 12.0, 5.0, "", 0.0, 0.0, 0.0, {})
+"ThresholdCrossing", com.industry.analytics.Data("ThresholdCrossing", "r", "", 12.0, 15.0, "", 0.0, 0.0, 0.0, {})
+
+//Make sure the new thresholds are being correctly used.
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 16.0, "", 0.0, 0.0, 0.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 4.0, "", 0.0, 0.0, 0.0, {})

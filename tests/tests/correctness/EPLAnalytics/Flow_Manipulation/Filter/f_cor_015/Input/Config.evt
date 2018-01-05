@@ -1,0 +1,16 @@
+// Invalid
+com.industry.analytics.Analytic("Filter", ["Input1"], ["Output1"], {"dValue":"<5 5", "xValue":"<5,5", "yValue":">5 5", "zValue":">5,5"})
+com.industry.analytics.Analytic("Filter", ["Input2"], ["Output1"], {"dValue":"< 5 5", "xValue":"< 5,5", "yValue":"> 5 5", "zValue":"> 5,5"})
+com.industry.analytics.Analytic("Filter", ["Input3"], ["Output1"], {"dValue":"<=5 5", "xValue":"<=5,5", "yValue":">=5 5", "zValue":">=5,5"})
+com.industry.analytics.Analytic("Filter", ["Input4"], ["Output1"], {"dValue":"<= 5 5", "xValue":"<= 5,5", "yValue":">= 5 5", "zValue":">= 5,5"})
+com.industry.analytics.Analytic("Filter", ["Input5"], ["Output1"], {"dValue":"= 5 5", "xValue":"= 5,5", "yValue":"=5 5", "zValue":"=5,5"})
+com.industry.analytics.Analytic("Filter", ["Input6"], ["Output1"], {"dValue":"<> 5", "xValue":"<>5,5", "yValue":">< 5", "zValue":"><5"})
+com.industry.analytics.Analytic("Filter", ["Input7"], ["Output1"], {"dValue":"<=> 5 5 5", "xValue":"<=>5,5,5", "yValue":">=< 5", "zValue":">=<5,5"})
+//Valid
+com.industry.analytics.Analytic("Filter", ["Input8"], ["Output1"], {"dValue":"<5", "xValue":"< 5", "yValue":">5", "zValue":"> 5"})
+com.industry.analytics.Analytic("Filter", ["Input9"], ["Output1"], {"dValue":"<=5", "xValue":"<= 5", "yValue":">=5", "zValue":">= 5"})
+com.industry.analytics.Analytic("Filter", ["Input10"], ["Output1"], {"dValue":"=5", "xValue":"= 5"})
+com.industry.analytics.Analytic("Filter", ["Input11"], ["Output1"], {"dValue":"<> 5 5", "xValue":"<> 5,5", "yValue":"<>5, 5", "zValue":"<> 5, 5"})
+com.industry.analytics.Analytic("Filter", ["Input12"], ["Output1"], {"dValue":">< 5 5", "xValue":">< 5,5", "yValue":"><5, 5", "zValue":">< 5, 5"})
+com.industry.analytics.Analytic("Filter", ["Input13"], ["Output1"], {"dValue":"<=> 5 5", "xValue":"<=> 5,5", "yValue":"<=>5, 5", "zValue":"<=> 5, 5"})
+com.industry.analytics.Analytic("Filter", ["Input14"], ["Output1"], {"dValue":">=< 5 5", "xValue":">=< 5,5", "yValue":">=<5, 5", "zValue":">=< 5, 5"})

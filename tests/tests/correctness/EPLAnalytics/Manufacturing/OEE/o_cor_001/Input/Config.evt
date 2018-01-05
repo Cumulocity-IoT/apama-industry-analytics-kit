@@ -1,0 +1,6 @@
+com.industry.analytics.Analytic("OEE", [], [], {})
+com.industry.analytics.Analytic("OEE", ["Input1","Input2","Input3"], [], {})
+com.industry.analytics.Analytic("OEE", ["Input1","Input2","Input3"], ["Output1", "Output2"], {})
+com.industry.analytics.Analytic("OEE", ["Input1", "Input2"], ["Output1"], {})
+com.industry.analytics.Analytic("OEE", ["Input1"], ["Output1"], {})
+com.industry.analytics.Analytic("OEE", [], ["Output1"], {})

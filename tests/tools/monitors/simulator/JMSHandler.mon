@@ -1,0 +1,48 @@
+//*****************************************************************************
+// Title:         JMSHandler
+// 
+// $Copyright (c) 2014 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or Terracotta Inc., San Francisco, CA, USA, and/or Software AG (Canada) Inc., Cambridge, Ontario, Canada, and/or, Software AG (UK) Ltd., Derby, United Kingdom, and/or Software A.G. (Israel) Ltd., Or-Yehuda, Israel and/or their licensors.$
+// Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+//
+//*****************************************************************************
+
+package com.industry.analytics;
+
+using com.apama.correlator.jms.JMSSenderStatus;
+using com.apama.correlator.jms.JMSReceiverStatus;
+using com.apama.correlator.jms.JMSConnectionStatus;
+
+using com.apama.correlator.jms.JMS;
+using com.apama.correlator.jms.JMSConnection;
+using com.apama.correlator.jms.JMSReceiver;
+using com.apama.correlator.jms.JMSReceiverConfiguration;
+using com.apama.correlator.jms.JMSReceiverReliability;
+using com.apama.correlator.jms.JMSSender;
+using com.apama.correlator.jms.JMSSenderConfiguration;
+using com.apama.correlator.jms.JMSSenderReliability;
+
+/** @private */
+event JMSConnector {
+	/** The JMS event object represents the Correlator-integrated JMS runtime. */
+	JMS jms;
+	/** Channel to which JMS will be listening for events from correlator. */
+	string JMS_SEND_CHANNEL;
+	
+	action init(action<string> done)
+	{
+		jms.onApplicationInitialized();
+		
+		JMSSenderStatus senderStatus;
+		on JMSSenderStatus():senderStatus
+		{
+			JMS_SEND_CHANNEL := jms.getConnection(senderStatus.connectionId).getDefaultSender().getChannel();
+			log "Enabled JMS Connection channel: "+JMS_SEND_CHANNEL at INFO;
+			done(JMS_SEND_CHANNEL);
+		}
+	}
+	
+	/** Returns channel on which correlator should emit events. */
+	action getJMSSendChannel() returns string {
+		return JMS_SEND_CHANNEL;
+	}
+}

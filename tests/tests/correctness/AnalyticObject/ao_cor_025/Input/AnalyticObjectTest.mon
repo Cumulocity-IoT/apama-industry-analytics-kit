@@ -1,0 +1,116 @@
+//*****************************************************************************
+// Title:         AnalyticObjectTest
+//*****************************************************************************
+
+package com.industry.analytics.AnalyticObject_025;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.AnalyticObject;
+
+
+event StopListeners {}
+
+
+monitor AnalyticObjectTest
+{
+	AnalyticInterface _tiAsync;
+	AnalyticInterface _tiSync;
+
+	
+	action onload()
+	{
+		spawn _spawnTarget to context("TestContext");
+	}
+	
+	
+	action _spawnTarget()
+	{
+		AnalyticObject to_sync := new AnalyticObject;
+		to_sync.initExtended(Analytic("TestAnalytic",
+		                       ["TestInputData1", "TestInputData2", "TestInputData3"],
+		                       ["TestOutputData1", "TestOutputData2", "TestOutputData3"],
+		                       new dictionary<string, string>),
+		             new action<Data>,
+		             processDataStreamSync,
+		             true,
+		             new action<>,
+		             new action<>,
+		             _initCompleteSync);
+		AnalyticObject to_async := new AnalyticObject;
+		to_async.initExtended(Analytic("TestAnalytic",
+		                        ["TestInputData1", "TestInputData2", "TestInputData3"],
+		                        ["TestOutputData1", "TestOutputData2", "TestOutputData3"],
+		                        new dictionary<string, string>),
+		              new action<Data>,
+		              processDataStreamAsync,
+		              false,
+			          new action<>,
+		              new action<>,
+		              _initCompleteAsync);
+	}
+	
+	
+	action _initCompleteSync(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			_tiSync := ti;
+			ti.start();
+
+			on StopListeners()
+			{
+				ti.stop();
+			}
+		}
+		else
+		{
+			log "Sync AnalyticObject.initExtended() failed." at ERROR;
+		}
+	}
+	
+	
+	action _initCompleteAsync(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			_tiAsync := ti;
+			ti.start();
+
+			on StopListeners()
+			{
+				ti.stop();
+			}
+		}
+		else
+		{
+			log "Async AnalyticObject.initExtended() failed." at ERROR;
+		}
+	}
+	
+	
+	action processDataStreamSync(dictionary<string, Data> dataIn)
+	{
+		Data currData;
+		for currData in dataIn.values()
+		{
+			currData.streamName := "SyncDataEvents";
+			_tiAsync.sendData(currData);
+		}
+		emit "" to "SyncDataEvents";
+	}
+	
+	
+	action processDataStreamAsync(dictionary<string, Data> dataIn)
+	{
+		Data currData;
+		for currData in dataIn.values()
+		{
+			currData.streamName := "AsyncDataEvents";
+			_tiSync.sendData(currData);
+		}
+		emit "" to "AsyncDataEvents";
+	}
+}

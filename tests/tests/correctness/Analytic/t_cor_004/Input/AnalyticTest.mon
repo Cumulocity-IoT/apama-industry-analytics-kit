@@ -1,0 +1,64 @@
+//*****************************************************************************
+// Title:         AnalyticTest
+//*****************************************************************************
+
+package com.industry.analytics.Analytic_cor_004;
+using com.industry.analytics.Analytic;
+
+monitor AnalyticTest
+{
+	action onload() {
+		// Create a new Analyticer
+		Analytic c := Analytic("Test", ["Input1",  "Input2"],
+										 ["Output1", "Output2"],
+										 {"param01":"true",  // Valid
+										  "param02":"false", // Valid
+										  "param03":"1",     // Invalid
+										  "param04":"0",     // Invalid
+										  "param05":"-1",    // Invalid
+										  "param06":"1.0",   // Invalid
+										  "param07":"0.0",   // Invalid
+										  "param08":"-1.0",  // Invalid
+										  "param09":"2",     // Invalid
+										  "param10":"666",   // Invalid
+										  "param11":"-2",    // Invalid
+										  "param12":"TRUE",  // Valid - Case insensitive compare
+										  "param13":"FALSE", // Valid - Case insensitive compare
+										  "param14":"True",  // Valid - Case insensitive compare
+										  "param15":"False", // Valid - Case insensitive compare
+										  "param16":"T",     // Invalid
+										  "param17":"F",     // Invalid
+										  "param18":"Foo",   // Invalid
+										  "param19":"Bar",   // Invalid
+										  "param20":"",      // Invalid
+										  "param21":"  "     // Invalid
+										  });
+		
+		// Create the set of types as all boolean
+		sequence<string>  types           := new sequence<string>;
+		sequence<boolean> mandatory_false := new sequence<boolean>;
+		sequence<boolean> mandatory_true  := new sequence<boolean>;
+		string paramName;
+		for paramName in c.params.keys() {
+			types.append("boolean");
+			mandatory_false.append(false);
+			mandatory_true.append(true);
+		} 
+		
+		// Validate the set of parameters
+		// Using non-mandatory params, but invalid boolean values for params - SHOULD FAIL
+		boolean result := c.validateParams( "Test", -1, -1, 
+											c.params.keys(), types, mandatory_false );
+		log "TEST 1: " + result.toString() at INFO;
+		
+		// Using mandatory params, but invalid boolean values for params - SHOULD FAIL
+		result := c.validateParams( "Test", -1, -1, 
+								    c.params.keys(), types, mandatory_true );
+		log "TEST 2: " + result.toString() at INFO;
+		
+		// Only specifying the valid boolean values for params - SHOULD PASS
+		result := c.validateParams( "Test", -1, -1, 
+								   ["param01", "param02"], ["boolean","boolean"], [false,false] );
+		log "TEST 3: " + result.toString() at INFO;
+	}
+}

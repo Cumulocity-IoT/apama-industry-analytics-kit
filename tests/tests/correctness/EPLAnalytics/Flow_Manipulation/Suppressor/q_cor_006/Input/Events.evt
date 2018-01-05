@@ -1,0 +1,23 @@
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 2.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s2", 2.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 4.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s2", 4.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s2", 6.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 6.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s2", 6.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s3", 7.0, 0.0, "", 1.0, 2.0, 3.0, {"reset":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 8.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s2", 8.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 10.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s2", 10.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 12.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s2", 12.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 14.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s2", 14.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 16.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s2", 16.0, 0.0, "", 1.0, 2.0, 3.0, {"action":""})

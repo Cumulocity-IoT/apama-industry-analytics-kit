@@ -1,0 +1,21 @@
+//*****************************************************************************
+// Title:         Simulator002
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.Simulator002;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+
+monitor Test {
+	
+	action onload() {
+		monitor.subscribe("OutputData");
+
+		on all Data() as currData {
+			if( currData.dValue > 100.0d or currData.dValue < 0.0d ) then {
+				log "Incorrect data generated : "+currData.toString() at ERROR;
+			}
+		}
+	}
+}

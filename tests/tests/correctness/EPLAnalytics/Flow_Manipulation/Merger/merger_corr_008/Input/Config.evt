@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Merger", ["In1", "In2"], ["Output"], {"mapping":"{\"params\":\"*\",\"param.overwrite\":\"passed\",\"param.Overwrite2\":\"${param.Overwrite2}\"}"})

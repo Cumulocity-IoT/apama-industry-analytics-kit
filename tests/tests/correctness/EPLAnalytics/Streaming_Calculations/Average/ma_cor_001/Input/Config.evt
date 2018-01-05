@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("Average", [], [], {})
+com.industry.analytics.Analytic("Average", ["Input1", "Input2"], ["Output1", "Output2"], {"timeWindow":"true"})
+com.industry.analytics.Analytic("Average", ["Input1"], ["Output1"], {"timeWindow":"0"})
+com.industry.analytics.Analytic("Average", ["Input1"], ["Output1"], {})

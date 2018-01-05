@@ -1,0 +1,26 @@
+//*****************************************************************************
+// Title:         Simulator051
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.Simulator051;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+
+monitor Test {
+	action onload() {
+		send com.industry.analytics.Analytic( "DataSimulator", new sequence<string>, ["OutputData"], 
+											 { "simulationType":"triangle","sourceIdCount":"1", 
+											   "rangeUpper":"50", "rangeLower":"0", 
+											   "sourceIdPrefix":"ID_", 
+											   "dataRateUnit":"perMinute", "dataRateValue":"60" }) to "";
+
+		monitor.subscribe("OutputData");
+		on all Data() as currData {
+			emit "Received Data: "+currData.dValue.toString() to "OUTPUT_DATA_ONLY";
+			if( currData.dValue < 0.0d or currData.dValue > 50.0d ) then {
+				emit "INVALID DATA RECEIVED! sourceId:"+currData.sourceId+" dValue:"+currData.dValue.toString() to "OUTPUT_DATA_ONLY";
+			}
+		}
+	}
+}

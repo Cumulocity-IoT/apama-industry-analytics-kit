@@ -1,0 +1,7 @@
+com.industry.analytics.Analytic("Mapper", ["Input"], ["DVAL"], {"inputField":"dValue", "outputField":"dValue", "mapping":"{\"1\":\"123\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["SVAL"], {"inputField":"dValue", "outputField":"sValue", "mapping":"{\"1\":\"success\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["XVAL"], {"inputField":"dValue", "outputField":"xValue", "mapping":"{\"1\":\"456\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["YVAL"], {"inputField":"dValue", "outputField":"yValue", "mapping":"{\"1\":\"567\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["ZVAL"], {"inputField":"dValue", "outputField":"zValue", "mapping":"{\"1\":\"890\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["TYPE"], {"inputField":"dValue", "outputField":"type", "mapping":"{\"1\":\"success\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["PARAM"],{"inputField":"dValue", "outputField":"param", "outputParamName":"result", "mapping":"{\"1\":\"success\"}"})

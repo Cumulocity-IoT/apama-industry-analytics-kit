@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("repeater", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("REPEATER", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("RePeAtEr", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("Repeater", ["Input"], ["Output"], {})

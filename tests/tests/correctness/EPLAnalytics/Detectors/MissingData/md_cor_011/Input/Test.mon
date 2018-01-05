@@ -1,0 +1,52 @@
+//*****************************************************************************
+// Title:         MissingData011
+//*****************************************************************************
+
+package com.industry.analytics.detectors.MissingData011;
+
+using com.industry.analytics.detectors.MissingData;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	MissingData _missingData;
+	
+	action onload()
+	{
+		Analytic config := Analytic("MissingData", ["Input"], ["Output"], new dictionary<string,string>);
+		_missingData.init(config, _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			Data currData := Data.init("Input", DataConstants.RAW, "asset1");
+			currData.timestamp := 0.0d;
+			currData.dValue := 0.0d;
+			_missingData.processData( currData );
+			currData.timestamp := 1.0d;
+			currData.dValue := 1.0d;
+			_missingData.processData( currData );
+			_missingData._missingCounts["asset1"] := 1;
+			log "MissingData Pre-Reset State:" at INFO;
+			log "  _timeouts: " + _missingData._timeouts.toString() at INFO;
+			log "  _data: " + _missingData._data.toString() at INFO;
+			log "  _missingCounts: " + _missingData._missingCounts.toString() at INFO;
+			_missingData.reset();
+			log "MissingData Post-Reset State:" at INFO;
+			log "  _timeouts: " + _missingData._timeouts.toString() at INFO;
+			log "  _data: " + _missingData._data.toString() at INFO;
+			log "  _missingCounts: " + _missingData._missingCounts.toString() at INFO;
+		}
+		else
+		{
+			log "Error spawning MissingData instance." at ERROR;
+		}
+	}
+}

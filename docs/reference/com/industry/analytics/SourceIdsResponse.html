@@ -1,0 +1,117 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>SourceIdsResponse</TITLE>
+<META NAME="keywords" CONTENT="SourceIdsResponse&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="SourceIdsResponse";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/SourceIdsResponse.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="SourceIdsResponse.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/analytics/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;ACTION</FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;ACTION</FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics</FONT>
+<BR>Event SourceIdsResponse</H2>
+<HR>This event is sent in response to the to the <font face="courier" size="-1">com.industry.analytics.DataSourceIdsRequest</font> on the DataSource Service channel (I.E. "DATASOURCE_MGMT_CHANNEL") which requests the set of associated DataSources for the one specified. Note that the entire hierachy of associated child DataSources are returned in the response, not just the direct children of a specified DataSource.<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../com/industry/analytics/SourceIdsRequest.html" title="type in com.industry.analytics">com.industry.analytics.SourceIdsRequest</A>&nbsp;-&nbsp;The request event that this event is sent in response to.</DD>
+<DD>
+<A HREF="../../../com/industry/analytics/DataSource.html" title="type in com.industry.analytics">com.industry.analytics.DataSource</A>&nbsp;-&nbsp;The definition of an DataSource object.</DD>
+</DL>
+<HR>
+<A NAME="member_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Member Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE><B><A HREF="SourceIdsResponse.html#sourceId">sourceId</A></B></CODE>
+<br>
+<br>The unique identifier of the DataSource that the set of associated DataSources was originally requested for.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;sequence&lt;string&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="SourceIdsResponse.html#sourceIds">sourceIds</A></B></CODE>
+<br>
+<br>A sequence containing the set of associated DataSource Ids.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="member_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Member Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="sourceId"></A>
+<H3>sourceId</H3>
+<PRE>string&nbsp;<B>sourceId</B>
+</PRE>The unique identifier of the DataSource that the set of associated DataSources was originally requested for.<HR>
+<A NAME="sourceIds"></A>
+<H3>sourceIds</H3>
+<PRE>sequence&lt;string&nbsp;&gt;&nbsp;<B>sourceIds</B>
+</PRE>A sequence containing the set of associated DataSource Ids.<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/SourceIdsResponse.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="SourceIdsResponse.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/analytics/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;ACTION</FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;ACTION</FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

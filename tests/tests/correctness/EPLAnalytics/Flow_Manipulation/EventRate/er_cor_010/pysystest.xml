@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pysystest state="runnable" type="auto">
+	<description>
+		<title>EventRate - Test with bySourceId=true and useCorrelatorTime=false</title>
+		<purpose>
+		<![CDATA[Timestamp event rate using input Data sourceId.]]>
+		</purpose>
+	</description>
+	<classification>
+		<groups>
+			<group>EventRate</group>
+			<group>Flow_Manipulation</group>
+			<group>Industry_Analytics</group>
+			<group>EPL</group>
+		</groups>
+	</classification>
+	<data>
+		<class module="run" name="PySysTest"></class>
+	</data>
+	<traceability>
+		<requirements>
+			<requirement></requirement>
+		</requirements>
+	</traceability>
+</pysystest>

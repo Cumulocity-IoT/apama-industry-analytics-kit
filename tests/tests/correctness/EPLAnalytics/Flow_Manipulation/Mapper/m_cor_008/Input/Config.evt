@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("mapper", ["Input"], ["Output"], {"inputField":"sValue", "mapping":"{\"abc\":\"def\"}"})
+com.industry.analytics.Analytic("MAPPER", ["Input"], ["Output"], {"inputField":"sValue", "mapping":"{\"abc\":\"def\"}"})
+com.industry.analytics.Analytic("MaPpeR", ["Input"], ["Output"], {"inputField":"sValue", "mapping":"{\"abc\":\"def\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["Output"], {"inputField":"sValue", "mapping":"{\"abc\":\"def\"}"})

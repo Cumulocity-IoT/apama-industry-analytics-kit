@@ -1,0 +1,46 @@
+//*****************************************************************************
+// Title:         Spike006
+//*****************************************************************************
+
+package com.industry.analytics.spike_cor_011;
+
+using com.industry.analytics.detectors.Spike;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	Spike _Spike;
+	
+	action onload()
+	{
+		Analytic config := Analytic("Spike", ["Input"], ["Output"], {"standardDeviationMultiple":"1", "timeWindow":"1"});
+		_Spike.init(config, _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			Data currData := Data.init("Input", DataConstants.RAW, "asset1");
+			currData.dValue := 1.0d;
+			_Spike.processData( currData );
+			currData.sourceId := "asset2";
+			currData.dValue := 2.345d;
+			_Spike.processData( currData );
+			log "Spike Pre-Reset State:" at INFO;
+			log "  _bollingers: " + _Spike._bollingers.toString() at INFO;
+			_Spike.reset();
+			log "Spike Post-Reset State:" at INFO;
+			log "  _bollingers: " + _Spike._bollingers.toString() at INFO;
+		}
+		else
+		{
+			log "Error spawning Spike instance." at ERROR;
+		}
+	}
+}

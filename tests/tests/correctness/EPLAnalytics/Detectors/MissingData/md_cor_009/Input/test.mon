@@ -1,0 +1,210 @@
+//*****************************************************************************
+// Title:         MissingData test
+//*****************************************************************************
+
+package com.industry.analytics.detectors.MissingData_cor_009;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.detectors.MissingData;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the MissingData - with valid values should pass
+		(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+															{ MissingData.INTERVAL_TYPE : "seconds" } ), 
+								initComplete );
+
+		// Create the MissingData - with valid values should pass
+		on NextTest( testNum=2 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "SECONDS" } ), 
+									initComplete );
+		}
+		// Create the MissingData - with valid values should pass
+		on NextTest( testNum=3 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "SeCoNdS" } ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - with valid values should pass
+		on NextTest( testNum=4 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "  seconds" } ), 
+									initComplete );
+		}
+
+		// Create the MissingData - with valid values should pass
+		on NextTest( testNum=5 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "seconds  " } ), 
+									initComplete );
+		}
+
+		// Create the MissingData - with valid values should pass
+		on NextTest( testNum=6 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "stddev" } ), 
+									initComplete );
+		}
+
+		// Create the MissingData - with valid values should pass
+		on NextTest( testNum=7 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "STDDEV" } ), 
+									initComplete );
+		}
+
+		// Create the MissingData - with valid values should pass
+		on NextTest( testNum=8 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "StDdEv" } ), 
+									initComplete );
+		}
+
+		// Create the MissingData - with valid values should pass
+		on NextTest( testNum=9 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "  stddev" } ), 
+									initComplete );
+		}
+
+		// Create the MissingData - with valid values should pass
+		on NextTest( testNum=10 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "stddev  " } ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - with invalid values should fail
+		on NextTest( testNum=11 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "0.0" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with empty INTERVAL_TYPE value - Should fail
+		on NextTest( testNum=12 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL_TYPE value - Should fail
+		on NextTest( testNum=13 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "  " } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL_TYPE value - Should fail
+		on NextTest( testNum=14 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "foobar" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL_TYPE value - Should fail
+		on NextTest( testNum=15 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "[]" } ), 
+									initComplete );
+		}		
+		
+		// Test minimal params with invalid INTERVAL_TYPE value - Should fail
+		on NextTest( testNum=16 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "[1.0]" } ), 
+									initComplete );
+		}		
+
+		// Test minimal params with invalid INTERVAL_TYPE value - Should fail
+		on NextTest( testNum=17 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "{}" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL_TYPE value - Should fail
+		on NextTest( testNum=18 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "-1.0" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL_TYPE value - Should fail
+		on NextTest( testNum=19 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "FALSE" } ), 
+									initComplete );
+		}
+
+		// Test minimal params with invalid INTERVAL_TYPE value - Should fail
+		on NextTest( testNum=20 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "false" } ), 
+									initComplete );
+		}
+
+		// Test minimal params with invalid INTERVAL_TYPE value - Should fail
+		on NextTest( testNum=21 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "TRUE" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL_TYPE value - Should fail
+		on NextTest( testNum=22 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ MissingData.INTERVAL_TYPE : "true" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL_TYPE name - Should pass as parameters are case insensitive
+		on NextTest( testNum=23 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ "INTERVALTYPE" : "stddev" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with invalid INTERVAL_TYPE name - Should pass as parameters are case insensitive
+		on NextTest( testNum=24 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ "intervaltype" : "stddev" } ), 
+									initComplete );
+		}
+		
+		// Test minimal params with valid INTERVAL_TYPE param name and value - Should pass 
+		on NextTest( testNum=25 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, [ "Input1" ], [ "Output1" ], 
+																{ "weight" : "1.0" } ), 
+									initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

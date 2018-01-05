@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pysystest state="runnable" type="auto">
+	<description>
+		<title>Volatility 008: Calculate Volatility for multiple source Ids with param bySourceId set to false.</title>
+		<purpose>
+		<![CDATA[Functionality test.]]>
+		</purpose>
+	</description>
+	<classification>
+		<groups>
+			<group>Volatility</group>
+			<group>Streaming_Calculations</group>
+			<group>Industry_Analytics</group>
+			<group>EPL</group>
+		</groups>
+	</classification>
+	<data>
+		<class module="run" name="PySysTest"></class>
+	</data>
+	<traceability>
+		<requirements>
+			<requirement></requirement>
+		</requirements>
+	</traceability>
+</pysystest>

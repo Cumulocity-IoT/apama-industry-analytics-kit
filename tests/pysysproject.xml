@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" standalone="yes"?>
+<pysysproject>
+	
+	<!-- Get the environment and osfamily properties -->
+	<property environment="env"/>
+	<property osfamily="osfamily"/>
+
+	<!-- Set apama project details from the environment -->
+	<property name="APAMA_LIBRARY_VERSION"   value="${env.APAMA_LIBRARY_VERSION}" default="9.9"/>
+	<property name="APAMA_HOME"              value="${env.APAMA_HOME}"/>
+	<property name="APAMA_CORRELATOR_HOME"   value="${env.APAMA_HOME}"/>
+	<property name="APAMA_DEV_HOME"          value="${env.APAMA_HOME}"/>
+	<property name="APAMA_MANAGEMENT_HOME"   value="${env.APAMA_HOME}"/>
+	<property name="APAMA_COMMON_JRE"        value="${env.APAMA_HOME}/third_party/jre"/>
+
+	<property root="rootdir"/>
+
+	<property name="OS_FAMILY"				value="${osfamily}"/>
+
+	<property name="JAVA_HOME"				value="${env.JAVA_HOME}"/>
+
+	<!-- Set apama project details which cannot be pulled from the environment -->
+	<property name="APAMA_MODELER_HOME"		value="${env.APAMA_HOME}"/>
+	<property name="APAMA_WORK"				value="${env.APAMA_WORK}"/>
+	<property name="APAMA_LICENCE"			value="${env.APAMA_WORK}/license/license.txt"/>
+
+	<!-- Add the src location (relative to the project root) to the python path -->
+	<path value="./src" relative="true"/>
+
+	<!-- Add the name of the runner class to use for the project -->
+	<runner classname="IndustrySolutionsRunner" module="industry.framework.BaseRunner"/>
+		
+</pysysproject>

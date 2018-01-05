@@ -1,0 +1,2 @@
+"In1", com.industry.analytics.Data("In1", "r", "source1", 0, 0, "", 0, 0, 0, {"ice":"cream"})
+"In2", com.industry.analytics.Data("In2", "a", "aCompletelyDifferentSourceId", 0, 1234, "", 0, 0, 0, {"apple":"pie"})

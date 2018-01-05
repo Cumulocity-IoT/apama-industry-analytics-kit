@@ -1,0 +1,3 @@
+com.industry.analytics.Data("OutputCombined","a","s3",18.650892288,1,"",0,0,0,{"anomalySource":"MissingData"})
+com.industry.analytics.Data("OutputCombined","a","s3",25.301784576,2,"",0,0,0,{"anomalySource":"MissingData"})
+com.industry.analytics.Data("OutputCombined","a","s3",31.952676864,3,"",0,0,0,{"anomalySource":"MissingData"})

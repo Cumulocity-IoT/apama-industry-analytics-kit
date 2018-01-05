@@ -1,0 +1,214 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>TimeWeightedMovingAverage</TITLE>
+<META NAME="keywords" CONTENT="TimeWeightedMovingAverage&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="TimeWeightedMovingAverage";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/TimeWeightedMovingAverage.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="TimeWeightedMovingAverage.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/analytics/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics</FONT>
+<BR>Event TimeWeightedMovingAverage</H2>
+<HR>This event handles the storage and calculations for a time weighted moving average.<br>
+<br> The following formulas are implemented:<br>
+<br> Standard formulation: ma_n = a * x_n + (1 - a) * ma_n-1 = ma_n-1 + a * (x_n - ma_n-1) a = (1 - e^-u) u = (t_n - t_n-1) / T<br>
+<br> Re-arrange for efficiency: ma_n = (1 - a) * x_n + a * ma_n-1 = x_n + a * (ma_n-1 - x_n) a = e^-u u = (t_n - t_n-1) / T<br>
+<br> Note: If there are multiple values (x_n) for a particular timestamp (t_n) then the average is used Note: If t_n < t_n-1 then the value is ignored<HR>
+<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;decimal</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="TimeWeightedMovingAverage.html#a()">a</A></B>()</CODE>
+<br>
+<br>Returns the intermediate value a from the above formulas. Required by the variance calculation, for example.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;decimal</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="TimeWeightedMovingAverage.html#currentCount()">currentCount</A></B>()</CODE>
+<br>
+<br>Get the count of the values at the current timestamp (Used by variance calculation)</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;decimal</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="TimeWeightedMovingAverage.html#currentSum()">currentSum</A></B>()</CODE>
+<br>
+<br>Get the sum of the values at the current timestamp (Used by variance calculation)</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;decimal</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="TimeWeightedMovingAverage.html#currentTimestamp()">currentTimestamp</A></B>()</CODE>
+<br>
+<br>Get the timestamp of the most recent update to the average</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;decimal</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="TimeWeightedMovingAverage.html#eMa()">eMa</A></B>()</CODE>
+<br>
+<br>Returns the current moving average.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="TimeWeightedMovingAverage.html#init()">init</A></B>(decimal&nbsp;value,&nbsp;decimal&nbsp;timestamp,&nbsp;decimal&nbsp;timeWindow)</CODE>
+<br>
+<br>Call this action immediately after creating a new instance of this event. Initialises the time weighted moving average.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;optional&lt;decimal&nbsp;&gt;</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="TimeWeightedMovingAverage.html#previousEMA()">previousEMA</A></B>()</CODE>
+<br>
+<br>Get the moving average for the previous timestamp (This may differ from the previously calculated eMa if there were multiple values for the same tiemstamp)</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="TimeWeightedMovingAverage.html#update()">update</A></B>(decimal&nbsp;value,&nbsp;decimal&nbsp;timestamp)</CODE>
+<br>
+<br>Updates the moving average with a new data point.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="a()"></A>
+<H3>a</H3>
+<PRE>decimal&nbsp;<B>a</B>()</PRE>Returns the intermediate value a from the above formulas. Required by the variance calculation, for example.<DL>
+<DT>
+<B>Returns:</B>
+</DT>
+<DD>Decimal value of a.</DD>
+</DL>
+<HR>
+<A NAME="currentCount()"></A>
+<H3>currentCount</H3>
+<PRE>decimal&nbsp;<B>currentCount</B>()</PRE>Get the count of the values at the current timestamp (Used by variance calculation)<DL>
+<DT>
+<B>Returns:</B>
+</DT>
+<DD>The count of the values as a decimal</DD>
+</DL>
+<HR>
+<A NAME="currentSum()"></A>
+<H3>currentSum</H3>
+<PRE>decimal&nbsp;<B>currentSum</B>()</PRE>Get the sum of the values at the current timestamp (Used by variance calculation)<DL>
+<DT>
+<B>Returns:</B>
+</DT>
+<DD>The sum of the values as a decimal</DD>
+</DL>
+<HR>
+<A NAME="currentTimestamp()"></A>
+<H3>currentTimestamp</H3>
+<PRE>decimal&nbsp;<B>currentTimestamp</B>()</PRE>Get the timestamp of the most recent update to the average<DL>
+<DT>
+<B>Returns:</B>
+</DT>
+<DD>Timestamp as a decimal</DD>
+</DL>
+<HR>
+<A NAME="eMa()"></A>
+<H3>eMa</H3>
+<PRE>decimal&nbsp;<B>eMa</B>()</PRE>Returns the current moving average.<DL>
+<DT>
+<B>Returns:</B>
+</DT>
+<DD>Moving average as a decimal value.</DD>
+</DL>
+<HR>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(decimal&nbsp;value,&nbsp;decimal&nbsp;timestamp,&nbsp;decimal&nbsp;timeWindow)</PRE>Call this action immediately after creating a new instance of this event. Initialises the time weighted moving average.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>value</tt>&nbsp;-&nbsp;The first decimal value in the set of data to be averaged.</DD>
+<DD>
+<tt>timestamp</tt>&nbsp;-&nbsp;The decimal timestamp when the first value was generated.</DD>
+<DD>
+<tt>timeWindow</tt>&nbsp;-&nbsp;The time window for the weight: T in the above formulas.</DD>
+</DL>
+<HR>
+<A NAME="previousEMA()"></A>
+<H3>previousEMA</H3>
+<PRE>optional&lt;decimal&nbsp;&gt;&nbsp;<B>previousEMA</B>()</PRE>Get the moving average for the previous timestamp (This may differ from the previously calculated eMa if there were multiple values for the same tiemstamp)<DL>
+<DT>
+<B>Returns:</B>
+</DT>
+<DD>Moving average as a decimal value.</DD>
+</DL>
+<HR>
+<A NAME="update()"></A>
+<H3>update</H3>
+<PRE>void&nbsp;<B>update</B>(decimal&nbsp;value,&nbsp;decimal&nbsp;timestamp)</PRE>Updates the moving average with a new data point.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>value</tt>&nbsp;-&nbsp;The decimal value to be added to the moving average.</DD>
+<DD>
+<tt>timestamp</tt>&nbsp;-&nbsp;The decimal timestamp when the value was generated.</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/TimeWeightedMovingAverage.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="TimeWeightedMovingAverage.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/analytics/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

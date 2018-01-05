@@ -1,0 +1,180 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Spike</TITLE>
+<META NAME="keywords" CONTENT="Spike&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="Spike";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/detectors/Spike.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Spike.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/detectors/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics.detectors</FONT>
+<BR>Event Spike</H2>
+<HR>The Spike Analytic takes a set of input Data events and, using the same time weighted calculations as used in the Average and Volatility Analytics, calculates the Nominal Range as a Bollinger Band centred on the moving average and bounded by a configured multiple of the standard deviation away from the moving average.<br>
+<br> The analytic will also optionally output to configured channels the output from various stages of the Bollinger calculation to save duplicate calculations within a separate analytic.<br>
+<br> If the input Data breaks the Nominal Range then an Anomaly Data is always output. By default, no output is generated when the bounds have not been breached, but this can optionally be enabled by setting the <font face="courier" size="-1">"verbose"</font> parameter to <font face="courier" size="-1">true</font>. These Data events will be output as Computed Data events.<br>
+<br> In both cases, the <font face="courier" size="-1">dValue</font> set on the Data event is the number of standard deviations that the input Data <font face="courier" size="-1">dValue</font> is away from the moving average.<br>
+<br> <dl><dt><b>Input Data events:</b></dt> <dd>Only a single input Data stream name must be provided.</dd> <dd><b>Note:</b> The input Data events timestamp value should be defined as the number of seconds since the epoch (1st January 1970).</dd> </dl> <dl><dt><b>Output Data events:</b></dt> <dd>Only a single Data stream name must be provided.<br>The resulting generated Data events on that stream name will either be:</ul> <li>Anomaly Data events if the Nominal Range has been breached.</li> <li>(Optionally enabled) Computed Data events if the Nominal Range has not been breached</li> </ul> In both cases, the Data events <font face="courier" size="-1">dValue</font> is set to the number of standard deviations that the input Data <font face="courier" size="-1">dValue</font> is away from the moving average. All the parameters from the input Data are copied to the output Data events.<br>
+<br> A set of Computed Data streams can also be optionally enabled in the Analytics outputDataName parameter by providing the channel name with the corresponding prefix. For example, specifying the outputChannelName with "stddev:MyStandardDeviationChannel", will send Data events containing the calculated standard deviation on the channel "MyStandardDeviationChannel".<br>
+<br> The table below defines the computed data stream type and the prefix required:<ul> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Calculation Type</th><th>Description</th><th>Output Channel Name Prefix</th></tr> <tr><td><b>Upper boundary</b></td><td>If this parameter is provided, Data events containing the calculated upper Nominal Range will be sent on the stream name provided by this parameters value</td><td><font face="courier" size="-1">upper:</font></td></tr> <tr><td><b>Lower boundary</b></td><td>If this parameter is provided, Data events containing the calculated lower Nominal Range will be sent on the stream name provided by this parameters value</td><td><font face="courier" size="-1">lower:</font></td></tr> <tr><td><b>Moving average</b></td><td>If this parameter is provided, Data events containing the calculated moving average data will be sent on the stream name provided by this parameters value</td><td><font face="courier" size="-1">avg:</font></td></tr> <tr><td><b>Standard deviation</b></td><td>If this parameter is provided, Data events containing the calculated standard deviation data will be sent on the stream name provided by this parameters value</td><td><font face="courier" size="-1">stddev:</font></td></tr> <tr><td><b>Variance</b></td><td>If this parameter is provided, Data events containing the calculated variance data will be sent on the stream name provided by this parameters value</td><td><font face="courier" size="-1">variance:</font></td></tr> </table></dd> </dd> </dl><dl><dt><b>Params:</b></dt> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr> <tr><td><b>timeWindow</b></td><td>The time window (in seconds) that moving average is calculated on</td> <td>Value must be > 0</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">60.0d</font></td></tr> <tr><td><b>standardDeviationMultiple</b></td><td>Sets the width of the Nominal Range in STDDEV</td> <td>Value must be > 0</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">2</font></td></tr> <tr><td><b>warmUp</b></td><td>The number of events to use to calculate the inital bounds. No anomalies will be generated during calculation.</td> <td>Value must be >= 0</td><td>Integer</td><td>False</td><td><font face="courier" size="-1">5</font></td></tr> <tr><td><b>verbose</b></td><td>Enables/Disables the verbose mode so that computed values are generated as well as anomaly values.</td> <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">false</font></td></tr> </table></dd> </dl> <dl><dt><b>Example usage:</b></dt> <dd><pre><br>// Define a Spike Analytic for Data events on the channel "Input1"<br>// and generate an anomaly Data event on the channel "Output1" if the value goes outside<br>// 2.0 standard deviations away from the moving average which was calculated over 10.0 seconds <br>send com.industry.analytics.Analytic("Spike", ["Input1"], ["Output1"], {"timeWindow":"10.0","standardDeviationMultiple":"2.0"} ) to "";<br>
+<br>// Define a Spike Analytic for Data events on the channel "Input1"<br>// and generate an anomaly Data event on the channel "Output2" if the value goes outside   <br>// 2.0 standard deviations away from the moving average which was calculated over 10.0 seconds. <br>// Also send the raw Data events on the "Output2" channel, the values calculated<br>// for the upper and lower boundaries on "UpperChannel" and "LowerChannel", and <br>// the moving Average calculation on the "AverageChannel"<br>send com.industry.analytics.Analytic("Spike", ["Input2"], ["Output2", "upper:UpperChannel","lower:LowerChannel","avg:AverageChannel","verbose:true"], <br>						{"timeWindow":"10.0","standardDeviationMultiple":"2.0"} ) to "";<br></pre></dd> </dl><HR>
+<A NAME="constant_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Constant Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Spike.html#NAME">NAME</A> := "Spike"</B></CODE>
+<br>
+<br>This constant defines the name of the Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Spike.html#STANDARD_DEVIATION_MULTIPLE">STANDARD_DEVIATION_MULTIPLE</A> := "standardDeviationMultiple"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name for the width of the Nominal Range in STDDEVs (as a decimal value)</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Spike.html#TIMEWINDOW">TIMEWINDOW</A> := "timeWindow"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name for the time window (in seconds as a decimal) that moving average is calculated on</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Spike.html#VERBOSE">VERBOSE</A> := "verbose"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name for enabling Verbose mode on/off.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Spike.html#WARMUP">WARMUP</A> := "warmUp"</B></CODE>
+<br>
+</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Spike.html#init()">init</A></B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="constant_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Constant Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="NAME"></A>
+<H3>NAME</H3>
+<PRE>constant string&nbsp;<B>NAME := "Spike"</B>
+</PRE>This constant defines the name of the Analytic.<HR>
+<A NAME="STANDARD_DEVIATION_MULTIPLE"></A>
+<H3>STANDARD_DEVIATION_MULTIPLE</H3>
+<PRE>constant string&nbsp;<B>STANDARD_DEVIATION_MULTIPLE := "standardDeviationMultiple"</B>
+</PRE>This constant defines the configuration parameter name for the width of the Nominal Range in STDDEVs (as a decimal value)<HR>
+<A NAME="TIMEWINDOW"></A>
+<H3>TIMEWINDOW</H3>
+<PRE>constant string&nbsp;<B>TIMEWINDOW := "timeWindow"</B>
+</PRE>This constant defines the configuration parameter name for the time window (in seconds as a decimal) that moving average is calculated on<HR>
+<A NAME="VERBOSE"></A>
+<H3>VERBOSE</H3>
+<PRE>constant string&nbsp;<B>VERBOSE := "verbose"</B>
+</PRE>This constant defines the configuration parameter name for enabling Verbose mode on/off.<HR>
+<A NAME="WARMUP"></A>
+<H3>WARMUP</H3>
+<PRE>constant string&nbsp;<B>WARMUP := "warmUp"</B>
+</PRE>
+<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration that will be used for this instance</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The action callback to call when the new Analytic has been created, or if an error occured.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration event object.</DD>
+<DD>
+<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that can be used to interact with the Analytic.</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/detectors/Spike.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Spike.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/detectors/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

@@ -1,0 +1,6 @@
+// Absolute value
+com.industry.analytics.Analytic("Drift", ["Input"], ["OutputValue"], {"offset":"2", "offsetType":"absolute", "lowerOffsetOverride":"3" })
+// Percentage
+com.industry.analytics.Analytic("Drift", ["Input"], ["OutputPercentage"], {"offset":"10", "offsetType":"percentage", "lowerOffsetOverride":"20" })
+// Standard deviation
+com.industry.analytics.Analytic("Drift", ["Input"], ["OutputStandardDeviation"], {"offset":"2", "offsetType":"stddev", "lowerOffsetOverride":"1" })

@@ -1,0 +1,59 @@
+//*****************************************************************************
+// Title:         AnalyticTest
+//*****************************************************************************
+
+package com.industry.analytics.Analytic_cor_001;
+using com.industry.analytics.Analytic;
+
+monitor AnalyticTest
+{
+	action onload()
+	{
+		Analytic c := Analytic("Test",
+		                             ["Input1", "Input2"],
+		                             ["Output1", "Output2"],
+		                             {"boolean_good":"true",
+									  "boolean_bad":"8",
+									  "decimal_good":"1.0",
+									  "decimal_bad":"true",
+									  "float_good":"2.0",
+									  "float_bad":"false",
+									  "integer_good":"3",
+									  "integer_bad":"true",
+									  "string":"a_string"});
+		
+		boolean result := c.validateParams("Test", -1, -1, 
+										   ["boolean_good", "decimal_good", "float_good", "integer_good", "string"],
+										   ["boolean", "decimal", "float", "integer", "string"],
+										   [true, false, true, false, true]);
+		log "All valid result: " + result.toString() at INFO;
+		
+		result := c.validateParams("Test", -1, -1, 
+		                            ["boolean_good", "boolean_bad",
+		                            "decimal_good", "decimal_bad",
+		                            "float_good", "float_bad",
+		                            "integer_good", "integer_bad",
+		                            "string",
+		                            "missing_mandatory", "missing_optional"],
+		                           ["boolean", "boolean",
+		                            "decimal", "decimal",
+		                            "float", "float",
+		                            "integer", "integer",
+		                            "string",
+		                            "string", "string"],
+		                           [true, true,
+		                            true, true,
+		                            true, true,
+		                            true, true,
+		                            true,
+		                            true, false]);
+		log "Some invalid result: " + result.toString() at INFO;
+		
+		log "boolean_good: " + c.getBoolean("boolean_good").toString() at INFO;
+		log "decimal_good: " + c.getDecimal("decimal_good").toString() at INFO;
+		log "float_good: " + c.getFloat("float_good").toString() at INFO;
+		log "integer_good: " + c.getInteger("integer_good").toString() at INFO;
+		log "string: " + c.getString("string") at INFO;
+		log "missing_optional: '" + c.getString("missing_optional") + "'" at INFO;
+	}
+}

@@ -1,0 +1,54 @@
+BATCH 0
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0,  5.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0,  5.0, "", 0.0, 0.0, 0.0, {})
+BATCH 10
+"Input", com.industry.analytics.Data("Input", "r", "s1", 5.0,  5.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 5.0,  5.0, "", 0.0, 0.0, 0.0, {})
+BATCH 20
+"Input", com.industry.analytics.Data("Input", "r", "s1", 10.0, 10.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 10.0, 5.0, "", 0.0, 0.0, 0.0, {})
+BATCH 30
+"Input", com.industry.analytics.Data("Input", "r", "s1", 15.0, 15.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 15.0,  5.0, "", 0.0, 0.0, 0.0, {})
+BATCH 40
+"Input", com.industry.analytics.Data("Input", "r", "s1", 20.0, 20.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 20.0,  5.0, "", 0.0, 0.0, 0.0, {})
+BATCH 50
+"Input", com.industry.analytics.Data("Input", "r", "s1", 25.0, 15.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 25.0,  5.0, "", 0.0, 0.0, 0.0, {})
+BATCH 60
+"Input", com.industry.analytics.Data("Input", "r", "s1", 30.0, 10.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 30.0,  5.0, "", 0.0, 0.0, 0.0, {})
+BATCH 70
+"Input", com.industry.analytics.Data("Input", "r", "s1", 35.0,  5.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 35.0,  5.0, "", 0.0, 0.0, 0.0, {})
+BATCH 80
+"Input", com.industry.analytics.Data("Input", "r", "s1", 40.0,  5.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 40.0,  5.0, "", 0.0, 0.0, 0.0, {})
+BATCH 90
+"Input", com.industry.analytics.Data("Input", "r", "s1", 45.0,  5.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 45.0, 15.0, "", 0.0, 0.0, 0.0, {})
+BATCH 100
+"Input", com.industry.analytics.Data("Input", "r", "s1", 50.0,  5.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 50.0, 20.0, "", 0.0, 0.0, 0.0, {})
+BATCH 110
+"Input", com.industry.analytics.Data("Input", "r", "s1", 55.0, 10.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 55.0, 20.0, "", 0.0, 0.0, 0.0, {})
+BATCH 120
+"Input", com.industry.analytics.Data("Input", "r", "s1", 60.0, 15.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 60.0, 20.0, "", 0.0, 0.0, 0.0, {})
+BATCH 130
+"Input", com.industry.analytics.Data("Input", "r", "s1", 65.0, 20.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 65.0, 20.0, "", 0.0, 0.0, 0.0, {})
+BATCH 140
+"Input", com.industry.analytics.Data("Input", "r", "s1", 70.0, 25.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 70.0, 20.0, "", 0.0, 0.0, 0.0, {})
+BATCH 150
+"Input", com.industry.analytics.Data("Input", "r", "s1", 75.0, 30.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 75.0, 20.0, "", 0.0, 0.0, 0.0, {})
+BATCH 160
+"Input", com.industry.analytics.Data("Input", "r", "s1", 80.0, 35.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 80.0, 20.0, "", 0.0, 0.0, 0.0, {})
+BATCH 170
+"Input", com.industry.analytics.Data("Input", "r", "s1", 85.0, 25.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 85.0, 20.0, "", 0.0, 0.0, 0.0, {})

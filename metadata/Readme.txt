@@ -1,0 +1,1 @@
+Output folder for metatadata.json, used by the AnalyticBuilder

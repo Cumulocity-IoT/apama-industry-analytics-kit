@@ -1,0 +1,6 @@
+// Moving Average
+com.industry.analytics.Analytic("Average", ["DataSimulator"], ["MovingAverage"], {"timeWindow":"15.0"})
+// Threshold Breach
+com.industry.analytics.Analytic("Threshold", ["MovingAverage"], ["Threshold"], {"threshold":"50.0", "direction":"crossing"})
+// Actual event rate measure
+com.industry.analytics.Analytic("EventRate", ["MovingAverage"], ["EventRate"], {"measurementPeriod":"1.0", "correlatorOrTimestamp":"correlator", "sourceId":"A"})

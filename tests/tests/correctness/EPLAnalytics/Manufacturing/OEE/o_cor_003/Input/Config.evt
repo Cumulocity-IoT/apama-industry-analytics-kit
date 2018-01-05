@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("OEE", ["Availability", "Quality", "Performance"], ["bySourceId"], {"bySourceId":"true"})
+com.industry.analytics.Analytic("OEE", ["Availability", "Quality", "Performance"], ["notBySourceId"], {"bySourceId":"false"})

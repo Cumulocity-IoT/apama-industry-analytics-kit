@@ -1,0 +1,7 @@
+com.industry.analytics.Analytic("Mapper", ["Input"], ["DVAL"], {"inputField":"dValue", "outputField":"sValue", "mapping":"{\"1000\":\"a\", \"1e3\":\"d\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["SVAL"], {"inputField":"sValue", "outputField":"sValue", "mapping":"{\"abc\":\"a\", \"abc\":\"d\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["XVAL"], {"inputField":"xValue", "outputField":"sValue", "mapping":"{\"1000\":\"a\", \"1e3\":\"d\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["YVAL"], {"inputField":"yValue", "outputField":"sValue", "mapping":"{\"1000\":\"a\", \"1e3\":\"d\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["ZVAL"], {"inputField":"zValue", "outputField":"sValue", "mapping":"{\"1000\":\"a\", \"1e3\":\"d\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["TYPE"], {"inputField":"type", "outputField":"sValue", "mapping":"{\"a\":\"a\", \"a\":\"d\"}"})
+com.industry.analytics.Analytic("Mapper", ["Input"], ["PARAM"], {"inputField":"param", "inputParamName":"abc", "outputField":"sValue", "mapping":"{\"a\":\"a\", \"a\":\"d\"}"})

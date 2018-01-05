@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("Distance", ["Input"], ["Output"], {"LATITUDE": "51.494824", "LONGITUDE" : "-0.109177", "distanceUnit":"KMS"})
+

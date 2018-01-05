@@ -1,0 +1,146 @@
+//*****************************************************************************
+// Title:         Filter test
+//*****************************************************************************
+
+package com.industry.analytics.flow_manipulation.Filter_cor_011;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.flow_manipulation.Filter;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the Filter - with valid values should pass
+		(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+		 											  { Filter.SVALUE : "[\"a\",\"c\"]" } ), 
+							initComplete );
+
+		// Test minimal params with empty SVALUE value - Should fail
+		on NextTest( testNum=2 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { Filter.SVALUE : "" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with invalid SVALUE value - Should fail
+		on NextTest( testNum=3 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { Filter.SVALUE : "  " } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with invalid SVALUE value - Should fail
+		on NextTest( testNum=4 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { Filter.SVALUE : "123" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with invalid SVALUE value - Should fail
+		on NextTest( testNum=5 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { Filter.SVALUE : "-123" } ), 
+								initComplete );
+		}		
+				
+		// Test minimal params with invalid SVALUE value - Should fail
+		on NextTest( testNum=6 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { Filter.SVALUE : "foobar" } ), 
+								initComplete );
+		}
+
+		// Test minimal params with invalid SVALUE value - Should fail
+		on NextTest( testNum=7 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { Filter.SVALUE : "{}" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with invalid SVALUE value - Should fail
+		on NextTest( testNum=8 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { Filter.SVALUE : "{\"a\":\"1\",\"c\":\"1\"}" } ), 
+								initComplete );
+		}		
+		
+		// Test minimal params with invalid SVALUE value - Should fail
+		on NextTest( testNum=9 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { Filter.SVALUE : "[1,2" } ), 
+								initComplete );
+		}
+
+		// Test minimal params with invalid SVALUE value - Should fail
+		on NextTest( testNum=10 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { Filter.SVALUE : "]" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with invalid SVALUE value - Should fail
+		on NextTest( testNum=11 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { Filter.SVALUE : "[\"a\",\"c\"" } ), 
+								initComplete );
+		}
+		// Test minimal params with invalid SVALUE value - Should fail
+		on NextTest( testNum=12 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { Filter.SVALUE : "[\"a\",1" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with valid (but empty) SVALUE value - Should pass
+		on NextTest( testNum=13 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { Filter.SVALUE : "[]" } ), 
+								initComplete );
+		}
+
+		// Test minimal params with invalid SVALUE name - Should pass as the param name is unrecognised and not mandatory
+		on NextTest( testNum=14 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { "SVALUE" : "[]" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with invalid SVALUE name - Should pass as the param name is unrecognised and not mandatory
+		on NextTest( testNum=15 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { "svalue" : "[]" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with valid SVALUE name and value - Should pass
+		on NextTest( testNum=16 ) { 
+			(new Filter).init( com.industry.analytics.Analytic( Filter.NAME, [ "Input1" ], [ "Output1" ], 
+														  { "sValue" : "[]" } ), 
+								initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

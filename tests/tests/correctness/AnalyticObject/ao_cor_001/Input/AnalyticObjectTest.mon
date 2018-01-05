@@ -1,0 +1,78 @@
+//*****************************************************************************
+// Title:         AnalyticObjectTest
+//*****************************************************************************
+
+package com.industry.analytics.AnalyticObject_001;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.AnalyticObject;
+
+
+event StopListeners {}
+
+
+monitor AnalyticObjectTest
+{
+	AnalyticInterface _ti;
+
+	
+	action onload()
+	{
+		spawn _spawnTarget to context("TestContext");
+	}
+	
+	
+	action _spawnTarget()
+	{
+		AnalyticObject tObj := new AnalyticObject;
+		tObj.initExtended(Analytic("TestAnalytic",
+		                    ["TestInputData1", "TestInputData2"],
+		                    ["TestOutputData1", "TestOutputData2"],
+							new dictionary<string, string>),
+		          processData,
+		          new action<dictionary<string, Data> >,
+		          false,
+		          new action<>,
+		          new action<>,
+		          _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			_ti := ti;
+			ti.start();
+
+			on StopListeners()
+			{
+				ti.stop();
+			}
+		}
+		else
+		{
+			log "AnalyticObject.initExtended() failed." at ERROR;
+		}
+	}
+	
+	
+	action processData(Data currData)
+	{
+		Data dataOut := currData.clone();
+		if currData.streamName = "TestInputData1" then
+		{
+			dataOut.streamName := "TestOutputData1";
+		}
+		else
+		{
+			dataOut.streamName := "TestOutputData2";
+		}
+		dataOut.type := DataConstants.COMPUTED;
+		dataOut.dValue := currData.dValue * 10.0d;
+		_ti.sendData(dataOut);
+	}
+}

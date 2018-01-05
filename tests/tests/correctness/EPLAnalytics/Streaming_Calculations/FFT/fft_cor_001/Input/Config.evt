@@ -1,0 +1,8 @@
+com.industry.analytics.Analytic("FFT", [], [], {})
+com.industry.analytics.Analytic("FFT", ["Input1", "Input2"], ["Output1", "Output2"], {"timeWindow":"30.0","sampleFrequency":"20"})
+com.industry.analytics.Analytic("FFT", ["Input1"], ["Output1"], {})
+com.industry.analytics.Analytic("FFT", ["Input1"], ["Output1"], {"timeWindow":"30.0"})
+com.industry.analytics.Analytic("FFT", ["Input1"], ["Output1"], {"sampleFrequency":"20"})
+com.industry.analytics.Analytic("FFT", ["Input1"], ["Output1"], {"timeWindow":"30.0","sampleFrequency":"20.0"})
+com.industry.analytics.Analytic("FFT", ["Input1"], ["Output1"], {"timeWindow":"30.0","sampleFrequency":"20"})
+

@@ -1,0 +1,23 @@
+//*****************************************************************************
+// Title:         Simulator010
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.Simulator010;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+
+monitor Test {
+	action onload() {
+		send com.industry.analytics.Analytic( "DataSimulator", new sequence<string>, ["OutputData"], 
+											 { "simulationType":"sin" } ) to "";
+
+		monitor.subscribe("OutputData");
+		on all Data() as currData {
+			emit "Received Data: "+currData.dValue.toString() to "OUTPUT_DATA_ONLY";
+			if( currData.dValue < 0.0d or currData.dValue > 100.0d ) then {
+				emit "INVALID DATA RECEIVED! sourceId:"+currData.sourceId+" dValue:"+currData.dValue.toString() to "OUTPUT_DATA_ONLY";
+			}
+		}
+	}
+}

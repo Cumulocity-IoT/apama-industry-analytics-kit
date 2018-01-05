@@ -1,0 +1,48 @@
+//*****************************************************************************
+// Title:         Spread004
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.Spread004;
+
+using com.industry.analytics.streaming_calculations.Spread;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	Spread _spread;
+	
+	action onload()
+	{
+		Analytic config := Analytic("Spread", ["Input1", "Input2"], ["Output"], new dictionary<string, string>);
+		_spread.init(config, _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			Data currData := Data.init("Input1", DataConstants.RAW, "asset1");
+			currData.dValue := 1.0d;
+			Data currData2 := Data.init("Input2", DataConstants.RAW, "asset1");
+			currData2.dValue := 3.0d;
+			_spread.processData( currData );
+			_spread.processData( currData2 );
+			log "Spread Pre-Reset State:" at INFO;
+			log "  _latestValuesInput1: " + _spread._latestValuesInput1.toString() at INFO;
+			log "  _latestValuesInput2: " + _spread._latestValuesInput2.toString() at INFO;
+			_spread.reset();
+			log "Spread Post-Reset State:" at INFO;
+			log "  _latestValuesInput1: " + _spread._latestValuesInput1.toString() at INFO;
+			log "  _latestValuesInput2: " + _spread._latestValuesInput2.toString() at INFO;
+		}
+		else
+		{
+			log "Error spawning Spread instance." at ERROR;
+		}
+	}
+}

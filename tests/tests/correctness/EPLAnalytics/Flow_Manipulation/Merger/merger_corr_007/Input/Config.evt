@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Merger", ["In1", "In2"], ["Output"], {"overwriteExistingParams":"false", "mapping":"{\"params\":\"*\",\"param.nonExistent1\":\"added\",\"param.nonExistent2\":\"${param.nonExistent2}\",\"param.existingField1\":\"AHHH TEST FAILURE\",\"param.existingField2\":\"${param.existingField2}\"}"})

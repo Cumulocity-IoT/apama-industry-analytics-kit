@@ -1,0 +1,18 @@
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputAll"], {})
+
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputType"], {"type":"[\"r\"]"})
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputNotType"], {"!type":"[\"c\"]"})
+
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputSensor"], {"sourceId":"[\"s1\",\"s2\"]"})
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputNotSensor"], {"!sourceId":"[\"s3\",\"s4\"]"})
+
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputParam"], {"hasParam":"[\"p1\",\"p2\"]"})
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputNotParam"], {"!hasParam":"[\"p3\",\"p4\"]"})
+
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputStringValue"], {"sValue":"[\"\"]"})
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputNotStringValue"], {"!sValue":"[\"\"]"})
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputSpecificStringValue"], {"sValue":"[\"a\"]"})
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputNotSpecificStringValue"], {"!sValue":"[\"b\"]"})
+
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputComb1"], {"type":"[\"r\"]", "!sourceId":"[\"s1\"]", "hasParam":"[\"p1\"]"})
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputComb2"], {"!type":"[\"c\"]", "sourceId":"[\"s4\"]", "!hasParam":"[\"p4\"]"})

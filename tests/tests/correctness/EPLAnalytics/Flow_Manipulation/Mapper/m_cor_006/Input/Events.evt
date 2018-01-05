@@ -1,0 +1,4 @@
+"Input", com.industry.analytics.Data("Input", "r", "source", 0.0, 1.0, "failure", 1.0, 1.0, 1.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "source", 0.0, 2.0, "failure", 2.0, 2.0, 2.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "source", 0.0, 3.0, "failure", 3.0, 3.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "source", 0.0, 1000.0, "failure", 1000.0, 1000.0, 1000.0, {})

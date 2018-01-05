@@ -1,0 +1,15 @@
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+
+"Input2", com.industry.analytics.Data("Input1", "r", "s2", 0.0, 20.0, "", 1.0, 2.0, 3.0, {})
+"Input2", com.industry.analytics.Data("Input1", "r", "s2", 0.0, 20.0, "", 1.0, 2.0, 3.0, {})
+"Input2", com.industry.analytics.Data("Input1", "r", "s2", 0.0, 20.0, "", 1.0, 2.0, 3.0, {})
+
+"Input3", com.industry.analytics.Data("Input1", "r", "s3", 0.0, 30.0, "", 1.0, 2.0, 3.0, {})
+"Input3", com.industry.analytics.Data("Input1", "r", "s3", 0.0, 30.0, "", 1.0, 2.0, 3.0, {})
+"Input3", com.industry.analytics.Data("Input1", "r", "s3", 0.0, 30.0, "", 1.0, 2.0, 3.0, {})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 10.0, "", 1.0, 2.0, 3.0, {"originalSourceId":"t1"})
+"Input2", com.industry.analytics.Data("Input1", "r", "s2", 0.0, 20.0, "", 1.0, 2.0, 3.0, {"originalSourceId":"t2"})
+"Input3", com.industry.analytics.Data("Input1", "r", "s3", 0.0, 30.0, "", 1.0, 2.0, 3.0, {"originalSourceId":"t3"})

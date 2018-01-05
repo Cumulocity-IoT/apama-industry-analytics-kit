@@ -1,0 +1,251 @@
+//*****************************************************************************
+// Title:         Volatility test
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.Volatility_cor_003;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.streaming_calculations.Volatility;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the Volatility - Zero input should fail
+		(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+														  new sequence<string>, 
+														  [ "Output1" ], 
+														  { Volatility.TIMEWINDOW : "1.0" } ), 
+							 initComplete );
+
+		// Create the Volatility - Single input should pass
+		on NextTest( testNum=2 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "Output1" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+							 	initComplete );
+		}
+		
+		// Create the Volatility - Check more than one input - should fail
+		on NextTest( testNum=3 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1",  "Input2" ], 
+															 [ "Output1" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - Check more than one input with more outputs - should fail
+		on NextTest( testNum=4 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1",  "Input2" ], 
+															 [ "Output1", "Output2", "Output3"  ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - Empty name for input should fail
+		on NextTest( testNum=5 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "" ], 
+															 [ "Output1" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - blank name for input should fail
+		on NextTest( testNum=6 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "  " ], 
+															 [ "Output1", "Output2" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - Check only one output - should pass
+		on NextTest( testNum=7 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "Output1" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - Check two outputs output - should pass as the 2nd is the Moving Average
+		on NextTest( testNum=8 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "Output1", "Output2" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - Check 3 outputs - should fail
+		on NextTest( testNum=9 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "Output1", "Output2", "Output3" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - Check more than one output with more inputs - should fail
+		on NextTest( testNum=10 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1", "Input2", "Input3" ], 
+															 [ "Output1", "Output2" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+
+		// Create the Volatility - Check no inputs or outputs fails
+		on NextTest( testNum=11 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 new sequence<string>, 
+															 new sequence<string>, 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - Check zero output fails
+		on NextTest( testNum=12 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 new sequence<string>, 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - Empty name for one output should fail
+		on NextTest( testNum=13 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "", "Output2" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - Empty name for 2nd output should fail
+		on NextTest( testNum=14 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "Output1", "" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+
+		// Create the Volatility - Empty name for both outputs should fail
+		on NextTest( testNum=15 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "", "" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+
+		// Create the Volatility - Blank name for one output should fail
+		on NextTest( testNum=16 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "  ", "Output2" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - Blank name for 2nd output should fail
+		on NextTest( testNum=17 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "Output1", "  " ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+
+		// Create the Volatility - blank name for both outputs should fail
+		on NextTest( testNum=18 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "  ", "  " ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - Check null value for Analytic name fails
+		on NextTest( testNum=19 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( "", 
+															 [ "Input1" ], 
+															 [ "Output1", "Output2" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - with invalid Analytic name fails
+		on NextTest( testNum=20 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( "foobar", 
+															 [ "Input1" ], 
+															 [ "Output1", "Output2" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - with invalid case for Analytic name fails
+		on NextTest( testNum=21 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( "VOLATILITY", 
+															 [ "Input1" ], 
+															 [ "Output1", "Output2" ], 
+															 { Volatility.TIMEWINDOW : "1.0" } ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - pass as using default param
+		on NextTest( testNum=22 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "Output1", "Output2" ], 
+															 new dictionary<string,string> ), 
+								 initComplete );
+		}
+		
+		// Create the Volatility - with configuration values should pass
+		on NextTest( testNum=23 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "Output1", "Output2" ], 
+															 { Volatility.TIMEWINDOW : "1.0", "TYPE":"STDDEV", "BySourceId":"TRUE" } ), 
+								 initComplete );
+		}
+								 
+		// Create the Volatility - with configuration values should fail
+		on NextTest( testNum=24 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, 
+															 [ "Input1" ], 
+															 [ "Output1", "Output2" ], 
+															 { Volatility.TIMEWINDOW : "1.0", "TYPE":"STD_DEV", "BySourceId":"TRUE" } ), 
+								 initComplete );
+			
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

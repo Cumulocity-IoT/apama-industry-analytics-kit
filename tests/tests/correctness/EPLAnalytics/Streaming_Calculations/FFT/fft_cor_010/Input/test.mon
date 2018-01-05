@@ -1,0 +1,51 @@
+//*****************************************************************************
+// Title:         FFTAnalysis test
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.FFTAnalysis_cor_010;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.streaming_calculations.FFTAnalysis;
+
+
+event StartDataGenerator {
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{
+		integer Fs := 512;       // Sampling frequency                    
+		integer timeWindow := 4; // Length of signal
+
+		send com.industry.analytics.Analytic("FFT", ["Input1"], ["Output1"], {"timeWindow":timeWindow.toString(), "sampleFrequency":Fs.toString()}) to "";
+
+		on StartDataGenerator() {
+			integer testIterations := 0;
+			while testIterations < 10 {
+			log "TESTING:";
+				decimal T  := 1.0d/Fs.toDecimal(); // Sampling period
+
+				integer currTimeIndex := 0;
+				while currTimeIndex < timeWindow*Fs {
+					// Time vector
+					decimal timeVector := currTimeIndex.toDecimal() * T;
+			
+					// Form a signal containing a 50 Hz sinusoid of amplitude 0.7 and a 120 Hz sinusoid of amplitude 1.
+					decimal S := (0.7d*(2.0d*decimal.PI*50.0d*timeVector).sin()) +
+								 (2.0d*decimal.PI*120.0d*timeVector).sin();
+								
+					// Construct and send the new sample as a Data event
+					com.industry.analytics.Data dataIn := com.industry.analytics.Data.init( "Input1", "r", "sourceId" );
+					dataIn.dValue := S;
+					dataIn.timestamp := currentTime.toDecimal();
+					send dataIn to "Input1";
+					
+					currTimeIndex := currTimeIndex + 1;
+				}
+				testIterations := testIterations + 1;
+			}
+		}
+	}
+}

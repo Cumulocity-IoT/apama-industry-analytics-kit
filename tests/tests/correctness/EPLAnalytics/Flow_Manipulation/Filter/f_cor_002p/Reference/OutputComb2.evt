@@ -1,0 +1,2 @@
+com.industry.analytics.Data("OutputComb2","a","s4",0,10,"",1,2,3,{})
+com.industry.analytics.Data("OutputComb2","c","s4",0,10,"",1,2,3,{"p3":"X"})

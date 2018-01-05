@@ -1,0 +1,46 @@
+//*****************************************************************************
+// Title:         Sorter006
+//*****************************************************************************
+
+package com.industry.analytics.flow_manipulation.Sorter006;
+
+using com.industry.analytics.flow_manipulation.Sorter;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	Sorter _sorter;
+	
+	action onload()
+	{
+		Analytic config := Analytic("Sorter", ["Input"], ["Output"], {"timeWindow":"1"});
+		_sorter.init(config, _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			Data dataVal := Data.init("Input", DataConstants.RAW, "asset1");
+			dataVal.dValue := 1.0d;
+			_sorter.processData(dataVal);
+			dataVal.sourceId := "asset2";
+			dataVal.dValue := 2.345d;
+			_sorter.processData(dataVal);
+			log "Sorter Pre-Reset State:" at INFO;
+			log "  _datastream: " + _sorter._datastream.toString() at INFO;
+			_sorter.reset();
+			log "Sorter Post-Reset State:" at INFO;
+			log "  _datastream: " + _sorter._datastream.toString() at INFO;
+		}
+		else
+		{
+			log "Error spawning Sorter instance." at ERROR;
+		}
+	}
+}

@@ -1,0 +1,55 @@
+//*****************************************************************************
+// Title:         AnalyticTest
+//*****************************************************************************
+
+package com.industry.analytics.Analytic_cor_010;
+using com.industry.analytics.Analytic;
+
+monitor AnalyticTest
+{
+	action onload() {
+		// Create a new Analyticer
+		Analytic c := Analytic("Test", ["Input1",  "Input2"],
+										 ["Output1", "Output2"],
+										 {"param01":"true",  
+										  "param02":"false", 
+										  "param03":"1",     
+										  "param04":"0",  
+										  "param05":"-1",   
+										  "param06":"1.0",   
+										  "param07":"0.0",   
+										  "param08":"-1.0",  
+										  "param09":"666",   
+										  "param10":"-666",    
+										  "param11":"TRUE",  
+										  "param12":"FALSE",
+										  "param13":"True",  
+										  "param14":"False", 
+										  "param15":"Foo",  
+										  "param16":"{}",   
+										  "param17":"[",   
+										  "param18":"]",              
+										  "param19":"[]",          
+										  "param20":"[[]",            
+										  "param21":"[]]",           
+										  "param22":"[1]",           
+										  "param23":"[1.1]",         
+										  "param24":"[foo]",           
+										  "param25":"[foo,bar]",       
+										  "param26":"[\"foo\"]",      
+										  "param27":"[\"foo\",\"1\"]",
+										  "param28":"[\"[]\"]",
+										  "param29":"",   
+										  "param30":"  "  
+										  });
+		
+		// Test the getters
+		string paramName;
+		for paramName in c.params.keys() {
+			log "*** TEST param: "+paramName+" getOr false: " +c.getOrBoolean( paramName, false ).toString()+
+											 " getOr true: "  +c.getOrBoolean( paramName, true ).toString()+
+											 " get: "+c.getBoolean( paramName ).toString();
+		} 
+		log "TEST COMPLETE";
+	}
+}

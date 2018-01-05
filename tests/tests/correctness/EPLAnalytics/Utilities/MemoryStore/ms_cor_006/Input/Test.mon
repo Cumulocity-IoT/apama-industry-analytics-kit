@@ -1,0 +1,47 @@
+//*****************************************************************************
+// Title:         MemoryStore006
+//*****************************************************************************
+
+package com.industry.analytics.utilities.MemoryStore006;
+
+using com.industry.analytics.utilities.MemoryStore;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	MemoryStore _memoryStore;
+	
+	action onload()
+	{
+		Analytic config := Analytic("MemoryStore", ["Input"], new sequence<string>, new dictionary<string, string>);
+		_memoryStore.init(config, _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			Data currData := Data.init("Input", DataConstants.RAW, "asset1");
+			currData.dValue := 0.0d;
+			_memoryStore.processData( currData );
+			currData.sourceId := "asset2";
+			currData.timestamp := 1.0d;
+			currData.dValue := 2.0d;
+			_memoryStore.processData( currData );
+			log "MemoryStore Pre-Reset State:" at INFO;
+			_memoryStore.dumpTable();
+			_memoryStore.reset();
+			log "MemoryStore Post-Reset State:" at INFO;
+			_memoryStore.dumpTable();
+		}
+		else
+		{
+			log "Error spawning MemoryStore instance." at ERROR;
+		}
+	}
+}

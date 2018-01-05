@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("fft", ["Input"], ["Output"], {"timeWindow":"30.0","sampleFrequency":"20"})
+com.industry.analytics.Analytic("FFT", ["Input"], ["Output"], {"timeWindow":"30.0","sampleFrequency":"20"})
+com.industry.analytics.Analytic("FfT", ["Input"], ["Output"], {"timeWindow":"30.0","sampleFrequency":"20"})
+com.industry.analytics.Analytic("Fft", ["Input"], ["Output"], {"timeWindow":"30.0","sampleFrequency":"20"})

@@ -1,0 +1,6 @@
+com.industry.analytics.Analytic("DataViewer", [], [], {})
+com.industry.analytics.Analytic("DataViewer", ["Input1"], ["Output1"], {})
+com.industry.analytics.Analytic("DataViewer", ["Input1", "Input2"], ["Output1", "Output2"], {})
+com.industry.analytics.Analytic("DataViewer", [], ["Output1"], {})
+com.industry.analytics.Analytic("DataViewer", ["Input1"], [], {})
+com.industry.analytics.Analytic("DataViewer", ["Input1"], [], {"name":"MyDataView"})

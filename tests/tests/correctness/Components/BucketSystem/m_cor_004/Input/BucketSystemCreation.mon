@@ -1,0 +1,83 @@
+
+using com.industry.utils.BucketSystemBuilder;
+using com.industry.utils.BucketSystem;
+using com.industry.utils.Bucket;
+
+using com.apama.exceptions.Exception;
+
+event TestFinished {}
+
+event Item {
+  float f;
+}
+
+monitor BucketSystemTest {
+  BucketSystem skip;
+  BucketSystem noSkip;
+
+  action onload() {
+    noSkip := BucketSystemBuilder.create()
+                          .toValue(getF)
+                          .updateBucket(addItemToBucket)
+                          .totalSize(5.0)
+                          .bucketCount(5)
+                          .onBucketCreated(onBucketCreatedNoSkip)
+                          .onBucketExpired(onBucketExpiredNoSkip)
+                          .skipForwardOnGap(false)
+                          .build();
+                          
+    skip := BucketSystemBuilder.create()
+                          .toValue(getF)
+                          .updateBucket(addItemToBucket)
+                          .totalSize(5.0)
+                          .bucketCount(5)
+                          .onBucketCreated(onBucketCreatedSkip)
+                          .onBucketExpired(onBucketExpiredSkip)
+                          .skipForwardOnGap(true)
+                          .build();
+                          
+    on all Item() as i {
+      skip.add(i);
+      noSkip.add(i);
+      
+      emit (<sequence <sequence<Item> > > skip.reduce(shoveIntoASingleSeq, new sequence<sequence<Item> >)).toString() to "Skip";
+      emit (<sequence <sequence<Item> > > noSkip.reduce(shoveIntoASingleSeq, new sequence<sequence<Item> >)).toString() to "NoSkip";
+    }
+    
+    on TestFinished() {
+      send TestFinished() to "Skip";
+      send TestFinished() to "NoSkip";
+    }
+  }
+  
+  action shoveIntoASingleSeq(any acc, Bucket b) returns any {
+    (<sequence<sequence<Item> > > acc).append(<sequence<Item> > b.data);
+    return acc;
+  }
+  
+  action getF(any item) returns float {
+    return (<Item> item).f;
+  }
+    
+  action onBucketCreatedSkip(Bucket b) {
+    b.data := new sequence<Item>;
+    emit "Bucket Created" to "Skip";
+  }
+  
+  action onBucketCreatedNoSkip(Bucket b) {
+    b.data := new sequence<Item>;
+    emit "Bucket Created" to "NoSkip";
+  }
+  action onBucketExpiredSkip(Bucket b) {
+    emit "Bucket Expired" to "Skip";
+  }
+  
+  action onBucketExpiredNoSkip(Bucket b) {
+    emit "Bucket Expired" to "NoSkip";
+  }
+  
+  action addItemToBucket(Bucket b, any item) returns any {
+    (<sequence<Item> > b.data).append(<Item> item);
+    return b.data;
+  }
+}

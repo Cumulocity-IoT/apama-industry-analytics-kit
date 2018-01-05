@@ -1,0 +1,14 @@
+// United States to Malaysia (15070 km)
+"Input", com.industry.analytics.Data("Input", "r", "s1", 2.0, 2.1, "", 4.210484 , 101.975766, 3.0, {})
+
+// United States to United Kingdom (6830 km)
+"Input", com.industry.analytics.Data("Input", "r", "s1", 2.0, 2.1, "", 55.378051 , -3.435973, 3.0, {})
+
+// United States to Canada (2262 km)
+"Input", com.industry.analytics.Data("Input", "r", "s1", 2.0, 2.1, "", 56.130366 , -106.346771, 3.0, {})
+
+// United States to Ghana (9888 km)
+"Input", com.industry.analytics.Data("Input", "r", "s1", 2.0, 2.1, "", 7.946527 , -1.023194, 3.0, {})
+
+// United States to Nigeria (10650 km)
+"Input", com.industry.analytics.Data("Input", "r", "s1", 2.0, 2.1, "", 9.081999 , 8.675277, 3.0, {})

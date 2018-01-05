@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
+  </head>
+  <body>
+    <h1>Industry Analytics Kit Development Guide</h1>
+    <hr>
+    <ol id="mozToc">
+      <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+      <li><a href="#mozTocId464329">Industry Analytics Kit Development Guide</a>
+        <ol>
+          <li><a href="#Prerequisites">Prerequisites</a></li>
+          <li><a href="#Building">Building the Industry Analytics Kit</a></li>
+          <li><a href="#Testing">Testing the Industry Analytics Kit</a>
+            <ol>
+              <li><a href="#Running">Running the Tests</a></li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+    </ol>
+    <hr>
+    <h2 id="prerequisites"><a name="Prerequisites"></a>Prerequisites</h2>
+    <ol>
+      <p>The pre-requisites for the Industry Analytics Kit:</p>
+      <ul>
+        <li>SoftwareAG Apama (requires v10.1 as a minimum)</li>
+       </ul>
+    </ol>
+    <hr>
+    <h2><a name="Building"></a>Building the Industry Analytics Kit</h2>
+    In order to build the Industry Analytics Kit, or rebuild it after making
+    modifications, the following steps must be taken:<br>
+    <ol>
+    </ol>
+    <ol>
+      <li>On a Windows platform, you can simply double-click on the "<span style="font-family: monospace;">\src\build.bat</span>"
+        batch file.</li>
+      <ul>
+        <li><strong>Note:</strong> This batch file assumes that you have Apama
+          installed in the default directory.&nbsp; If you have installed Apama
+          in a non-standard installation path, you will either need to modify
+          the batch file directly in a text editor, or follow the alternate
+          steps below.</li>
+      </ul>
+      <li>Alternatively, you can use the ANT scripts directly:</li>
+      <ol>
+        <li>Open an Apama Command Prompt.</li>
+        <li>Navigate to the <span style="font-family: monospace;">&lt;analytics_kit_install_directory&gt;/src
+            </span>directory.</li>
+        <li>Type <span style="font-family: monospace;">ant build </span>followed
+          by return.</li>
+        <ul>
+          <li><strong>Note: </strong>To display help on what ANT targets are
+            available just type <span style="font-family: monospace;">ant </span>or
+            <span style="font-family: monospace;">ant usage</span> followed by
+            return.</li>
+        </ul>
+      </ol>
+    </ol>
+    <hr>
+    <h2><a name="Testing"></a>Testing the Industry Analytics Kit</h2>
+    A test framework and a set of tests are provided to assist developing the
+    Industry Analytics Kit further, or to provide a better understanding of the Industry
+    Analytics Kit itself.&nbsp; The test framework uses the Pysys Test
+    Framework, based on Python,&nbsp; that is shipped as part of the SoftwareAG
+    Apama product.<br>
+    <br>
+    <strong>Note:</strong> This section is not intended to be a guide on how the
+    Pysys Test Framework works and how to write new tests.&nbsp; Further
+    information on Pysys can be found in the documentation for the SoftwareAG
+    Apama product. <br>
+    <br>
+    The tests and the Pysys Test Framework extensions can all be found in the <span
+      style="font-family: monospace;">&lt;analytics_kit_install_directory&gt;/tests </span>directory.
+    <br><br>
+    A set of Python scripts in <span style="font-family: monospace;"><span style="font-family: monospace;">&lt;analytics_kit_install_directory&gt;/</span>tests/src/industry/framework</span>
+    extend the functionality provided by Pysys to make the task of testing the
+    Industry Analytics Kit easier.&nbsp; A Pysys BaseTest is provided (see <span style="font-family: monospace;"><span
+        style="font-family: monospace;">&lt;analytics_kit_install_directory&gt;/</span>tests/src/industry/framework/AnalyticsBaseTest.py</span>)
+    which sets up the appropriate environment, starts the Correlator and injects
+    the EPL that is required by the Industry Analytics Kit.<br>
+    <br>
+    The individual tests themselves are under the <span style="font-family: monospace;"><span
+        style="font-family: monospace;">&lt;analytics_kit_install_directory&gt;/</span>tests/tests</span>
+    directory.&nbsp;&nbsp; <br>
+    <h3><a name="Running"></a>Running the Tests</h3>
+    In order to run the tests, the following steps must be taken: <br>
+    <ol>
+      <li>Open an Apama Command Prompt.</li>
+      <li>Navigate to the <span style="font-family: monospace;">&lt;analytics_kit_install_directory&gt;/tests
+          </span>directory.</li>
+      <li>Type <span style="font-family: monospace;">pysys run </span>followed
+        by return.&nbsp; This will execute all of the tests that are provided,
+        and will indicate whether the test run passed or failed.</li>
+    </ol>
+    <ol>
+      <ol>
+      </ol>
+      <ol>
+      </ol>
+      <ol>
+      </ol>
+    </ol>
+    <ol>
+    </ol>
+    <hr><span lang="EN-US"></span>
+    <ol>
+    </ol>
+  </body>
+</html>

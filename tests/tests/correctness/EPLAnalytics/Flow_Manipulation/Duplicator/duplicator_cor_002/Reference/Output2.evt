@@ -1,0 +1,5 @@
+com.industry.analytics.Data("Output2","r","s1",0,10,"",1,2,3,{})
+com.industry.analytics.Data("Output2","r","s1",0,10,"",1,2,3,{})
+com.industry.analytics.Data("Output2","r","s1",0,10,"",1,2,3,{})
+com.industry.analytics.Data("Output2","r","s1",0,10,"",1,2,3,{"originalSourceId":"t1"})
+com.industry.analytics.Data("Output2","r","s2",0,20,"",1,2,3,{"originalSourceId":"t2"})

@@ -1,0 +1,5 @@
+com.industry.analytics.Data("Output1","c","source1",0,0,"",0,0,0,{})
+com.industry.analytics.Data("Output1","c","source2",0.5,0,"",0,0,0,{})
+com.industry.analytics.Data("Output1","c","source1",2.5,0,"",0,0,0,{})
+com.industry.analytics.Data("Output1","c","source2",3,0,"",0,0,0,{})
+com.industry.analytics.Data("Output1","c","source1",4.5,0,"",0,0,0,{})

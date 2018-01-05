@@ -1,0 +1,8 @@
+com.industry.analytics.Analytic("Repeater", [], [], {})
+com.industry.analytics.Analytic("Repeater", ["Input1", "Input2"], ["Output1", "Output2"], {})
+com.industry.analytics.Analytic("Repeater", ["Input1"], [], {})
+com.industry.analytics.Analytic("Repeater", [], ["Output1"], {})
+com.industry.analytics.Analytic("Repeater", ["Input1"], ["Output1"], {})
+com.industry.analytics.Analytic("Repeater", ["Input1"], ["Output1"], {"interval":"0.0"})
+com.industry.analytics.Analytic("Repeater", ["Input1"], ["Output1"], {"interval":"-1.0"})
+com.industry.analytics.Analytic("Repeater", ["Input1"], ["Output1"], {"interval":"1.0"})

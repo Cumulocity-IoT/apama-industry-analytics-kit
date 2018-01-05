@@ -1,0 +1,14 @@
+// Check normal
+"Input", com.industry.analytics.Data("Input", "r", "source", 0,   0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "r", "source", 0.5, 0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "r", "source", 1,   0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "r", "source", 1.5, 0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "r", "source", 2,   0, "", 0, 0, 0, {})
+
+// Check differing
+"Input", com.industry.analytics.Data("Input", "a", "source", 2.5, 0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "c", "source", 3,   0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "c", "source", 3.5, 0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "c", "source", 4,   0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "c", "source", 4.5, 0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "c", "source", 5,   0, "", 0, 0, 0, {})

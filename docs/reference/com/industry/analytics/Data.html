@@ -1,0 +1,224 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Data</TITLE>
+<META NAME="keywords" CONTENT="Data&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="Data";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/Data.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Data.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/analytics/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics</FONT>
+<BR>Event Data</H2>
+<HR>The Data event is a normalized event structure which is used within the framework for passing around values. Events coming into the Correlator from external sources will need to be converted prior to use within the framework. The structure of the event that carries both incoming (raw) data and the computed data within a Analytic network.<HR>
+<A NAME="member_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Member Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE><B><A HREF="Data.html#streamName">streamName</A></B></CODE>
+<br>
+<br>The name of the Data stream.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE><B><A HREF="Data.html#type">type</A></B></CODE>
+<br>
+<br>The enumerated type that states what type the Data is. This should be set to one of the values defined in the com.industry.analytics.DataConstants event.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE><B><A HREF="Data.html#sourceId">sourceId</A></B></CODE>
+<br>
+<br>The unique identifier of the source of the Data. This may be a sensor or a higher level entity for an aggregated Data stream.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;decimal</CODE></FONT></TD><TD><CODE><B><A HREF="Data.html#timestamp">timestamp</A></B></CODE>
+<br>
+<br>The timestamp the Data was generated, represented as the number of seconds since the epoch (1st January 1970).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;decimal</CODE></FONT></TD><TD><CODE><B><A HREF="Data.html#dValue">dValue</A></B></CODE>
+<br>
+<br>The value of the Data as a decimal.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE><B><A HREF="Data.html#sValue">sValue</A></B></CODE>
+<br>
+<br>The value of the Data as a string.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;float</CODE></FONT></TD><TD><CODE><B><A HREF="Data.html#xValue">xValue</A></B></CODE>
+<br>
+<br>The value of a float</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;float</CODE></FONT></TD><TD><CODE><B><A HREF="Data.html#yValue">yValue</A></B></CODE>
+<br>
+<br>The value of a float</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;float</CODE></FONT></TD><TD><CODE><B><A HREF="Data.html#zValue">zValue</A></B></CODE>
+<br>
+<br>The value of a float</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;dictionary&lt;string,&nbsp;string&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="Data.html#params">params</A></B></CODE>
+<br>
+<br>This stringified dictionary is available to hold any other data associated with the Data.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A></CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="Data.html#init()">init</A></B>(string&nbsp;name,&nbsp;string&nbsp;type,&nbsp;string&nbsp;sourceId)</CODE>
+<br>
+<br>This static action initialises a new Data for a given channel and sourceId.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="member_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Member Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="dValue"></A>
+<H3>dValue</H3>
+<PRE>decimal&nbsp;<B>dValue</B>
+</PRE>The value of the Data as a decimal.<HR>
+<A NAME="params"></A>
+<H3>params</H3>
+<PRE>dictionary&lt;string,&nbsp;string&nbsp;&gt;&nbsp;<B>params</B>
+</PRE>This stringified dictionary is available to hold any other data associated with the Data.<HR>
+<A NAME="sourceId"></A>
+<H3>sourceId</H3>
+<PRE>string&nbsp;<B>sourceId</B>
+</PRE>The unique identifier of the source of the Data. This may be a sensor or a higher level entity for an aggregated Data stream.<HR>
+<A NAME="streamName"></A>
+<H3>streamName</H3>
+<PRE>string&nbsp;<B>streamName</B>
+</PRE>The name of the Data stream.<HR>
+<A NAME="sValue"></A>
+<H3>sValue</H3>
+<PRE>string&nbsp;<B>sValue</B>
+</PRE>The value of the Data as a string.<HR>
+<A NAME="timestamp"></A>
+<H3>timestamp</H3>
+<PRE>decimal&nbsp;<B>timestamp</B>
+</PRE>The timestamp the Data was generated, represented as the number of seconds since the epoch (1st January 1970).<HR>
+<A NAME="type"></A>
+<H3>type</H3>
+<PRE>string&nbsp;<B>type</B>
+</PRE>The enumerated type that states what type the Data is. This should be set to one of the values defined in the com.industry.analytics.DataConstants event.<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../com/industry/analytics/DataConstants.html" title="type in com.industry.analytics">com.industry.analytics.DataConstants</A>&nbsp;-&nbsp;The set of constants that define the types of Data events available</DD>
+</DL>
+<HR>
+<A NAME="xValue"></A>
+<H3>xValue</H3>
+<PRE>float&nbsp;<B>xValue</B>
+</PRE>The value of a float<HR>
+<A NAME="yValue"></A>
+<H3>yValue</H3>
+<PRE>float&nbsp;<B>yValue</B>
+</PRE>The value of a float<HR>
+<A NAME="zValue"></A>
+<H3>zValue</H3>
+<PRE>float&nbsp;<B>zValue</B>
+</PRE>The value of a float<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>
+<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;static <B>init</B>(string&nbsp;name,&nbsp;string&nbsp;type,&nbsp;string&nbsp;sourceId)</PRE>This static action initialises a new Data for a given channel and sourceId.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>name</tt>&nbsp;-&nbsp;Channel name for the event.</DD>
+<DD>
+<tt>type</tt>&nbsp;-&nbsp;Whether the event is raw, computed or an anomaly.</DD>
+<DD>
+<tt>sourceId</tt>&nbsp;-&nbsp;The sourceId for the event.</DD>
+</DL>
+<DL>
+<DT>
+<B>Returns:</B>
+</DT>
+<DD>The new Data event.</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/Data.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Data.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/analytics/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

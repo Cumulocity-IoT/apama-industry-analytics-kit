@@ -1,0 +1,196 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>EventRate</TITLE>
+<META NAME="keywords" CONTENT="EventRate&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="EventRate";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/flow_manipulation/EventRate.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="EventRate.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/flow_manipulation/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;<A HREF="#import_summary">IMPORT</A>&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;<A HREF="#import_detail">IMPORT</A>&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics.flow_manipulation</FONT>
+<BR>Event EventRate</H2>
+<HR>The EventRate Analytic outputs the rate of arrival of events on the specified input channel. This rate can be derived based on either the correlator time or on the timestamps of the <font face="courier" size="-1">Data</font> events.<br>
+<br> The calculated event rate is published at a rate defined by the <font face="courier" size="-1">publishRate</font> parameter.  If a value of <font face="courier" size="-1">0.0d</font> is provided, then the calculation is sent everytime an input event is received.  In the correlator time mode, a wait listener is setup to ensure an event rate is output even when no input Data events are received. This is not possible for the timestamp mode, as time is being driven entirely by the timestamp of the Data events received. If the <font face="courier" size="-1">bySourceId</font> parameter is set to <font face="courier" size="-1">true</font>, then the listener will be enabled AFTER the first <font face="courier" size="-1">Data</font> event is received for the new <font face="courier" size="-1">sourceId</font>. This means that if no input events are received, no output events will be sent.<br>
+<br> <dl><dt><b>Input Data events:</b></dt> <dd>Only a single input Data stream name must be provided.</dd> </dl> <dl><dt><b>Output Data events:</b></dt> <dd>Only a single output Data stream name must be provided. As this analytic is generating new data, not dependent on the values of the incoming Data events, no params are copied from the incoming events.</dd> </dl> <dl><dt><b>Params:</b></dt> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr> <tr><td><b>useCorrelatorTime</b></td><td>Defines whether to use the Correlator time or alternatively use the events timestamp</td> <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">false</font></td></tr> <tr><td><b>smoothingFactor</b></td><td>Defines the number of events over which to calculate/smooth the event rate calculation.</td> <td>>= 2</td><td>Integer</td><td>False</td><td><font face="courier" size="-1">3</font></td></tr> <tr><td><b>bySourceId</b></td><td>If defined, the Event Rate calculations are partitioned based on the <font face="courier" size="-1">sourceId</font> parameter of the input data stream</td> <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr> <tr><td><b>publishRate</b></td><td>Defines the rate at which the Event Rate calculations are published on the output channel per-sourceId. A value of <font face="courier" size="-1">0.0d</font> indicates that the calculation is published for each event received.</td> <td>>=0.0d</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">1.0d</font></td></tr> </table></dd> </dl> <dl><dt><b>Example usage:</b></dt> <dd><pre><br>// Define a EventRate Analytic which takes Data events on the channel "Input1"  <br>// and calculates the rate at which events are being received on that channel<br>// based on the Data events timestamp and publishes an event on the "Output1" channel. <br>send com.industry.analytics.Analytic("EventRate", ["Input1"], ["Output1"], new dictionary&ltstring,string&gt ) to "";<br>
+<br>// Define a EventRate Analytic which takes Data events on the channel "Input1"  <br>// and calculates the rate at which events are being received on that channel <br>// based on the Correlator time and the last 10events and publishes an event <br>// on the "Output1" channel. <br>send com.industry.analytics.Analytic("EventRate", ["Input1"], ["Output1"], {"useCorrelatorTime":"true", "smoothingFactor":"10"} ) to "";<br></pre></dd> </dl><HR>
+<A NAME="import_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Import Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;TimeFormatPlugin</CODE></FONT></TD><TD><CODE><B><A HREF="EventRate.html#timeFormat">timeFormat</A></B></CODE>
+<br>
+</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="constant_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Constant Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="EventRate.html#BY_SOURCEID">BY_SOURCEID</A> := "bySourceId"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether or not the Event Rate calculation will be partitioned by the <font face="courier" size="-1">sourceId</font></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="EventRate.html#NAME">NAME</A> := "EventRate"</B></CODE>
+<br>
+<br>This constant defines the name of the Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="EventRate.html#PUBLISH_RATE">PUBLISH_RATE</A> := "publishRate"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that indicates what the time between publishing the event rates.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="EventRate.html#SMOOTHING_FACTOR">SMOOTHING_FACTOR</A> := "smoothingFactor"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines the number of events that the rate is calculated over.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="EventRate.html#USE_CORRELATOR_TIME">USE_CORRELATOR_TIME</A> := "useCorrelatorTime"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that indicates what timestamp mode should be used. By default, the timestamp of the event is used instead of the Correlator time.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="EventRate.html#init()">init</A></B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="import_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Import Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="timeFormat"></A>
+<H3>timeFormat</H3>
+<PRE>TimeFormatPlugin&nbsp;<B>timeFormat</B>
+</PRE>
+<HR>
+<A NAME="constant_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Constant Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="BY_SOURCEID"></A>
+<H3>BY_SOURCEID</H3>
+<PRE>constant string&nbsp;<B>BY_SOURCEID := "bySourceId"</B>
+</PRE>This constant defines the configuration parameter name that defines whether or not the Event Rate calculation will be partitioned by the <font face="courier" size="-1">sourceId</font><HR>
+<A NAME="NAME"></A>
+<H3>NAME</H3>
+<PRE>constant string&nbsp;<B>NAME := "EventRate"</B>
+</PRE>This constant defines the name of the Analytic.<HR>
+<A NAME="PUBLISH_RATE"></A>
+<H3>PUBLISH_RATE</H3>
+<PRE>constant string&nbsp;<B>PUBLISH_RATE := "publishRate"</B>
+</PRE>This constant defines the configuration parameter name that indicates what the time between publishing the event rates.<HR>
+<A NAME="SMOOTHING_FACTOR"></A>
+<H3>SMOOTHING_FACTOR</H3>
+<PRE>constant string&nbsp;<B>SMOOTHING_FACTOR := "smoothingFactor"</B>
+</PRE>This constant defines the configuration parameter name that defines the number of events that the rate is calculated over.<HR>
+<A NAME="USE_CORRELATOR_TIME"></A>
+<H3>USE_CORRELATOR_TIME</H3>
+<PRE>constant string&nbsp;<B>USE_CORRELATOR_TIME := "useCorrelatorTime"</B>
+</PRE>This constant defines the configuration parameter name that indicates what timestamp mode should be used. By default, the timestamp of the event is used instead of the Correlator time.<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration that will be used for this instance</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The action callback to call when the new Analytic has been created, or if an error occured.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration event object.</DD>
+<DD>
+<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that can be used to interact with the Analytic.</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/flow_manipulation/EventRate.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="EventRate.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/flow_manipulation/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;<A HREF="#import_summary">IMPORT</A>&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;<A HREF="#import_detail">IMPORT</A>&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

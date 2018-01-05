@@ -1,0 +1,13 @@
+"MachineStatus", com.industry.analytics.Data("MachineStatus", "r", "source", 0, 0, "up", 0.0, 0.0, 0.0, {})
+"PartProduced", com.industry.analytics.Data("PartProduced", "r", "source", 0, 1, "", 0.0, 0.0, 0.0, {})
+"PartProduced", com.industry.analytics.Data("PartProduced", "r", "source", 1, 1, "", 0.0, 0.0, 0.0, {})
+"PartProduced", com.industry.analytics.Data("PartProduced", "r", "source", 2, 1, "", 0.0, 0.0, 0.0, {})
+"PartProduced", com.industry.analytics.Data("PartProduced", "r", "source", 3, 1, "", 0.0, 0.0, 0.0, {})
+"PartProduced", com.industry.analytics.Data("PartProduced", "r", "source", 4, 1, "", 0.0, 0.0, 0.0, {})
+"PartProduced", com.industry.analytics.Data("PartProduced", "r", "source", 5, 1, "", 0.0, 0.0, 0.0, {})
+"PartProduced", com.industry.analytics.Data("PartProduced", "r", "source", 6, 1, "", 0.0, 0.0, 0.0, {})
+"PartProduced", com.industry.analytics.Data("PartProduced", "r", "source", 7, 1, "", 0.0, 0.0, 0.0, {})
+"PartProduced", com.industry.analytics.Data("PartProduced", "r", "source", 8, 1, "", 0.0, 0.0, 0.0, {})
+"PartProduced", com.industry.analytics.Data("PartProduced", "r", "source", 9, 1, "", 0.0, 0.0, 0.0, {})
+"PartProduced", com.industry.analytics.Data("PartProduced", "r", "source", 10, 1, "", 0.0, 0.0, 0.0, {})
+

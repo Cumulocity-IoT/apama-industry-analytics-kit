@@ -1,0 +1,16 @@
+// Invalid expression
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"exp()"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"exp(abc)"})
+
+// Valid expression - should result in e
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output1"], {"expression":"exp(1)"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output2"], {"expression":"exp(0)"})
+// Valid expression - should result in 1/e
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output3"], {"expression":"exp(-1)"})
+// Valid expression - should result in e^2
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output4"], {"expression":"exp(2)"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output5"], {"expression":"exp(2-2)"})
+// Valid expression - should result in e^2
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output6"], {"expression":"exp((5+3)/4)"})

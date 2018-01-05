@@ -1,0 +1,245 @@
+//*****************************************************************************
+// Title: Availability Analytic implementation
+//
+// Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or its licensors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//*****************************************************************************
+
+package com.industry.analytics.manufacturing;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Constants;
+
+using com.industry.analytics.manufacturing.MachineStatus;
+
+using com.industry.utils.Bucket;
+using com.industry.utils.BucketSystem;
+using com.industry.utils.BucketSystemBuilder;
+
+using com.apama.exceptions.Exception;
+
+event OEEParts {
+	optional<decimal> availability;
+	optional<decimal> performance;
+	optional<decimal> quality;
+	
+	action canCalculate() returns boolean {
+		return not (availability.empty() or performance.empty() or quality.empty());
+	}
+	
+	action calculateOEE() returns decimal {
+		return availability.getOrThrow() * performance.getOrThrow() * quality.getOrThrow();
+	}
+}
+
+/* @AnalyticDefinition
+{
+	"name": "OEE",
+	"description": "Calculates the OEE from availability, performance, and quality inputs.",
+	"group": "Manufacturing",
+	"documentation": "com/industry/analytics/manufacturing/OEE.html",
+	"inputChannels": [
+		{
+			"name": "Availability",
+			"description": "The channel containing availability data",
+			"dataProperties": ["dValue"]
+		},{
+			"name": "Performance",
+			"description": "The channel containing performance data",
+			"dataProperties": ["dValue"]
+		},{
+			"name": "Quality",
+			"description": "The channel containing quality data",
+			"dataProperties": ["dValue"]
+		}
+	],
+	"outputChannels": [
+		{
+			"name": "OEE",
+			"description": "OEE data channel",
+			"dataProperties": ["+dValue"]
+		}
+	],
+	"properties": [
+		{
+			"name": "bySourceId",
+			"description": "Calculate separate Availabilities by sourceId",
+			"type": "boolean",
+			"defaultValue": true,
+			"optional": true,
+			"advanced": true
+		},{
+            "name": "managementId",
+            "description": "The id used for management of the analytic",
+            "type": "string",
+            "optional": true,
+            "advanced": true
+        }
+	]
+}
+*/
+/**
+ *  The OEE Analytic calculates machine the Overall Equipment Effectiveness from streams of machine availability, performance and quality.
+ *
+ *
+ *  <dl><dt><b>Input Data events:</b></dt>
+ *  <dd>Three input Data streams must be provided. They are Availability, Quality, and Performance. They can be provided in any order and must each contain a dValue</dd>
+ *  </dl>
+ *  <dl><dt><b>Output Data events:</b></dt>
+ *  <dd>Only a single output Data stream name must be provided.</dd>
+ * 	<dd>Contains the calculated OEE in the dValue field. (All other fields from the incoming data event are copied)</dd>
+ *  </dl>
+ *  <dl><dt><b>Params:</b></dt>
+ *  <dd>
+ *  <table border="1" style="border-collapse: collapse;width:100%">
+ *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
+ *  <tr><td><b>bySourceId</b></td><td>Calculate separate OEEs for each sourceId</td>
+ *      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr>
+ *  </table></dd>
+ *  </dl>
+ *  <dl><dt><b>Example usage:</b></dt>
+ <dd><code>
+// Create an OEE Analytic which takes Availability, Performance and Quality from three channels 
+// and output them to the channel "OEE".
+send com.industry.analytics.Analytic("OEE", ["Availability", "Performance, "Quality"], ["OEE"], new dictionary<string, string> ) to "";
+</code></dd>
+ *</dl>
+ */
+event OEE {
+	/** The name of the analytic. */
+	constant string NAME := "OEE";
+	
+	/** This constant defines the configuration parameter name
+	 *  that defines whether or not the drift calculation will be
+	 *  partitioned by the <font face="courier" size="-1">sourceId</font>*/
+	constant string BY_SOURCEID := "bySourceId";
+	
+	constant string INTERNAL_SOURCEID := "__internal_shared_sourceId";
+	
+	/** @private */	string _availabilityInputStream;
+	/** @private */ string _performanceInputStream;
+	/** @private */ string _qualityInputStream;
+	boolean _bySourceId;
+	
+	/** @private */
+	string _outputStreamName;
+			  
+	/** The Analytic Base Object implementation 
+	 *  @private */
+	AnalyticObject _analyticObject;
+	
+	dictionary<string, OEEParts> oeePartsBySourceId;
+
+	/** 
+	 *  This action creates a new instance of the Analytic.
+	 *  Typically, this is called internally by the associated Analytics 
+	 *  service monitor when a com.industry.analytics.Analytic event is 
+	 *  sent for this type of Analytic.
+	 *
+	 *  @param  config        The Analytic configuration that 
+	 *                        will be used for this instance
+	 *  @param  initComplete  The action callback to call when the new Analytic  
+	 *                        has been created, or if an error occured.
+     *
+	 *  @see com.industry.analytics.Analytic           The Analytic configuration event object.
+	 *  @see com.industry.analytics.AnalyticInterface  The action interface that can be used 
+	 *                                            to interact with the Analytic.
+	 */
+	action init(Analytic config, action<boolean, AnalyticInterface> initComplete) {
+		if( not _validateConfiguration( config ) ) then {
+			initComplete( false, new AnalyticInterface );
+			return;
+		}
+		
+		_analyticObject := new AnalyticObject;
+		_analyticObject.init( config,
+		                      processData,
+		                      new action<>,
+		                      initComplete );
+	}
+	
+	/** 
+	 *  This helper action validates configuration that was
+	 *  used when trying to create a new instance of the Analytic.
+	 *  This is called internally, and should not be called directly by 
+	 *  the Users application.
+	 *  
+	 *  @param   config  The Analytic configuration object that is being validated
+	 *  @returns A boolean value indicating whether the configuration was valid or not.
+	 * 
+	 *  @private
+	 */
+	action _validateConfiguration(Analytic config) returns boolean {
+		boolean result := config.validateParams( NAME, 3, 1, 
+		                                         new sequence<string>,
+		                                         new sequence<string>,
+		                                         new sequence<boolean>);
+		
+    if result {
+      _availabilityInputStream := config.inputDataNames[0];
+      _performanceInputStream := config.inputDataNames[1];
+      _qualityInputStream := config.inputDataNames[2];
+      
+      _outputStreamName := config.outputDataNames[0];
+      
+      _bySourceId := config.getOrBoolean( BY_SOURCEID, true );
+    }
+    
+		return result;
+	}
+	
+	
+	/**
+	 *  This action implements the Analytic function itself. 
+	 *  This is called internally by the Analytic Object, and  
+	 *  should not be called directly by the Users application.
+	 *  If the application has created this Analytic using the 
+	 *  #init() action directly, then the <font face="courier" size="-1">processData</font>
+	 *  action on the <font face="courier" size="-1">com.industry.analytics.AnalyticInterface</font> 
+	 *  that was returned should be used instead.
+	 *
+	 *  @param   dataIn  The input Data event to be processed by this Analytic
+	 * 
+	 *  @private
+	 */
+	action processData(Data dataIn) {
+		log "Processing " + dataIn.toString() at DEBUG;
+		
+		string sourceId := INTERNAL_SOURCEID;
+		if _bySourceId {
+			sourceId := dataIn.sourceId;
+		}
+		
+		OEEParts oeeParts := oeePartsBySourceId.getOrAddDefault(sourceId);
+		
+		if dataIn.streamName = _availabilityInputStream {
+			oeeParts.availability := dataIn.dValue;
+		} else if dataIn.streamName = _performanceInputStream {
+			oeeParts.performance := dataIn.dValue;
+		} else if dataIn.streamName = _qualityInputStream {
+			oeeParts.quality := dataIn.dValue;
+		}
+		
+		if oeeParts.canCalculate() {
+			Data dataOut := dataIn.clone();
+			dataOut.dValue := oeeParts.calculateOEE();
+			dataOut.streamName := _outputStreamName;
+			_analyticObject.sendData(dataOut);
+		}
+	}
+}

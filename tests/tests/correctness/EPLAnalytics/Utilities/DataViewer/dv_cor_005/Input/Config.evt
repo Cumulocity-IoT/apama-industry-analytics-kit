@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("dataviewer", ["Input1"], [], {})
+com.industry.analytics.Analytic("DATAVIEWER", ["Input2"], [], {})
+com.industry.analytics.Analytic("DaTaViEwEr", ["Input3"], [], {})
+com.industry.analytics.Analytic("DataViewer", ["Input4"], [], {})

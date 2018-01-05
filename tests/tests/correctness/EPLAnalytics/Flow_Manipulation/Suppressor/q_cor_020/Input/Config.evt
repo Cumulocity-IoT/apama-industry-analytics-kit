@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Suppressor", ["Input1"], ["Output1"], {"triggerParam":"trigger", "triggerExtension":"false", "timeWindow":"10", "suppressionType":"startSuppressed", "actionParam":"type", "actionParamValue":"r", "resetParam": "reset"})

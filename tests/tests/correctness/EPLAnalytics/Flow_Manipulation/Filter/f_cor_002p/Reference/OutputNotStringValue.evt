@@ -1,0 +1,4 @@
+com.industry.analytics.Data("OutputNotStringValue","c","s4",0,10,"a",1,2,3,{"p3":"X"})
+com.industry.analytics.Data("OutputNotStringValue","c","s4",0,10,"b",1,2,3,{"p3":"X"})
+com.industry.analytics.Data("OutputNotStringValue","c","s3",0,10,"c",1,2,3,{"p3":"X"})
+com.industry.analytics.Data("OutputNotStringValue","c","s4",0,10,"d",1,2,3,{"p3":"X"})

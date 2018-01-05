@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("Mode", ["Input"], ["Output"], {"timeWindow" : "50.0", "bucketCount":"5", "decimalPrecision":"3"})
+

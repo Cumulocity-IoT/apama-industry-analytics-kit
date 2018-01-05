@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("minmax", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("MINMAX", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("MiNmAx", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("MinMax", ["Input"], ["Output"], {})

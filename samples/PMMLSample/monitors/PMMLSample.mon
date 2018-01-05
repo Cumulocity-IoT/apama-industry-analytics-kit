@@ -1,0 +1,113 @@
+//*****************************************************************************
+// Title:         Industry Analytics Kit Prediction Sample Sample
+// Description:   This sample demonstrates how some of the features of the 
+//                Industry Analytics Kit are used.
+//
+// Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or its licensors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//*****************************************************************************
+
+package com.industry.demo;
+
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Data;
+
+// This event is used by the user interface to send manual 
+// updates to the value of a specified data source
+event ManualValue {
+	string id;
+	float value;
+}
+
+monitor PredictionAnalyticsSample {
+	// These variables are simply placeholders we can use instead
+	// of creating new empty sequences/dictionaries to pass into the 
+	// Analytics we are creating
+	sequence<string>           emptySequence;
+	dictionary<string, string> emptyDictionary;
+	
+	// Cache of values for the samples simulator
+	dictionary<string, float> lastTemperatures;
+	dictionary<string, float> lastRPMs;
+	dictionary<string, float> lastRatios;
+	
+	action onload()	{
+		/////////////////////////////////////////////////////////////////////////
+		// Set up the Industry Analytics Kit Analytic network
+		/////////////////////////////////////////////////////////////////////////
+		
+		// The PMML model analyses Temperature, pressure and RPM.
+		// It will generally put the predicted failure %age above 50 when
+		// the ratio of pressure/temperature deviates significantly from 3.
+		send com.industry.analytics.Analytic("Prediction",
+		                                ["SIMULATOR"],
+		                                ["PMMLRESULT"],
+		                                {"modelName":"PredictedEngineStatus",
+										 "pmmlFileName":"Engine.pmml",
+		                                 "pmmlFileDirectory":"./model",
+		                                 "Temperature":"SIMULATOR.XVALUE",
+										 "Pressure":"SIMULATOR.YVALUE",
+										 "RPM":"SIMULATOR.ZVALUE",
+										 "svm_predict_function":"PMMLRESULT.DVALUE",
+		                                 "synchronize":"false"}) to "";
+		
+		// Create the MemoryStores for this Analytic so we can see this data in the demo
+		send com.industry.analytics.Analytic("MemoryStore", ["SIMULATOR"],  emptySequence, emptyDictionary ) to ""; // simulated raw data
+		send com.industry.analytics.Analytic("MemoryStore", ["PMMLRESULT"], emptySequence, emptyDictionary ) to ""; // PMML result
+
+		/////////////////////////////////////////////////////////////////////////
+		// Start generating simulated values for 10 engines
+		// - limiting to that value so UI is simpler to visualise
+		/////////////////////////////////////////////////////////////////////////
+		integer count := 0;
+		while count < 10 {				
+			count := count + 1;
+			simulatorForID("ID" + count.toString());
+		}
+		
+		/////////////////////////////////////////////////////////////////////////
+		// Create a listener for manual value updates to the raw data from the UI
+		/////////////////////////////////////////////////////////////////////////
+		on all com.industry.demo.ManualValue() as mv {
+			lastRatios[mv.id] := mv.value - 0.05;
+		}
+	}
+	
+	
+	// This action creates a simulator for each source of data
+	// The ratio randomising makes this a bit too complex for the Data Simulator Analytic.
+	action simulatorForID ( string ID ) {
+		float r     := 0.5; // how much to change the value by
+		float delay := 1.0; // time between updates
+
+		lastRatios.add(ID, 2.95);
+		lastTemperatures.add(ID, 25.0 + r.rand() - r.rand()); // random walk
+		lastRPMs.add(ID, 30.0 + r.rand() - r.rand());		  // random walk
+		on wait( delay.rand() ) {		
+			// Stagger the updates for all data sources across the update window
+			on all wait( delay )	{
+				lastTemperatures[ID] := lastTemperatures[ID] + r.rand() - r.rand();	// delta from previous value
+				lastRPMs[ID] := lastRPMs[ID] + r.rand() - r.rand();
+
+				// Create a new Data event and send it onto the channel of all the raw data values
+				Data simulatedData := Data.init( "SIMULATOR", DataConstants.RAW, ID );
+				simulatedData.timestamp := currentTime.toDecimal();
+				simulatedData.xValue    := lastTemperatures[ID];
+				simulatedData.yValue    := lastTemperatures[ID] * (lastRatios[ID] + 0.1.rand());
+				simulatedData.zValue    := lastRPMs[ID];
+				send simulatedData to "SIMULATOR";		
+			}
+		}
+	}
+}

@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("filter", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("FILTER", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("FiLtEr", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("Filter", ["Input"], ["Output"], {})

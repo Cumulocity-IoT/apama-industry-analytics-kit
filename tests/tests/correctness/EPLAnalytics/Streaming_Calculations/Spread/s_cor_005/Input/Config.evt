@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("spread", ["Input1","Input2"], ["Output"], {})
+com.industry.analytics.Analytic("SPREAD", ["Input1","Input2"], ["Output"], {})
+com.industry.analytics.Analytic("SpReAd", ["Input1","Input2"], ["Output"], {})
+com.industry.analytics.Analytic("Spread", ["Input1","Input2"], ["Output"], {})

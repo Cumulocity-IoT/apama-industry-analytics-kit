@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("spike", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("SPIKE", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("SpIkE", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("Spike", ["Input"], ["Output"], {})

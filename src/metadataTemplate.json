@@ -1,0 +1,13 @@
+{
+    "version": "placeholder",
+    "groupOrder": [
+        "Detectors",
+        "Flow Manipulators",
+        "Streaming Calculations",
+        "Utilities",
+        "GeoLocation",
+        "Extensions"
+    ],
+    "analytics": "placeholder",
+    "samples": "placeholder"
+}

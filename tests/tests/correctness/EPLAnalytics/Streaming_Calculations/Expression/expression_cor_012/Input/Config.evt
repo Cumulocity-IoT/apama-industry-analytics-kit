@@ -1,0 +1,4 @@
+// Convert from Fahrenheit to Celcius
+com.industry.analytics.Analytic("Expression", ["Input"], ["F2C"], {"expression":"(${DVALUE}-32)*5/9"})
+// Convert from Celcius to Fahrenheit
+com.industry.analytics.Analytic("Expression", ["F2C"], ["C2F"], {"expression":"(${DVALUE}*(9/5))+32"})

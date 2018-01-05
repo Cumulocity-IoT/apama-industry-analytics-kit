@@ -1,0 +1,195 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>AddDataSource</TITLE>
+<META NAME="keywords" CONTENT="AddDataSource&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="AddDataSource";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/AddDataSource.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="AddDataSource.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/analytics/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics</FONT>
+<BR>Event AddDataSource</H2>
+<HR>The com.industry.analytics.AddDataSource event requests that a DataSource should be added to the hierachy of DataSources. This is used to define the relationships/grouping of different DataSources, so that they can be later referenced as a set of DataSources or as an individual DataSource.  For example, an DataSource could be non-physical parent node which defines the set of sensors for a specific machine, this then has a set of physical devices associated with it.<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../com/industry/analytics/DataSource.html" title="type in com.industry.analytics">com.industry.analytics.DataSource</A>&nbsp;-&nbsp;The DataSource event that is created using this request</DD>
+</DL>
+<HR>
+<A NAME="member_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Member Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE><B><A HREF="AddDataSource.html#id">id</A></B></CODE>
+<br>
+<br>The unique identifier for this specific DataSource.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE><B><A HREF="AddDataSource.html#sourceTypeId">sourceTypeId</A></B></CODE>
+<br>
+<br>The identifier for this type of DataSource. This can be used for grouping individual DataSources</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE><B><A HREF="AddDataSource.html#name">name</A></B></CODE>
+<br>
+<br>The name of this DataSource. <b>Note:</b> This does not have to be a unique value.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;wildcard string</CODE></FONT></TD><TD><CODE><B><A HREF="AddDataSource.html#description">description</A></B></CODE>
+<br>
+<br>The description for this DataSource.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE><B><A HREF="AddDataSource.html#parentId">parentId</A></B></CODE>
+<br>
+<br>The parent sourceId associated with the current DataSource.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;dictionary&lt;string,&nbsp;string&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="AddDataSource.html#params">params</A></B></CODE>
+<br>
+<br>A set of stringified extra configuration information for this DataSource.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/analytics/AddDataSource.html" title="type in com.industry.analytics">com.industry.analytics.AddDataSource</A></CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="AddDataSource.html#init()">init</A></B>(string&nbsp;id,&nbsp;string&nbsp;sourceTypeId,&nbsp;string&nbsp;name,&nbsp;string&nbsp;description,&nbsp;string&nbsp;parentId,&nbsp;dictionary&lt;string,&nbsp;string&nbsp;&gt;&nbsp;params)</CODE>
+<br>
+</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="member_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Member Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="description"></A>
+<H3>description</H3>
+<PRE>wildcard string&nbsp;<B>description</B>
+</PRE>The description for this DataSource.<HR>
+<A NAME="id"></A>
+<H3>id</H3>
+<PRE>string&nbsp;<B>id</B>
+</PRE>The unique identifier for this specific DataSource.<HR>
+<A NAME="name"></A>
+<H3>name</H3>
+<PRE>string&nbsp;<B>name</B>
+</PRE>The name of this DataSource. <b>Note:</b> This does not have to be a unique value.<HR>
+<A NAME="params"></A>
+<H3>params</H3>
+<PRE>dictionary&lt;string,&nbsp;string&nbsp;&gt;&nbsp;<B>params</B>
+</PRE>A set of stringified extra configuration information for this DataSource.<HR>
+<A NAME="parentId"></A>
+<H3>parentId</H3>
+<PRE>string&nbsp;<B>parentId</B>
+</PRE>The parent sourceId associated with the current DataSource.<HR>
+<A NAME="sourceTypeId"></A>
+<H3>sourceTypeId</H3>
+<PRE>string&nbsp;<B>sourceTypeId</B>
+</PRE>The identifier for this type of DataSource. This can be used for grouping individual DataSources<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>
+<A HREF="../../../com/industry/analytics/AddDataSource.html" title="type in com.industry.analytics">com.industry.analytics.AddDataSource</A>&nbsp;static <B>init</B>(string&nbsp;id,&nbsp;string&nbsp;sourceTypeId,&nbsp;string&nbsp;name,&nbsp;string&nbsp;description,&nbsp;string&nbsp;parentId,&nbsp;dictionary&lt;string,&nbsp;string&nbsp;&gt;&nbsp;params)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>id</tt>
+</DD>
+<DD>
+<tt>sourceTypeId</tt>
+</DD>
+<DD>
+<tt>name</tt>
+</DD>
+<DD>
+<tt>description</tt>
+</DD>
+<DD>
+<tt>parentId</tt>
+</DD>
+<DD>
+<tt>params</tt>
+</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/AddDataSource.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="AddDataSource.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/analytics/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

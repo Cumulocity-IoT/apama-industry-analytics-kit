@@ -1,0 +1,250 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Filter</TITLE>
+<META NAME="keywords" CONTENT="Filter&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="Filter";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/flow_manipulation/Filter.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Filter.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/flow_manipulation/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics.flow_manipulation</FONT>
+<BR>Event Filter</H2>
+<HR>The Filter Analytic filters the Data events passed through it based on the configuration parameters given below. Appropriate use of the <font face="courier" size="-1">sValue</font> filters can create a stream with just float values or just string values if desired.<br>
+<br> <b>Note:</b> When using the <font face="courier" size="-1">sourceId_OnlyLeafNodes</font> or <font face="courier" size="-1">sourceId_AllChildren</font> filters, applications must first define the relationships/grouping of DataSources using the com.industry.analytics.DataSource event.<br>
+<br> <dl><dt><b>Input Data events:</b></dt> <dd>Only a single input Data stream channel name must be provided. All the <font face="courier" size="-1">params</font> from the input Data are copied to the filtered <font face="courier" size="-1">Data</font> event.</dd> </dl> <dl><dt><b>Output Data events:</b></dt> <dd>Only a single output Data stream channel name must be provided.</dd> </dl> <dl><dt><b>Params:</b></dt> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr> <tr><td><b>sourceId</b></td><td>If defined, only Data events which have a <font face="courier" size="-1">sourceId</font> that matches at least ONE of the set of defined sourceIds are allowed through. A stringified empty sequence is treated as "allow any value".<br><br> <b>Note:</b> If the same value appears in both the <font face="courier" size="-1">sourceId</font> and the <font face="courier" size="-1">!sourceId</font> configuration parameter, then the Data event WILL NOT be filtered.</td> <td>Empty string, or a stringified <font face="courier" size="-1">sequence&ltstring&gt</font> containing the set of sourceIds to filter on</td> <td>Stringified <font face="courier" size="-1">sequence&ltstring&gt</font></td><td>False</td><td><font face="courier" size="-1">"[]"</font></td></tr> <tr><td><b>!sourceId</b></td><td>If defined, Data events which have a <font face="courier" size="-1">sourceId</font> that matches matches ANY of the set of defined sourceIds are NOT allowed through. A stringified empty sequence is treated as "allow any value".<br><br> <b>Note:</b> If the same value appears in both the <font face="courier" size="-1">sourceId</font> and the <font face="courier" size="-1">!sourceId</font> configuration parameter, then the Data event WILL NOT be filtered.</td> <td>Empty string, or a stringified <font face="courier" size="-1">sequence&ltstring&gt</font> containing the set of sourceIds to filter on</td> <td>Stringified <font face="courier" size="-1">sequence&ltstring&gt</font></td><td>False</td><td><font face="courier" size="-1">"[]"</font></td></tr> <tr><td><b>hasParam</b></td><td>If defined, only Data events which have a <font face="courier" size="-1">param</font> that matches at least ONE of the set of defined <font face="courier" size="-1">hasParam</font> values are allowed through. A stringified empty sequence is treated as "allow any value".<br><br> <b>Note:</b> If the same value appears in both the <font face="courier" size="-1">hasParam</font> and the <font face="courier" size="-1">!hasParam</font> configuration parameter, then the Data event WILL be filtered.</td> <td>Empty string, or a stringified <font face="courier" size="-1">sequence&ltstring&gt</font> containing the set of params to filter on</td> <td>Stringified <font face="courier" size="-1">sequence&ltstring&gt</font></td><td>False</td><td><font face="courier" size="-1">"[]"</font></td></tr> <tr><td><b>!hasParam</b></td><td>If defined, only Data events which have a <font face="courier" size="-1">param</font> that matches ANY of the set of defined <font face="courier" size="-1">!hasParam</font> values are NOT allowed through. A stringified empty sequence is treated as "allow any value".<br><br> <b>Note:</b> If the same value appears in both the <font face="courier" size="-1">hasParam</font> and the <font face="courier" size="-1">!hasParam</font> configuration parameter, then the Data event WILL be filtered.</td> <td>Empty string, or a stringified <font face="courier" size="-1">sequence&ltstring&gt</font> containing the set of params to filter on</td> <td>Stringified <font face="courier" size="-1">sequence&ltstring&gt</font></td><td>False</td><td><font face="courier" size="-1">"[]"</font></td></tr> <tr><td><b>sValue</b></td><td>If defined, only Data events which have a <font face="courier" size="-1">sValue</font> that matches at least ONE of the set of defined string values are allowed through. A stringified empty sequence is treated as "allow any value".<br><br> <b>Note:</b> If the same value appears in both the <font face="courier" size="-1">sValue</font> and the <font face="courier" size="-1">!sValue</font> configuration parameter, then the Data event WILL NOT be filtered.</td> <td>Empty string, or a stringified <font face="courier" size="-1">sequence&ltstring&gt</font> containing the set of sValues to filter on</td> <td>Stringified <font face="courier" size="-1">sequence&ltstring&gt</font></td><td>False</td><td><font face="courier" size="-1">"[]"</font></td></tr> <tr><td><b>!sValue</b></td><td>If defined, only Data events which have a <font face="courier" size="-1">sValue</font> that matches ANY of the set of defined string values are NOT allowed through. A stringified empty sequence is treated as "allow any value".<br><br> <b>Note:</b> If the same value appears in both the <font face="courier" size="-1">sValue</font> and the <font face="courier" size="-1">!sValue</font> configuration parameter, then the Data event WILL NOT be filtered.</td> <td>Empty string, or a stringified <font face="courier" size="-1">sequence&ltstring&gt</font> containing the set of sValues to filter on</td> <td>Stringified <font face="courier" size="-1">sequence&ltstring&gt</font></td><td>False</td><td><font face="courier" size="-1">"[]"</font></td></tr> <tr><td><b>type</b></td><td>If defined, only Data events which have a <font face="courier" size="-1">type</font> that matches at least ONE of "r" Raw , "c" Computed, or "a" Anomaly. A stringified empty sequence is treated as "allow any value".<br><br> <b>Note:</b> If the same value appears in both the <font face="courier" size="-1">type</font> and the <font face="courier" size="-1">!type</font> configuration parameter, then the Data event WILL NOT be filtered.</td> <td>Empty string, or a stringified <font face="courier" size="-1">sequence&ltstring&gt</font> containing the set of Types to filter on</td> <td>Stringified <font face="courier" size="-1">sequence&ltstring&gt</font></td><td>False</td><td><font face="courier" size="-1">"[]"</font></td></tr> <tr><td><b>!type</b></td><td>If defined, only Data events which have a <font face="courier" size="-1">type</font> that matches ANY of "r" Raw , "c" Computed, or "a" Anomaly are NOT allowed through. A stringified empty sequence is treated as "allow any value".<br><br> <b>Note:</b> If the same value appears in both the <font face="courier" size="-1">type</font> and the <font face="courier" size="-1">!type</font> configuration parameter, then the Data event WILL NOT be filtered.</td> <td>Empty string, or a stringified <font face="courier" size="-1">sequence&ltstring&gt</font> containing the set of Types to filter on</td> <td>Stringified <font face="courier" size="-1">sequence&ltstring&gt</font></td><td>False</td><td><font face="courier" size="-1">"[]"</font></td></tr> <tr><td><b>sourceId_OnlyLeafNodes</b></td><td>If defined, only Data events which have an <font face="courier" size="-1">sourceId</font> which is a leaf node DataSource below the specified DataSource Id in the hierarchy will be allowed through A stringified empty sequence is treated as "allow any value". <td>Empty string, or a stringified <font face="courier" size="-1">sequence&ltstring&gt</font> containing the set of sourceIds to filter on</td> <td>Stringified <font face="courier" size="-1">sequence&ltstring&gt</font></td><td>False</td><td><font face="courier" size="-1">"[]"</font></td></tr> <tr><td><b>sourceId_AllChildren</b></td><td>If defined, only Data events which have an <font face="courier" size="-1">sourceId</font> which is a child DataSource that is has the specified DataSource Id as a parent ancestor in the hierarchy will be allowed through. A stringified empty sequence is treated as "allow any value". <td>Empty string, or a stringified <font face="courier" size="-1">sequence&ltstring&gt</font> containing the set of sourceIds to filter on</td> <td>Stringified <font face="courier" size="-1">sequence&ltstring&gt</font></td><td>False</td><td><font face="courier" size="-1">"[]"</font></td></tr> <tr><td><b>dValue<br>xValue<br>yValue<br>zValue</b></td> <td>For each of the numeric members of the Data event a filter condition can be specified. The operator always comes first, followed by one or two bounding values. If two values are requires they can be separated by a space or comma.<br> <font face="courier" size="-1">&lt; X</font>  less than<br> <font face="courier" size="-1">&lt;= X</font>  less than or equal<br> <font face="courier" size="-1">= X</font>  equals<br> <font face="courier" size="-1">&gt;= X</font>  greater than or equal<br> <font face="courier" size="-1">&gt; X</font>  greater than<br> <font face="courier" size="-1">&gt;&lt; X Y</font>  between<br> <font face="courier" size="-1">&gt;=&lt; X Y</font>  between inclusive<br> <font face="courier" size="-1">&lt;&gt; X Y</font>  without<br> <font face="courier" size="-1">&lt;=&gt; X Y</font>  without inclusive <td>Non-empty string containing condition.</td> <td>String</td><td>False</td><td></td></tr> </table></dd> </dl> <dl><dt><b>Example usage:</b></dt> <dd><pre><br>// Define a Filter Analytic which takes Data events on the channel "Input1"  <br>// and filters out any Data events from the data source "MySensor" that are not <br>// anomalies (IE just filter raw and computed values).<br>send com.industry.analytics.Analytic("Filter", ["Input1"], ["Output1"], {"sourceId":"MySensor","!type":DataConstants.ANOMALY } ) to "";<br>
+<br>// Define a Filter Analytic which takes Data events on the channel "Input1"  <br>// and filters out any Data events except those which have a dValue parameter <br>// of between 15.0 and 30.0.<br>send com.industry.analytics.Analytic("Filter", ["Input1"], ["Output1"], {"dValue":">< 15.0, 30.0"} ) to "";<br></pre></dd> </dl><DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/DataSource.html" title="type in com.industry.analytics">com.industry.analytics.DataSource</A>&nbsp;-&nbsp;The DataSource event that is used to define groups of DataSources. This is required if using the <font face="courier" size="-1">sourceId_AllChildren</font> or <font face="courier" size="-1">sourceId_OnlyLeafNodes</font> filters.</DD>
+</DL>
+<DL>
+<DT>
+<B>Sends:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/SourceIdsRequest.html" title="type in com.industry.analytics">com.industry.analytics.SourceIdsRequest</A>&nbsp;-&nbsp;</DD>
+</DL>
+<DL>
+<DT>
+<B>Listens:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/SourceIdsResponse.html" title="type in com.industry.analytics">com.industry.analytics.SourceIdsResponse</A>&nbsp;-&nbsp;</DD>
+</DL>
+<HR>
+<A NAME="constant_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Constant Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Filter.html#HASPARAM">HASPARAM</A> := "hasParam"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that allows filtering by the Data events <font face="courier" size="-1">params</font> parameter</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Filter.html#NAME">NAME</A> := "Filter"</B></CODE>
+<br>
+<br>This constant defines the name of the Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Filter.html#NOT_HASPARAM">NOT_HASPARAM</A> := "!hasParam"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that allows filtering by not having the Data events <font face="courier" size="-1">params</font> parameter</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Filter.html#NOT_SOURCEID">NOT_SOURCEID</A> := "!sourceId"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that allows filtering by not having the Data events <font face="courier" size="-1">sourceId</font> parameter</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Filter.html#NOT_SVALUE">NOT_SVALUE</A> := "!sValue"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that allows filtering by not having the Data events <font face="courier" size="-1">sValue</font> parameter</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Filter.html#NOT_TYPE">NOT_TYPE</A> := "!type"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that allows filtering by not having the Data events <font face="courier" size="-1">type</font> parameter</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Filter.html#SOURCEID">SOURCEID</A> := "sourceId"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that allows filtering by the Data events <font face="courier" size="-1">sourceId</font> parameter</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Filter.html#SOURCEID_ALLCHILDREN">SOURCEID_ALLCHILDREN</A> := "sourceId_AllChildren"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that allows filtering where the Data events <font face="courier" size="-1">sourceId</font> parameter is a node in the hierarchical tree of DataSources associated with the parent sourceId defined by this parameter</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Filter.html#SOURCEID_ONLYLEAFNODES">SOURCEID_ONLYLEAFNODES</A> := "sourceId_OnlyLeafNodes"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that allows filtering where the Data events <font face="courier" size="-1">sourceId</font> parameter is a terminating leaf node in the hierarchical tree of DataSources (IE it has no associated child DataSources) associated with the parent sourceId defined by this parameter</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Filter.html#SVALUE">SVALUE</A> := "sValue"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that allows filtering by the Data events <font face="courier" size="-1">sValue</font> parameter</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Filter.html#TYPE">TYPE</A> := "type"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that allows filtering by the Data events <font face="courier" size="-1">type</font> parameter</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Filter.html#init()">init</A></B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="constant_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Constant Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="HASPARAM"></A>
+<H3>HASPARAM</H3>
+<PRE>constant string&nbsp;<B>HASPARAM := "hasParam"</B>
+</PRE>This constant defines the configuration parameter name that allows filtering by the Data events <font face="courier" size="-1">params</font> parameter<HR>
+<A NAME="NAME"></A>
+<H3>NAME</H3>
+<PRE>constant string&nbsp;<B>NAME := "Filter"</B>
+</PRE>This constant defines the name of the Analytic.<HR>
+<A NAME="NOT_HASPARAM"></A>
+<H3>NOT_HASPARAM</H3>
+<PRE>constant string&nbsp;<B>NOT_HASPARAM := "!hasParam"</B>
+</PRE>This constant defines the configuration parameter name that allows filtering by not having the Data events <font face="courier" size="-1">params</font> parameter<HR>
+<A NAME="NOT_SOURCEID"></A>
+<H3>NOT_SOURCEID</H3>
+<PRE>constant string&nbsp;<B>NOT_SOURCEID := "!sourceId"</B>
+</PRE>This constant defines the configuration parameter name that allows filtering by not having the Data events <font face="courier" size="-1">sourceId</font> parameter<HR>
+<A NAME="NOT_SVALUE"></A>
+<H3>NOT_SVALUE</H3>
+<PRE>constant string&nbsp;<B>NOT_SVALUE := "!sValue"</B>
+</PRE>This constant defines the configuration parameter name that allows filtering by not having the Data events <font face="courier" size="-1">sValue</font> parameter<HR>
+<A NAME="NOT_TYPE"></A>
+<H3>NOT_TYPE</H3>
+<PRE>constant string&nbsp;<B>NOT_TYPE := "!type"</B>
+</PRE>This constant defines the configuration parameter name that allows filtering by not having the Data events <font face="courier" size="-1">type</font> parameter<HR>
+<A NAME="SOURCEID"></A>
+<H3>SOURCEID</H3>
+<PRE>constant string&nbsp;<B>SOURCEID := "sourceId"</B>
+</PRE>This constant defines the configuration parameter name that allows filtering by the Data events <font face="courier" size="-1">sourceId</font> parameter<HR>
+<A NAME="SOURCEID_ALLCHILDREN"></A>
+<H3>SOURCEID_ALLCHILDREN</H3>
+<PRE>constant string&nbsp;<B>SOURCEID_ALLCHILDREN := "sourceId_AllChildren"</B>
+</PRE>This constant defines the configuration parameter name that allows filtering where the Data events <font face="courier" size="-1">sourceId</font> parameter is a node in the hierarchical tree of DataSources associated with the parent sourceId defined by this parameter<HR>
+<A NAME="SOURCEID_ONLYLEAFNODES"></A>
+<H3>SOURCEID_ONLYLEAFNODES</H3>
+<PRE>constant string&nbsp;<B>SOURCEID_ONLYLEAFNODES := "sourceId_OnlyLeafNodes"</B>
+</PRE>This constant defines the configuration parameter name that allows filtering where the Data events <font face="courier" size="-1">sourceId</font> parameter is a terminating leaf node in the hierarchical tree of DataSources (IE it has no associated child DataSources) associated with the parent sourceId defined by this parameter<HR>
+<A NAME="SVALUE"></A>
+<H3>SVALUE</H3>
+<PRE>constant string&nbsp;<B>SVALUE := "sValue"</B>
+</PRE>This constant defines the configuration parameter name that allows filtering by the Data events <font face="courier" size="-1">sValue</font> parameter<HR>
+<A NAME="TYPE"></A>
+<H3>TYPE</H3>
+<PRE>constant string&nbsp;<B>TYPE := "type"</B>
+</PRE>This constant defines the configuration parameter name that allows filtering by the Data events <font face="courier" size="-1">type</font> parameter<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration that will be used for this instance</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The action callback to call when the new Analytic has been created, or if an error occured.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration event object.</DD>
+<DD>
+<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that can be used to interact with the Analytic.</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/flow_manipulation/Filter.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Filter.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/flow_manipulation/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

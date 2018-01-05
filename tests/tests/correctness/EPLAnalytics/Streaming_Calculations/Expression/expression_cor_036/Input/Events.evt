@@ -1,0 +1,14 @@
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"MyTestParam1":"-20","MyTestParam2":"-12"})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"MyTestParam1":"-15","MyTestParam2":"-11"})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"MyTestParam1":"-10","MyTestParam2":"-10"})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"MyTestParam1":"10","MyTestParam2":"10"})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"MyTestParam1":"15","MyTestParam2":"11"})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"MyTestParam1":"20","MyTestParam2":"12"})
+
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"MyTestParam1":"-120","MyTestParam2":"-112"})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"MyTestParam1":"-115","MyTestParam2":"-111"})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"MyTestParam1":"-110","MyTestParam2":"-110"})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"MyTestParam1":"110","MyTestParam2":"110"})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"MyTestParam1":"115","MyTestParam2":"111"})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0, 0.0, "", 0.0, 0.0, 0.0, {"MyTestParam1":"120","MyTestParam2":"112"})
+

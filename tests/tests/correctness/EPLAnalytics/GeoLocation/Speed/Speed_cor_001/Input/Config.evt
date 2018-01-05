@@ -1,0 +1,12 @@
+&SETTIME(0)
+&TIME(1.0)
+com.industry.analytics.Analytic("Speed", [], [], {})
+com.industry.analytics.Analytic("Speed", ["Input1"], ["Output1"], {})
+
+com.industry.analytics.Analytic("Speed", ["Input2"], ["Output4"], {"speedUnit":"ASD"})
+
+com.industry.analytics.Analytic("Speed", ["Input3"], ["Output4"], {"speedUnit":"KMPH"})
+
+com.industry.analytics.Analytic("Speed", ["Input4"], ["Output4"], {"speedUnit":"MPH"})
+
+

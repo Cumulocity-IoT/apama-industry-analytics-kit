@@ -1,0 +1,707 @@
+//*****************************************************************************
+// Title: Prediction Analytic implementation
+//
+// Copyright (c) 2016-2017 Software AG, Darmstadt, Germany and/or its licensors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//*****************************************************************************
+
+package com.industry.analytics.extensions;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Constants;
+
+using com.apama.pa.pmml.Input;
+using com.apama.pa.pmml.Model;
+using com.apama.pa.pmml.Output;
+using com.apama.pa.pmml.ServiceError;
+using com.apama.pa.pmml.ServiceHandler;
+using com.apama.pa.pmml.ServiceHandlerFactory;
+using com.apama.pa.pmml.ServiceName;
+using com.apama.pa.pmml.ServiceParams;
+
+
+/** @private Event to help with validation as due to checking the pmml model,
+ *  there's a callback in the middle with fixed arguments. */
+event ValidationResult
+{
+	boolean result;
+}
+
+
+/** @private Event for storing a pmml argument mapping. */
+event DataMap
+{
+	string  name;
+	integer element;
+	string  paramName;
+}
+
+/* @AnalyticDefinition
+{
+	"name": "Prediction",
+	"description": "Connect to PMML predictive model.",
+	"group": "Extensions",
+	"documentation": "com/industry/analytics/extensions/Prediction.html",
+	"inputChannels": [
+		{
+			"name": "Data",
+			"description": "An input to the PMML model",
+			"repeated": true
+		}
+	],
+	"outputChannels": [
+		{
+			"name": "PMML Output",
+			"description": "An output from the PMML model",
+			"dataProperties": ["+dValue", "+sValue", "+xValue", "+yValue", "+zValue", "+params"]
+		}
+	],
+	"properties": [
+		{
+			"name": "modelName",
+			"description": "The name of the model to be used within the PMML file.",
+			"type": "string",
+			"validator": "function(value) { return value.trim().length > 0 || 'Must provide a model name' }"
+		},{
+			"name": "pmmlFileName",
+			"description": "The file containing the PMML model.",
+			"type": "string",
+			"validator": "function(value) { return value.trim().length > 0 || 'Must provide a file name' }"
+		},{            
+			"name": "input / output parameter name",
+            "description": "The mapping of an input and output parameters for the PMML model to a value within one of the input or output Data events. See documentation for further details on the syntax.",
+            "repeated": true,
+            "type": "string"
+        },{
+			"name": "synchronous",
+			"description": "Whether the input stream Data events should be dealt with synchronously or as they arrive.",
+			"type": "boolean",
+			"optional": true,
+			"defaultValue": true
+		},{
+			"name": "combineParams",
+			"description": "Defines whether the output Data events have a combination of all the params in the Data events used for the calculation (true) or just the params from the input Data from the alphabetically first input stream (false). The latter is more performant.",
+			"type": "boolean",
+			"optional": true,
+			"defaultValue": false,
+			"advanced":true
+		},{
+			"name": "pmmlFileDirectory",
+			"description": "The full path of the directory containing the PMML file. Required when the model file is not in the working directory.",
+			"type": "string",
+			"optional": true,
+			"defaultValue": "Current working directory",
+			"validator": "function(value) { return value.trim().length > 0 || 'Must provide a pmml directory name' }",
+			"advanced":true
+		},{
+            "name": "managementId",
+            "description": "Defines the id used for management of the analytic",
+            "type": "string",
+            "optional": true,
+            "advanced": true
+        }
+	]
+}
+*/
+/**
+ *  The Prediction Analytic takes the specified input Data values and inputs
+ *  them into a defined Predictive (PMML) model, gets the result from the Apama
+ *  Predictive Analytics plugin and generates the specified Data events with the 
+ *  results. The Apama Predictive Analytics plugin must also be installed 
+ *  (a separate license may also be required).
+ *
+ *  In addition to the parameters specified below the Analytic will also pass
+ *  through the following plugin parameters to the plugin setup. Please see the
+ *  Apama Predictive Analytics plugin documentation for more details on these parameters:
+ *  configDirectory, workDirectory, recordLatency, logLatency.
+ * 
+ *  <dl><dt><b>Input Data events:</b></dt>
+ *  <dd>At least one input Data stream name must be provided.</dd>
+ *  </dl>
+ *  <dl><dt><b>Output Data events:</b></dt>
+ *  <dd>At least one output Data stream name must be provided.<br></dd>
+ *  </dl>
+ *  <dl><dt><b>Params:</b></dt>
+ *  <dd>
+ *  <table border="1" style="border-collapse: collapse;width:100%">
+ *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
+ *  <tr><td><b>combineParams</b></td><td>Defines whether the output Data events have a combination of all the params
+ *                                       in the Data events used for the calculation (true) or just the params from the
+ *                                       input Data from the alphabetically first input stream (false). The latter is more performant.</td>
+ *      <td>Stringified boolean</font></td><td>boolean</td><td>False</td><td>false</td></tr>
+ *  <tr><td><b>modelName</b></td><td>The name of the model to be used within the PMML file.</td>
+ *      <td>Non-Empty String</td><td>String</td><td>True</td><td></td></tr>
+ *  <tr><td><b>pmmlFileDirectory</b></td><td>The directory containing the PMML model.</td>
+ *      <td>Non-Empty String</td><td>String</td><td>False.</td><td>Current working directory.</td></tr>
+ *  <tr><td><b>pmmlFileName</b></td><td>The file containing the PMML model.</td>
+ *      <td>Non-Empty String</td><td>String</td><td>True</td><td></td></tr>
+ *  <tr><td><b>synchronous</b></td><td>Whether the input stream Data events should be dealt with synchronously or as they arrive.</td>
+ *      <td>True / False</td><td>Boolean</td><td>False</td><td>True</td></tr>
+ *  <tr><td><b>&lt;input parameter name&gt;</b></td><td>The mapping of an input parameter to the PMML model to a value within
+ *                                                one of the input Data events. These parameters use the syntax 
+ *                                                "<channel_name>.[DVALUE|SVALUE|XVALUE|YVALUE|ZVALUE|PVALUE.<param_name>]".
+ *                                                For example, "Input1.DVALUE" would use the "dValue" parameter of Data events 
+ *                                                received on the input channel "Input1" for the value of the named input parameter. 
+ *                                                Whereas "Input2.PVALUE.myValue" would use the parameter "myValue" in the "params" of  
+ *                                                Data events received on the input channel "Input2" for the value of the named input parameter. 
+ *                                                If necessary the parameter can be prefixed by 'input.' to avoid confusion when a 
+ *                                                model uses the same name for both an input and output parameter.</td>
+ *      <td>Non-Empty String</td><td>String</td><td>True when mandatory in the model.</td><td></td></tr>
+ *  <tr><td><b>&lt;output parameter name&gt;</b></td><td>The mapping of an output parameter to the PMML model to a value within
+ *                                                one of the output Data events. These parameters use the syntax 
+ *                                                "<channel_name>.[DVALUE|SVALUE|XVALUE|YVALUE|ZVALUE|PVALUE.<param_name>]".
+ *                                                For example, "Output1.DVALUE" would put the value from the named output parameter
+ *                                                into the "dValue" parameter of Data events and publish them on the output channel
+ *                                                "Output1".  Whereas "Output2.PVALUE.myValue" would put the value from the named
+ *                                                output parameter into a parameter called "myValue" in the "params" of  
+ *                                                Data events that are sent on the output channel "Output2". 
+ *                                                If necessary the parameter can be prefixed by 'output.' to avoid confusion when
+ *                                                a model uses the same name for both an input and output parameters.</td>
+ *      <td>Non-Empty String</td><td>String</td><td>True when mandatory in the model.</td><td></td></tr>
+ *  </table></dd>
+ *  </dl>
+ *  <dl><dt><b>Example usage:</b></dt>
+<dd><code>
+// Define a Prediction Analytic to pass Data events on the channel "Input1"
+// to a specified PMML model (the "PredictedEngineStatus" model defined in  
+// the "Engine.pmml" file) and generate a Data event with the results of 
+// the model in the "dValue" parameter and send to the channel "PMMLRESULT".
+// The model is defined to take the Temperature, Pressure and RPM values from 
+// the "xValue", "yValue" and "zValue" parameters of the incoming Data event.
+send com.industry.analytics.Analytic("Prediction", ["Input1"], ["PMMLRESULT"],
+								{"modelName":"PredictedEngineStatus",
+								 "pmmlFileName":"Engine.pmml",
+								 "pmmlFileDirectory":"./model",
+								 "Temperature":"Input1.XVALUE",
+								 "Pressure":"Input1.YVALUE",
+								 "RPM":"Input1.ZVALUE",
+								 "model_output":"PMMLRESULT.DVALUE"}) to "";
+</code></dd>
+ *  </dl>
+ */
+event Prediction
+{
+	/** This constant defines the name of the Analytic. */
+	constant string NAME := "Prediction";
+	
+	/** TimeFormat event for timestamps. */
+	import "TimeFormatPlugin" as timeFormat;
+
+	/** This constant defines the configuration parameter name
+	 *  that defines whether params should be combined instead of being taken from
+	 *  the last Data in a gradient calculation. */
+	constant string COMBINE_PARAMS := "combineParams";
+	/** This constant defines the configuration parameter name
+	 *  giving the directory containing the PMML model. */
+	constant string PMML_FILE_DIRECTORY := "pmmlFileDirectory";
+	/** This constant defines the configuration parameter name
+	 *  giving the filename containing the PMML model. */
+	constant string PMML_FILE_NAME := "pmmlFileName";
+	/** This constant defines the configuration parameter name
+	 *  giving the model name within the PMML file. */
+	constant string MODEL_NAME := "modelName";
+	
+	/** @private NONE mapping value. */
+	constant integer NONE := 0;
+	/** @private DVALUE mapping value. */
+	constant integer DVALUE := 1;
+	/** @private SVALUE mapping value. */
+	constant integer SVALUE := 2;
+	/** @private XVALUE mapping value. */
+	constant integer XVALUE := 3;
+	/** @private YVALUE mapping value. */
+	constant integer YVALUE := 4;
+	/** @private ZVALUE mapping value. */
+	constant integer ZVALUE := 5;
+	/** @private PVALUE mapping value. */
+	constant integer PVALUE := 6;
+	
+	
+	// Algo specific variables
+	/** @private Configuration for this instance of the analytic. */
+	Analytic _config;
+	/** @private Model input parameter mappings. */
+	dictionary<string, DataMap> _inputMappings;
+	/** @private Model output parameter mappings. */
+	dictionary<string, DataMap> _outputMappings;
+	/** @private Model in use for this instance of the analytic. */
+	Model _model;
+	/** @private Name to be used for instanceId and communications channel. */
+	string _instanceName;
+	/** Local cached value for the combineParams configuration parameter value
+	 *  @private */
+	boolean _combineParams;
+
+	/** The Analytic Base Object implementation 
+	 *  @private */
+	AnalyticObject _analyticObject;
+	
+
+	/** 
+	 *  This action creates a new instance of the Analytic.
+	 *  Typically, this is called internally by the associated Analytics 
+	 *  service monitor when a com.industry.analytics.Analytic event is 
+	 *  sent for this type of Analytic.
+	 *
+	 *  @param  config        The Analytic configuration that 
+	 *                        will be used for this instance
+	 *  @param  initComplete  The action callback to call when the new Analytic  
+	 *                        has been created, or if an error occured.
+     *
+	 *  @see com.industry.analytics.Analytic           The Analytic configuration event object.
+	 *  @see com.industry.analytics.AnalyticInterface  The action interface that can be used 
+	 *                                            to interact with the Analytic.
+	 */
+	action init(Analytic config,
+	            action<boolean, AnalyticInterface> initComplete)
+	{
+		_instanceName := context.current().getName();
+
+		// Need to subscribe to the instance channel to 
+		// receive any outputs
+		monitor.subscribe( _instanceName );
+		
+		_validateConfiguration(config);
+		
+		ValidationResult vr;
+		on ValidationResult() :vr
+		{
+			if vr.result then
+			{
+				_analyticObject := new AnalyticObject;
+				boolean synchronous := config.getOrBoolean("synchronous", true);
+				log "Prediction Analytic inputs synchronous: " + synchronous.toString() at DEBUG;
+				_analyticObject.initExtended( config,
+				                              new action<Data>,
+				                              processDataStream,
+				                              synchronous,
+				                              new action<>,
+				                              new action<>,
+				                              initComplete );
+			}
+			else
+			{
+				initComplete(false, new AnalyticInterface);
+				return;
+			}
+		}		
+	}
+	
+	
+	/** 
+	 *  This helper action validates configuration that was
+	 *  used when trying to create a new instance of the Analytic.
+	 *  This is called internally, and should not be called directly by 
+	 *  the Users application.
+	 *  
+	 *  @param   config  The Analytic configuration object that is being validated
+	 *  @returns A boolean value indicating whether the configuration was valid or not.
+	 * 
+	 *  @private
+	 */
+	action _validateConfiguration( Analytic config ) {
+		boolean result := config.validateParams( NAME, -1, -1, 
+		                                         [ MODEL_NAME,          COMBINE_PARAMS, 
+		      		                               "configDirectory",   "workDirectory",
+		      		                               "pmmlFileDirectory", "pmmlFileName",
+		      		                               "recordLatency",     "logLatency",
+		      		                               "modelName"],
+		      		                           	 [ Constants.STRING, Constants.BOOLEAN,
+		      		                           	   Constants.STRING, Constants.STRING,
+		      		                           	   Constants.STRING, Constants.STRING,
+		      		                           	   Constants.STRING, Constants.STRING,
+		      		                           	   Constants.STRING ],
+		      		                           	 [ true,  false,
+		      		                           	   false, false, 
+		      		                           	   false, false, 
+		      		                           	   false, false, 
+		      		                           	   false ] );
+
+		// Only check the specific params if the validation was okay
+		if( result ) then {
+
+			if( config.inputDataNames.size() < 1 ) then {
+				log "inputDataNames sequence must have at least one entry." at ERROR;
+				log "  inputDataNames: " + config.inputDataNames.toString() at ERROR;
+				result := false;
+			} else {
+				// Check that no blank strings were provided.
+				// Also check for trimming the name.
+				string name;
+				for name in config.inputDataNames {
+					if( name.ltrim().rtrim().length() = 0 ) then {
+						log "inputDataNames cannot contain blank strings." at ERROR;
+						result := false;
+						break;
+					}
+				}
+			}
+			if( config.outputDataNames.size() < 1 ) then {
+				log "outputDataNames sequence must have at least one entry." at ERROR;
+				log "  outputDataNames: " + config.outputDataNames.toString() at ERROR;
+				result := false;
+			} else {	
+				// Check that no blank strings were provided.
+				// Also check for trimming the name.
+				string name;
+				for name in config.outputDataNames {
+					if( name.ltrim().rtrim().length() = 0 ) then {
+						log "outputDataNames cannot contain blank strings." at ERROR;
+						result := false;
+						break;
+					}
+				}
+			}
+	
+			if( result ) then {
+				// Cache the original configuration
+				_config := config;
+				_combineParams := config.getOrBoolean(COMBINE_PARAMS, false);
+				
+				// Leave validation of service parameters to the PMML plugin.
+				
+				// Need to return if result is false at this stage as might screw up the plugin.
+				if not result then {route ValidationResult(result);}
+		
+				// Set the params for the PMML plugin.
+				ServiceParams serviceParams := (new com.apama.pa.pmml.ServiceParamsHelper).create();
+				serviceParams.subscribeToChannel(_instanceName);
+				serviceParams.sendToChannel(_instanceName);
+				if config.hasParam("configDirectory")   then { serviceParams.setConfigDirectory(   config.getString(  "configDirectory" ) ); }
+				if config.hasParam("workDirectory")     then { serviceParams.setWorkDirectory(     config.getString(  "workDirectory" ) ); }
+				if config.hasParam("pmmlFileDirectory") then { serviceParams.setPMMLFileDirectory( config.getString(  "pmmlFileDirectory" ) ); }
+				if config.hasParam("pmmlFileName")      then { serviceParams.setPMMLFileName(      config.getString(  "pmmlFileName" ) ); }
+				if config.hasParam("recordLatency")     then { serviceParams.recordLatency(        config.getBoolean( "recordLatency" ) ); } 
+				if config.hasParam("logLatency")        then { serviceParams.logLatency(           config.getBoolean( "logLatency" ) ); }
+				if config.hasParam("modelName")         then { serviceParams.setModelName(         config.getString(  "modelName" ) ); }
+				
+				(new ServiceHandlerFactory).create( ServiceName.Zementis,
+				                                    _instanceName,
+				                                    serviceParams,
+												    _onServiceInitialised,
+												    _onServiceError);
+			}
+		} 
+		if( not result ) then {
+			// Need to return if result is false
+			route ValidationResult( result );
+		}
+	}
+	
+	
+	/**
+	 *  Continues validation after the PMML model file has been successfully loaded.
+	 *
+	 *  @private
+	 */
+	action _onServiceInitialised(ServiceHandler sh)
+	{
+		boolean result := true;
+		
+		// Continue validation. Need to ensure mappings work against model.
+		if( sh.hasModel( _config.getString( MODEL_NAME ) ) ) then {
+			_model := sh.getModel( _config.getString( MODEL_NAME ) );
+		} else {
+			log "Model " + _config.getString( MODEL_NAME ) + " not found in PMML file '" + _config.getString( PMML_FILE_NAME ) + "'." at ERROR;
+			result := false;
+			route ValidationResult(result);
+			return;
+		}
+
+		log "Prediction Analytic using model " + _model.getModelName() + " from " + _config.getString( PMML_FILE_NAME ) at INFO;
+		log "  Input fields : " + _model.getInputFieldNames().toString() at INFO;
+		log "  Output fields: " + _model.getOutputFieldNames().toString() at INFO;
+		
+		// Get the input parameter mappings.
+		dictionary<DataMap, boolean> existingMappings := {};
+		string name;
+		for name in _model.getInputFieldNames() {
+			string param := name;
+			if( not _config.hasParam( param ) ) then {
+				param := "input." + name;
+				if( not _config.hasParam( param ) ) then {
+					// Some inputs can be optional.
+					log "No map found for model input parameter: " + name at WARN;
+					continue;
+				}
+			}
+			
+			// Check whether the mapping has been seen before.
+			string mapping := _config.getString( param );
+			DataMap mm := _parseMap(mapping);
+			if( mm.name = "" ) then {
+				result := false;
+			} else {
+				if( _config.inputDataNames.indexOf( mm.name ) < 0 ) then {
+					log "Data name " + mm.name + " not found in the list of inputDataNames: " + _config.inputDataNames.toString() at ERROR;
+					result := false;
+				} else {
+					if( existingMappings.hasKey( mm ) ) then {
+						// You might want to send the same value into separate input parameters.
+						log "Duplicate mapping " + mapping + " for PMML model input parameters." at WARN;
+					} else {
+						existingMappings[mm] := true;
+					}
+					_inputMappings[name] := mm;
+				}
+			}
+		}
+
+		// Get the output parameter mappings.
+		existingMappings.clear();
+		for name in _model.getOutputFieldNames() {
+			string param := name;
+			if( not _config.hasParam( param ) ) then {
+				param := "output." + name;
+				if( not _config.hasParam( param ) ) then {
+					// It's quite feasible that any given output isn't of interest to the user.
+					log "No map found for model output parameter: " + name at WARN;
+					continue;
+				}
+			}
+			
+			// Check whether the mapping has been seen before.
+			string mapping := _config.getString( param );
+			DataMap mm := _parseMap( mapping );
+			if( mm.name = "" ) then {
+				result := false;
+			} else {
+				if( _config.outputDataNames.indexOf( mm.name ) < 0 ) then {
+					log "Data name " + mm.name + " not found in the list of outputDataNames: " + _config.outputDataNames.toString() at ERROR;
+					result := false;
+				} else {
+					if( existingMappings.hasKey( mm ) ) then {
+						// Using a duplicate mapping would result in one output overwriting another.
+						log "Duplicate mapping " + mapping + " for PMML model output parameters." at ERROR;
+						result := false;
+						continue;
+					} else {
+						existingMappings[mm] := true;
+					}
+					_outputMappings[name] := mm;
+				}
+			}
+		}
+
+		route ValidationResult(result);
+	}
+	
+
+	/**
+	 *  Parses the mapping value provided with a model parameter in the Analytic parameters.
+	 *
+	 *  @private
+	 */
+	action _parseMap(string map) returns DataMap
+	{
+		DataMap mm := new DataMap;
+		map := map.ltrim().rtrim();
+		if( map.length() < 7 ) then {
+			log "Error parsing map: " + map at ERROR;
+			return mm;
+		}
+		
+		sequence<string> parts := ".".split( map );
+		// We should have at least 2 parts "<channel>.<element>[.<paramName>]"
+		if( parts.size() >= 2 ) then {
+			// The last 7 characters should define ._VALUE
+			mm.name := parts[0];
+	
+			string element := parts[1].toUpper();
+			if element = "DVALUE" then {mm.element := DVALUE;}
+			else if element = "SVALUE" then {mm.element := SVALUE;}
+			else if element = "XVALUE" then {mm.element := XVALUE;}
+			else if element = "YVALUE" then {mm.element := YVALUE;}
+			else if element = "ZVALUE" then {mm.element := ZVALUE;}
+			else if element = "PVALUE" and parts.size() = 3 then {
+				mm.element   := PVALUE;
+				mm.paramName := parts[2];
+			} else {
+				log "Unrecognised element: " + element at ERROR;
+			}
+		} else {
+			log "Unrecognised element: " + map at ERROR;
+			mm.name := "";
+		}
+		return mm;
+	}
+	
+
+	/**
+	 *  Handles the case when the PMML model file load is unsuccessful.
+	 *
+	 *  @private
+	 */
+	action _onServiceError(ServiceError se)
+	{
+		log "Error setting up PMML plugin: " + se.getErrorMessage() at ERROR;
+		route ValidationResult(false);
+	}
+	
+	
+	/**
+	 *  This action implements the Analytic function itself. 
+	 *  This is called internally by the Analytic Object, and  
+	 *  should not be called directly by the Users application.
+	 *  If the application has created this Analytic using the 
+	 *  #initMultiple() action directly, then the <font face="courier" size="-1">processDataStream</font>
+	 *  action on the <font face="courier" size="-1">com.industry.analytics.AnalyticInterface</font> 
+	 *  that was returned should be used instead.
+	 *
+	 *  @param   dataIn  The input Data event to be processed by this Analytic
+	 * 
+	 *  @private
+	 */
+	action processDataStream(dictionary<string, Data> dataIn)
+	{
+		log "Processing " + dataIn.toString() at DEBUG;
+
+		Input input := new Input;
+		input.instanceName := _instanceName;
+		input.modelName := _model.getModelName();
+		input.requestId := integer.getUnique().toString();
+		_mapInput(dataIn, input);
+		send input to _instanceName;
+		
+		Output output;
+		on Output(instanceName=input.instanceName, requestId=input.requestId) :output
+		{
+			// Construct sourceId based on the incoming sourceIds.
+			string sourceId := "";
+			string name;
+			for name in dataIn.keys()
+			{
+				if sourceId!= "" then {sourceId := sourceId + "_";}
+				sourceId := sourceId + dataIn[name].sourceId;
+			}
+			
+			dictionary<string, string> params := {};
+			if _combineParams then
+			{
+				string key;
+				for key in dataIn.keys()
+				{
+					Data currData := dataIn[key];
+					string param;
+					for param in currData.params.keys()
+					{
+						params[param] := currData.params[param]; 
+					}
+				}
+			}
+			else
+			{
+				params := dataIn[dataIn.keys()[0]].params;
+			}
+			dictionary<string, Data> dataOut := {};
+			_mapOutput(dataOut, output, sourceId, params);
+
+			for name in dataOut.keys()
+			{
+				_analyticObject.sendData(dataOut[name]);
+			}
+		}
+	}
+	
+
+	/**
+	 *  Maps the appropriate input Data values to the Input object
+	 *  for passing into the PMML model.
+	 *
+	 *  @private
+	 */
+	action _mapInput(dictionary<string, Data> dataIn, Input input)
+	{
+		string param;
+		for param in _inputMappings.keys()
+		{
+			DataMap dm := _inputMappings[param];
+			Data currData := dataIn.getOrDefault(dm.name);
+			if dm.element = DVALUE then {input.inputFields[param] := currData.dValue.toString();}
+			else if dm.element = SVALUE then {input.inputFields[param] := currData.sValue;}
+			else if dm.element = XVALUE then {input.inputFields[param] := currData.xValue.toString();}
+			else if dm.element = YVALUE then {input.inputFields[param] := currData.yValue.toString();}
+			else if dm.element = ZVALUE then {input.inputFields[param] := currData.zValue.toString();}
+			else if dm.element = PVALUE then {input.inputFields[param] := currData.params.getOrDefault( dm.paramName );}
+		}
+	}
+	
+	
+	/**
+	 *  Maps the appropriate onput Data values from the Output object
+	 *  for passing sending out on to the specified channels..
+	 *
+	 *  @private
+	 */
+	action _mapOutput(dictionary<string, Data> dataOut, Output output, string sourceId, dictionary<string, string> params)
+	{	
+		string name;
+		for name in _config.outputDataNames
+		{
+			Data currData := new Data;
+			currData.streamName := name;
+			currData.type       := DataConstants.COMPUTED;
+			currData.sourceId   := sourceId;
+			currData.timestamp  := timeFormat.getTime().toDecimal();
+			currData.params     := params;
+			dataOut[name]       := currData;
+		}
+		string param;
+		for param in _outputMappings.keys()
+		{
+			DataMap dm := _outputMappings[param];
+			Data currData := dataOut[dm.name];
+			if dm.element = DVALUE then {currData.dValue := output.outputFields[param].toDecimal();}
+			else if dm.element = SVALUE then {currData.sValue := output.outputFields[param];}
+			else if dm.element = XVALUE then {currData.xValue := output.outputFields[param].toFloat();}
+			else if dm.element = YVALUE then {currData.yValue := output.outputFields[param].toFloat();}
+			else if dm.element = ZVALUE then {currData.zValue := output.outputFields[param].toFloat();}
+			else if dm.element = PVALUE then {currData.params.add( dm.paramName, output.outputFields[param] );}
+		}
+	}
+}
+
+
+
+/** 
+ *  This internal Monitor is used to automatically intern 
+ *  any string constants that are defined that are associated
+ *  with the Prediction Analytic in order to improve  
+ *  performance when handling strings.
+ *
+ *  Note: The listener that is created is required in order
+ *        to keep the monitor alive between a Persistant  
+ *        Correlators recovery.  Otherwise, this would be a 
+ *        transient monitor, and it would not be recovered.  
+ *        Which would then mean that the strings would not
+ *        interned in the recovered Correlator.
+ *
+ *  @private
+ */
+monitor InternPrediction {
+	event StayAlive {}
+	
+	action onload()	{
+		string discard := Prediction.NAME.intern();
+		discard := Prediction.COMBINE_PARAMS.intern();
+		discard := Prediction.PMML_FILE_DIRECTORY.intern();
+		discard := Prediction.PMML_FILE_NAME.intern();
+		discard := Prediction.MODEL_NAME.intern();
+		on all StayAlive() {}
+	}
+}

@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("Throttler", ["Input"], ["Output1"], {"timeWindow":"2.0"})
+com.industry.analytics.Analytic("Throttler", ["Input"], ["Output2"], {"timeWindow":"2.0", "bySourceID":"false"})

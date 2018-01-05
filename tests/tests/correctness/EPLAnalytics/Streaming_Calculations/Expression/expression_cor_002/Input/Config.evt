@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("expression", ["Input"], ["Output"], {"expression":"1+1"})
+com.industry.analytics.Analytic("EXPRESSION", ["Input"], ["Output"], {"expression":"1+1"})
+com.industry.analytics.Analytic("ExPrEsSiOn", ["Input"], ["Output"], {"expression":"1+1"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output"], {"expression":"1+1"})

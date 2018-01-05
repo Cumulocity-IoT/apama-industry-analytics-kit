@@ -1,0 +1,202 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Sum</TITLE>
+<META NAME="keywords" CONTENT="Sum&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="Sum";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/streaming_calculations/Sum.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Sum.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/streaming_calculations/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics.streaming_calculations</FONT>
+<BR>Event Sum</H2>
+<HR>The Sum Analytic computation generates a Data containing a moving sum calculation for each input Data received. The sum is calculated based on the number of events recieved within a time window (in seconds) or last 'N' events. A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br> NOTE: The smoothing factor should be less than or equal to calculationValue parameter.<br>
+<br> <dl><dt><b>Input Data events:</b></dt> <dd>Only one input Data stream names must be provided.</dd> <dd><b>Note:</b> The input Data events timestamp value should be defined as the number of seconds since the epoch (1st January 1970).</dd> </dl> <dl><dt><b>Output Data events:</b></dt> <dd>Only a single output Data stream name must be provided. Only Data events of Computed type are generated.</dd> </dl> <dl><dt><b>Params:</b></dt> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr> <tr><td><b>calculationType</b></td><td>Defines whether the sum calculation is based on timeWindow or count of last ‘N’ events.</td> <td>Valid values are either <font face="courier" size="-1">sampleCount</font> or <font face="courier" size="-1">timeWindow</font> </td><td>String</td><td>True</td><td> </td></tr> <tr><td><b>calculationValue</b></td><td>Defines the value for <font face="courier" size="-1">sampleCount</font> or <font face="courier" size="-1">timeWindow</font>.</td> <td>Stringified decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">60.0d</font></td></tr> <tr><td><b>smoothingFactor</b></td><td>Defines the smoothing factor to be used for precision.</td> <td>Stringified decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">10.0d</font> </td></tr> <tr><td><b>paramName</b></td><td>Defines the name of Data parameter to use for calculating Sum.</td> <td>Valid values are either<font face="courier" size="-1">dValue</font> or <font face="courier" size="-1">xValue</font> or <font face="courier" size="-1">yValue</font> or <font face="courier" size="-1">zValue</font> </td><td>String</td><td>False</td><td><font face="courier" size="-1">dValue</font> </td></tr> <tr><td><b>bySourceId</b></td><td>If defined, the Drift calculations are partitioned based on the <font face="courier" size="-1">sourceId</font> of the <font face="courier" size="-1">Data</font> events</td> <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr><br>
+<br> </table></dd> </dl> <dl><dt><b>Example usage:</b></dt> <dd><pre><br>//Define a Sum Analytic which takes Data events on the channel "Input"  <br>//and calculate the moving sum of last 21 Data events with smoothingFactor of 4 for precision. It publishes<br>//a Data event with the calculated value of Sum on the output channel "Output" after receiving every Data event. <br>send com.industry.analytics.Analytic("Sum", ["Input"], ["Output"], {"calculationType": "sampleCount", "calculationValue":"21.0", "smoothingFactor":"4.0"} ) to "";<br>
+<br>//Define a Sum Analytic which takes Data events on the channel "Input"  <br>//and calculate the moving sum of events received within timeWindow of 60 seconds with smoothingFactor of 4 for precision. It publishes<br>//a Data event with the calculated value of Sum of xValues on the output channel "Output" after receiving every Data event. <br>send com.industry.analytics.Analytic("Sum", ["Input"], ["Output"], {"calculationType": "timeWindow", "calculationValue":"60.0", "smoothingFactor":"4.0", "paramName":"xValue"} ) to "";<br></pre></dd> </dl><HR>
+<A NAME="constant_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Constant Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Sum.html#BY_SOURCEID">BY_SOURCEID</A> := "bySourceId"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether or not the drift calculation will be partitioned by the <font face="courier" size="-1">sourceId</font></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Sum.html#CALCULATION_TYPE">CALCULATION_TYPE</A> := "calculationType"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the calculation type to be used to calculate the sum. Type can be either 'timeWindow' or 'sampleCount'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Sum.html#CALCULATION_VALUE">CALCULATION_VALUE</A> := "calculationValue"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the calculation value to be used for calculationType to calculate the sum.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Sum.html#NAME">NAME</A> := "Sum"</B></CODE>
+<br>
+<br>This constant defines the name of the Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Sum.html#PARAM_NAME">PARAM_NAME</A> := "paramName"</B></CODE>
+<br>
+<br>This constant defines the data parameter to use for calculating Sum</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Sum.html#SAMPLE_COUNT">SAMPLE_COUNT</A> := "sampleCount"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter calculationType value</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Sum.html#SMOOTHING_FACTOR">SMOOTHING_FACTOR</A> := "smoothingFactor"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the smoothing factor used to calculate the sum.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Sum.html#TIMEWINDOW">TIMEWINDOW</A> := "timeWindow"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter calculationType value</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Sum.html#init()">init</A></B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="constant_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Constant Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="BY_SOURCEID"></A>
+<H3>BY_SOURCEID</H3>
+<PRE>constant string&nbsp;<B>BY_SOURCEID := "bySourceId"</B>
+</PRE>This constant defines the configuration parameter name that defines whether or not the drift calculation will be partitioned by the <font face="courier" size="-1">sourceId</font><HR>
+<A NAME="CALCULATION_TYPE"></A>
+<H3>CALCULATION_TYPE</H3>
+<PRE>constant string&nbsp;<B>CALCULATION_TYPE := "calculationType"</B>
+</PRE>This constant defines the configuration parameter name that specifies the calculation type to be used to calculate the sum. Type can be either 'timeWindow' or 'sampleCount'<HR>
+<A NAME="CALCULATION_VALUE"></A>
+<H3>CALCULATION_VALUE</H3>
+<PRE>constant string&nbsp;<B>CALCULATION_VALUE := "calculationValue"</B>
+</PRE>This constant defines the configuration parameter name that specifies the calculation value to be used for calculationType to calculate the sum.<HR>
+<A NAME="NAME"></A>
+<H3>NAME</H3>
+<PRE>constant string&nbsp;<B>NAME := "Sum"</B>
+</PRE>This constant defines the name of the Analytic.<HR>
+<A NAME="PARAM_NAME"></A>
+<H3>PARAM_NAME</H3>
+<PRE>constant string&nbsp;<B>PARAM_NAME := "paramName"</B>
+</PRE>This constant defines the data parameter to use for calculating Sum<HR>
+<A NAME="SAMPLE_COUNT"></A>
+<H3>SAMPLE_COUNT</H3>
+<PRE>constant string&nbsp;<B>SAMPLE_COUNT := "sampleCount"</B>
+</PRE>This constant defines the configuration parameter calculationType value<HR>
+<A NAME="SMOOTHING_FACTOR"></A>
+<H3>SMOOTHING_FACTOR</H3>
+<PRE>constant string&nbsp;<B>SMOOTHING_FACTOR := "smoothingFactor"</B>
+</PRE>This constant defines the configuration parameter name that specifies the smoothing factor used to calculate the sum.<HR>
+<A NAME="TIMEWINDOW"></A>
+<H3>TIMEWINDOW</H3>
+<PRE>constant string&nbsp;<B>TIMEWINDOW := "timeWindow"</B>
+</PRE>This constant defines the configuration parameter calculationType value<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration that will be used for this instance</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The action callback to call when the new Analytic has been created, or if an error occured.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration event object.</DD>
+<DD>
+<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that can be used to interact with the Analytic.</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/streaming_calculations/Sum.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Sum.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/streaming_calculations/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

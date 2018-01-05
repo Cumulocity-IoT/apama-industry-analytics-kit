@@ -1,0 +1,20 @@
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})
+
+// No reset defined, so should just be passed through
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 1.0, 0.0, "", 1.0, 2.0, 3.0, {"reset":""})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 2.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 4.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 6.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 8.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})
+
+// Re-trigger
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 10.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})
+
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 12.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 14.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 16.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 18.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})
+
+//Re-trigger
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 20.0, 0.0, "", 1.0, 2.0, 3.0, {"trigger":""})

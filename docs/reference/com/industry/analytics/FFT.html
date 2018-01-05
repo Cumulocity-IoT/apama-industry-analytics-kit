@@ -1,0 +1,233 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>FFT</TITLE>
+<META NAME="keywords" CONTENT="FFT&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="FFT";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/FFT.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="FFT.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/analytics/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics</FONT>
+<BR>Event FFT</H2>
+<HR>This event provides functionality to calculate Fast-Fourier Transformations using the Cooley-Tukey algorithm. Fourier analysis converts data from a time-domain to a representation in the frequency domain (and vice versa).<HR>
+<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;</CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="FFT.html#cfft()">cfft</A></B>(sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;buffer)</CODE>
+<br>
+<br>Calculate the FFT based on complex numbers</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;</CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="FFT.html#fft()">fft</A></B>(sequence&lt;decimal&nbsp;&gt;&nbsp;buffer)</CODE>
+<br>
+<br>Calculate the FFT based on simple numbers</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;sequence&lt;decimal&nbsp;&gt;</CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="FFT.html#getAmplitudes()">getAmplitudes</A></B>(sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;fftResult)</CODE>
+<br>
+<br>Get the set of amplitude values from a previously calculated set of FFT results</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/AmplitudeFrequency.html" title="type in com.industry.analytics">com.industry.analytics.AmplitudeFrequency</A>&nbsp;&gt;</CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="FFT.html#getAmplitudesAndFrequencies()">getAmplitudesAndFrequencies</A></B>(integer&nbsp;sampleSize,&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;fftResult)</CODE>
+<br>
+<br>Get the set of amplitude and frequency pairs from a previously calculated set of FFT results</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;sequence&lt;integer&nbsp;&gt;</CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="FFT.html#getFrequencies()">getFrequencies</A></B>(integer&nbsp;sampleSize,&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;fftResult)</CODE>
+<br>
+<br>Get the set of frequency values from a previously calculated set of FFT results</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;integer</CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="FFT.html#getLargestFrequency()">getLargestFrequency</A></B>(integer&nbsp;sampleSize,&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;fftResult)</CODE>
+<br>
+<br>Get the frequency with the highest amplitude from a previously calculated set of FFT results</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/AmplitudeFrequency.html" title="type in com.industry.analytics">com.industry.analytics.AmplitudeFrequency</A>&nbsp;&gt;</CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="FFT.html#getTopNAmplitudesAndFrequencies()">getTopNAmplitudesAndFrequencies</A></B>(integer&nbsp;sampleSize,&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;fftResult,&nbsp;integer&nbsp;numToRet)</CODE>
+<br>
+<br>Get the defined number of highest amplitude and frequency pairs from a previously calculated set of FFT results</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;</CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="FFT.html#ifft()">ifft</A></B>(sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;amplitudes)</CODE>
+<br>
+<br>This action calculates the inverse FFT</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="cfft()"></A>
+<H3>cfft</H3>
+<PRE>sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;static <B>cfft</B>(sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;buffer)</PRE>Calculate the FFT based on complex numbers<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>buffer</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="fft()"></A>
+<H3>fft</H3>
+<PRE>sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;static <B>fft</B>(sequence&lt;decimal&nbsp;&gt;&nbsp;buffer)</PRE>Calculate the FFT based on simple numbers<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>buffer</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="getAmplitudes()"></A>
+<H3>getAmplitudes</H3>
+<PRE>sequence&lt;decimal&nbsp;&gt;&nbsp;static <B>getAmplitudes</B>(sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;fftResult)</PRE>Get the set of amplitude values from a previously calculated set of FFT results<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>fftResult</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="getAmplitudesAndFrequencies()"></A>
+<H3>getAmplitudesAndFrequencies</H3>
+<PRE>sequence&lt;<A HREF="../../../com/industry/analytics/AmplitudeFrequency.html" title="type in com.industry.analytics">com.industry.analytics.AmplitudeFrequency</A>&nbsp;&gt;&nbsp;static <B>getAmplitudesAndFrequencies</B>(integer&nbsp;sampleSize,&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;fftResult)</PRE>Get the set of amplitude and frequency pairs from a previously calculated set of FFT results<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>sampleSize</tt>
+</DD>
+<DD>
+<tt>fftResult</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="getFrequencies()"></A>
+<H3>getFrequencies</H3>
+<PRE>sequence&lt;integer&nbsp;&gt;&nbsp;static <B>getFrequencies</B>(integer&nbsp;sampleSize,&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;fftResult)</PRE>Get the set of frequency values from a previously calculated set of FFT results<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>sampleSize</tt>
+</DD>
+<DD>
+<tt>fftResult</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="getLargestFrequency()"></A>
+<H3>getLargestFrequency</H3>
+<PRE>integer&nbsp;static <B>getLargestFrequency</B>(integer&nbsp;sampleSize,&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;fftResult)</PRE>Get the frequency with the highest amplitude from a previously calculated set of FFT results<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>sampleSize</tt>
+</DD>
+<DD>
+<tt>fftResult</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="getTopNAmplitudesAndFrequencies()"></A>
+<H3>getTopNAmplitudesAndFrequencies</H3>
+<PRE>sequence&lt;<A HREF="../../../com/industry/analytics/AmplitudeFrequency.html" title="type in com.industry.analytics">com.industry.analytics.AmplitudeFrequency</A>&nbsp;&gt;&nbsp;static <B>getTopNAmplitudesAndFrequencies</B>(integer&nbsp;sampleSize,&nbsp;sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;fftResult,&nbsp;integer&nbsp;numToRet)</PRE>Get the defined number of highest amplitude and frequency pairs from a previously calculated set of FFT results<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>sampleSize</tt>
+</DD>
+<DD>
+<tt>fftResult</tt>
+</DD>
+<DD>
+<tt>numToRet</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="ifft()"></A>
+<H3>ifft</H3>
+<PRE>sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;static <B>ifft</B>(sequence&lt;<A HREF="../../../com/industry/analytics/ComplexType.html" title="type in com.industry.analytics">com.industry.analytics.ComplexType</A>&nbsp;&gt;&nbsp;amplitudes)</PRE>This action calculates the inverse FFT<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>amplitudes</tt>
+</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/FFT.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="FFT.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/analytics/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

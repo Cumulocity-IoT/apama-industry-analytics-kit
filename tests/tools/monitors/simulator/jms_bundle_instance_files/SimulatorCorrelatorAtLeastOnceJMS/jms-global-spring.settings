@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<m:mappingInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:m="urn:mappinginfo" xsi:schemaLocation="urn:mappinginfo mappingInfo.xsd">
+  <m:generateServiceMon>NCName</m:generateServiceMon>
+  <m:parameters>
+    <m:parameterMap name="" type="JMS_MESSAGE" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;mapping:messageMapping xmlns:mapping=&quot;http://www.progress.com/caf/mapping1.0&quot; xmlns:metadata=&quot;http://www.progress.com/caf/mapping1.0/toolingMetadata&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;>&#xD;&#xA;  &lt;metadata:toolingMetadata>&#xD;&#xA;    &lt;metadata:mapInput>&#xD;&#xA;      &lt;metadata:source>&#xD;&#xA;        &lt;metadata:mappablesData displayName=&quot;MESSAGE_TYPE&quot; expressionName=&quot;com.industry.analytics.Data&quot; mappableType=&quot;MANUAL&quot;/>&#xD;&#xA;        &lt;metadata:mappablesData displayName=&quot;DESTINATION&quot; expressionName=&quot;queue:Data Simulator&quot; mappableType=&quot;MANUAL&quot;/>&#xD;&#xA;      &lt;/metadata:source>&#xD;&#xA;      &lt;metadata:target>&#xD;&#xA;        &lt;metadata:mappablesData displayName=&quot;MESSAGE_TYPE&quot; expressionName=&quot;${jms.property['MESSAGE_TYPE']}&quot; mappableType=&quot;MANUAL&quot;/>&#xD;&#xA;      &lt;/metadata:target>&#xD;&#xA;    &lt;/metadata:mapInput>&#xD;&#xA;  &lt;/metadata:toolingMetadata>&#xD;&#xA;  &lt;mapping:mapInput>&#xD;&#xA;    &lt;mapping:property name=&quot;eventType&quot; value=&quot;com.industry.analytics.Data&quot;/>&#xD;&#xA;    &lt;mapping:rule action=&quot;None&quot; resource=&quot;&quot; source=&quot;${apamaEvent}&quot; target=&quot;${jms.body.textmessage}&quot; type=&quot;BINDING_PARAM&quot;/>&#xD;&#xA;    &lt;mapping:rule action=&quot;None&quot; source=&quot;com.industry.analytics.Data&quot; target=&quot;${jms.property['MESSAGE_TYPE']}&quot; type=&quot;BINDING_PARAM&quot;/>&#xD;&#xA;    &lt;mapping:rule action=&quot;None&quot; resource=&quot;&quot; source=&quot;queue:Data Simulator&quot; target=&quot;${jms.header['JMSDestination']}&quot; type=&quot;BINDING_PARAM&quot;/>&#xD;&#xA;  &lt;/mapping:mapInput>&#xD;&#xA;  &lt;mapping:mapOutput/>&#xD;&#xA;  &lt;mapping:mapFault name=&quot;default_fault&quot;/>&#xD;&#xA;&lt;/mapping:messageMapping>">
+      <m:parameterMap name="" type="INPUT" value="com.industry.analytics.Data">
+        <m:param name="" type="EXPRESSION" value="${apamaEventType.name=='com.industry.analytics.Data'}"/>
+      </m:parameterMap>
+    </m:parameterMap>
+  </m:parameters>
+  <m:events/>
+  <m:dbs/>
+</m:mappingInfo>

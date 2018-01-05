@@ -1,0 +1,110 @@
+Changes between 2.0.0.1 and 2.1.0.0
+-----------------------------------
+
+* PRE_REQUISITE: Ensure you are using the latest update of Apama v10.1
+
+* NEW: Merger Analytic - Merges fields from two Data streams or appends static data values to individual parameters
+* NEW: Mapper Analytic - Maps a value from one parameter field to another value or field.
+* NEW: Repeater Analytic - Republishes a Data event based on a periodic update if no other Data was received that forces an immediate update
+* NEW: Throttler Analytic - Allows a stream of Data events to be throttled, for example, so that repeated events are ignored
+* NEW: FFTAnalysis Analytic - Performs a Fast Fourier Transformation on a streaming sample of Data events
+* NEW: Distance Analytic - Calculates the Distance between consecutive latitude/longitude data events
+* NEW: Speed Analytic - Calculates the Speed based on the time between consecutive latitude/longitude data events
+* NEW: Expression Analytic - Allows uses to define a mathematical expression to be calculated inline
+* NEW: Logger Analytic - Logs all received Data events to the log file for diagnostics or auditing purposes
+* FIXED: MinMax Analytic calculation did not clear old values after time window expired
+
+Changes between 2.0.0.0 and 2.0.0.1
+-----------------------------------
+* FIXED:  Sum Analytic calculation was incorrect in some cases
+* UPDATE: Sum Analytic can now add based on dValue, xValue, yValue, zValue Data event fields
+* UPDATE: Detector Analytics now add a value to the Data event parameters indicating which Analytic generated the anomaly
+* UPDATE: Spike Analytic now allows Users to defines a number of points before anomalous events are generated. This allows the average and standard deviation corridor to settle before anomalies are generated
+* UPDATE: Suppressor Analytic can now be started as "suppressed"
+* UPDATE: Average Analytic now supports the "bySourceId" parameter to allow generating a moving average partioned by the "sourceId" parameter (which was the previous behaviour) or to ignore it as part of the calculation
+
+Changes between 1.0.9.0 and 2.0.0.0
+-----------------------------------
+* PRE_REQUISITE: Ensure you are using the latest update of Apama 9.12.
+* UPDATE: The Industry Analytics Kit was originally termed the "IoT Analytics Kit", and while 
+  the analytics themselves still provide the same (and extended) use cases for IoT, 
+  they are also used in other industries. So, we have taken the opportunity to genericise 
+  some of the keywords used in the names of the components and the events used to define them. 
+  Below is the list of changes between the IoT Analytics Kit and the current Industry Analytics Kit.
+  
+  There are no behavioural changes, just name changes. Refactoring or search and replace would be
+  the simplest. Replacing the IoT Analytics Kit bundle with the new Industry Analytics Kit bundle 
+  will highlight any errors within Software AG Designer tool.
+    
+* UPDATE: Changed the package from "com.industry.iot" to "com.industry.analytics"
+* UPDATE: Arranged the Analytics into functional groups, and modified their package names to reflect their grouping
+* UPDATE: Changed the name of the Event Types:
+    Transformer --> Analytic (com.industry.analytics.analytic)
+    Measure --> Data (com.industry.analytics.data)
+* UPDATE: Changed the names of some of the fields in the Data (Measure) event type
+    name --> streamName
+    assetId --> sourceId
+* UPDATE: Renamed some Analytics (ie Transformers)
+    Aggregator --> Combiner
+    Sorted Merge --> Sorter
+    Quasher --> Suppressor
+    Moving Average --> Average
+    Variance --> Volatility
+    Threshold Breach --> Threshold
+    Baseline Threshold --> Drift
+    Nominal Range --> Spike
+    PMML --> Prediction
+    Simulator --> Data Simulator
+* UPDATE: Replaced the AssetService with an improved DataSourceService for management of sources of raw data
+* UPDATE: Changed the names of some of the configuration parameters of the Filter Analytic, but they operate the same way:
+    sensorsForAssets --> sourceId_OnlyLeafNodes
+    assetsAndChildren --> sourceId_AllChildren
+* UPDATE: Modified the Spike Analytic to use special output channel name prefixes for optional output
+          channels rather than specifying them via configuration parameters.
+* UPDATE: Simplified the Filter and Sorter Analytics to only allow single input and output channels. If multi-channel 
+          support is required, applications should use multiple instances of these Analytics or the Combiner/Duplicator Analytics.
+* UPDATE: Simplified the DataViewer and MemoryStore Analytics so you do not define an output channel as the 
+          name of the Dataview or MemoryStore table. The input channel name is used by default, which can be optionally 
+          overridden by using a configuration parameter.
+* UPDATE: All Analytic parameter values are case-insensitive now, making it easier to configure everything.
+* NEW: Added a VersioningService - Allows applications to check the current version of the Industry Analytics Kit, 
+       and check if the version the application wants to use is compatible with the current version.
+* NEW: Deployment script to improve ease of use in integration with SoftwareAG Designer
+* NEW: Duplicator Analytic - Added a new Analytic that takes a single input Data stream and duplicates the Data event onto multiple output channels
+* NEW: Min/Max Analytic - Added a new Analytic that calculates the min/max values for a Data stream over a defined time window.
+* NEW: Peer Analysis Analytic - Added a new Analytic that calculates the "normal" range of values for a Data stream over a defined time window.
+* NEW: Sum Analytic - Added a new Analytic that calculates the moving sum values for a Data stream over a defined time window or number of events.
+* NEW: Mode Analytic - Added a new Analytic that calculates the statistical mode for a Data stream over a defined time window.
+* NEW: Data Simulator Analytic - Added a new Analytic that generates Data events based on a configurable pattern type (e.g. brownian motion, random, sine wave, sawtooth, etc).
+* NEW: Added new sample for creating a custom Analytic 
+* NEW: Added new sample for demonstrating the Peer Analysis Analytic.
+
+
+Changes between 1.0.8 and 1.0.9
+-------------------------------
+
+* PRE_REQUISITE: Ensure you are using the latest update of Apama 9.12.
+* NEW: DataViewer Transform.
+* NEW: reset action in Transform interface, to allow transform states to be reset back to their starting state.
+* NEW: RESET, START and STOP added to TransformManagement.
+* UPDATE: TransportObject init() API altered to take advantage of the new ifpresent EPL functionality.
+* UPDATE: TransportObject initMultiple() has been removed.
+* UPDATE: BasicSample changed to use DataViewer instead of MemoryStore.
+* UPDATE: BasicSample changed to use Simulator instead of custom simulation.
+* UPDATE: DataViewer and MemoryStore list table now also includes the actual dataview name as well as the reference name.
+* UPDATE: DataViewer now deletes the DataView definition when an instance of the transform is deleted.
+* FIXED: ThresholdBreach was using the same direction across all assets for the CROSSING mode.
+
+
+Changes between 1.0.7 and 1.0.8
+-------------------------------
+
+* PRE-REQUISITE: Now requires Apama 9.12.
+* NEW: GeoFence Transform.
+* NEW: Spread Transform.
+* NEW: TransformManagement event with DELETE command, allowing existing transformers to be deleted dynamically.
+* RENAMED: DataViewer Transform to MemoryStore Transform.
+* UPDATE: ThresholdBreach now adds a param specifying in which direction the breach was registered.
+* UPDATE: Gradient and PMML transforms now pass through parameters in configurable fashion from their input Measures.
+* UPDATE: modelName is now mandatory for the PMML Transform due to change in the API with Apama 9.12.
+* Update: decimal types are now stored as decimals in the MemoryStore Transform instead of as floats.

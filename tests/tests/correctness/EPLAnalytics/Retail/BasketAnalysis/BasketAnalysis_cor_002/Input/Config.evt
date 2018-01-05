@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("BasketAnalysis", ["Input"], ["Output"], {"timeWindow": "20.0"})

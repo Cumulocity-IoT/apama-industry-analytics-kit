@@ -1,0 +1,3 @@
+com.industry.analytics.Analytic("Sum", ["Input"], ["Output"], {"calculationType": "sampleCount", "calculationValue":"21.0", "smoothingFactor":"4.0"})
+
+

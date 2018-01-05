@@ -1,0 +1,210 @@
+//*****************************************************************************
+// Title:         MissingData test
+//*****************************************************************************
+
+package com.industry.analytics.detectors.MissingData_cor_005;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.detectors.MissingData;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the MissingData - Zero input should fail
+		(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+															new sequence<string>, 
+															[ "Output1" ], 
+															new dictionary<string,string> ), 
+								initComplete );
+
+		// Create the MissingData - Single input should pass
+		on NextTest( testNum=2 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - Check more than one input less outputs - should fail
+		on NextTest( testNum=3 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "Input1",  "Input2" ], 
+																[ "Output1"  ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - Check more than one input with more outputs - should fail
+		on NextTest( testNum=4 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "Input1",  "Input2" ], 
+																[ "Output1", "Output2", "Output3"  ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - Empty name for input should fail
+		on NextTest( testNum=5 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "" ], 
+																[ "Output1" ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - blank name for input should fail
+		on NextTest( testNum=6 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "  " ], 
+																[ "Output1" ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - Check more than one output with less inputs - should fail
+		on NextTest( testNum=7 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "Input1" ], 
+																[ "Output1", "Output2" ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - Check more than one output with more inputs - should fail
+		on NextTest( testNum=8 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "Input1", "Input2", "Input3" ], 
+																[ "Output1", "Output2" ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - Check zero output fails
+		on NextTest( testNum=9 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "Input1" ], 
+																new sequence<string>, 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+			
+		// Create the MissingData - Check no inputs or outputs fails
+		on NextTest( testNum=10 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																new sequence<string>, 
+																new sequence<string>, 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - Check two inputs/outputs - should fail
+		on NextTest( testNum=11 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "Input1", "Input2" ], 
+																[ "Output1", "Output2" ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+	
+		// Create the MissingData - Check four inputs/outputs - should fail
+		on NextTest( testNum=12 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "Input1", "Input2", "Input3", "Input4" ], 
+																[ "Output1", "Output2", "Output3", "Output4" ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - Empty name for output should fail
+		on NextTest( testNum=13 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "Input1" ], 
+																[ "" ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - blank name for output should fail
+		on NextTest( testNum=14 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "Input1" ], 
+																[ "  " ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - Check null value for Analytic name fails
+		on NextTest( testNum=15 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( "", 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - with invalid Analytic name fails
+		on NextTest( testNum=16 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( "foobar", 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - with invalid case for Analytic name fails
+		on NextTest( testNum=17 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( "MISSINGDATA", 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - with no configuration values should pass (no mandatory params required)
+		on NextTest( testNum=18 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																new dictionary<string,string> ), 
+									initComplete );
+		}
+		
+		// Create the MissingData - with configuration values should pass
+		on NextTest( testNum=19 ) { 
+			(new MissingData).init( com.industry.analytics.Analytic( MissingData.NAME, 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																{ MissingData.BY_SOURCEID  : "true",
+																  MissingData.INTERVAL   : "1.0",
+																  MissingData.REPEATS    : "1",
+																  MissingData.TIMEFACTOR : "1.0" } ), 
+									initComplete );
+			
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+		
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

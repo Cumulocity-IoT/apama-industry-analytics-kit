@@ -1,0 +1,6 @@
+﻿// Name: Missing Spikes
+// Description: This is an example of how to detect missing periodic spikes in the incoming Data events, for example, missing heartbeats in a healthcare monitoring system. This uses the Drift Analytic to automatically calculate a "normal" range for the values, and then look for spiking data values that are outside that range. These anomalies are then monitored by the Missing Data Analytic to check for missing periodic anomalies.
+// Version: 2.0.0.1
+// Row: 0
+com.industry.analytics.Analytic("Drift",["Data"],["Missing Spikes:Row0:Channel1.0"],{"offset":"1.5d"})
+com.industry.analytics.Analytic("MissingData",["Missing Spikes:Row0:Channel1.0"],["Missing Spikes"],{})

@@ -1,0 +1,388 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Logger</TITLE>
+<META NAME="keywords" CONTENT="Logger&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="Logger";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/utilities/Logger.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Logger.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/utilities/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics.utilities</FONT>
+<BR>Event Logger</H2>
+<HR>The Logger Analytic logs to the correlator log and (optionally) a channel.<br>
+<br> If "fields" are specified then the events are logged in csv format, otherwise the Data event is logged in its toString form.<br>
+<br> To log to a file run "engine_receive -s -c &lt;ChannelName&gt; -f &lt;fileName&gt;"<br>
+<br> <dl><dt><b>Input Data events:</b></dt> <dd>Only one input Data stream names must be provided.</dd> </dl> <dl><dt><b>Output Data events:</b></dt> <dd>None</dd> </dl> <dl><dt><b>Params:</b></dt> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr> <tr><td><b>fields</b></td><td>A list of fields to log in csv format. If not provided then the event is toString()-ed.</td> <td>Valid values are <font face="courier" size="-1"> streamName, dValue, sValue, xValue, yValue, zValue, type, timestamp, param.xxx</font> </td><td>stringified sequence&lt;string&gt;</td><td>False</td><td>The toString() of the event is logged instead.</td></tr> <tr><td><b>emitToChannel</b></td><tdThe name of a channel to emit to.</td> <td></td><td>String</td><td>false</td><td>Don't emit</td></tr> </table></dd> </dl> <dl><dt><b>Example usage:</b></dt> <dd><pre><br>// Log the toString() of the event<br>send com.industry.analytics.Analytic("Logger", ["Input"], new sequence<string>, new dictionary<string, string> ) to "";<br>
+<br>//Log the streamName and dValue of the event<br>send com.industry.analytics.Analytic("Logger", ["Input"], new sequence<string>, {"fields":["streamName","dValue"].toString()} ) to "";<br>
+<br>// Emit the dValue of the event to a channel<br>send com.industry.analytics.Analytic("Logger", ["Input"], new sequence<string>, {"fields":["dValue"].toString(), "emitToChannel":"loggingChannel"} ) to "";<br>
+<br></pre></dd> </dl><DL>
+<DT>
+<B>Emits:</B>
+</DT>
+<DD>string&nbsp;representation&nbsp;of&nbsp;an&nbsp;event&nbsp;-&nbsp;</DD>
+</DL>
+<HR>
+<A NAME="constant_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Constant Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Logger.html#EMIT_TO_CHANNEL">EMIT_TO_CHANNEL</A> := "emitToChannel"</B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Logger.html#FIELDS">FIELDS</A> := "fields"</B></CODE>
+<br>
+<br>This constant defines the name of parameter decimalPrecision.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Logger.html#NAME">NAME</A> := "Logger"</B></CODE>
+<br>
+<br>This constant defines the name of the Analytic.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#csvEscape()">csvEscape</A></B>(string&nbsp;value)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#dValueGetter()">dValueGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#generateCsvOutput()">generateCsvOutput</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;dataIn)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#init()">init</A></B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#sourceIdGetter()">sourceIdGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#streamNameGetter()">streamNameGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#sValueGetter()">sValueGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;sequence&lt;string&nbsp;&gt;</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#tidyFields()">tidyFields</A></B>(sequence&lt;string&nbsp;&gt;&nbsp;fields)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#timestampGetter()">timestampGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#typeGetter()">typeGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;boolean</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#validateFields()">validateFields</A></B>(sequence&lt;string&nbsp;&gt;&nbsp;fields)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#xValueGetter()">xValueGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#yValueGetter()">yValueGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Logger.html#zValueGetter()">zValueGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="constant_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Constant Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="EMIT_TO_CHANNEL"></A>
+<H3>EMIT_TO_CHANNEL</H3>
+<PRE>constant string&nbsp;<B>EMIT_TO_CHANNEL := "emitToChannel"</B>
+</PRE>
+<HR>
+<A NAME="FIELDS"></A>
+<H3>FIELDS</H3>
+<PRE>constant string&nbsp;<B>FIELDS := "fields"</B>
+</PRE>This constant defines the name of parameter decimalPrecision.<HR>
+<A NAME="NAME"></A>
+<H3>NAME</H3>
+<PRE>constant string&nbsp;<B>NAME := "Logger"</B>
+</PRE>This constant defines the name of the Analytic.<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="csvEscape()"></A>
+<H3>csvEscape</H3>
+<PRE>string&nbsp;<B>csvEscape</B>(string&nbsp;value)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="dValueGetter()"></A>
+<H3>dValueGetter</H3>
+<PRE>string&nbsp;<B>dValueGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="generateCsvOutput()"></A>
+<H3>generateCsvOutput</H3>
+<PRE>string&nbsp;<B>generateCsvOutput</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;dataIn)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>dataIn</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration that will be used for this instance</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The action callback to call when the new Analytic has been created, or if an error occured.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration event object.</DD>
+<DD>
+<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that can be used to interact with the Analytic.</DD>
+</DL>
+<HR>
+<A NAME="sourceIdGetter()"></A>
+<H3>sourceIdGetter</H3>
+<PRE>string&nbsp;<B>sourceIdGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="streamNameGetter()"></A>
+<H3>streamNameGetter</H3>
+<PRE>string&nbsp;<B>streamNameGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="sValueGetter()"></A>
+<H3>sValueGetter</H3>
+<PRE>string&nbsp;<B>sValueGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="tidyFields()"></A>
+<H3>tidyFields</H3>
+<PRE>sequence&lt;string&nbsp;&gt;&nbsp;<B>tidyFields</B>(sequence&lt;string&nbsp;&gt;&nbsp;fields)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>fields</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="timestampGetter()"></A>
+<H3>timestampGetter</H3>
+<PRE>string&nbsp;<B>timestampGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="typeGetter()"></A>
+<H3>typeGetter</H3>
+<PRE>string&nbsp;<B>typeGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="validateFields()"></A>
+<H3>validateFields</H3>
+<PRE>boolean&nbsp;<B>validateFields</B>(sequence&lt;string&nbsp;&gt;&nbsp;fields)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>fields</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="xValueGetter()"></A>
+<H3>xValueGetter</H3>
+<PRE>string&nbsp;<B>xValueGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="yValueGetter()"></A>
+<H3>yValueGetter</H3>
+<PRE>string&nbsp;<B>yValueGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="zValueGetter()"></A>
+<H3>zValueGetter</H3>
+<PRE>string&nbsp;<B>zValueGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/utilities/Logger.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Logger.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/utilities/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

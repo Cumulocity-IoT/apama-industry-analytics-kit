@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bundle name="Industry Analytics Kit for Manufacturing" type="monitorscript" singleton="true">
+	<version>
+		<id>1.0</id>
+		<date>2017-11-07</date>
+		<author>Software AG</author>
+		<comments/>
+	</version>
+	<description>
+		Apama Bundle for Industry Analytics Kit for Manufacturing
+	</description>
+	<monitors>
+		<fileset dir="../monitors/analytics/Manufacturing">
+			<include name="Availability.mon"/>
+			<include name="AvailabilityService.mon"/>
+			<include name="Performance.mon"/>
+			<include name="PerformanceService.mon"/>
+			<include name="Quality.mon"/>
+			<include name="QualityService.mon"/>
+			<include name="OEE.mon"/>
+			<include name="OEEService.mon"/>
+		</fileset>
+	</monitors>
+	<block-catalogs>
+	</block-catalogs>
+	<configurations>
+	</configurations>
+	<static-files>
+	</static-files>
+	<events>
+	</events>
+	<libraries>
+	</libraries>
+	<jars>
+	</jars>
+	<dependencies>
+		<dependency bundle-filename="Industry Analytics Kit.bnd" catalog="."/>
+	</dependencies>
+</bundle>

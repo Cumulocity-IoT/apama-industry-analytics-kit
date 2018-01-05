@@ -1,0 +1,232 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>BucketSystem</TITLE>
+<META NAME="keywords" CONTENT="BucketSystem&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="BucketSystem";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/utils/BucketSystem.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="BucketSystem.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/utils/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.utils</FONT>
+<BR>Event BucketSystem</H2>
+<HR>BucketSystem provides a way to group anything into buckets They are grouped by a float value (Usually a timestamp), either provided with the incoming data or through an earlier provided getter A required updateBucket callback allows data to be stored into a bucket in any chosen format, either aggregating the data or storing all data. Example Usage: <pre><br>// Create a bucketSystem made up of 6 buckets each 10 seconds long<br>BucketSystem bucketSystem := BucketSystemBuilder.create()<br>												.toValue(getTimestampFromData)<br>												.updateBucket(addDataToBucket)<br>												.bucketSize(10.0)<br>												.bucketCount(6)<br>												.onBucketCreate(initializeBucket)<br>												.build();<br>
+<br>action getTimestampFromData(any data) returns float {<br>	return (&lt;Data&gt; data).getTimestamp();<br>}<br>
+<br>action addDataToBucket(Bucket b, any data) returns any {<br>	sequence&lt;Data&gt; result := (sequence&lt;Data&gt;b.data)<br>	result.append(&lt;Data&gt; data);<br>	return result;<br>}<br>
+<br>action initializeBucket(Bucket b) {<br>	b.data := new sequence&lt;Data&gt;;<br>}<br>
+<br>bucketSystem.add(data); // Adding data where the timestamp is extracted from the data<br>bucketSystem.addWithValue(data, 1234.0); // Adding data where the timestamp is provided with the data<br>
+<br>bucketSystem.reduce(combineBuckets, new sequence&lt;Data&gt;); // Concatenate all of the sequences stored inside all of the buckets to produce a sequence of all data<br>
+<br>action combineBuckets(any allData, Bucket b) return any {<br>	allData.appendSequence(&lt;sequence&lt;Data&gt;&gt; b.data);<br>	return allData;<br>}<br>
+<br></pre><HR>
+<A NAME="member_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Member Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;boolean</CODE></FONT></TD><TD><CODE><B><A HREF="BucketSystem.html#skipForwardOnGap">skipForwardOnGap</A></B></CODE>
+<br>
+<br>Whether the bucketSystem can remove all buckets and restart when the gap between data is larger than the totalSize of the bucketSystem If false then the bucketSystem will add any intermediate buckets (This could potentially take a long time if the gap is large)</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="BucketSystem.html#onBucketExpired">onBucketExpired</A></B></CODE>
+<br>
+<br>Optional - Called when a bucket is removed</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="BucketSystem.html#onBucketCreated">onBucketCreated</A></B></CODE>
+<br>
+<br>Optional - Called when a bucket is created</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystem.html#add()">add</A></B>(any&nbsp;item)</CODE>
+<br>
+<br>Add an item to the bucketSystem Throws an exception if toValue function has not been provided See also: BucketSystem.addWithValue</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystem.html#addWithValue()">addWithValue</A></B>(any&nbsp;item,&nbsp;float&nbsp;itemValue)</CODE>
+<br>
+<br>Add an item to the bucketSystem</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystem.html" title="type in com.industry.utils">com.industry.utils.BucketSystem</A></CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="BucketSystem.html#create()">create</A></B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>,&nbsp;any&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;updateBucket,&nbsp;action&lt;any&nbsp;&gt;&nbsp;returns&nbsp;float&nbsp;toValue,&nbsp;float&nbsp;bucketSize,&nbsp;integer&nbsp;bucketCount)</CODE>
+<br>
+<br>Create a bucket system</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;sequence&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystem.html#getBuckets()">getBuckets</A></B>()</CODE>
+<br>
+<br>Get all buckets</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;any</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystem.html#reduce()">reduce</A></B>(action&lt;any,&nbsp;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;callback,&nbsp;any&nbsp;initialValue)</CODE>
+<br>
+<br>Reduce buckets to a single value or event Example: <pre></TD>
+</TR>
+</TABLE>&nbsp;<A NAME="member_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Member Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="onBucketCreated"></A>
+<H3>onBucketCreated</H3>
+<PRE>action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;<B>onBucketCreated</B>
+</PRE>Optional - Called when a bucket is created<HR>
+<A NAME="onBucketExpired"></A>
+<H3>onBucketExpired</H3>
+<PRE>action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;<B>onBucketExpired</B>
+</PRE>Optional - Called when a bucket is removed<HR>
+<A NAME="skipForwardOnGap"></A>
+<H3>skipForwardOnGap</H3>
+<PRE>boolean&nbsp;<B>skipForwardOnGap</B>
+</PRE>Whether the bucketSystem can remove all buckets and restart when the gap between data is larger than the totalSize of the bucketSystem If false then the bucketSystem will add any intermediate buckets (This could potentially take a long time if the gap is large)<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="add()"></A>
+<H3>add</H3>
+<PRE>void&nbsp;<B>add</B>(any&nbsp;item)</PRE>Add an item to the bucketSystem Throws an exception if toValue function has not been provided See also: BucketSystem.addWithValue<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>item</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="addWithValue()"></A>
+<H3>addWithValue</H3>
+<PRE>void&nbsp;<B>addWithValue</B>(any&nbsp;item,&nbsp;float&nbsp;itemValue)</PRE>Add an item to the bucketSystem<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>item</tt>
+</DD>
+<DD>
+<tt>itemValue</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="create()"></A>
+<H3>create</H3>
+<PRE>
+<A HREF="../../../com/industry/utils/BucketSystem.html" title="type in com.industry.utils">com.industry.utils.BucketSystem</A>&nbsp;static <B>create</B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>,&nbsp;any&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;updateBucket,&nbsp;action&lt;any&nbsp;&gt;&nbsp;returns&nbsp;float&nbsp;toValue,&nbsp;float&nbsp;bucketSize,&nbsp;integer&nbsp;bucketCount)</PRE>Create a bucket system<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>updateBucket</tt>&nbsp;-&nbsp;The function called to determine how to store a particular value into a bucket</DD>
+<DD>
+<tt>toValue</tt>&nbsp;-&nbsp;The function called to determine which bucket to place a value into (For example: a function that gets the timestamp from a object passed to "BucketSystem.add")</DD>
+<DD>
+<tt>bucketSize</tt>&nbsp;-&nbsp;The size of an individualBucket</DD>
+<DD>
+<tt>bucketCount</tt>&nbsp;-&nbsp;The maximum number of buckets to use</DD>
+</DL>
+<DL>
+<DT>
+<B>Returns:</B>
+</DT>
+<DD>A new BucketSystem</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;-&nbsp;provides a better interface for construction and param validation</DD>
+</DL>
+<HR>
+<A NAME="getBuckets()"></A>
+<H3>getBuckets</H3>
+<PRE>sequence&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;<B>getBuckets</B>()</PRE>Get all buckets<HR>
+<A NAME="reduce()"></A>
+<H3>reduce</H3>
+<PRE>any&nbsp;<B>reduce</B>(action&lt;any,&nbsp;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;callback,&nbsp;any&nbsp;initialValue)</PRE>Reduce buckets to a single value or event Example: <pre><br>		// Sum all of the buckets<br>        float sum := &lt;float&gt;bucketSystem.reduce(sum, 0);<br>	<br>		action sum(any accumulator, Bucket b) returns any {<br>			return &lt;float&gt; accumulator + &lt;float&gt;b.value;<br>		}<br>	 </pre><DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>callback</tt>
+</DD>
+<DD>
+<tt>initialValue</tt>
+</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/utils/BucketSystem.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="BucketSystem.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/utils/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

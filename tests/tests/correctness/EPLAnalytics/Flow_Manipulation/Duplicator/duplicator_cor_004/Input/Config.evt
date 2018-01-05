@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("duplicator", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("DUPLICATOR", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("DuPlIcAtOr", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("Duplicator", ["Input"], ["Output"], {})

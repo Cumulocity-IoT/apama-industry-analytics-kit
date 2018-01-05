@@ -1,0 +1,6 @@
+com.industry.analytics.Data("OutputFalling","a","s1",10,5,"",1,2,3,{"anomalySource":"Threshold","direction":"falling","duration":"10"})
+com.industry.analytics.Data("OutputFalling","a","s1",20,5,"",1,2,3,{"anomalySource":"Threshold","direction":"falling","duration":"20"})
+com.industry.analytics.Data("OutputFalling","a","s1",30,5,"",1,2,3,{"anomalySource":"Threshold","direction":"falling","duration":"30"})
+com.industry.analytics.Data("OutputFalling","a","s1",130,5,"",1,2,3,{"anomalySource":"Threshold","direction":"falling","duration":"10"})
+com.industry.analytics.Data("OutputFalling","a","s1",140,5,"",1,2,3,{"anomalySource":"Threshold","direction":"falling","duration":"20"})
+com.industry.analytics.Data("OutputFalling","a","s1",150,5,"",1,2,3,{"anomalySource":"Threshold","direction":"falling","duration":"30"})

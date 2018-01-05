@@ -1,0 +1,13 @@
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 7.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 25.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 20.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})
+
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0, 7.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0, 25.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0, 20.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.0, 10.0, "", 1.0, 2.0, 3.0, {})

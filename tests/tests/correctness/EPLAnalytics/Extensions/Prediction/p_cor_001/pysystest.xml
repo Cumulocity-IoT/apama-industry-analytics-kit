@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pysystest state="runnable" type="auto">
+	<description>
+		<title>Prediction 001: Check validation of Analytic parameters.</title>
+		<purpose>
+		<![CDATA[Config validation errors. You will need ensure zementis.license is in tests/tools/classes.]]>
+		</purpose>
+	</description>
+	<classification>
+		<groups>
+			<group>Prediction</group>
+			<group>Extensions</group>
+			<group>Industry_Analytics</group>
+			<group>EPL</group>
+		</groups>
+	</classification>
+	<data>
+		<class module="run" name="PySysTest"></class>
+	</data>
+	<traceability>
+		<requirements>
+			<requirement></requirement>
+		</requirements>
+	</traceability>
+</pysystest>

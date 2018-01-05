@@ -1,0 +1,4 @@
+com.industry.analytics.Data("SVAL","c","source",0,1,"success",2,3,4,{"input":"def"})
+com.industry.analytics.Data("SVAL","a","source",0,2,"zyx",3,4,5,{"input":"wvu"})
+com.industry.analytics.Data("SVAL","","",0,0,"",0,0,0,{"input":""})
+com.industry.analytics.Data("SVAL","","",0,0,"",0,0,0,{})

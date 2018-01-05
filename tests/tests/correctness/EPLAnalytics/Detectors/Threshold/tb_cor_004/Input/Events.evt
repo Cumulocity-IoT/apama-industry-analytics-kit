@@ -1,0 +1,43 @@
+// Falling will be triggered after duration.
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 0.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 5.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 10.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 15.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 20.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 25.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 30.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 35.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 40.0, 5.0, "", 1.0, 2.0, 3.0, {})
+
+// Crossing and rising will be triggered after duration.
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 60.0, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 65.0, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 70.0, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 75.0, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 80.0, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 85.0, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 90.0, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 95.0, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 100.0, 15.0, "", 1.0, 2.0, 3.0, {})
+
+// Crossing and falling will be triggered after duration.
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 120.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 125.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 130.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 135.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 140.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 145.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 150.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 155.0, 5.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 160.0, 5.0, "", 1.0, 2.0, 3.0, {})
+
+// Nothing should be triggered.
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 180.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 185.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 190.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 195.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 200.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 205.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 210.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 215.0, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input1", com.industry.analytics.Data("Input1", "r", "s1", 220.0, 10.0, "", 1.0, 2.0, 3.0, {})

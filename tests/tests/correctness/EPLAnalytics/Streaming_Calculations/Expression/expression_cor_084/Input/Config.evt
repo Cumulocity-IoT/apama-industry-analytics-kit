@@ -1,0 +1,8 @@
+// Invalid expressions - Should use "abs()" for nested
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"rand()"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"rand(abc)"})
+
+// Valid expression - should result in a 0 <= random number < 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output1"], {"expression":"rand(1)"})
+// Valid expression - should result in a 0 >= random number > 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output2"], {"expression":"rand(-1)"})

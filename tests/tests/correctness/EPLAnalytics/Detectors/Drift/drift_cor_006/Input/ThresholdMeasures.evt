@@ -1,0 +1,9 @@
+"Input", com.industry.analytics.Data("Input", "r", "s1", 61.0, 10.5, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 62.0, 11.5, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 63.0, 12.5, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 63.0, 13.5, "", 1.0, 2.0, 3.0, {})
+
+"Input", com.industry.analytics.Data("Input", "r", "s1", 64.0, 9.5, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 65.0, 8.5, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 66.0, 7.5, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 67.0, 6.5, "", 1.0, 2.0, 3.0, {})

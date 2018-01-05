@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("FFT", ["Input1"], ["Output1"], {"timeWindow":"4.0", "sampleFrequency":"512"})

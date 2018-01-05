@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Spike", ["Input1"], ["SpikeResult"], {"timeWindow":"30.0", "standardDeviationMultiple":"2"})

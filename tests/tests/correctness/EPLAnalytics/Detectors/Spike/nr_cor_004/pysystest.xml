@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pysystest state="runnable" type="auto">
+	<description>
+		<title>Spike - Test verification of input params</title>
+		<purpose>
+		<![CDATA[Test verification of config params]]>
+		</purpose>
+	</description>
+	<classification>
+		<groups>
+			<group>Spike</group>
+			<group>Detectors</group>
+			<group>Industry_Analytics</group>
+			<group>EPL</group>
+		</groups>
+	</classification>
+	<data>
+		<class module="run" name="PySysTest"></class>
+	</data>
+	<traceability>
+		<requirements>
+			<requirement></requirement>
+		</requirements>
+	</traceability>
+</pysystest>

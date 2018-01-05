@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="metadataBuilder:jar">
+    <output-path>$PROJECT_DIR$/out/</output-path>
+    <root id="archive" name="metadataBuilder.jar">
+      <element id="module-output" name="metadataBuilder" />
+      <element id="extracted-dir" path="C:/Program Files (x86)/Groovy/Groovy-2.4.7/lib/groovy-2.4.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/Program Files (x86)/Groovy/Groovy-2.4.7/lib/groovy-json-2.4.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/Program Files (x86)/Groovy/Groovy-2.4.7/lib/commons-cli-1.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

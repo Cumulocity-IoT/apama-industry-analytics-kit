@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("Speed", ["Input"], ["Output"], {"speedUnit":"KMPH"})
+

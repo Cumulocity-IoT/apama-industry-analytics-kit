@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Logger", ["Input"], [], {"fields":"[\"dValue\",\"sValue\"]", "emitToChannel":"Output"})

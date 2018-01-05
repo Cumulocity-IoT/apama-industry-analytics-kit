@@ -1,0 +1,7 @@
+com.industry.analytics.Analytic("Combiner", [], [], {})
+com.industry.analytics.Analytic("Combiner", ["Input1", "Input2"], ["Output1", "Output2"], {})
+com.industry.analytics.Analytic("Combiner", ["Input1"], [], {})
+com.industry.analytics.Analytic("Combiner", [], ["Output1"], {})
+com.industry.analytics.Analytic("Combiner", ["Input1", "Input2"], ["Output1"], {"aggregatedSourceId":""})
+com.industry.analytics.Analytic("Combiner", ["Input1", "Input2"], ["Output1"], {"aggregatedSourceId":"aggregatedSensor"})
+com.industry.analytics.Analytic("Combiner", ["Input1", "Input2"], ["Output1"], {})

@@ -1,0 +1,76 @@
+//*****************************************************************************
+// Title:         AnalyticTest
+//*****************************************************************************
+
+package com.industry.analytics.Analytic_cor_006;
+using com.industry.analytics.Analytic;
+
+monitor AnalyticTest
+{
+	action onload() {
+		// Create a new Analyticer
+		Analytic c := Analytic("Test", ["Input1",  "Input2"],
+										 ["Output1", "Output2"],
+										 {"param01":"1",       // Valid (treated as  1.0)
+										  "param02":"0",       // Valid (treated as  0.0)
+										  "param03":"-1",      // Valid (treated as -1.0)
+										  "param04":"1.0",     // Valid 
+										  "param05":"0.0",     // Valid 
+										  "param06":"-1.0",    // Valid
+										  "param07":"2",       // Valid (treated as 2.0 )
+										  "param08":"0.66",    // Valid
+										  "param09":"666",     // Valid (treated as 666.0 )
+										  "param10":"true",    // Invalid
+										  "param11":"false",   // Invalid
+										  "param12":"TRUE",    // Invalid
+										  "param13":"FALSE",   // Invalid
+										  "param14":"True",    // Invalid
+										  "param15":"False",   // Invalid
+										  "param16":"123ABC",  // Invalid
+										  "param17":"ABC123",  // Invalid
+										  "param18":"123 ABC", // Invalid
+										  "param19":"ABC 123", // Invalid
+										  "param20":"1.2.3.",  // Invalid
+										  "param21":".1.2.3",  // Invalid
+										  "param22":"Foo",     // Invalid
+										  "param23":"Bar",     // Invalid
+										  "param24":"",        // Invalid
+										  "param25":"  "       // Invalid
+										  });
+		
+		// Create the set of types as all float
+		sequence<string>  types           := new sequence<string>;
+		sequence<boolean> mandatory_false := new sequence<boolean>;
+		sequence<boolean> mandatory_true  := new sequence<boolean>;
+		string paramName;
+		for paramName in c.params.keys() {
+			types.append("float");
+			mandatory_false.append(false);
+			mandatory_true.append(true);
+		} 
+		
+		// Validate the set of parameters
+		// Using non-mandatory params, but invalid values for params - SHOULD FAIL
+		boolean result := c.validateParams( "Test", -1, -1, 
+										    c.params.keys(), types, mandatory_false );
+		log "TEST 1: " + result.toString() at INFO;
+		
+		// Using mandatory params, but invalid values for params - SHOULD FAIL
+		result := c.validateParams( "Test", -1, -1, 
+								    c.params.keys(), types, mandatory_true );
+		log "TEST 2: " + result.toString() at INFO;
+		
+		// Only specifying the valid values for params - SHOULD PASS
+		result := c.validateParams( "Test", -1, -1, 
+								   ["param01", "param02", "param03", "param04", 
+									 "param05", "param06", "param07", "param08", 
+									 "param09"], 
+									["float","float","float","float",
+									 "float","float","float","float", 
+									 "float"], 
+									[false,false,false,false,
+									 false,false,false,false,
+									 false] );
+		log "TEST 3: " + result.toString() at INFO;
+	}
+}

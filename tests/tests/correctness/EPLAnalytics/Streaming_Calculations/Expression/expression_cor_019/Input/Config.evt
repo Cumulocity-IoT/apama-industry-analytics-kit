@@ -1,0 +1,20 @@
+// Should result in 6 if evaluation follows correct order of operation
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output1"], {"expression":"4 + 6 - 7 + 3"})
+// Should result in 2 if evaluation follows correct order of operation
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output2"], {"expression":"4 - 6 + 7 - 3"})
+// Should result in 14 if evaluation follows correct order of operation
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output3"], {"expression":"2 + 3 * 4"})
+// Should result in 14 if evaluation follows correct order of operation
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output4"], {"expression":"4 * 3 + 2"})
+// Should result in 17 if evaluation follows correct order of operation
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output5"], {"expression":"4 * 5 / 2 + 7"})
+// Should result in 26 if evaluation follows correct order of operation
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output6"], {"expression":"4 + 5 * 3 + 7"})
+// Should result in 9 if evaluation follows correct order of operation
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output7"], {"expression":"1 + 2 + 3 * 2"})
+// Should result in 14 if evaluation follows correct order of operation
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output8"], {"expression":"1 + 2 + 3 + 4 * 2"})
+// Should result in 4 (-9 without brackets) if evaluation follows correct order of operation
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output9"], {"expression":"(5 - 3) * (4 - 2)"})
+// Should result in 1 (2.25 without brackets) if evaluation follows correct order of operation
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output10"], {"expression":"(5 - 3) / (4 - 2)"})

@@ -1,0 +1,2 @@
+"In1", com.industry.analytics.Data("In1", "r", "source1", 0.0, 0.0, "", 0.0, 0.0, 999.0, {"roast":"potatoes"})
+"In2", com.industry.analytics.Data("In2", "a", "source1", 1.0, 2.0, "3", 4.0, 5.0, 6.0, {"number":"7"})

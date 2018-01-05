@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Duplicator", ["Input1"], ["Output1","Output2","Output3"], {})

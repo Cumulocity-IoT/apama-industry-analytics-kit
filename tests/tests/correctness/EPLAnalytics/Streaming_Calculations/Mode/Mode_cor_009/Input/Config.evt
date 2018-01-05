@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Mode", ["Input"], ["Output"], {"timeWindow" : "50.0", "dataAttribute":"xValue"})

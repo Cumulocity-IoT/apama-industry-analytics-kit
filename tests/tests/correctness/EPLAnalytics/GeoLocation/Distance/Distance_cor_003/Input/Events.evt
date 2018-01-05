@@ -1,0 +1,2 @@
+"Input", com.industry.analytics.Data("Input", "r", "s1", 1.0, 1.2, "", 52.214943, 0.133896, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 2.0, 2.1, "", 51.759951 , -0.228653, 3.0, {})

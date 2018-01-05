@@ -1,0 +1,125 @@
+//*****************************************************************************
+// Title:         Drift test
+//*****************************************************************************
+
+package com.industry.analytics.detectors.Drift_cor_003;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.detectors.Drift;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the Drift - valid offset parameter value - should pass
+		(new Drift).init( com.industry.analytics.Analytic( Drift.NAME, 
+															[ "Input1" ], 
+															[ "Output1" ], 
+															{ "offsetPeriod":"1.0" } ), 
+								initComplete );
+
+		// Create the Drift - zero offset parameter value - should fail
+		on NextTest( testNum=2 ) { 
+			(new Drift).init( com.industry.analytics.Analytic( Drift.NAME, 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																{ "offsetPeriod":"0.0" } ), 
+									initComplete );
+		}
+		
+		// Create the Drift - invalid offset parameter value - should fail
+		on NextTest( testNum=3 ) { 
+			(new Drift).init( com.industry.analytics.Analytic( Drift.NAME, 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																{ "offsetPeriod":"-1.0" } ), 
+									initComplete );
+		}
+		
+		// Create the Drift - invalid offset parameter value - should fail
+		on NextTest( testNum=4 ) { 
+			(new Drift).init( com.industry.analytics.Analytic( Drift.NAME, 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																{ "offsetPeriod":"1.0s" } ), 
+									initComplete );
+		}
+		
+		// Create the Drift - invalid offset parameter value - should fail
+		on NextTest( testNum=5 ) { 
+			(new Drift).init( com.industry.analytics.Analytic( Drift.NAME, 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																{ "offsetPeriod":"s10" } ), 
+									initComplete );
+		}
+		
+		// Create the Drift - invalid offset parameter value - should fail
+		on NextTest( testNum=6 ) { 
+			(new Drift).init( com.industry.analytics.Analytic( Drift.NAME, 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																{ "offsetPeriod":"" } ), 
+									initComplete );
+		}
+		
+		// Create the Drift - invalid offset parameter value - should fail
+		on NextTest( testNum=7 ) { 
+			(new Drift).init( com.industry.analytics.Analytic( Drift.NAME, 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																{ "offsetPeriod":"  " } ), 
+									initComplete );
+		}
+		
+		// Create the Drift - invalid offset parameter value - should fail
+		on NextTest( testNum=8 ) { 
+			(new Drift).init( com.industry.analytics.Analytic( Drift.NAME, 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																{ "offsetPeriod":"foo" } ), 
+									initComplete );
+		}
+		
+		// Create the Drift - valid offset parameter value - should pass
+		on NextTest( testNum=9 ) { 
+			(new Drift).init( com.industry.analytics.Analytic( Drift.NAME, 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																{ "offsetPeriod":"1" } ), 
+									initComplete );
+		}
+				
+		// Create the Drift - valid offset parameter value - should pass
+		on NextTest( testNum=10 ) { 
+			(new Drift).init( com.industry.analytics.Analytic( Drift.NAME, 
+																[ "Input1" ], 
+																[ "Output1" ], 
+																{ "offsetPeriod":"1.0d" } ), 
+									initComplete );
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+		
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

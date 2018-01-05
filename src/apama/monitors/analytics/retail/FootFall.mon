@@ -1,0 +1,370 @@
+package com.industry.analytics.retail;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Constants;
+
+using com.industry.analytics.geolocation.GeoFence;
+using com.industry.analytics.flow_manipulation.Mapper;
+using com.industry.analytics.streaming_calculations.Sum;
+
+/* @AnalyticDefinition
+{
+	"name": "FootFall",
+	"description": "Calculates the number of people currently in the store.",
+	"group": "retail",
+	"documentation": "com/industry/analytics/retail/FootFall.html",
+	"inputChannels": [
+		{
+			"name": "Data",
+			"description": "The channel to check",
+			"dataProperties": ["xValue", "yValue"]
+		}
+	],
+	"outputChannels": [
+		{
+			"name": "FootFallData",
+			"description": "The channel on which to output the FootFall values",
+			"dataProperties": ["dValue", "sValue"]
+		}
+	],
+	"properties": [
+		{
+			"name": "geoFenceLatitude",
+			"description": "Defines the latitude of the retail store",
+			"type": "decimal",
+			"optional": true,
+			"defaultValue": 0.0
+			
+		},{
+			"name": "geoFenceLongitude",
+			"description": "Defines the longitude of the retail store",
+			"type": "decimal",
+			"optional": true,
+			"defaultValue": 0.0
+		},{
+			"name": "geoFenceRadius",
+			"description": "Defines the radius to be used for geofence of the retail store",
+			"type": "decimal",
+			"optional": true,
+			"defaultValue": 0.0
+		},{
+			"name": "smoothingFactor",
+			"description": "Defines the smoothing factor to be used for precision.",
+			"type": "decimal",
+			"optional": true,
+			"defaultValue": 10,
+			"advanced":true,
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+			
+		},
+		{
+			"name": "calculationType",
+			"description": "Defines whether the sum calculation is based on timeWindow or count of last ‘N’ events.",
+			"type": "string",
+			"optional": false,
+			"validValues": ["sampleCount", "timeWindow"]
+		}
+	]
+}
+*/
+
+
+
+event FootFall
+{
+	/** This constant defines the name of the Analytic. */
+	constant string NAME := "FootFall";
+	
+	/** This constant defines the prefix used for the internal
+	 *  channel names.
+	 *  @private */
+	constant string CHANNEL_PREFIX := "__internalChannel_FOOTFALL";
+	
+	/** This constant defines the configuration parameter name
+	 *  that defines the latitude of the geofenced area */
+	constant string GEOFENCE_LATITUDE    := "geoFenceLatitude";
+	
+	/** This constant defines the configuration parameter name
+	 *  that defines the longitude of the geofenced area */
+	constant string GEOFENCE_LONGITUDE   := "geoFenceLongitude";
+	
+	/** This constant defines the configuration parameter name
+	 *  that defines the radius of the geofenced area in metres, when using a circular geofence. */
+	constant string GEOFENCE_RADIUS := "geoFenceRadius";
+	
+	/** This constant defines the configuration parameter timeWIndow value  */
+	constant string TIMEWINDOW := "timeWindow";
+	
+	/**This constant defines the configuration parameter name
+	 *  that specifies the smoothing factor used to calculate the sum.*/
+	constant string SMOOTHING_FACTOR := "smoothingFactor";
+	
+	constant string ENTERED := "ENTERED";
+	constant string EXITED := "EXITED";
+	
+	constant string ENABLE_ENTRY := "enableEntry";
+	constant string ENABLE_EXIT := "enableExit";
+	constant string USE_HYPERTREE := "useHypertree";
+	
+	//Algo specific variables
+	/** Local cached input Data name
+	 *  @private */
+	string _inputDataName;
+	/** Local cached output Data name
+	 *  @private */
+	string _outputDataName;
+	
+	/** The Analytic Base Object implementation 
+	 *  @private */
+	AnalyticObject _analyticObject;
+	
+	/** Local cached copy of the original configuration provided
+	 *  for the FootFall Analysis Analytic.
+	 *  @private */
+	Analytic _config;
+		
+	/** Local cached closure for the initialisation of the 
+	 *  FootFall Analysis Analytic.
+	 *  @private */
+	action<boolean, AnalyticInterface> _initCompleteFootFallAnalysis;
+
+	/** Local cached AnalyticInterface object for the internally
+	 *  created Geofence Analytic.
+	 *  @private */
+	AnalyticInterface _geofenceAnalyticInterface;
+	/** Local cached AnalyticInterface object for the internally
+	 *  created Mapper Analytic.
+	 *  @private */
+	AnalyticInterface _mapperAnalyticInterface;
+	/** Local cached AnalyticInterface object for the internally
+	 *  created Sum Analytic.
+	 *  @private */
+	AnalyticInterface _sumAnalyticInterface;
+	
+	/** 
+	 *  This action creates a new instance of the Analytic.
+	 *  Typically, this is called internally by the associated Analytics 
+	 *  service monitor when a com.industry.analytics.Analytic event is 
+	 *  sent for this type of Analytic.
+	 *
+	 *  @param  config        The Analytic configuration that 
+	 *                        will be used for this instance
+	 *  @param  initComplete  The action callback to call when the new Analytic  
+	 *                        has been created, or if an error occured.
+    *
+	 *  @see com.industry.analytics.Analytic           The Analytic configuration event object.
+	 *  @see com.industry.analytics.AnalyticInterface  The action interface that can be used 
+	 *                                                 to interact with the Analytic.
+	 */
+	
+	action init(Analytic config, 
+	            action<boolean, AnalyticInterface> initComplete) {
+		
+		boolean result := config.validateParams( NAME, 1, 1, 
+		                                         new sequence<string>,
+		                                         new sequence<string>,
+		                                         new sequence<boolean> );
+
+		// Only check the specific params if the validation was okay
+		if( result ) then {
+
+			// Cache the input/output channel names
+			_inputDataName  := config.inputDataNames[0];
+			_outputDataName := config.outputDataNames[0];
+
+			// Cache the completion closure action
+			_initCompleteFootFallAnalysis := initComplete;
+	
+			// Cache the original configuration
+			_config := config;
+			
+			dictionary<string, string> _geoFenceParam := _config.params.clone();
+			if(not _geoFenceParam.hasKey(ENABLE_ENTRY)) {
+				_geoFenceParam.add(ENABLE_ENTRY, "true");
+			}
+			if(not _geoFenceParam.hasKey(ENABLE_EXIT)) {
+				_geoFenceParam.add(ENABLE_EXIT, "true");
+			}
+			if(not _geoFenceParam.hasKey(USE_HYPERTREE)) {
+				_geoFenceParam.add(USE_HYPERTREE, "false");
+			}
+			
+			// Create Geofence Analytic using the defined input channel
+			// and creating an internal channel for the Geofence.
+			(new GeoFence).init( com.industry.analytics.Analytic( GeoFence.NAME, 
+			                                                     [_inputDataName ],
+																 [ CHANNEL_PREFIX+"_GEOFENCE_"+_outputDataName ], 
+			                                                      _geoFenceParam ), 
+			                     								_initCompleteGeoFence );
+		}
+		
+		if( not result ) then {
+			// Call the closure with an error
+			initComplete( false, new AnalyticInterface );
+		}
+	}
+	
+	/**
+	 *  This action defines the completion handler for the for GeoFence Analytic
+	 *  @private */
+	action _initCompleteGeoFence( boolean success, AnalyticInterface tInterface ) {
+		
+		 //If the Geofence Analytic was created successfully
+		if( success ) then {
+			// Cache the Geofence Analytic interface object 
+			_geofenceAnalyticInterface := tInterface;
+			
+			dictionary<string,string> mapping := new dictionary<string,string>;
+			mapping.add(ENTERED,"1.0d");
+			mapping.add(EXITED,"-1.0d");
+			
+			dictionary<string, string> _mapperParam := new dictionary<string, string>;
+			_mapperParam.add("inputField","sValue");
+			_mapperParam.add("outputField","dValue");
+			_mapperParam.add("mapping",mapping.toString());
+			// Create Mapper Analytic using the created geofence as input channel 
+			// and the internally created Mapper Analytic channel output
+			// We pass in all the configuration parameters to ensure 
+			// future compatibility with new features of the Analytics
+			(new Mapper).init( com.industry.analytics.Analytic( Mapper.NAME, 
+			                                                    [ CHANNEL_PREFIX+"_GEOFENCE_"+_outputDataName ], 
+			                                                    [ CHANNEL_PREFIX+"_MAPPER_"+_outputDataName ], 
+			                                                    _mapperParam ), 
+			                   _initCompleteMapper );
+		} else {
+			log "Error spawning FootFall Analytic - Failed to create the Geofence Analytic part of the chain" at ERROR;
+			_initCompleteFootFallAnalysis( false, new AnalyticInterface );
+			return;
+		}
+	}
+	
+	/**
+	 *  This action defines the completion handler for the for Mapper Analytic
+	 *  @private */
+	action _initCompleteMapper( boolean success, AnalyticInterface tInterface ) {
+		
+		 //If the Mapper Analytic was created successfully
+		if( success ) then {
+			// Cache the Mapper Analytic interface object 
+			_mapperAnalyticInterface := tInterface;
+
+			dictionary<string, string> _sumParam := _config.params.clone();
+			_sumParam.add("calculationType","timeWindow");
+			_sumParam.add("calculationValue",_config.getOrDecimal(TIMEWINDOW, 600.0d).toString());
+			_sumParam.add("bySourceId","false");
+			// Create Mapper Analytic using the created mapper as input channel 
+			// and the internally created Sum Analytic channel output
+			// We pass in all the configuration parameters to ensure 
+			// future compatibility with new features of the Analytics
+			(new Sum).init( com.industry.analytics.Analytic( Sum.NAME, 
+			                                                    [ CHANNEL_PREFIX+"_MAPPER_"+_outputDataName ], 
+			                                                    [ _outputDataName ], 
+			                                                 	_sumParam ), 
+			                   _initCompleteSum );
+		} else {
+			log "Error spawning FootFall Analytic - Failed to create the Mapper Analytic part of the chain" at ERROR;
+			_initCompleteFootFallAnalysis( false, new AnalyticInterface );
+			return;
+		}
+	}
+	
+	/**
+	 *  This action defines the completion handler for the for Sum Analytic
+	 *  @private */
+	action _initCompleteSum( boolean success, AnalyticInterface tInterface ) {
+		
+		 //If the Sum Analytic was created successfully
+		if( success ) then {
+			// Cache the Sum Analytic interface object 
+			_sumAnalyticInterface := tInterface;
+			
+			//log "starting interfaces";
+			_geofenceAnalyticInterface.start();
+			_mapperAnalyticInterface.start();
+			_sumAnalyticInterface.start();
+			
+			 //Create an Analytic object for the FootFall.
+			// This is only required to handle the reset/deletion of 
+			// the internally created Analytics.
+			// There is no need to implement the processData action
+			// as the internally created Analytics will handle this.
+			_analyticObject := new AnalyticObject;
+			_analyticObject.initExtended( _config,
+			                              new action<Data>, 
+			                              new action<dictionary<string, Data> >,
+			                              false,
+			                              reset,
+			                              onDelete,
+			                              _initCompleteFootFallAnalysis );
+
+
+		
+		} else {
+			log "Error spawning FootFall Analytic - Failed to create the Sum Analytic part of the chain" at ERROR;
+			_initCompleteFootFallAnalysis( false, new AnalyticInterface );
+			return;
+		}
+	}
+	
+	/**
+	 *  Optional action to reset the state of the Analytic instance
+	 *  back to its initialisation state.
+	 *  If the application has created this Analytic using the 
+	 *  #init() action directly, then the <font face="courier" size="-1">reset</font>
+	 *  action on the <font face="courier" size="-1">com.industry.analytics.AnalyticInterface</font> 
+	 *  that was returned should be used instead.
+	 *
+	 *  @private
+	 */
+	action reset() {
+		// Reset all the analytics
+		_geofenceAnalyticInterface.reset();
+		_mapperAnalyticInterface.reset();
+		_sumAnalyticInterface.reset();
+	}
+	
+	/**
+	 *  Optional action that is called on deleting the Analytic
+	 *  instance. This action should clear any local state/listeners
+	 *  that have been created by the Analytic instance.
+	 *  This is called internally by the Analytic Object, and  
+	 *  should not be called directly by the Users application.
+	 *
+	 *  @private
+	 */
+	action onDelete() {
+		// Stop all the internally created Analytic interfaces
+		_geofenceAnalyticInterface.stop();
+		_mapperAnalyticInterface.stop();
+		_sumAnalyticInterface.stop();
+
+	}
+}
+
+/** 
+*  This internal Monitor is used to automatically intern 
+*  any string constants that are defined that are associated
+*  with the Combiner Analytic in order to improve  
+*  performance when handling strings.
+*
+*  Note: The listener that is created is required in order
+*        to keep the monitor alive between a Persistant  
+*        Correlators recovery.  Otherwise, this would be a 
+*        transient monitor, and it would not be recovered.  
+*        Which would then mean that the strings would not
+*        interned in the recovered Correlator.
+*
+*  @private
+*/
+monitor InternFootFallChannel {
+	event StayAlive {}
+	
+	action onload() {
+		string discard := FootFall.NAME.intern();
+		on all StayAlive() {}
+	}
+}

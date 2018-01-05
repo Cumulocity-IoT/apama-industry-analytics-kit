@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
+  </head>
+  <body>
+    <h1>Industry Analytics Kit Deployment Guide</h1>
+    <hr>
+    <ol id="mozToc">
+      <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+      <li><a href="#mozTocId301732">Industry Analytics Kit Deployment Guide</a>
+        <ol>
+          <li><a href="#Prerequisites">Prerequisites</a></li>
+          <li><a href="#DesignerConfig">Apama Studio Configuration/Setup</a></li>
+          <li><a href="#Sample">Using the Industry Analytics Kit Sample</a></li>
+          <li><a href="#AddSampleToProject">Adding the Industry Analytics Kit to your
+              own Apama Project</a></li>
+        </ol>
+      </li>
+    </ol>
+    <hr>
+    <h2 id="prerequisites"><a name="Prerequisites"></a>Prerequisites</h2>
+    <ol>
+      <p>The pre-requisites for the Industry Analytics Kit:</p>
+      <ul>
+        <li>SoftwareAG Apama (requires v10.1 as a minimum)</li>
+       </ul>
+    </ol>
+    <hr>
+    <h2><a name="DesignerConfig"></a>SoftwareAG Designer Configuration/Setup</h2>
+    In order to use the Industry Analytics Kit within SoftwareAG Designer, the following
+    steps must be taken:<br>
+    <ol>
+      <li>Run the deployment script <span style="font-family: monospace;">deploy.bat</span> – 
+          This deploys the Apama bundle configuration for the Industry Analytics Kit to SoftwareAG Designer</li>
+      <li>(Re)start SoftwareAG Designer</li>
+      <li>SoftwareAG Designer is now configured for you to use the Industry Analytics Kit in any projects.</li>
+      <ul>
+        <li><strong>Note:</strong> If you move the location of the Industry Analytics Kit, then you
+		    will need to re-run the <span style="font-family: monospace;">deploy.bat</span> deployment script.</li>
+      </ul>
+    </ol>
+    <hr>
+    <h2><a name="Sample"></a>Using the Industry Analytics Kit Sample</h2>
+    As part of the release of the Industry Analytics Kit, a sample project is
+    provided. In order to use the sample project, the following steps must be
+    taken:<br>
+    <ol>
+      <li>Start SoftwareAG Designer.</li>
+      <ul>
+        <li><strong>Note:</strong> Ensure that you have completed the SoftwareAG Designer configuration as
+          described in the section above.</li>
+      </ul>
+      <li>Select<span style="font-family: monospace;"> File-&gt;Import</span>
+        from the main menu.</li>
+      <li>In the Import window that appears, select <span style="font-family: monospace;">General
+          -&gt; Existing projects into Workspace</span> from the tree control.</li>
+      <li>Select the<span style="font-family: monospace;"> Select root directory</span>
+        radio button, and click the <span style="font-family: monospace;">Browse...</span>
+        button.</li>
+      <li>Select the <span style="font-family: monospace;">samples</span>
+        folder within the <span style="font-family: monospace;">"Industry Analytics Kit
+          Kit x.x.x.x"</span> folder, and click the <span style="  font-family: monospace;">OK</span>
+        button.</li>
+      <li>Now click <span style="font-family: monospace;">Finish </span>to
+        import the project.</li>
+      <ul>
+        <li><strong>Note:</strong> by default, the sample will load the bundle
+          configuration using the <span style=" font-family: monospace;">INDUSTRY_ANALYTICS_KIT_HOME
+            </span>monitorscript path variable. If you move the location of the Industry Analytics Kit, then you
+		    will need to re-run the <span style="font-family: monospace;">deploy.bat</span> deployment script.</li>
+      </ul>
+      <li>To run the sample, right-click on the name of the project, and select
+          <span style="font-family: monospace;"> Run As-&gt;Apama Application</span>.</li>
+    </ol>
+    <hr>
+    <h2><a name="AddSampleToProject"></a>Adding the Industry Analytics Kit to your
+      own Apama Project</h2>
+    In order to use the Industry Analytics Kit in in your own Apama project, the
+    following steps must be taken:<br>
+    <ol>
+      <li>Start SoftwareAG Designer.</li>
+      <ul>
+        <li><strong>Note:</strong> Ensure that you have
+          configured SoftwareAG Designer as described in the section above.<br>
+        </li>
+      </ul>
+      <li>Either import your own pre-existing Apama project, or create a new
+        Apama Project.</li>
+      <li>Right-click on your Apama project, and select "<span style="font-family: monospace;">Add
+          Bundle</span>", and add the "<span style="font-family: monospace;">Industry
+          Analytics Kit</span>" from the list of bundles available.&nbsp;</li>
+      <li>The Industry Analytics Kit can now be used in your project.&nbsp;&nbsp; See
+        the <a href="./reference/index.html">Industry Analytics Kit Technical
+          Reference</a> document for details.</li>
+    </ol>
+    <hr>
+  </body>
+</html>

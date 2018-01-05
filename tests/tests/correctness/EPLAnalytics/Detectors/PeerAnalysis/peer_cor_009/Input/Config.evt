@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("PeerAnalysis", ["Input"], ["Output"], {"timeWindow":"30","threshold":"10"})

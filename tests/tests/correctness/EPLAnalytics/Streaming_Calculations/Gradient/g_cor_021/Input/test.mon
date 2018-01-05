@@ -1,0 +1,126 @@
+//*****************************************************************************
+// Title:         Gradient test
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.Gradient_cor_021;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.streaming_calculations.Gradient;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the Gradient - with valid values should pass
+		(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+														 { Gradient.TIME_WINDOW : "1.0" } ), 
+							initComplete );
+
+		// Test minimal params with empty TIME_WINDOW value - Should fail
+		on NextTest( testNum=2 ) { 
+			(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Gradient.TIME_WINDOW : "" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with invalid TIME_WINDOW value - Should fail
+		on NextTest( testNum=3 ) { 
+			(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Gradient.TIME_WINDOW : "  " } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with invalid TIME_WINDOW value - Should fail
+		on NextTest( testNum=4 ) { 
+			(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Gradient.TIME_WINDOW : "foobar" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with invalid TIME_WINDOW value - Should fail
+		on NextTest( testNum=5 ) { 
+			(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Gradient.TIME_WINDOW : "[]" } ), 
+								initComplete );
+		}		
+		
+		// Test minimal params with invalid TIME_WINDOW value - Should fail
+		on NextTest( testNum=6 ) { 
+			(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Gradient.TIME_WINDOW : "[1.0]" } ), 
+								initComplete );
+		}		
+
+		// Test minimal params with invalid TIME_WINDOW value - Should fail
+		on NextTest( testNum=7 ) { 
+			(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Gradient.TIME_WINDOW : "{}" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with valid TIME_WINDOW value - Should pass
+		on NextTest( testNum=8 ) { 
+			(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Gradient.TIME_WINDOW : "0.0" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with invalid TIME_WINDOW value - Should fail
+		on NextTest( testNum=9 ) { 
+			(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Gradient.TIME_WINDOW : "-1.0" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with valid TIME_WINDOW value - Should pass
+		on NextTest( testNum=10 ) { 
+			(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Gradient.TIME_WINDOW : "0.1" } ), 
+								initComplete );
+		}
+
+		// Test minimal params with valid TIME_WINDOW name - Should pass as parameters are case insensitive
+		on NextTest( testNum=11 ) { 
+			(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+															 { "TIMEWINDOW" : "0.1" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with valid TIME_WINDOW name - Should pass as parameters are case insensitive
+		on NextTest( testNum=12 ) { 
+			(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+															 { "TimeWindow" : "0.1" } ), 
+								initComplete );
+		}
+		
+		// Test minimal params with valid TIME_WINDOW name and value - Should pass
+		on NextTest( testNum=13 ) { 
+			(new Gradient).init( com.industry.analytics.Analytic( Gradient.NAME, [ "Input1" ], [ "Output1" ], 
+															 { "timeWindow" : "0.1" } ), 
+								initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

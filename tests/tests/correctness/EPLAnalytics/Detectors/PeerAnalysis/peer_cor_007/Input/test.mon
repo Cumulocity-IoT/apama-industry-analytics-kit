@@ -1,0 +1,270 @@
+//*****************************************************************************
+// Title:         PeerAnalysis test
+//*****************************************************************************
+
+package com.industry.analytics.detectors.PeerAnalysis_cor_007;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.detectors.PeerAnalysis;
+using com.industry.analytics.streaming_calculations.Average;
+using com.industry.analytics.streaming_calculations.Spread;
+using com.industry.analytics.detectors.Threshold;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload() {
+		// Create the Threshold - with valid values should pass
+		(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																{ Threshold.THRESHOLD : "1.0",
+																  Threshold.DIRECTION : "crossing" } ), 
+									initComplete );
+
+		// Test minimal params with empty DIRECTION value - Should fail
+		on NextTest( testNum=2 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid DIRECTION value - Should fail
+		on NextTest( testNum=3 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "  " } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid DIRECTION value - Should fail
+		on NextTest( testNum=4 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "foobar" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid DIRECTION value - Should fail
+		on NextTest( testNum=5 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "[]" } ), 
+										initComplete );
+		}		
+		
+		// Test minimal params with invalid DIRECTION value - Should fail
+		on NextTest( testNum=6 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "[1.0]" } ), 
+										initComplete );
+		}		
+
+		// Test minimal params with invalid DIRECTION value - Should fail
+		on NextTest( testNum=7 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "{}" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid DIRECTION value - Should fail
+		on NextTest( testNum=8 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "0.0" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid DIRECTION value - Should fail
+		on NextTest( testNum=9 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "-1.0" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid DIRECTION value - Should fail
+		on NextTest( testNum=10 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "0" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid DIRECTION value - Should fail
+		on NextTest( testNum=11 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "-1" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=12 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "crossing" } ), 
+										initComplete );
+		}
+
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=13 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "rising" } ), 
+										initComplete );
+		}
+
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=14 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "falling" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=15 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "CROSSING" } ), 
+										initComplete );
+		}
+
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=16 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "RISING" } ), 
+										initComplete );
+		}
+
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=17 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "FALLING" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=18 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "Crossing" } ), 
+										initComplete );
+		}
+
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=19 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "Rising" } ), 
+										initComplete );
+		}
+
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=20 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "Falling" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=21 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "  Crossing" } ), 
+										initComplete );
+		}
+
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=22 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "  Rising" } ), 
+										initComplete );
+		}
+
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=23 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "  Falling" } ), 
+										initComplete );
+		}
+				
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=24 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "Crossing  " } ), 
+										initComplete );
+		}
+
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=25 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "Rising  " } ), 
+										initComplete );
+		}
+
+		// Test minimal params with valid DIRECTION value - Should pass
+		on NextTest( testNum=26 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DIRECTION : "Falling  " } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with uppercase DIRECTION name - Should pass as the param name is case-insensitive
+		on NextTest( testNum=27 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  "DIRECTION" : "crossing" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with mixed case DIRECTION name - Should pass as the param name is case-insensitive
+		on NextTest( testNum=28 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  "Direction" : "crossing" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with lowercase DIRECTION name and value - Should pass as the param name is case-insensitive
+		on NextTest( testNum=29 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  "direction" : "crossing" } ), 
+										initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

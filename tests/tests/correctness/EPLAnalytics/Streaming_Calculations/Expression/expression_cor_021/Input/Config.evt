@@ -1,0 +1,23 @@
+// Valid expressions using postive first value
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output1"], {"expression":"10+${DVALUE}"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output2"], {"expression":"10+-${DVALUE}"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output3"], {"expression":"(10)+${DVALUE}"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output4"], {"expression":"(10)+-${DVALUE}"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output5"], {"expression":"10+(${DVALUE})"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output6"], {"expression":"10+(-${DVALUE})"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output7"], {"expression":"(10)+(${DVALUE})"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output8"], {"expression":"(10)+(-${DVALUE})"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output9"], {"expression":"(10+-${DVALUE})"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output10"], {"expression":"((10)+(-${DVALUE}))"})
+
+// Valid expressions using negative first value
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output11"], {"expression":"-10+${DVALUE}"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output12"], {"expression":"-10+-${DVALUE}"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output13"], {"expression":"(-10)+${DVALUE}"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output14"], {"expression":"(-10)+-${DVALUE}"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output15"], {"expression":"-10+(${DVALUE})"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output16"], {"expression":"-10+(-${DVALUE})"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output17"], {"expression":"(-10)+(${DVALUE})"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output18"], {"expression":"(-10)+(-${DVALUE})"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output19"], {"expression":"(-10+-${DVALUE})"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output20"], {"expression":"((-10)+(-${DVALUE}))"})

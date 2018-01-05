@@ -1,0 +1,64 @@
+//*****************************************************************************
+// Title:         EventRate008
+//*****************************************************************************
+
+package com.industry.analytics.flow_manipulation.EventRate008;
+
+using com.industry.analytics.flow_manipulation.EventRate;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	EventRate _eventRateCorrelator;
+	EventRate _eventRateTimestamp;
+	
+	action onload()
+	{
+		Analytic config1 := Analytic("EventRate", ["Input"], ["Output"], {"useCorrelatorTime":"true"});
+		_eventRateCorrelator.init(config1, _initComplete);
+		Analytic config2 := Analytic("EventRate", ["Input"], ["Output"], {"useCorrelatorTime":"false"});
+		_eventRateTimestamp.init(config2, _initComplete);
+	}
+	
+	
+	integer _completeCount := 0;
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		_completeCount := _completeCount + 1;
+		if _completeCount < 2 then {return;}
+
+		if success then
+		{
+			Data currData := Data.init("Input", DataConstants.RAW, "asset1");
+			currData.timestamp := 0.5d;
+			currData.dValue := 1.0d;
+			_eventRateCorrelator.processData( currData );
+			_eventRateTimestamp.processData( currData );
+			currData.sourceId := "asset2";
+			currData.timestamp := 0.6d;
+			currData.dValue := 2.345d;
+			_eventRateCorrelator.processData( currData );
+			_eventRateTimestamp.processData( currData );
+			log "EventRate Pre-Reset State:" at INFO;
+			log "  _eventRateCorrelator: " + _eventRateCorrelator._lastInputTimestamps.toString() +
+				":" + _eventRateCorrelator._lastOutputTimestamps.toString() at INFO;
+			log "  _eventRateTimestamp: " + _eventRateTimestamp._lastInputTimestamps.toString() +
+				":" + _eventRateTimestamp._lastOutputTimestamps.toString() at INFO;
+			_eventRateCorrelator.reset();
+			_eventRateTimestamp.reset();
+			log "EventRate Post-Reset State:" at INFO;
+			log "  _eventRateCorrelator: " + _eventRateCorrelator._lastInputTimestamps.toString() +
+				":" + _eventRateCorrelator._lastOutputTimestamps.toString() at INFO;
+			log "  _eventRateTimestamp: " + _eventRateTimestamp._lastInputTimestamps.toString() +
+				":" + _eventRateTimestamp._lastOutputTimestamps.toString() at INFO;
+		}
+		else
+		{
+			log "Error spawning EventRate instance." at ERROR;
+		}
+	}
+}

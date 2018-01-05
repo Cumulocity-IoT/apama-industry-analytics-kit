@@ -1,0 +1,4 @@
+// Triggered and actioned on computed data, reset by an anomaly.
+com.industry.analytics.Analytic("Suppressor", ["Input"], ["OutputCCA"], {"triggerParam":"type", "triggerParamValue":"c", "resetParam":"type", "resetParamValue":"a", "timeWindow":"10"})
+// Triggered by raw data, actioned on computed data, reset by anomaly.
+com.industry.analytics.Analytic("Suppressor", ["Input"], ["OutputRCA"], {"triggerParam":"type", "triggerParamValue":"r", "actionParam":"type", "actionParamValue":"c", "resetParam":"type", "resetParamValue":"a", "timeWindow":"10"})

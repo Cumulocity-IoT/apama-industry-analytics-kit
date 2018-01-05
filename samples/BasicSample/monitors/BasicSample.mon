@@ -1,0 +1,87 @@
+//*****************************************************************************
+// Title:         Basic Industry Analytics Kit Sample
+// Description:   This sample demonstrates how some of the features of the 
+//                Industry Analytics Kit are used.
+//
+// Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or its licensors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//*****************************************************************************
+
+package com.industry.demo;
+
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Data;
+
+// This monitor creates a set of Analytics to monitor a group
+// of simulated data sources
+monitor BasicAnalyticsSample {
+	// These variables are simply placeholders we can use instead
+	// of creating new empty sequences/dictionaries to pass into the 
+	// Analytics we are creating
+	sequence<string>           emptySequence;
+	dictionary<string, string> emptyDictionary;
+	
+	action onload() {
+		/////////////////////////////////////////////////////////////////////////
+		// Set up the Industry Analytics Kit Analytic network
+		/////////////////////////////////////////////////////////////////////////
+		
+		// Start generating simulated values for 200 individual data sources
+		// - limiting to that value so UI is simpler to visualise
+		send com.industry.analytics.Analytic( "DataSimulator", emptySequence, ["DataSimulator"], 
+											 {"sourceIdCount":"200", "sourceIdPrefix":"ID", "dataRateValue":"60"} ) to "";
+
+		// Create the Confidence/Nominal Corridors and look for spikes in the data
+		send com.industry.analytics.Analytic("Spike",
+										     ["DataSimulator"],
+										     ["OUT", "upper:RANGE_HIGH", "lower:RANGE_LOW", "avg:RANGE_AVG"],
+										     {"timeWindow":"10.0d", "verbose":"true" } ) to "";
+		
+		// Gradient Analytic that receives the raw simulated data feed
+		send com.industry.analytics.Analytic("Gradient", ["DataSimulator"], ["GRADIENT"], {"timeWindow":"30.0d"}) to "";
+		
+		// Create a Corridor Analytic to check for the gradient going outside the defined threshold values 
+		send com.industry.analytics.Analytic("Corridor", ["GRADIENT"], ["THRESHOLDS"], {"upperThreshold":"1.0d", "lowerThreshold":"-1.0d", "zone":"outside"})  to "";
+		
+				
+		/////////////////////////////////////////////////////////////////////////
+		// Create a set of DataViewer Analytics for the various data values 
+		// so that we can visualize these values in the Dashboard 
+		/////////////////////////////////////////////////////////////////////////
+		// Create the DataViewer for the raw data values from the simulator
+		send com.industry.analytics.Analytic("DataViewer", ["DataSimulator"], emptySequence, emptyDictionary ) to ""; // raw values
+		
+		// Create the DataViewers for the Spike Analytic outputs so we can see this data in the demo
+		send com.industry.analytics.Analytic("DataViewer", ["OUT"],        emptySequence, emptyDictionary ) to ""; // alerts
+		send com.industry.analytics.Analytic("DataViewer", ["RANGE_LOW"],  emptySequence, emptyDictionary ) to ""; // The lower "normal" range
+		send com.industry.analytics.Analytic("DataViewer", ["RANGE_HIGH"], emptySequence, emptyDictionary ) to ""; // The upper "normal" range
+		send com.industry.analytics.Analytic("DataViewer", ["RANGE_AVG"],  emptySequence, emptyDictionary ) to ""; // the Average value of the data source that we'll reuse
+
+		// A DataViewer for the Gradient Analytic output
+		send com.industry.analytics.Analytic("DataViewer", ["GRADIENT"], emptySequence, emptyDictionary ) to "";
+		
+		// A DataViewer for the Corridor Analytic output
+		send com.industry.analytics.Analytic("DataViewer", ["THRESHOLDS"], emptySequence, emptyDictionary ) to "";
+		
+		
+		/////////////////////////////////////////////////////////////////////////
+		// Create a listener for manual value updates to the raw data from the UI
+		/////////////////////////////////////////////////////////////////////////
+		monitor.subscribe("ManualUpdate");
+		on all Data() as dataIn {
+			dataIn.timestamp := currentTime.toDecimal();
+			send dataIn to dataIn.streamName;
+		}		
+	}
+}

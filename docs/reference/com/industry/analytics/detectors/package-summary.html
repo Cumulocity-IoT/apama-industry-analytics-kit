@@ -1,0 +1,104 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>com.industry.analytics.detectors</TITLE>
+<META NAME="keywords" CONTENT="com.industry.analytics.detectors package">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">
+          function windowTitle()
+          {
+          parent.document.title="com.industry.analytics.detectors";
+          }
+        </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"><FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/detectors/package-summary.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="package-summary.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>Package com.industry.analytics.detectors</H2>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Event Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Corridor.html" title="Event in com.industry.analytics.detectors">Corridor</A></B></TD><TD>The Corridor Analytic generates an anomaly Data if a threshold range is breached. The computation looks for data entering or exiting the corridor. These can either be reported immediately or, to ignore spikes, after a set duration based on the Data timestamps.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Drift.html" title="Event in com.industry.analytics.detectors">Drift</A></B></TD><TD>The Drift Analytic monitors a sources <font face="courier" size="-1">dValue</font> to ensure that it doesn't go outside of a set boundary or pair of boundaries. If a boundary is breached then an anomaly Data is generated. Once set these boundaries are fixed, unlike, for example, a Bollinger Band which will mutate along with a slow moving drift in values.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="MissingData.html" title="Event in com.industry.analytics.detectors">MissingData</A></B></TD><TD>The MissingData Analytic computation generates an Anomaly type of Data when no data is being received on the input channel. The period is a multiple of either a fixed time period in the configuration or a weighted average calculated from the timings of events which have been received. The computation will give out a set number of repeated anomalies after each subsequent multiple of the timeout period and can also calculate the timeout based for each individual source or calculated across all the sources combined.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="PeerAnalysis.html" title="Event in com.industry.analytics.detectors">PeerAnalysis</A></B></TD><TD>The Peer Analysis Analytic calculates the "normal" range of Data events and detects if incoming Data events are outside that range. It does this by calculating the spread between the raw Data events being received and a moving average calculated for that same set of Data.  It then generates an anomaly Data event if the the calculated Spread is breaches the defined threshold value. This Analytic utilizes the Average, Spread and Threshold analytics internally, so the same set of configuration parameters are available in this Analytic. This allows the moving Average timewindow to be defined, and the threshold value can either look for rising breaches, falling breaches or every time a threshold is passed in both directions. These can either be reported immediately or, to ignore spikes, after a set duration based on the Data timestamps.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Spike.html" title="Event in com.industry.analytics.detectors">Spike</A></B></TD><TD>The Spike Analytic takes a set of input Data events and, using the same time weighted calculations as used in the Average and Volatility Analytics, calculates the Nominal Range as a Bollinger Band centred on the moving average and bounded by a configured multiple of the standard deviation away from the moving average.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="Threshold.html" title="Event in com.industry.analytics.detectors">Threshold</A></B></TD><TD>The Threshold Analytic generates an anomaly Data event if a threshold is breached. The computation can either look for rising breaches, falling breaches or every time a threshold is passed in both directions. These can either be reported immediately or, to ignore spikes, after a set duration based on the Data timestamps.</TD>
+</TR>
+</TABLE>
+<P></P>
+        &nbsp;
+        <HR>
+<P></P>
+        &nbsp;
+        <HR>
+<P></P>
+        &nbsp;
+        <HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"><FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/detectors/package-summary.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="package-summary.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

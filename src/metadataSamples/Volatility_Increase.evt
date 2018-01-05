@@ -1,0 +1,6 @@
+﻿// Name: Volatility Increase
+// Description: This is an example of how to use the Industry Analytics Kit to detect when the volatility of the incoming Data events exceeds a threshold of 25%
+// Version: 2.0.0.1
+// Row: 0
+com.industry.analytics.Analytic("Volatility",["RAW_SENSOR_DATA"],["Volatility Increase:Row0:Channel1.0"],{})
+com.industry.analytics.Analytic("Threshold",["Volatility Increase:Row0:Channel1.0"],["SENSOR_ANOMALIES"],{"threshold":"25.0d"})

@@ -1,0 +1,4 @@
+com.industry.analytics.Data("YVAL","c","source",0,1,"abc",2,567,4,{"input":"def"})
+com.industry.analytics.Data("YVAL","a","source",0,2,"zyx",3,4,5,{"input":"wvu"})
+com.industry.analytics.Data("YVAL","","",0,0,"",0,0,0,{"input":""})
+com.industry.analytics.Data("YVAL","","",0,0,"",0,0,0,{})

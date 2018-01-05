@@ -1,0 +1,329 @@
+//*****************************************************************************
+// Title: Availability Analytic implementation
+//
+// Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or its licensors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//*****************************************************************************
+
+package com.industry.analytics.manufacturing;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Constants;
+
+using com.industry.analytics.manufacturing.MachineStatus;
+
+using com.industry.utils.Bucket;
+using com.industry.utils.BucketSystem;
+using com.industry.utils.BucketSystemBuilder;
+
+using com.apama.exceptions.Exception;
+
+event AvailabilityStatusTimestamp {
+  string status;
+  float timestamp;
+}
+
+event AvailabilityBucket {
+	decimal uptime;
+	decimal downtime;
+	string currentState;
+	decimal lastStatusTimestamp;
+}
+
+event InitializeAvailabilityBucketWithStartingStatus {
+	dictionary<string, AvailabilityStatusTimestamp> machineStatusBySourceId;
+	string sourceId;
+	
+	static action create(dictionary<string, AvailabilityStatusTimestamp> machineStatusBySourceId, string sourceId) returns action<Bucket> {
+		return InitializeAvailabilityBucketWithStartingStatus(machineStatusBySourceId, sourceId).onBucketCreated;
+	}
+	
+	action onBucketCreated(Bucket bucket) {
+		bucket.data := AvailabilityBucket(0.0d, 0.0d, machineStatusBySourceId.getOrDefault(sourceId).status, bucket.start.toDecimal());
+	}
+}
+
+/* @AnalyticDefinition
+{
+	"name": "Availability",
+	"description": "Calculates the availability from a series of status updates.",
+	"group": "Manufacturing",
+	"documentation": "com/industry/analytics/manufacturing/Availability.html",
+	"inputChannels": [
+		{
+			"name": "Machine Status",
+			"description": "The channel containing machine status updates",
+			"dataProperties": ["sValue"]
+		}
+	],
+	"outputChannels": [
+		{
+			"name": "Availability",
+			"description": "Availability data channel",
+			"dataProperties": ["+dValue"]
+		}
+	],
+	"properties": [
+		{
+			"name": "timeWindow",
+			"description": "The period of time to calculate the availability over.",
+			"type": "decimal",
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }",
+			"postfix": "(Seconds)"
+		},{
+			"name": "smoothingFactor",
+			"description": "The number of buckets to divide the timeWindow into.",
+			"type": "integer",
+			"defaultValue": 10,
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }",
+			"optional": true,
+			"advanced": true
+		},{
+			"name": "bySourceId",
+			"description": "Calculate separate Availabilities by sourceId",
+			"type": "boolean",
+			"defaultValue": true,
+			"optional": true,
+			"advanced": true
+		},{
+            "name": "managementId",
+            "description": "The id used for management of the analytic",
+            "type": "string",
+            "optional": true,
+            "advanced": true
+        }
+	]
+}
+*/
+/**
+ *  The Availability Analytic calculates machine availability from a stream of machine statuses.
+ *
+ * 	This is calculated by dividing the uptime by the total time the machine should have been active.
+ *
+ *  <dl><dt><b>Input Data events:</b></dt>
+ *  <dd>Only a single input Data stream name must be provided.</dd>
+ * 	<dd>Must contain an sValue indicating the current machine status (One of: "up", "down", or "stopped")</dd>
+ *  </dl>
+ *  <dl><dt><b>Output Data events:</b></dt>
+ *  <dd>Only a single output Data stream name must be provided.</dd>
+ * 	<dd>Contains the calculated availability in the dValue field. (All other fields from the incoming data event are copied)</dd>
+ *  </dl>
+ *  <dl><dt><b>Params:</b></dt>
+ *  <dd>
+ *  <table border="1" style="border-collapse: collapse;width:100%">
+ *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
+ *  <tr><td><b>timeWindow</b></td><td>The maximum time window over which to calculate the availability (Availability will be calculated over a shorter time window if this has not yet ellapsed).</td>
+ *      <td>Stringified decimal <font face="courier" size="-1">>0.0d</font></td><td>Decimal</td><td>True</td><td></td></tr>
+ *  <tr><td><b>smoothingFactor</b></td><td>The number of buckets in which to divide the timeWindow and aggregate the data (The oldest bucket is replaced when the timeWindow ellapses).</td>
+ *      <td>true or false</td><td>String</td><td>False</td><td>False</td></tr>
+ *  <tr><td><b>bySourceId</b></td><td>Calculate separate availabilities for each sourceId</td>
+ *      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr>
+ *  </table></dd>
+ *  </dl>
+ *  <dl><dt><b>Example usage:</b></dt>
+ <dd><code>
+// Create an Availability Analytic which takes status Data events on the channel "MachineStatus"  
+// an output them to the channel "Availability". This is calculated for a maximum time period of 8Hours (Until 8 Hours is reached it will be the ellapsed time).
+send com.industry.analytics.Analytic("Availability", ["MachineStatus"], ["Availability"], { "timeWindow": (8.0d * 60.0d * 60.0d).toString() } ) to "";
+</code></dd>
+ *</dl>
+ */
+event Availability {
+	/** The name of the analytic. */
+	constant string NAME := "Availability";
+	
+	constant string TIMEWINDOW := "timeWindow";
+	constant string SMOOTHING_FACTOR := "smoothingFactor";
+	
+	/** This constant defines the configuration parameter name
+	 *  that defines whether or not the drift calculation will be
+	 *  partitioned by the <font face="courier" size="-1">sourceId</font>*/
+	constant string BY_SOURCEID := "bySourceId";
+		
+	/** @private */
+	string _outputStreamName;
+	
+	float _timeWindow;
+	integer _smoothingFactor;
+	boolean _bySourceId;
+	
+	constant string INTERNAL_SOURCEID := "__internal_shared_sourceId";
+
+	dictionary<string, BucketSystem> _bucketSystemBySourceId;
+	dictionary<string, AvailabilityStatusTimestamp> _currentMachineStatusBySourceId;
+		  
+	/** The Analytic Base Object implementation 
+	 *  @private */
+	AnalyticObject _analyticObject;
+
+	/** 
+	 *  This action creates a new instance of the Analytic.
+	 *  Typically, this is called internally by the associated Analytics 
+	 *  service monitor when a com.industry.analytics.Analytic event is 
+	 *  sent for this type of Analytic.
+	 *
+	 *  @param  config        The Analytic configuration that 
+	 *                        will be used for this instance
+	 *  @param  initComplete  The action callback to call when the new Analytic  
+	 *                        has been created, or if an error occured.
+     *
+	 *  @see com.industry.analytics.Analytic           The Analytic configuration event object.
+	 *  @see com.industry.analytics.AnalyticInterface  The action interface that can be used 
+	 *                                            to interact with the Analytic.
+	 */
+	action init(Analytic config, action<boolean, AnalyticInterface> initComplete) {
+		if( not _validateConfiguration( config ) ) then {
+			initComplete( false, new AnalyticInterface );
+			return;
+		}
+		
+		_analyticObject := new AnalyticObject;
+		_analyticObject.init( config,
+		                      processData,
+		                      new action<>,
+		                      initComplete );
+	}
+	
+	/** 
+	 *  This helper action validates configuration that was
+	 *  used when trying to create a new instance of the Analytic.
+	 *  This is called internally, and should not be called directly by 
+	 *  the Users application.
+	 *  
+	 *  @param   config  The Analytic configuration object that is being validated
+	 *  @returns A boolean value indicating whether the configuration was valid or not.
+	 * 
+	 *  @private
+	 */
+	action _validateConfiguration(Analytic config) returns boolean {
+		boolean result := config.validateParams( NAME, 1, 1, 
+		                                       [ TIMEWINDOW, SMOOTHING_FACTOR ],
+		      		                           [ Constants.FLOAT, Constants.INTEGER ],
+		      		                           [ true, false ] );
+		
+		// Only check the specific params if the validation was okay
+		if result {
+			_outputStreamName := config.outputDataNames[0];
+			
+			_timeWindow := config.getFloat(TIMEWINDOW);
+			if _timeWindow <= 0.0 {
+				log "  Param "+ TIMEWINDOW +" must be > 0." at ERROR;
+				result := false;
+			}
+			
+			_smoothingFactor := config.getOrInteger(SMOOTHING_FACTOR, 10);
+			if _smoothingFactor <= 0 {
+				log "  Param "+ SMOOTHING_FACTOR +" must be an integer > 0." at ERROR;
+				result := false;
+			}
+			
+			_bySourceId := config.getOrBoolean( BY_SOURCEID, true );
+		}
+
+		return result;
+	}
+	
+	
+	/**
+	 *  This action implements the Analytic function itself. 
+	 *  This is called internally by the Analytic Object, and  
+	 *  should not be called directly by the Users application.
+	 *  If the application has created this Analytic using the 
+	 *  #init() action directly, then the <font face="courier" size="-1">processData</font>
+	 *  action on the <font face="courier" size="-1">com.industry.analytics.AnalyticInterface</font> 
+	 *  that was returned should be used instead.
+	 *
+	 *  @param   dataIn  The input Data event to be processed by this Analytic
+	 * 
+	 *  @private
+	 */
+	action processData(Data dataIn) {
+		log "Processing " + dataIn.toString() at DEBUG;
+		
+		string sourceId := INTERNAL_SOURCEID;
+		if _bySourceId {
+			sourceId := dataIn.sourceId;
+		}
+
+		if not _bucketSystemBySourceId.hasKey(sourceId) {
+			_bucketSystemBySourceId.add(sourceId, BucketSystemBuilder.create()
+							                                        .toValue(getTimestampFromData)
+							                                        .updateBucket(addDataToBucket)
+							                                        .totalSize(_timeWindow)
+							                                        .bucketCount(_smoothingFactor)
+										                            .onBucketCreated(InitializeAvailabilityBucketWithStartingStatus.create(_currentMachineStatusBySourceId, sourceId))
+							                                        .build());
+		}
+		BucketSystem bucketSystem := _bucketSystemBySourceId[sourceId];
+	
+		bucketSystem.add(dataIn);
+		
+		AvailabilityBucket availabilityBucket := <AvailabilityBucket> bucketSystem.reduce(reduceAvailabilityBucketsToSingle, new AvailabilityBucket);
+		
+		if availabilityBucket.uptime > 0.0d or availabilityBucket.downtime > 0.0d {
+			Data dataOut := dataIn.clone();
+			dataOut.dValue := availabilityBucket.uptime / (availabilityBucket.uptime + availabilityBucket.downtime);
+			dataOut.streamName := _outputStreamName;
+			_analyticObject.sendData(dataOut);
+		}
+	}
+	
+	action getTimestampFromData(any data) returns float {
+		return (<Data> data).timestamp.toFloat();
+	}
+	
+	action addDataToBucket(Bucket bucket, any dataAsAny) returns any {
+		Data data := <Data> dataAsAny;
+		
+		string sourceId := data.sourceId;
+		
+		// This is safe as we are always setting a value in the onBucketCreated callback
+		AvailabilityBucket result := <AvailabilityBucket>bucket.data;
+
+		if _currentMachineStatusBySourceId.hasKey(sourceId) and _currentMachineStatusBySourceId[sourceId].timestamp > data.timestamp.toFloat() {
+			log "Machine statuses should arrive in chronological order" at ERROR;
+		} else {
+			if result.currentState = MachineStatus.UP {
+				result.uptime := result.uptime + data.timestamp - result.lastStatusTimestamp;
+			} else if result.currentState = MachineStatus.DOWN {
+				result.downtime := result.downtime + data.timestamp - result.lastStatusTimestamp;
+			}
+			result.currentState := data.sValue.toLower();
+			_currentMachineStatusBySourceId.add(sourceId, AvailabilityStatusTimestamp(result.currentState, data.timestamp.toFloat()));
+			result.lastStatusTimestamp := data.timestamp;
+		}
+
+		return result;
+	}
+	
+	action reduceAvailabilityBucketsToSingle(any accumulator, Bucket bucket) returns any {
+		AvailabilityBucket acc := <AvailabilityBucket> accumulator;
+		AvailabilityBucket current := <AvailabilityBucket>bucket.data;
+		acc.uptime := acc.uptime + current.uptime;
+		acc.downtime := acc.downtime + current.downtime;
+		
+		// If the most recent status of the bucket is UP/DOWN then we need to add the time between the latest time in the bucket and the last status update 
+		// this is because uptime and downtime are only updated when there has been a status change event - they'll be out of date otherwise
+		if current.currentState = MachineStatus.UP {
+			acc.uptime := acc.uptime + bucket.currentEnd().toDecimal() - current.lastStatusTimestamp;
+		} else if current.currentState = MachineStatus.DOWN {
+			acc.downtime := acc.downtime + bucket.currentEnd().toDecimal() - current.lastStatusTimestamp;
+		}
+		return acc;
+	}
+}

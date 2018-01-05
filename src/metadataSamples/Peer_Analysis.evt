@@ -1,0 +1,9 @@
+\\ Name: Peer Analysis
+\\ Description: This is an example of how to use the Analytics Kit to detect difference between a device and its peers
+\\ Version: 2.0.0.1
+\\ Row: 0
+com.industry.analytics.Analytic("Average",["Orders"],["Average"],{"bySourceId":"false"})
+
+\\ Row: 1
+com.industry.analytics.Analytic("Spread",["Orders","Average"],["Peer Analysis:Row1:Channel1.0"],{})
+com.industry.analytics.Analytic("Threshold",["Peer Analysis:Row1:Channel1.0"],["Breaches"],{"threshold":"0.0d"})

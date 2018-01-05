@@ -1,0 +1,54 @@
+
+using com.industry.utils.BucketSystemBuilder;
+using com.industry.utils.BucketSystem;
+using com.industry.utils.Bucket;
+
+using com.apama.exceptions.Exception;
+
+event TestFinished {}
+
+event Item {
+  float f;
+}
+
+monitor BucketSystemTest {
+  BucketSystem b;
+
+  action onload() {
+    b := BucketSystemBuilder.create()
+                          .toValue(getF)
+                          .updateBucket(addItemToBucket)
+                          .totalSize(10.0)
+                          .bucketCount(10)
+                          .onBucketCreated(initializeBucket)
+                          .build();
+                          
+    on all Item() as i {
+      b.add(i);
+      
+      emit (<sequence <sequence<Item> > > b.reduce(shoveIntoASingleSeq, new sequence<sequence<Item> >)).toString() to "Output";
+    }
+    
+    on TestFinished() {
+      send TestFinished() to "Output";
+    }
+  }
+  
+  action shoveIntoASingleSeq(any acc, Bucket b) returns any {
+    (<sequence<sequence<Item> > > acc).append(<sequence<Item> > b.data);
+    return acc;
+  }
+  
+  action getF(any item) returns float {
+    return (<Item> item).f;
+  }
+  
+  action initializeBucket(Bucket b) {
+    b.data := new sequence<Item>;
+  }
+  
+  action addItemToBucket(Bucket b, any item) returns any {
+    (<sequence<Item> > b.data).append(<Item> item);
+    return b.data;
+  }
+}

@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("missingdata", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("MISSINGDATA", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("MiSsInGdAtA", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("MissingData", ["Input"], ["Output"], {})

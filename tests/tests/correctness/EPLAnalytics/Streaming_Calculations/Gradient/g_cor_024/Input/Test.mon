@@ -1,0 +1,51 @@
+//*****************************************************************************
+// Title:         Gradient024
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.Gradient024;
+
+using com.industry.analytics.streaming_calculations.Gradient;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	Gradient _gradient;
+	
+	action onload()
+	{
+		Analytic config := Analytic("Gradient", ["Input"], ["Output"], {"timeWindow":"6"});
+		_gradient.init(config, _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			Data currData := Data.init("Input", DataConstants.RAW, "asset1");
+			currData.timestamp := 0.0d;
+			currData.dValue := 0.0d;
+			_gradient.processData( currData );
+			currData.timestamp := 1.0d;
+			currData.dValue := 1.0d;
+			_gradient.processData( currData );
+			currData.sourceId := "asset2";
+			currData.timestamp := 1.0d;
+			currData.dValue := 2.0d;
+			_gradient.processData( currData );
+			log "Gradient Pre-Reset State:" at INFO;
+			log "  _buckets: " + _gradient._buckets.toString() at INFO;
+			_gradient.reset();
+			log "Gradient Post-Reset State:" at INFO;
+			log "  _buckets: " + _gradient._buckets.toString() at INFO;
+		}
+		else
+		{
+			log "Error spawning Gradient instance." at ERROR;
+		}
+	}
+}

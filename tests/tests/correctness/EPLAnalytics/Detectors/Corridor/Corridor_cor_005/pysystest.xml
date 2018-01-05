@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pysystest state="runnable" type="auto">
+	<description>
+		<title>Corridor 005: Test Corridor for values above corridor upper limit (OUTSIDE, duration = 10.0) with zone = outside.</title>
+		<purpose>
+		<![CDATA[Trigger each type of threshold and no triggering on threshold with a set duration.]]>
+		</purpose>
+	</description>
+	<classification>
+		<groups>
+			<group>Corridor</group>
+			<group>Detectors</group>
+			<group>Industry_Analytics</group>
+			<group>EPL</group>
+		</groups>
+	</classification>
+	<data>
+		<class module="run" name="PySysTest"></class>
+	</data>
+	<traceability>
+		<requirements>
+			<requirement></requirement>
+		</requirements>
+	</traceability>
+</pysystest>

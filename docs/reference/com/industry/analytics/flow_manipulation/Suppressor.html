@@ -1,0 +1,258 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Suppressor</TITLE>
+<META NAME="keywords" CONTENT="Suppressor&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="Suppressor";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/flow_manipulation/Suppressor.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Suppressor.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/flow_manipulation/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics.flow_manipulation</FONT>
+<BR>Event Suppressor</H2>
+<HR>The Suppressor Analytic will suppress events from the defined input stream from appearing on the output stream name for a set duration following a trigger event. The trigger event will be passed through regardless allowing the prevention of repeated warnings, for example.<br>
+<br> The trigger event is based upon a defined parameter, the events acted upon may use the same parameter or another. It is also possible to reset the suppressing by the use of an event with a different parameter. It is also possible to independently set whether suppressing should happen just for the source in the trigger event or for all sources received, and whether a reset should just apply to its source or reset all sources being actioned. It is also possible to set whether a new trigger event received before the end of a suppressing window should restart the duration timer or just be ignored.<br>
+<br> A special case exists for the parameters below. If the parameter value <font face="courier" size="-1">"type"</font> is used, then the Suppressor will look at the type member of the Data event instead of the params dictionary. In this case the param value is mandatory and must be one of <font face="courier" size="-1">'r', 'c' or 'a'</font> (raw, computed or anomaly).<br>
+<br> The suppressor can also be inverted so that events are suppressed until after a trigger event. See the <font face="courier" size="-1">suppressionType</font> param.<br>
+<br> <dl><dt><b>Input Data events:</b></dt> <dd>Only a single input Data stream name must be provided.</dd> </dl> <dl><dt><b>Output Data events:</b></dt> <dd>Only a single output Data stream name must be provided.  All the <font face="courier" size="-1">params</font> from the input Data are copied to the unsuppressed Data events.</dd> </dl> <dl><dt><b>Params:</b></dt> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr> <tr><td><b>timeWindow</b></td><td>Defines the time window in seconds in which to suppress events over</td> <td>Stringified decimal <font face="courier" size="-1">>0.0d</font></td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">60.0d"</font></td></tr> <tr><td><b>triggerParam</b></td><td>Defines the parameter name at which to start suppressing events on. The <font face="courier" size="-1">triggerParamValue</font> parameter can also be used to trigger on a specific parameter value. If the value is set to <font face="courier" size="-1">"type"</font>, then the Suppressor will look at the type member of the Data event instead of the params dictionary. In this case the <font face="courier" size="-1">triggerParamValue</font> value is mandatory and must be one of <font face="courier" size="-1">'r', 'c' or 'a'</font> (raw, computed or anomaly).</td> <td>Non-empty string value</td><td>String</td><td>True</td><td></td></tr> <tr><td><b>triggerParamValue</b></td><td>Defines a specific value for the <font face="courier" size="-1">triggerParam</font> before starting to suppress events. If this configuration parameter was not defined or an empty string is provided, then any values for the <font face="courier" size="-1">triggerParam</font> will trigger suppressing to start. If the <font face="courier" size="-1">triggerParam</font> value is set to <font face="courier" size="-1">"type"</font>, this parameter is mandatory and must be one of <font face="courier" size="-1">'r', 'c' or 'a'</font> (raw, computed or anomaly).</td> <td></td><td>String</td><td>False</td><td><font face="courier" size="-1">""</font></td></tr> <tr><td><b>triggerExtension</b></td><td>Defines whether or not the time window will be reset following a new trigger match</td> <td></td><td><font face="courier" size="-1">"true"</font> or <font face="courier" size="-1">"false"</font></td><td>False</td><td><font face="courier" size="-1">"false"</font></td></tr> <tr><td><b>actionParam</b></td><td>Defines the parameter name which will cause the Data event to be suppressed once a trigger has been received. The <font face="courier" size="-1">actionParamValue</font> parameter to trigger on a specific parameter value. If the value is set to <font face="courier" size="-1">"type"</font>, then the Suppressor will look at the type member of the Data event instead of the params dictionary. In this case the <font face="courier" size="-1">actionParamValue</font> value is mandatory and must be one of <font face="courier" size="-1">'r', 'c' or 'a'</font> (raw, computed or anomaly).</td> <td></td><td>String</td><td>False</td><td>The <font face="courier" size="-1">triggerParam</font></td></tr> <tr><td><b>actionParamValue</b></td><td>Defines a specific value for the <font face="courier" size="-1">actionParam</font> before suppressing events. If this configuration parameter was not defined or an empty string is provided, then any values for the <font face="courier" size="-1">actionParam</font> will trigger suppressing to start. If the <font face="courier" size="-1">actionParam</font> value is set to <font face="courier" size="-1">"type"</font>, this parameter is mandatory and must be one of <font face="courier" size="-1">'r', 'c' or 'a'</font> (raw, computed or anomaly).</td> <td></td><td>String</td><td>False</td><td><font face="courier" size="-1">""</font></td></tr> <tr><td><b>resetParam</b></td><td>Defines the parameter name which will cause the trigger Suppressor to be reset. The <font face="courier" size="-1">resetParamValue</font> parameter can also be used to reset the trigger on a specific parameter value. If this parameter is not defined, the trigger will never be reset. If the value is set to <font face="courier" size="-1">"type"</font>, then the Suppressor will look at the type member of the Data event instead of the params dictionary. In this case the <font face="courier" size="-1">resetParamValue</font> value is mandatory and must be one of <font face="courier" size="-1">'r', 'c' or 'a'</font> (raw, computed or anomaly).</td> <td></td><td>String</td><td>False</td><td>""</td></tr> <tr><td><b>resetParamValue</b></td><td>Defines a specific value for the <font face="courier" size="-1">resetParam</font> before resetting the trigger. If the <font face="courier" size="-1">resetParam</font> value is set to <font face="courier" size="-1">"type"</font>, this parameter is mandatory and must be one of <font face="courier" size="-1">'r', 'c' or 'a'</font> (raw, computed or anomaly).</td> <td></td><td>String</td><td>False</td><td><font face="courier" size="-1">""</font></td></tr> <tr><td><b>suppressionType</b></td><td>Switch between two different modes of suppression.<br> <font face="courier" size="-1">startUnsuppressed</font> - Start unsuppressed, triggering events cause supression.<br> <font face="courier" size="-1">startSuppressed</font> - Start suppressed, triggering events cause unsuppression.</td> <td><font face="courier" size="-1">startUnsuppressed</font> or <font face="courier" size="-1">startSuppressed</font></td><td>String</td><td>False</td><td><font face="courier" size="-1">startUnsuppressed</font></td></tr> <tr><td><b>bySourceId</b></td><td>If defined, the suppression of Data events is partitioned by the <font face="courier" size="-1">sourceId</font> parameter of the input data stream</td> <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr> </table></dd> </dl> <dl><dt><b>Example usage:</b></dt> <dd><pre><br>// Define a Suppressor Analytic which takes Data events on the channel "Input1"  <br>// and prevents any "Computed" types of Data events from being published onto <br>// the output channel "Output1" within a 20.0 second time window. For example,<br>// if you only want to publish periodic updates from a data source.<br>send com.industry.analytics.Analytic("Suppressor", ["Input1"], ["Output1"], { "timeWindow":"20.0d","triggerParam":"type","triggerParamValue":DataConstants.COMPUTED } ) to "";<br>
+<br>// Define a Suppressor Analytic which takes Data events on the channel "Input1"  <br>// and waits until it receives a Data event with the parameter "isTestingEnabled"<br>// set to a value of "true". Once the Analytic has triggered, it prevents any <br>// "Computed" types of Data events from being published onto the output channel <br>// "Output1" within a 20.0 second time window.  For example, if you want to <br>// ignore any events being published while a device is in a "test mode".<br>send com.industry.analytics.Analytic("Suppressor", ["Input1"], ["Output1"], { "timeWindow":"20.0d","triggerParam":"isTestingEnabled","triggerParamValue":"true",<br>                                                                               "actionParam":"type", "actionParamValue":DataConstants.COMPUTED } ) to "";<br></pre></dd> </dl><HR>
+<A NAME="constant_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Constant Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#ACTION_PARAM">ACTION_PARAM</A> := "actionParam"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the action parameter name. This can be used in conjunction with the <font face="courier" size="-1">actionParamValue</font> configuration parameter to refine the action condition.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#ACTION_PARAM_VALUE">ACTION_PARAM_VALUE</A> := "actionParamValue"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the action parameter value. This is used in conjunction with the <font face="courier" size="-1">actionParam</font> configuration parameter to refine the action condition.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#BY_SOURCEID">BY_SOURCEID</A> := "bySourceId"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether or not the suppression of Data events is partitioned by the <font face="courier" size="-1">sourceId</font></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#NAME">NAME</A> := "Suppressor"</B></CODE>
+<br>
+<br>This constant defines the name of the Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#RESET_PARAM">RESET_PARAM</A> := "resetParam"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the trigger reset parameter name. This can be used in conjunction with the <font face="courier" size="-1">resetParamValue</font> configuration parameter to refine the trigger reset condition.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#RESET_PARAM_VALUE">RESET_PARAM_VALUE</A> := "resetParamValue"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the trigger reset parameter value. This is used in conjunction with the <font face="courier" size="-1">resetParam</font> configuration parameter to refine the trigger reset condition.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#SUPPRESSION_TYPE">SUPPRESSION_TYPE</A> := "suppressionType"</B></CODE>
+<br>
+<br>Constant for the supressionType parameter name.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#SUPPRESSION_TYPE_START_SUPPRESSED">SUPPRESSION_TYPE_START_SUPPRESSED</A> := "startSuppressed"</B></CODE>
+<br>
+<br>A valid value for supressionType - unsuppresses data when triggered</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#SUPPRESSION_TYPE_START_UNSUPPRESSED">SUPPRESSION_TYPE_START_UNSUPPRESSED</A> := "startUnsuppressed"</B></CODE>
+<br>
+<br>A valid value for supressionType - suppresses data when triggered</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#TIMEWINDOW">TIMEWINDOW</A> := "timeWindow"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the time window (in seconds) that the events will be suppressed for once triggered.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#TRIGGER_EXTENSION">TRIGGER_EXTENSION</A> := "triggerExtension"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the whether or not the trigger time out will be reset following a new trigger match.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#TRIGGER_PARAM">TRIGGER_PARAM</A> := "triggerParam"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the suppressing trigger parameter name. This can be used in conjunction with the <font face="courier" size="-1">triggerParamValue</font> configuration parameter to refine the trigger condition.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#TRIGGER_PARAM_VALUE">TRIGGER_PARAM_VALUE</A> := "triggerParamValue"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that specifies the suppressing trigger parameter value. This is used in conjunction with the <font face="courier" size="-1">triggerParam</font> configuration parameter.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Suppressor.html#TYPE">TYPE</A> := "type"</B></CODE>
+<br>
+<br>This constant defines the special case parameter name which refers to the Data event type field.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Suppressor.html#init()">init</A></B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="constant_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Constant Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="ACTION_PARAM"></A>
+<H3>ACTION_PARAM</H3>
+<PRE>constant string&nbsp;<B>ACTION_PARAM := "actionParam"</B>
+</PRE>This constant defines the configuration parameter name that specifies the action parameter name. This can be used in conjunction with the <font face="courier" size="-1">actionParamValue</font> configuration parameter to refine the action condition.<HR>
+<A NAME="ACTION_PARAM_VALUE"></A>
+<H3>ACTION_PARAM_VALUE</H3>
+<PRE>constant string&nbsp;<B>ACTION_PARAM_VALUE := "actionParamValue"</B>
+</PRE>This constant defines the configuration parameter name that specifies the action parameter value. This is used in conjunction with the <font face="courier" size="-1">actionParam</font> configuration parameter to refine the action condition.<HR>
+<A NAME="BY_SOURCEID"></A>
+<H3>BY_SOURCEID</H3>
+<PRE>constant string&nbsp;<B>BY_SOURCEID := "bySourceId"</B>
+</PRE>This constant defines the configuration parameter name that defines whether or not the suppression of Data events is partitioned by the <font face="courier" size="-1">sourceId</font><HR>
+<A NAME="NAME"></A>
+<H3>NAME</H3>
+<PRE>constant string&nbsp;<B>NAME := "Suppressor"</B>
+</PRE>This constant defines the name of the Analytic.<HR>
+<A NAME="RESET_PARAM"></A>
+<H3>RESET_PARAM</H3>
+<PRE>constant string&nbsp;<B>RESET_PARAM := "resetParam"</B>
+</PRE>This constant defines the configuration parameter name that specifies the trigger reset parameter name. This can be used in conjunction with the <font face="courier" size="-1">resetParamValue</font> configuration parameter to refine the trigger reset condition.<HR>
+<A NAME="RESET_PARAM_VALUE"></A>
+<H3>RESET_PARAM_VALUE</H3>
+<PRE>constant string&nbsp;<B>RESET_PARAM_VALUE := "resetParamValue"</B>
+</PRE>This constant defines the configuration parameter name that specifies the trigger reset parameter value. This is used in conjunction with the <font face="courier" size="-1">resetParam</font> configuration parameter to refine the trigger reset condition.<HR>
+<A NAME="SUPPRESSION_TYPE"></A>
+<H3>SUPPRESSION_TYPE</H3>
+<PRE>constant string&nbsp;<B>SUPPRESSION_TYPE := "suppressionType"</B>
+</PRE>Constant for the supressionType parameter name.<HR>
+<A NAME="SUPPRESSION_TYPE_START_SUPPRESSED"></A>
+<H3>SUPPRESSION_TYPE_START_SUPPRESSED</H3>
+<PRE>constant string&nbsp;<B>SUPPRESSION_TYPE_START_SUPPRESSED := "startSuppressed"</B>
+</PRE>A valid value for supressionType - unsuppresses data when triggered<HR>
+<A NAME="SUPPRESSION_TYPE_START_UNSUPPRESSED"></A>
+<H3>SUPPRESSION_TYPE_START_UNSUPPRESSED</H3>
+<PRE>constant string&nbsp;<B>SUPPRESSION_TYPE_START_UNSUPPRESSED := "startUnsuppressed"</B>
+</PRE>A valid value for supressionType - suppresses data when triggered<HR>
+<A NAME="TIMEWINDOW"></A>
+<H3>TIMEWINDOW</H3>
+<PRE>constant string&nbsp;<B>TIMEWINDOW := "timeWindow"</B>
+</PRE>This constant defines the configuration parameter name that specifies the time window (in seconds) that the events will be suppressed for once triggered.<HR>
+<A NAME="TRIGGER_EXTENSION"></A>
+<H3>TRIGGER_EXTENSION</H3>
+<PRE>constant string&nbsp;<B>TRIGGER_EXTENSION := "triggerExtension"</B>
+</PRE>This constant defines the configuration parameter name that specifies the whether or not the trigger time out will be reset following a new trigger match.<HR>
+<A NAME="TRIGGER_PARAM"></A>
+<H3>TRIGGER_PARAM</H3>
+<PRE>constant string&nbsp;<B>TRIGGER_PARAM := "triggerParam"</B>
+</PRE>This constant defines the configuration parameter name that specifies the suppressing trigger parameter name. This can be used in conjunction with the <font face="courier" size="-1">triggerParamValue</font> configuration parameter to refine the trigger condition.<HR>
+<A NAME="TRIGGER_PARAM_VALUE"></A>
+<H3>TRIGGER_PARAM_VALUE</H3>
+<PRE>constant string&nbsp;<B>TRIGGER_PARAM_VALUE := "triggerParamValue"</B>
+</PRE>This constant defines the configuration parameter name that specifies the suppressing trigger parameter value. This is used in conjunction with the <font face="courier" size="-1">triggerParam</font> configuration parameter.<HR>
+<A NAME="TYPE"></A>
+<H3>TYPE</H3>
+<PRE>constant string&nbsp;<B>TYPE := "type"</B>
+</PRE>This constant defines the special case parameter name which refers to the Data event type field.<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration that will be used for this instance</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The action callback to call when the new Analytic has been created, or if an error occured.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration event object.</DD>
+<DD>
+<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that can be used to interact with the Analytic.</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/flow_manipulation/Suppressor.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Suppressor.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/flow_manipulation/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("Availability", ["Input"], ["bySourceId"], {"timeWindow":"4", "smoothingFactor": "4", "bySourceId":"true"})
+com.industry.analytics.Analytic("Availability", ["Input"], ["notBySourceId"], {"timeWindow":"4", "smoothingFactor": "4", "bySourceId":"false"})

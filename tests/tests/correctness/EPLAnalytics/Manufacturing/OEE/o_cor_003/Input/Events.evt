@@ -1,0 +1,19 @@
+"Availability", com.industry.analytics.Data("Availability", "r", "source", 0, 1, "", 0.0, 0.0, 0.0, {})
+"Quality",      com.industry.analytics.Data("Quality",      "r", "source", 1, 1, "", 0.0, 0.0, 0.0, {})
+"Performance",  com.industry.analytics.Data("Performance",  "r", "source", 2, 1, "", 0.0, 0.0, 0.0, {})
+
+"Availability", com.industry.analytics.Data("Availability", "r", "source", 3, 0.5, "", 0.0, 0.0, 0.0, {})
+"Quality",      com.industry.analytics.Data("Quality",      "r", "source", 4, 0.5, "", 0.0, 0.0, 0.0, {})
+"Performance",  com.industry.analytics.Data("Performance",  "r", "source", 5, 0.5, "", 0.0, 0.0, 0.0, {})
+
+"Availability", com.industry.analytics.Data("Availability", "r", "source2", 6, 0.1, "", 0.0, 0.0, 0.0, {})
+"Quality",      com.industry.analytics.Data("Quality",      "r", "source2", 7, 0.1, "", 0.0, 0.0, 0.0, {})
+"Performance",  com.industry.analytics.Data("Performance",  "r", "source2", 8, 0.1, "", 0.0, 0.0, 0.0, {})
+
+"Availability", com.industry.analytics.Data("Availability", "r", "source2", 9, 1, "", 0.0, 0.0, 0.0, {})
+"Quality",      com.industry.analytics.Data("Quality",      "r", "source2", 10, 1, "", 0.0, 0.0, 0.0, {})
+"Performance",  com.industry.analytics.Data("Performance",  "r", "source2", 11, 1, "", 0.0, 0.0, 0.0, {})
+
+"Availability", com.industry.analytics.Data("Availability", "r", "source", 12, 1, "", 0.0, 0.0, 0.0, {})
+"Quality",      com.industry.analytics.Data("Quality",      "r", "source", 13, 1, "", 0.0, 0.0, 0.0, {})
+"Performance",  com.industry.analytics.Data("Performance",  "r", "source", 14, 1, "", 0.0, 0.0, 0.0, {})

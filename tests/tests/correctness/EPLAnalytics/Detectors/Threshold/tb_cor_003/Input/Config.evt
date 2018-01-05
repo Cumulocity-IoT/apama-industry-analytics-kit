@@ -1,0 +1,3 @@
+com.industry.analytics.Analytic("Threshold", ["Input1"], ["OutputRising"], {"threshold":"10", "direction":"rising", "repeats":"3"})
+com.industry.analytics.Analytic("Threshold", ["Input1"], ["OutputFalling"], {"threshold":"10", "direction":"falling", "repeats":"3"})
+com.industry.analytics.Analytic("Threshold", ["Input1"], ["OutputCrossing"], {"threshold":"10", "direction":"crossing", "repeats":"3"})

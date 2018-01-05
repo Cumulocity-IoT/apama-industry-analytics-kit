@@ -1,0 +1,9 @@
+"SEPAL_LE", com.industry.analytics.Data("SEPAL_LE", "r", "s1", 1.0, 0.6375, "", 0.0, 0.0, 0.0, {"a":"1"})
+"SEPAL_WI", com.industry.analytics.Data("SEPAL_WI", "r", "s1", 1.0, 0.7, "", 0.0, 0.0, 0.0, {"b":"1"})
+"PETAL_LE", com.industry.analytics.Data("PETAL_LE", "r", "s1", 1.0, 0.28, "", 0.0, 0.0, 0.0, {"c":"1"})
+"PETAL_WI", com.industry.analytics.Data("PETAL_WI", "r", "s1", 1.0, 0.066667, "", 0.0, 0.0, 0.0, {"d":"1"})
+
+"SEPAL_LE", com.industry.analytics.Data("SEPAL_LE", "r", "s1", 2.0, 0.6125, "", 0.0, 0.0, 0.0, {"a":"2"})
+"SEPAL_WI", com.industry.analytics.Data("SEPAL_WI", "r", "s1", 2.0, 0.6, "", 0.0, 0.0, 0.0, {"b":"2"})
+"PETAL_LE", com.industry.analytics.Data("PETAL_LE", "r", "s1", 2.0, 0.28, "", 0.0, 0.0, 0.0, {"c":"2"})
+"PETAL_WI", com.industry.analytics.Data("PETAL_WI", "r", "s1", 2.0, 0.066667, "", 0.0, 0.0, 0.0, {"d":"2"})

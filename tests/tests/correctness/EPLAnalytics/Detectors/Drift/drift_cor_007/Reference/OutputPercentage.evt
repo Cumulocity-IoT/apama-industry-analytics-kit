@@ -1,0 +1,5 @@
+com.industry.analytics.Data("OutputPercentage","a","s1",62,11.5,"",1,2,3,{"anomalySource":"Drift"})
+com.industry.analytics.Data("OutputPercentage","a","s1",63,12.5,"",1,2,3,{"anomalySource":"Drift"})
+com.industry.analytics.Data("OutputPercentage","a","s1",63,13.5,"",1,2,3,{"anomalySource":"Drift"})
+com.industry.analytics.Data("OutputPercentage","a","s1",66,7.5,"",1,2,3,{"anomalySource":"Drift"})
+com.industry.analytics.Data("OutputPercentage","a","s1",67,6.5,"",1,2,3,{"anomalySource":"Drift"})

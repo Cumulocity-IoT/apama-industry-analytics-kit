@@ -1,0 +1,142 @@
+//*****************************************************************************
+// Title:         PeerAnalysis test
+//*****************************************************************************
+
+package com.industry.analytics.detectors.PeerAnalysis_cor_004;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.detectors.PeerAnalysis;
+using com.industry.analytics.streaming_calculations.Average;
+using com.industry.analytics.streaming_calculations.Spread;
+using com.industry.analytics.detectors.Threshold;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload() {
+		// Create the PeerAnalysis - with valid values should pass
+		(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																  { Threshold.THRESHOLD : "1.0",
+																	Threshold.DURATION  : "1.0" } ), 
+									initComplete );
+
+		// Test minimal params with empty DURATION value - Should fail
+		on NextTest( testNum=2 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DURATION  : "" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid DURATION value - Should fail
+		on NextTest( testNum=3 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DURATION  : "  " } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid DURATION value - Should fail
+		on NextTest( testNum=4 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DURATION  : "foobar" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid DURATION value - Should fail
+		on NextTest( testNum=5 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DURATION  : "[]" } ), 
+										initComplete );
+		}		
+		
+		// Test minimal params with invalid DURATION value - Should fail
+		on NextTest( testNum=6 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DURATION  : "[1.0]" } ), 
+										initComplete );
+		}		
+
+		// Test minimal params with invalid DURATION value - Should fail
+		on NextTest( testNum=7 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DURATION  : "{}" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with valid DURATION value - Should pass
+		on NextTest( testNum=8 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DURATION  : "0.0" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with valid DURATION value - Should pass
+		on NextTest( testNum=9 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DURATION  : "-1.0" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with valid DURATION value - Should pass
+		on NextTest( testNum=10 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  Threshold.DURATION  : "0.1" } ), 
+										initComplete );
+		}
+
+		// Test minimal params with invalid DURATION name - Should pass as the param name is unrecognised and is not mandatory
+		on NextTest( testNum=11 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  "DURATION" : "0.1" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid DURATION name - Should pass as the param name is unrecognised and is not mandatory
+		on NextTest( testNum=12 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  "Duration" : "0.1" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with valid DURATION name and value - Should pass
+		on NextTest( testNum=13 ) { 
+			(new PeerAnalysis).init( com.industry.analytics.Analytic( PeerAnalysis.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.THRESHOLD : "1.0",
+																	  "duration" : "0.1" } ), 
+										initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

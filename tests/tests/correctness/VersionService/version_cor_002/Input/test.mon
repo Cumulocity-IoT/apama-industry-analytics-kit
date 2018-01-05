@@ -1,0 +1,106 @@
+//*****************************************************************************
+// Title:         VersionTest
+// $Copyright (c) 2015 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or Terracotta Inc., San Francisco, CA, USA, and/or Software AG (Canada) Inc., Cambridge, Ontario, Canada, and/or, Software AG (UK) Ltd., Derby, United Kingdom, and/or Software A.G. (Israel) Ltd., Or-Yehuda, Israel and/or their licensors.$
+// Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG
+//*****************************************************************************
+
+package com.industry.analytics.tests.version_002;
+
+using com.industry.analytics.CheckVersion;
+using com.industry.analytics.CurrentVersion;
+using com.industry.analytics.Constants;
+
+event NextTest {}
+
+monitor VersionTest {
+	
+	action onload() {
+		monitor.subscribe( Constants.MANAGEMENT_CHANNEL );
+
+		// Get the current version of the Industry Analytics Kit
+		send CheckVersion( "" ) to Constants.MANAGEMENT_CHANNEL;
+		on CurrentVersion() as response {
+			// Log the current version of the Industry Analytics Kit
+			emit response to "TEST_OUT";
+
+			// Convert the version returned into a sequence of integer value
+			sequence<integer> currentVersion := convertStringToIntegerSequence( response.currentVersion );
+
+			// Check if the version is valid
+			if( currentVersion.size() = 4 ) then {
+				integer currMajorVersion := currentVersion[ 0 ];
+				integer currMinorVersion := currentVersion[ 1 ];
+				integer currSPVersion    := currentVersion[ 2 ];
+				integer currHFVersion    := currentVersion[ 3 ];
+				
+				on all NextTest() {
+					boolean isValid := true;
+					currHFVersion := currHFVersion +1;
+					if( currHFVersion > 9 ) then {
+						currHFVersion := 0;
+						currSPVersion := currSPVersion +1;
+						if( currSPVersion > 9 ) then {
+							currSPVersion := 0;
+							currMinorVersion := currMinorVersion +1;
+							if( currMinorVersion > 9 ) then {
+								currMinorVersion := 0;
+								currMajorVersion := currMajorVersion +1;
+								if( currMajorVersion < 9 ) then {
+									isValid := false;
+								}
+							}
+						}
+					}
+					if( isValid ) then {
+						string testVersion := currMajorVersion.toString()+"."+currMinorVersion.toString()+"."+currSPVersion.toString()+"."+currHFVersion.toString();
+					
+						emit "TESTING WITH VERSION: "+testVersion to "TEST_OUT";
+					
+						send CheckVersion( testVersion ) to Constants.MANAGEMENT_CHANNEL;
+						on CurrentVersion() as response {
+							// Log the current version of the Industry Analytics Kit
+							emit response to "TEST_OUT";
+							if( response.compatible ) then {
+								route NextTest();
+							}
+						}
+					} else {
+						emit "END OF TEST - NO MORE ATTEMPTS TO TRY" to "TEST_OUT";
+					}
+				}
+				
+				// Kick off the test set
+				route NextTest();
+				
+			} else {
+				emit "INVALID INITIAL VERSION RETURNED: "+response.currentVersion to "TEST_OUT";
+			}
+			
+		}
+	}
+	
+	
+	/** 
+	 * This helper action checks a single stringified version number
+	 * against the stringified mininum version compatible and the current
+	 * version number.
+	 *
+	 * @private
+	 */
+	action convertStringToIntegerSequence( string strVersion ) returns sequence<integer> {
+		sequence<integer> seqVersion := [];
+		
+		// Convert the version strings to integer sequences 
+		string versionVal;
+		for versionVal in ".".split( strVersion ) {
+			if( integer.canParse( versionVal ) ) then {							
+				seqVersion.append( integer.parse( versionVal ) );
+			} else {
+				// Invalid version so break the loop
+				break;
+			}
+		}	
+		
+		return seqVersion;
+	}
+}

@@ -1,0 +1,2 @@
+"In1", com.industry.analytics.Data("In1", "r", "source1", 1, 2, "3", 4, 5, 6, {"g":"h"})
+"In2", com.industry.analytics.Data("In2", "a", "source1", 0, 0, "", 0, 0, 0, {"a":"b", "c":"d", "e":"f"})

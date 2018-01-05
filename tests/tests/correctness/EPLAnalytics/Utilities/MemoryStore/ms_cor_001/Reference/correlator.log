@@ -1,0 +1,316 @@
+2017-07-26 13:39:27.759 ##### [13772] - Correlator, version 9.12.0.5.301831 (build rel/9.12.0.x@301831 on amd64-win), started.
+2017-07-26 13:39:27.759 ##### [13772] - Running on host 'MCNMI03.eur.ad.sag'.
+2017-07-26 13:39:27.759 ##### [13772] - Running on platform 'Windows 7 (Service Pack 1)'.
+2017-07-26 13:39:27.759 ##### [13772] - Running on CPU 'GenuineIntel family 6 model 14 stepping 3 Intel(R) Core(TM) i7-6600U CPU @ 2.60GHz'.
+2017-07-26 13:39:27.760 ##### [13772] - Running with process Id 10964.
+2017-07-26 13:39:27.760 ##### [13772] - Running with 16046.18MB of physical memory.
+2017-07-26 13:39:27.760 ##### [13772] - There are 4 CPU(s)
+2017-07-26 13:39:27.760 ##### [13772] - Correlator command line: C:\SoftwareAG\Apama\bin\correlator --name correlator -p 11935 -l C:\Users\Public\SoftwareAG\ApamaWork_9.12\license\ApamaServerLicense.xml -f correlator.out -v INFO -Xclock
+2017-07-26 13:39:27.760 ##### [13772] - Current Working Directory: C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\tests\correctness\EPLAnalytics\Utilities\MemoryStore\ms_cor_001\Output\win32
+2017-07-26 13:39:27.760 ##### [13772] - Current UTC time: 2017-07-26 12:39:27, local timezone: GMT Daylight Time
+2017-07-26 13:39:27.760 ##### [13772] - Input value - port                     = 11935
+2017-07-26 13:39:27.760 ##### [13772] - Input value - output queue size        = 10000
+2017-07-26 13:39:27.760 ##### [13772] - Input value - output queue batch size  = 100
+2017-07-26 13:39:27.760 ##### [13772] - Input value - output queue mode        = blocking
+2017-07-26 13:39:27.760 ##### [13772] - Input value - environment variable     = APAMA_HOME=C:\SoftwareAG\Apama\
+2017-07-26 13:39:27.760 ##### [13772] - Input value - environment variable     = APAMA_LIBRARY_VERSION=9.12
+2017-07-26 13:39:27.760 ##### [13772] - Input value - environment variable     = APAMA_ENVSET=9.12:C:\SoftwareAG\Apama:amd64-win
+2017-07-26 13:39:27.760 ##### [13772] - Input value - environment variable     = APAMA_CORRELATOR_HOME=C:\SoftwareAG\Apama\
+2017-07-26 13:39:27.760 ##### [13772] - Input value - environment variable     = APAMA_WORK=C:\Users\Public\SoftwareAG\ApamaWork_9.12
+2017-07-26 13:39:27.760 ##### [13772] - Input value - environment variable     = APAMA_JRE=C:\SoftwareAG\jvm\jvm\jre
+2017-07-26 13:39:27.760 ##### [13772] - Input value - environment variable     = APAMA_PLATFORM=amd64-win
+2017-07-26 13:39:27.760 ##### [13772] - Input value - environment variable     = APAMA_MACHTYPE=amd64-win64-msvc9
+2017-07-26 13:39:27.760 ##### [13772] - Input value - environment variable     = APAMA_MANAGEMENT_HOME=C:\SoftwareAG\Apama\
+2017-07-26 13:39:27.760 ##### [13772] - Input value - environment variable     = APAMA_COMMON_JRE=C:\SoftwareAG\jvm\jvm\jre
+2017-07-26 13:39:27.760 ##### [13772] - Input value - environment variable     = APAMA_DEV_HOME=C:\SoftwareAG\Apama\
+2017-07-26 13:39:27.760 ##### [13772] - Input value - environment variable     = APAMA_DASHBOARD_HOME=C:\SoftwareAG\Apama\
+2017-07-26 13:39:27.760 ##### [13772] - Using memory allocator                 = TBB scalable allocator
+2017-07-26 13:39:27.760 ##### [13772] - License File: C:\Users\Public\SoftwareAG\ApamaWork_9.12\license\ApamaServerLicense.xml
+2017-07-26 13:39:27.775 ##### [13772] - ================= Software AG License Data =================
+2017-07-26 13:39:27.775 ##### [13772] - Sales Information
+2017-07-26 13:39:27.775 ##### [13772] -      Serial Number      : 0000306131
+2017-07-26 13:39:27.775 ##### [13772] -      Customer ID        : 3150000
+2017-07-26 13:39:27.775 ##### [13772] -      Customer Name      : Software AG for Salesweb Internal USE ONLY
+2017-07-26 13:39:27.775 ##### [13772] - Product Information
+2017-07-26 13:39:27.775 ##### [13772] -      Product Name       : Apama Server
+2017-07-26 13:39:27.775 ##### [13772] -      Product Code       : PAMCO
+2017-07-26 13:39:27.775 ##### [13772] -      Operating System   : win
+2017-07-26 13:39:27.775 ##### [13772] -      Product Version    : 9.12
+2017-07-26 13:39:27.775 ##### [13772] -      Product Usage      : 
+2017-07-26 13:39:27.775 ##### [13772] -      Expiration Date    : 2017/10/19
+2017-07-26 13:39:27.775 ##### [13772] - License Information
+2017-07-26 13:39:27.775 ##### [13772] -      License Type       : 
+2017-07-26 13:39:27.775 ##### [13772] -      Price Unit         : ST
+2017-07-26 13:39:27.775 ##### [13772] -      Price Quantity     : 1
+2017-07-26 13:39:27.775 ##### [13772] -      Extended Rights    : 
+2017-07-26 13:39:27.775 ##### [13772] -      License Version    : 1.2
+2017-07-26 13:39:27.775 ##### [13772] - Physical Hardware
+2017-07-26 13:39:27.775 ##### [13772] -      Model              : Intel(R) Core(TM) i7-6600U CPU @ 2.60GHz
+2017-07-26 13:39:27.775 ##### [13772] -      Sockets            : 1
+2017-07-26 13:39:27.775 ##### [13772] -      Physical cores     : 2
+2017-07-26 13:39:27.775 ##### [13772] -      Logical cores      : 4
+2017-07-26 13:39:27.775 ##### [13772] -      Performance Bucket : CoreB
+2017-07-26 13:39:27.775 ##### [13772] -      Virtualization     : no
+2017-07-26 13:39:27.775 ##### [13772] - ==================== End License Data ======================
+2017-07-26 13:39:27.775 ##### [13772] - 
+2017-07-26 13:39:27.777 ##### [13772] - Input value - pidfile                  = 
+2017-07-26 13:39:27.777 ##### [13772] - Input value - per receiver queue size  = 10 s
+2017-07-26 13:39:27.777 ##### [13772] - Input value - per receiver queue size  = 10240 kb
+2017-07-26 13:39:27.777 ##### [13772] - Input value - input queue size         = 20000
+2017-07-26 13:39:27.777 ##### [13772] - Java application support               = disabled
+2017-07-26 13:39:27.777 ##### [13772] - External clocking                      = enabled
+2017-07-26 13:39:27.777 ##### [13772] - Input value - logfile                  = correlator.out
+2017-07-26 13:39:27.777 ##### [13772] - Input value - loglevel                 = INFO
+2017-07-26 13:39:27.777 ##### [13772] - Input value - inputLog                 = ** Warning input log not enabled **
+2017-07-26 13:39:27.777 ##### [13772] - Compiler optimizations                 = enabled - the debugger cannot be used; specify command line option "-g" to use it.
+2017-07-26 13:39:27.777 ##### [13772] - Using EPL runtime                      = interpreted
+2017-07-26 13:39:27.782 INFO  [13772] - Will log queue size every 5.000000 seconds
+2017-07-26 13:39:27.782 INFO  [13772] - Starting scheduler with 4 threads (determined from hardware)
+2017-07-26 13:39:27.785 INFO  [13772] - Server socket opened listening on 0.0.0.0:11935
+2017-07-26 13:39:27.786 ##### [13772] - Component ID: correlator (correlator/6447058443899804768/6447058443899804768)
+2017-07-26 13:39:27.786 ##### [13772] - Correlator, version 9.12.0.5.301831, running
+2017-07-26 13:39:28.329 INFO  [8756] - Sender engine_send (0000000003EAC820) (component ID 6447058448392428640/6447339923369139296) connected from 127.0.0.1:54137
+2017-07-26 13:39:28.331 INFO  [12676] - Set time to 0.00
+2017-07-26 13:39:28.334 INFO  [8756] - Receiver engine_receive (0000000004BCDBA0) (component ID 6447058448308280416/6447339923284991072) connected from 127.0.0.1:54139
+2017-07-26 13:39:28.334 INFO  [8756] - Receiver engine_receive (0000000004BCDBA0) initially subscribed to <no channels>
+2017-07-26 13:39:28.334 INFO  [8756] - Blocking receiver engine_receive (0000000004BCDBA0) will be blocked after 10.000000 seconds or 10240 kb if slow
+2017-07-26 13:39:28.334 INFO  [11964] - Receiver engine_receive (0000000004BCDBA0) unsubscribed from all channels
+2017-07-26 13:39:28.334 INFO  [11964] - Receiver engine_receive (0000000004BCDBA0) added subscriptions to [TEST_OUT]
+2017-07-26 13:39:28.397 INFO  [8756] - Sender engine_inject (0000000003EB0DD0) (component ID 6447058448291241056/6447339923267951712) connected from 127.0.0.1:54143
+2017-07-26 13:39:28.451 INFO  [16096] - Added monitor com.apama.scenario.ScenarioService
+2017-07-26 13:39:28.451 INFO  [16096] - Added monitor com.apama.scenario.RequestInstancesHandler
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.ScenarioServiceUpdaterMultipleInstances
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.ScenarioServiceUpdaterSingleInstance
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.ScenarioServiceUpdaterBase
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.CallbackHelper
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.ScenarioServiceLibrary
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.AllConfiguration
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.GetAllConfiguration
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.ScenarioProcessedUpdates
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.OperationCompleted
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.Configuration
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.GetConfiguration
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.ParallelStarting
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.RequestInstancesParallelDone
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.RequestInstancesParallel
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.FinishedScenarioRecovery
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.StartScenarioRecovery
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.ScenarioFinished
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.RequestInstancesInternal
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.SendQueuedUpdatesNow
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.ConfigureUpdates
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.SetThrottlingPeriod
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.ScenarioServiceUnloaded
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.ScenarioServiceLoaded
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.Instance
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.ScenarioUnloaded
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.Scenario
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.RequestInstancesDone
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.RequestInstancesOnChannelByUser
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.RequestInstancesOnChannel
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.RequestScenariosAck
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.RequestScenariosDone
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.RequestScenarios
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.StateChange
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.Acknowledge
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.Update
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.InstanceDied
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.Deleted
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.Delete
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.Edited
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.Edit
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.ParentChildRelationship
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.Created
+2017-07-26 13:39:28.451 INFO  [16096] - Added type com.apama.scenario.Create
+2017-07-26 13:39:28.451 INFO  [16096] - Injected MonitorScript from file C:\SoftwareAG\Apama\monitors\ScenarioService.mon (afe3040d21dd0d26824adc1fba28d335), size 74870 bytes, compile time 0.05 seconds
+2017-07-26 13:39:28.453 INFO  [13892] - com.apama.scenario.ScenarioService [1] ScenarioService interface loaded. MetaData: {"interface.fileName":"ScenarioService.mon","interface.fullVersion":"rel/9.12.0.x@301831","interface.language":"MonitorScript","interface.name":"ScenarioService","interface.package":"com.apama.scenario","interface.vendor":"Apama","interface.version":"9.12.0.5.301831"}
+2017-07-26 13:39:28.454 INFO  [11964] - Sender engine_inject (0000000003EB0DD0) (component ID 6447058448291241056/6447339923267951712) disconnected cleanly: Other party requested disconnection
+2017-07-26 13:39:28.542 INFO  [8756] - Sender engine_inject (0000000003EB0DD0) (component ID 6447058448470285408/6447339923446996064) connected from 127.0.0.1:54146
+2017-07-26 13:39:28.547 INFO  [10576] - MemoryStorePlugin version 9.12.0.5.301831 (build rel/9.12.0.x@301831 on amd64-win), loaded.
+2017-07-26 13:39:28.553 INFO  [10576] - Plugin library MemoryStorePlugin (C++ API v9.0) loaded OK
+2017-07-26 13:39:28.557 INFO  [12452] - Added type com.apama.memorystore.Storage
+2017-07-26 13:39:28.557 INFO  [12452] - Added type com.apama.memorystore.Store
+2017-07-26 13:39:28.557 INFO  [12452] - Added type com.apama.memorystore.Table
+2017-07-26 13:39:28.557 INFO  [12452] - Added type com.apama.memorystore.Iterator
+2017-07-26 13:39:28.557 INFO  [12452] - Added type com.apama.memorystore.RowChanged
+2017-07-26 13:39:28.557 INFO  [12452] - Added type com.apama.memorystore.Row
+2017-07-26 13:39:28.557 INFO  [12452] - Added type com.apama.memorystore.Schema
+2017-07-26 13:39:28.557 INFO  [12452] - Added type com.apama.memorystore.Finished
+2017-07-26 13:39:28.557 INFO  [12452] - Injected MonitorScript from file C:\SoftwareAG\Apama\monitors\data_storage\MemoryStore.mon (8735fe52fb5f5e3d4129636ba90b47c7), size 42249 bytes, compile time 0.01 seconds
+2017-07-26 13:39:28.558 INFO  [11964] - Sender engine_inject (0000000003EB0DD0) (component ID 6447058448470285408/6447339923446996064) disconnected cleanly: Other party requested disconnection
+2017-07-26 13:39:28.646 INFO  [8756] - Sender engine_inject (0000000003EB0DD0) (component ID 6447058448054262880/6447339923030973536) connected from 127.0.0.1:54149
+2017-07-26 13:39:28.657 INFO  [16096] - Added monitor com.apama.memorystore.MemoryStoreScenarioImpl
+2017-07-26 13:39:28.657 INFO  [16096] - Added type com.apama.memorystore.ForwardMemoryStoreUpdatesTo
+2017-07-26 13:39:28.657 INFO  [16096] - Injected MonitorScript from file C:\SoftwareAG\Apama\monitors\data_storage\MemoryStoreScenarioImpl.mon (d6fd01295e03b209b5219f5f07b4174c), size 10652 bytes, compile time 0.01 seconds
+2017-07-26 13:39:28.659 INFO  [11964] - Sender engine_inject (0000000003EB0DD0) (component ID 6447058448054262880/6447339923030973536) disconnected cleanly: Other party requested disconnection
+2017-07-26 13:39:28.761 INFO  [8756] - Sender engine_inject (0000000003EB0DD0) (component ID 6447058448207879264/6447339923184589920) connected from 127.0.0.1:54152
+2017-07-26 13:39:28.766 INFO  [12452] - Added monitor com.apama.dataview.DataViewService_Interface
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewServiceUnloaded
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewItemException
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewException
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewFieldLookup
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewAllItemsDeleted
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewItemDeleted
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewItem
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewDefinitionDeleted
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewDefinition
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewDeleteAllItems
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewDeleteItem
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewUpdateItemDelta
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewUpdateItem
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewAddOrUpdateItem
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewAddItem
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewGetFieldLookup
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewDeleteDefinition
+2017-07-26 13:39:28.766 INFO  [12452] - Added type com.apama.dataview.DataViewAddDefinition
+2017-07-26 13:39:28.766 INFO  [12452] - Injected MonitorScript from file C:\SoftwareAG\Apama\monitors\DataViewService_interface.mon (939da015e6d3b189da1ee6453f308725), size 20389 bytes, compile time 0.00 seconds
+2017-07-26 13:39:28.772 INFO  [13892] - com.apama.dataview.DataViewService_Interface [6] DataViewService interface loaded. MetaData: {"interface.fileName":"DataViewService_Interface.mon","interface.fullVersion":"rel/9.12.0.x@301831","interface.language":"MonitorScript","interface.name":"DataViewService_Interface","interface.package":"com.apama.dataview","interface.vendor":"Apama","interface.version":"9.12.0.5.301831"}
+2017-07-26 13:39:28.812 INFO  [12452] - Added monitor com.apama.dataview.DataViewService_Impl_Dict
+2017-07-26 13:39:28.812 INFO  [12452] - Injected MonitorScript from file C:\SoftwareAG\Apama\monitors\DataViewService_Impl_Dict.mon (087b152e0585ae604c2bcecf53103869), size 59718 bytes, compile time 0.05 seconds
+2017-07-26 13:39:28.813 INFO  [11496] - com.apama.dataview.DataViewService_Impl_Dict [7] DataViewService implementation loaded. MetaData: {"implementation.fileName":"DataViewService_Impl_Dict.mon","implementation.fullVersion":"rel/9.12.0.x@301831","implementation.language":"MonitorScript","implementation.name":"DataViewService_Impl_Dict","implementation.package":"com.apama.dataview","implementation.vendor":"Apama","implementation.version":"9.12.0.5.301831"}
+2017-07-26 13:39:28.815 INFO  [11964] - Sender engine_inject (0000000003EB0DD0) (component ID 6447058448207879264/6447339923184589920) disconnected cleanly: Other party requested disconnection
+2017-07-26 13:39:28.910 INFO  [8756] - Sender engine_inject (0000000008B69E80) (component ID 6447058448143129696/6447339923119840352) connected from 127.0.0.1:54155
+2017-07-26 13:39:28.913 INFO  [11900] - Added monitor com.industry.analytics.InternConstants
+2017-07-26 13:39:28.913 INFO  [11900] - Added type com.industry.analytics.Constants
+2017-07-26 13:39:28.913 INFO  [11900] - Injected MonitorScript from file C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\..\output\windows\Industry Analytics Kit 2.0.0.1\Industry Analytics Kit\eventdefinitions\Constants.mon (c58da15773957ed49ef31d46ecb5dd0e), size 5210 bytes, compile time 0.00 seconds
+2017-07-26 13:39:28.914 INFO  [11964] - Sender engine_inject (0000000008B69E80) (component ID 6447058448143129696/6447339923119840352) disconnected cleanly: Other party requested disconnection
+2017-07-26 13:39:28.914 INFO  [11876] - Interning ALERT_CHANNEL
+2017-07-26 13:39:28.914 INFO  [11876] - Interning DATASOURCE_MGMT_CHANNEL
+2017-07-26 13:39:28.914 INFO  [11876] - Interning ANALYTICS_MANAGEMENT_CHANNEL
+2017-07-26 13:39:28.914 INFO  [11876] - Interning DELETE
+2017-07-26 13:39:28.914 INFO  [11876] - Interning RESET
+2017-07-26 13:39:28.914 INFO  [11876] - Interning START
+2017-07-26 13:39:28.914 INFO  [11876] - Interning STOP
+2017-07-26 13:39:28.914 INFO  [11876] - Interning boolean
+2017-07-26 13:39:28.914 INFO  [11876] - Interning decimal
+2017-07-26 13:39:28.914 INFO  [11876] - Interning float
+2017-07-26 13:39:28.914 INFO  [11876] - Interning integer
+2017-07-26 13:39:28.914 INFO  [11876] - Interning string
+2017-07-26 13:39:28.914 INFO  [11876] - Interning sequence<string>
+2017-07-26 13:39:28.914 INFO  [11876] - Interning _
+2017-07-26 13:39:28.914 INFO  [11876] - Interning INDUSTRY_ANALYTICS
+2017-07-26 13:39:29.001 INFO  [8756] - Sender engine_inject (0000000008B69E80) (component ID 6447058447954123872/6447339922930834528) connected from 127.0.0.1:54158
+2017-07-26 13:39:29.015 INFO  [12452] - Added monitor com.industry.analytics.InternMemStoreUtil
+2017-07-26 13:39:29.015 INFO  [12452] - Added type com.industry.analytics.MemStoreUtil
+2017-07-26 13:39:29.015 INFO  [12452] - Added type com.industry.analytics.TableReady
+2017-07-26 13:39:29.015 INFO  [12452] - Added type com.industry.analytics.StoreProxy
+2017-07-26 13:39:29.015 INFO  [12452] - Added type com.industry.analytics.SchemaProxy
+2017-07-26 13:39:29.015 INFO  [12452] - Added type com.industry.analytics.TableProxy
+2017-07-26 13:39:29.015 INFO  [12452] - Injected MonitorScript from file C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\..\output\windows\Industry Analytics Kit 2.0.0.1\Industry Analytics Kit\monitors\cache\MemStoreUtil.mon (58f4a179d14ac378084a1f5217f804fc), size 14152 bytes, compile time 0.01 seconds
+2017-07-26 13:39:29.016 INFO  [13892] - Interning IN_MEMORY
+2017-07-26 13:39:29.016 INFO  [13892] - Interning DISTRIBUTED
+2017-07-26 13:39:29.016 INFO  [13892] - Interning CORRELATOR_PERSISTENT
+2017-07-26 13:39:29.020 INFO  [12452] - Added type com.industry.analytics.Cache
+2017-07-26 13:39:29.020 INFO  [12452] - Added type com.industry.analytics.ClearCache
+2017-07-26 13:39:29.020 INFO  [12452] - Injected MonitorScript from file C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\..\output\windows\Industry Analytics Kit 2.0.0.1\Industry Analytics Kit\monitors\cache\Cache.mon (8ed54142da4d13d07ad8a1979c20f71e), size 4184 bytes, compile time 0.00 seconds
+2017-07-26 13:39:29.030 INFO  [12452] - Added monitor com.industry.analytics.InternDataView
+2017-07-26 13:39:29.030 INFO  [12452] - Added type com.industry.analytics.DataView
+2017-07-26 13:39:29.030 INFO  [12452] - Added type com.industry.analytics.ClearDataView
+2017-07-26 13:39:29.030 INFO  [12452] - Injected MonitorScript from file C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\..\output\windows\Industry Analytics Kit 2.0.0.1\Industry Analytics Kit\monitors\cache\DataView.mon (4c2418bcf4a79012cc655713ec3400a3), size 9213 bytes, compile time 0.01 seconds
+2017-07-26 13:39:29.031 INFO  [11876] - Interning DATAVIEW_CHANNEL
+2017-07-26 13:39:29.031 INFO  [11964] - Sender engine_inject (0000000008B69E80) (component ID 6447058447954123872/6447339922930834528) disconnected cleanly: Other party requested disconnection
+2017-07-26 13:39:29.106 INFO  [8756] - Sender engine_inject (0000000004BDC870) (component ID 6447058452294704224/6447339927271414880) connected from 127.0.0.1:54161
+2017-07-26 13:39:29.111 INFO  [11900] - Added monitor com.industry.analytics.InternData
+2017-07-26 13:39:29.111 INFO  [11900] - Added type com.industry.analytics.Data
+2017-07-26 13:39:29.111 INFO  [11900] - Added type com.industry.analytics.DataDetails
+2017-07-26 13:39:29.111 INFO  [11900] - Added type com.industry.analytics.DataConstants
+2017-07-26 13:39:29.111 INFO  [11900] - Injected MonitorScript from file C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\..\output\windows\Industry Analytics Kit 2.0.0.1\Industry Analytics Kit\eventdefinitions\Data.mon (292255911c0f58f7bbd91d05f94e841b), size 8403 bytes, compile time 0.00 seconds
+2017-07-26 13:39:29.111 INFO  [13892] - Interning streamName
+2017-07-26 13:39:29.111 INFO  [13892] - Interning type
+2017-07-26 13:39:29.111 INFO  [13892] - Interning sourceId
+2017-07-26 13:39:29.111 INFO  [13892] - Interning timestamp
+2017-07-26 13:39:29.111 INFO  [13892] - Interning dValue
+2017-07-26 13:39:29.111 INFO  [13892] - Interning sValue
+2017-07-26 13:39:29.111 INFO  [13892] - Interning xValue
+2017-07-26 13:39:29.111 INFO  [13892] - Interning yValue
+2017-07-26 13:39:29.111 INFO  [13892] - Interning zValue
+2017-07-26 13:39:29.111 INFO  [13892] - Interning params
+2017-07-26 13:39:29.111 INFO  [13892] - Interning a
+2017-07-26 13:39:29.111 INFO  [13892] - Interning c
+2017-07-26 13:39:29.111 INFO  [13892] - Interning r
+2017-07-26 13:39:29.122 INFO  [11900] - Added monitor com.industry.analytics.InternAnalytic
+2017-07-26 13:39:29.122 INFO  [11900] - Added type com.industry.analytics.AnalyticManagement
+2017-07-26 13:39:29.122 INFO  [11900] - Added type com.industry.analytics.Analytic
+2017-07-26 13:39:29.122 INFO  [11900] - Injected MonitorScript from file C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\..\output\windows\Industry Analytics Kit 2.0.0.1\Industry Analytics Kit\eventdefinitions\Analytic.mon (aacd62abcc051da3ec43683aafa63b9c), size 38137 bytes, compile time 0.01 seconds
+2017-07-26 13:39:29.122 INFO  [11496] - Interning managementId
+2017-07-26 13:39:29.123 INFO  [11900] - Added type com.industry.analytics.Ready
+2017-07-26 13:39:29.123 INFO  [11900] - Injected MonitorScript from file C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\..\output\windows\Industry Analytics Kit 2.0.0.1\Industry Analytics Kit\eventdefinitions\Ready.mon (03ecc1ed2327b66d7144916aafd02658), size 1294 bytes, compile time 0.00 seconds
+2017-07-26 13:39:29.124 INFO  [11964] - Sender engine_inject (0000000004BDC870) (component ID 6447058452294704224/6447339927271414880) disconnected cleanly: Other party requested disconnection
+2017-07-26 13:39:29.171 INFO  [8756] - Sender engine_inject (0000000009009160) (component ID 6447058451944479840/6447339926921190496) connected from 127.0.0.1:54164
+2017-07-26 13:39:29.174 INFO  [12452] - Added type com.industry.analytics.AnalyticInterface
+2017-07-26 13:39:29.174 INFO  [12452] - Injected MonitorScript from file C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\..\output\windows\Industry Analytics Kit 2.0.0.1\Industry Analytics Kit\monitors\interfaces\AnalyticInterface.mon (2f395e89ce869a8023a28419ad9e3deb), size 5391 bytes, compile time 0.00 seconds
+2017-07-26 13:39:29.175 INFO  [11964] - Sender engine_inject (0000000009009160) (component ID 6447058451944479840/6447339926921190496) disconnected cleanly: Other party requested disconnection
+2017-07-26 13:39:29.237 INFO  [8756] - Sender engine_inject (0000000009009160) (component ID 6447058452066901088/6447339927043611744) connected from 127.0.0.1:54167
+2017-07-26 13:39:29.248 INFO  [11900] - Added monitor com.industry.analytics.InternAnalyticObject
+2017-07-26 13:39:29.248 INFO  [11900] - Added type com.industry.analytics.AnalyticObject
+2017-07-26 13:39:29.248 INFO  [11900] - Added type com.industry.analytics.KillManagementChannelListeners
+2017-07-26 13:39:29.248 INFO  [11900] - Added type com.industry.analytics.KillInputChannelListeners
+2017-07-26 13:39:29.248 INFO  [11900] - Injected MonitorScript from file C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\..\output\windows\Industry Analytics Kit 2.0.0.1\Industry Analytics Kit\monitors\objects\AnalyticObject.mon (0d29dd1fea8418be329d92a1243355a1), size 23621 bytes, compile time 0.01 seconds
+2017-07-26 13:39:29.248 INFO  [11496] - Interning com.apama.queries
+2017-07-26 13:39:29.248 INFO  [11496] - Interning sendResultToChannel
+2017-07-26 13:39:29.248 INFO  [11496] - Interning sendResultToQueryChannel
+2017-07-26 13:39:29.248 INFO  [11964] - Sender engine_inject (0000000009009160) (component ID 6447058452066901088/6447339927043611744) disconnected cleanly: Other party requested disconnection
+2017-07-26 13:39:29.323 INFO  [8756] - Sender engine_inject (0000000009009160) (component ID 6447058452630510688/6447339927607221344) connected from 127.0.0.1:54170
+2017-07-26 13:39:29.327 INFO  [12452] - Added monitor com.industry.analytics.VersioningService
+2017-07-26 13:39:29.327 INFO  [12452] - Added type com.industry.analytics.CurrentVersion
+2017-07-26 13:39:29.327 INFO  [12452] - Added type com.industry.analytics.CheckVersion
+2017-07-26 13:39:29.327 INFO  [12452] - Injected MonitorScript from file C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\..\output\windows\Industry Analytics Kit 2.0.0.1\Industry Analytics Kit\monitors\objects\VersioningService.mon (32b3dafe03c073fd99a14eb8169ea248), size 5979 bytes, compile time 0.00 seconds
+2017-07-26 13:39:29.327 INFO  [11964] - Sender engine_inject (0000000009009160) (component ID 6447058452630510688/6447339927607221344) disconnected cleanly: Other party requested disconnection
+2017-07-26 13:39:29.376 INFO  [8756] - Sender engine_inject (0000000008F79890) (component ID 6447058452529585248/6447339927506295904) connected from 127.0.0.1:54173
+2017-07-26 13:39:29.383 INFO  [11900] - Added monitor com.industry.analytics.utilities.InternMemoryStore
+2017-07-26 13:39:29.383 INFO  [11900] - Added type com.industry.analytics.utilities.MemoryStore
+2017-07-26 13:39:29.383 INFO  [11900] - Added type com.industry.analytics.utilities.DumpTable
+2017-07-26 13:39:29.383 INFO  [11900] - Injected MonitorScript from file C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\..\output\windows\Industry Analytics Kit 2.0.0.1\Industry Analytics Kit\monitors\analytics\Utilities\MemoryStore.mon (86a3002a69380035ce677054283f121c), size 15598 bytes, compile time 0.00 seconds
+2017-07-26 13:39:29.383 INFO  [13892] - Interning MemoryStore
+2017-07-26 13:39:29.383 INFO  [13892] - Interning exposeMemoryView
+2017-07-26 13:39:29.383 INFO  [13892] - Interning exposePersistentView
+2017-07-26 13:39:29.385 WARN  [10576] - A persistent monitor com.industry.analytics.utilities.MemoryStoreService injected into a non-persistent correlator
+2017-07-26 13:39:29.387 INFO  [11900] - Added monitor com.industry.analytics.utilities.MemoryStoreService
+2017-07-26 13:39:29.387 INFO  [11900] - Injected MonitorScript from file C:\dev\NSM_134772 - Remove verbose logging in Analytics\tests\..\output\windows\Industry Analytics Kit 2.0.0.1\Industry Analytics Kit\monitors\analytics\Utilities\MemoryStoreService.mon (07649ed9cf8d5b7afbab1b7a7627cc17), size 2049 bytes, compile time 0.00 seconds
+2017-07-26 13:39:29.387 INFO  [12728] - Sender engine_inject (0000000008F79890) (component ID 6447058452529585248/6447339927506295904) disconnected cleanly: Other party requested disconnection
+2017-07-26 13:39:29.428 INFO  [8756] - Sender engine_send (0000000008F79890) (component ID 6447058452571266144/6447339927547976800) connected from 127.0.0.1:54176
+2017-07-26 13:39:29.432 INFO  [11496] - com.industry.analytics.utilities.MemoryStoreService [17] Validating com.industry.analytics.Analytic("MemoryStore",[],[],{})
+2017-07-26 13:39:29.432 ERROR [11496] - com.industry.analytics.utilities.MemoryStoreService [17] inputDataNames sequence should only have one entry.
+2017-07-26 13:39:29.432 ERROR [11496] - com.industry.analytics.utilities.MemoryStoreService [17]   inputDataNames: []
+2017-07-26 13:39:29.432 ERROR [11496] - com.industry.analytics.utilities.MemoryStoreService [17] Error spawning MemoryStore instance.
+2017-07-26 13:39:29.433 INFO  [11496] - com.industry.analytics.utilities.MemoryStoreService [18] Validating com.industry.analytics.Analytic("MemoryStore",["Input1"],["Output1"],{})
+2017-07-26 13:39:29.433 ERROR [11496] - com.industry.analytics.utilities.MemoryStoreService [18] outputDataNames sequence should be empty.
+2017-07-26 13:39:29.433 ERROR [11496] - com.industry.analytics.utilities.MemoryStoreService [18]   outputDataNames: ["Output1"]
+2017-07-26 13:39:29.433 ERROR [11496] - com.industry.analytics.utilities.MemoryStoreService [18] Error spawning MemoryStore instance.
+2017-07-26 13:39:29.433 INFO  [11496] - com.industry.analytics.utilities.MemoryStoreService [19] Validating com.industry.analytics.Analytic("MemoryStore",["Input1"],["Output1","Output2"],{})
+2017-07-26 13:39:29.433 ERROR [11496] - com.industry.analytics.utilities.MemoryStoreService [19] outputDataNames sequence should be empty.
+2017-07-26 13:39:29.433 ERROR [11496] - com.industry.analytics.utilities.MemoryStoreService [19]   outputDataNames: ["Output1","Output2"]
+2017-07-26 13:39:29.433 ERROR [11496] - com.industry.analytics.utilities.MemoryStoreService [19] Error spawning MemoryStore instance.
+2017-07-26 13:39:29.433 INFO  [11496] - com.industry.analytics.utilities.MemoryStoreService [21] Validating com.industry.analytics.Analytic("MemoryStore",["Input1"],[],{"exposeMemoryView":"","exposePersistentView":""})
+2017-07-26 13:39:29.433 ERROR [11496] - com.industry.analytics.utilities.MemoryStoreService [21]   Unable to parse param exposeMemoryView as boolean
+2017-07-26 13:39:29.433 ERROR [11496] - com.industry.analytics.utilities.MemoryStoreService [21]   Unable to parse param exposePersistentView as boolean
+2017-07-26 13:39:29.433 ERROR [11496] - com.industry.analytics.utilities.MemoryStoreService [21] Error spawning MemoryStore instance.
+2017-07-26 13:39:29.434 INFO  [13892] - com.industry.analytics.utilities.MemoryStoreService [20] Validating com.industry.analytics.Analytic("MemoryStore",["Input1","Input2"],["Output1","Output2"],{})
+2017-07-26 13:39:29.434 ERROR [13892] - com.industry.analytics.utilities.MemoryStoreService [20] inputDataNames sequence should only have one entry.
+2017-07-26 13:39:29.434 ERROR [13892] - com.industry.analytics.utilities.MemoryStoreService [20]   inputDataNames: ["Input1","Input2"]
+2017-07-26 13:39:29.434 ERROR [13892] - com.industry.analytics.utilities.MemoryStoreService [20] outputDataNames sequence should be empty.
+2017-07-26 13:39:29.434 ERROR [13892] - com.industry.analytics.utilities.MemoryStoreService [20]   outputDataNames: ["Output1","Output2"]
+2017-07-26 13:39:29.434 INFO  [11496] - com.industry.analytics.utilities.MemoryStoreService [22] Validating com.industry.analytics.Analytic("MemoryStore",["Input1"],[],{})
+2017-07-26 13:39:29.434 INFO  [11496] - Interning Input1
+2017-07-26 13:39:29.434 INFO  [11496] - com.industry.analytics.utilities.MemoryStoreService [22] CORRELATOR_PERSISTENT cache initialized.
+2017-07-26 13:39:29.434 ERROR [13892] - com.industry.analytics.utilities.MemoryStoreService [20] Error spawning MemoryStore instance.
+2017-07-26 13:39:29.434 INFO  [11496] - com.industry.analytics.utilities.MemoryStoreService [22] CORRELATOR_PERSISTENT cache initialized.
+2017-07-26 13:39:29.434 INFO  [11496] - com.industry.analytics.utilities.MemoryStoreService [22] Adding table: MemoryStore to TableProxy.
+2017-07-26 13:39:29.434 INFO  [11496] - com.industry.analytics.utilities.MemoryStoreService [22] MemoryStore cache ready.
+2017-07-26 13:39:29.434 INFO  [11496] - com.industry.analytics.utilities.MemoryStoreService [22] Adding table: Input1 to TableProxy.
+2017-07-26 13:39:29.434 INFO  [11496] - com.industry.analytics.utilities.MemoryStoreService [22] Input1 cache ready.
+2017-07-26 13:39:29.434 INFO  [13892] - com.industry.analytics.utilities.MemoryStoreService [23] Validating com.industry.analytics.Analytic("MemoryStore",["Input1"],[],{"name":"MyMemoryStore"})
+2017-07-26 13:39:29.434 INFO  [13892] - com.industry.analytics.utilities.MemoryStoreService [23] CORRELATOR_PERSISTENT cache initialized.
+2017-07-26 13:39:29.435 INFO  [11496] - com.industry.analytics.utilities.MemoryStoreService [22] Analytic MemoryStore started for inputDataNames ["Input1"]
+2017-07-26 13:39:29.435 INFO  [13892] - com.industry.analytics.utilities.MemoryStoreService [23] Adding table: MemoryStore to TableProxy.
+2017-07-26 13:39:29.435 INFO  [13892] - com.industry.analytics.utilities.MemoryStoreService [23] MemoryStore cache ready.
+2017-07-26 13:39:29.435 INFO  [13892] - com.industry.analytics.utilities.MemoryStoreService [23] CORRELATOR_PERSISTENT cache initialized.
+2017-07-26 13:39:29.435 INFO  [13892] - com.industry.analytics.utilities.MemoryStoreService [23] Adding table: MyMemoryStore to TableProxy.
+2017-07-26 13:39:29.435 INFO  [13892] - com.industry.analytics.utilities.MemoryStoreService [23] MyMemoryStore cache ready.
+2017-07-26 13:39:29.435 INFO  [13892] - com.industry.analytics.utilities.MemoryStoreService [23] Analytic MemoryStore started for inputDataNames ["Input1"]
+2017-07-26 13:39:29.521 INFO  [11964] - Sender engine_send (0000000008F79890) (component ID 6447058452571266144/6447339927547976800) disconnected cleanly: Other party requested disconnection
+2017-07-26 13:39:29.662 ##### [12452] - Shutting down correlator in response to client (127.0.0.1:54178) request: Shutdown requested by test
+2017-07-26 13:39:29.668 INFO  [13772] - MemoryStorePlugin unloaded.
+2017-07-26 13:39:29.669 INFO  [13772] - MessageSenderImpl.Shutdown() - Disconnecting remote receiver 6447058448308280416:6447339923284991072
+2017-07-26 13:39:29.670 INFO  [13772] - MessageReceiverImpl.Shutdown() - Disconnecting remote sender 6447058448392428640:6447339923369139296
+2017-07-26 13:39:29.671 INFO  [13772] - Correlator shutdown is complete

@@ -1,0 +1,99 @@
+//*****************************************************************************
+// Title:         AnalyticTest
+//*****************************************************************************
+
+package com.industry.analytics.Analytic_cor_002;
+using com.industry.analytics.Analytic;
+
+monitor AnalyticTest
+{
+	action onload() {
+		// Create a new Analyticer
+		Analytic c := Analytic("Test", ["Input1", "Input2"],
+										 ["Output1", "Output2"],
+										 {"boolean_param":"true",
+										  "decimal_param":"1.0",
+										  "float_param":"2.0",
+										  "integer_param":"3",
+										  "string_param":"a_string"});
+		
+		// Validate the set of parameters
+		// Defining all params - SHOULD PASS
+		boolean result := c.validateParams("Test", -1, -1, 
+										   ["boolean_param", "decimal_param", "float_param", "integer_param", "string_param"],
+		                                   ["boolean", "decimal", "float", "integer", "string"],
+		                                   [true, true, true, true, true]);
+		log "TEST 1: " + result.toString() at INFO;
+
+		// Missing all required params - SHOULD FAIL
+		result := c.validateParams( "Test", -1, -1, 
+		                            new sequence<string>,
+		                            new sequence<string>,
+								   [true, true, true, true, true]);
+		log "TEST 2: " + result.toString() at INFO;
+
+		// Defining all required params, but missing types - SHOULD FAIL
+		result := c.validateParams("Test", -1, -1, 
+		                           ["boolean_param", "decimal_param", "float_param", "integer_param", "string_param"],
+		                           new sequence<string>,
+								   [true, true, true, true, true]);
+		log "TEST 3: " + result.toString() at INFO;
+
+		// Missing all required params, but defining types - SHOULD FAIL
+		result := c.validateParams( "Test", -1, -1, 
+		                            new sequence<string>,
+		                            ["boolean", "decimal", "float", "integer", "string"],
+								    [true, true, true, true, true]);
+		log "TEST 4: " + result.toString() at INFO;
+
+		// Mis-matching size of params to sequence of mandatory flags - SHOULD FAIL
+		result := c.validateParams("Test", -1, -1, 
+		                           ["boolean_param", "float_param", "string_param"],
+								   ["boolean", "float", "string"],
+								   [true, true, true, true, true]);
+		log "TEST 5: " + result.toString() at INFO;
+
+		// Mis-matching size of param names to type and mandatory sequences - SHOULD FAIL
+		result := c.validateParams("Test", -1, -1, 
+		                           ["boolean_param", "float_param", "string_param"],
+		                           ["boolean", "decimal", "float", "integer", "string"],
+								   [true, true, true, true, true]);
+		log "TEST 6: " + result.toString() at INFO;
+
+		// Mis-matching size of params to type sequence - SHOULD FAIL
+		result := c.validateParams("Test", -1, -1, 
+		                           ["boolean_param", "decimal_param", "float_param", "integer_param", "string_param"],
+								   ["boolean", "float", "string"],
+								   [true, true, true, true, true]);
+		log "TEST 7: " + result.toString() at INFO;
+
+		// Mis-matching size of params to type sequence, but non-mandatory values - SHOULD FAIL
+		result := c.validateParams("Test", -1, -1, 
+		                           ["boolean_param", "decimal_param"],
+		                           ["boolean", "decimal"],
+								   [true, true, false, false, false]);
+		log "TEST 8: " + result.toString() at INFO;
+
+		// Mis-matching size of params to type sequence, but non-mandatory values (different mandatory sequence)- SHOULD FAIL
+		result := c.validateParams("Test", -1, -1, 
+		                           ["boolean_param", "decimal_param"],
+		                           ["boolean", "decimal"],
+								   [false, false, false, true, true]);
+		log "TEST 9: " + result.toString() at INFO;
+		
+		// Non-mandatory fields are invalid types - SHOULD FAIL
+		result := c.validateParams("Test", -1, -1, 
+		                           ["boolean_param", "decimal_param", "float_param", "integer_param", "string_param"],
+		                           ["boolean", "boolean", "float", "boolean", "string"],
+								   [true, false, true, false, true]);
+		log "TEST 10: " + result.toString() at INFO;
+
+		// Mix of non-mandatory and mandatory valid params - SHOULD PASS
+		result := c.validateParams("Test", -1, -1, 
+		                           ["boolean_param", "decimal_param", "float_param", "integer_param", "string_param"],
+		                           ["boolean", "decimal", "float", "integer", "string"],
+								   [true, false, true, false, true]);
+		log "TEST 11: " + result.toString() at INFO;
+
+	}
+}

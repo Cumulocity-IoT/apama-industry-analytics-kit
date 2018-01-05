@@ -1,0 +1,176 @@
+
+Monitors
+========
+Name                                               Num Sub Monitors
+----                                               ----------------
+com.apama.dataview.DataViewService_Impl_Dict                 1
+com.apama.memorystore.MemoryStoreScenarioImpl                3
+com.apama.scenario.RequestInstancesHandler                   1
+com.apama.scenario.ScenarioService                           1
+com.industry.analytics.InternAnalytic                        1
+com.industry.analytics.InternAnalyticObject                  1
+com.industry.analytics.InternConstants                       1
+com.industry.analytics.InternData                            1
+com.industry.analytics.InternDataView                        1
+com.industry.analytics.InternLifecycleDummy                  1
+com.industry.analytics.InternMemStoreUtil                    1
+com.industry.analytics.LifecycleDummyService                 2
+com.industry.analytics.streaming_calculations.DeltaService   2
+com.industry.analytics.streaming_calculations.InternDelta    1
+com.industry.analytics.VersioningService                     1
+
+Java Applications
+=================
+Name                                               Num Listeners
+----                                               -------------
+
+
+Event Types
+===========
+Name                                               Num Event Templates
+----                                               -------------------
+any                                                          0
+com.apama.dataview.DataViewAddDefinition                     1
+com.apama.dataview.DataViewAddItem                           1
+com.apama.dataview.DataViewAddOrUpdateItem                   1
+com.apama.dataview.DataViewAllItemsDeleted                   0
+com.apama.dataview.DataViewDefinition                        0
+com.apama.dataview.DataViewDefinitionDeleted                 0
+com.apama.dataview.DataViewDeleteAllItems                    1
+com.apama.dataview.DataViewDeleteDefinition                  1
+com.apama.dataview.DataViewDeleteItem                        1
+com.apama.dataview.DataViewException                         0
+com.apama.dataview.DataViewFieldLookup                       0
+com.apama.dataview.DataViewGetFieldLookup                    1
+com.apama.dataview.DataViewItem                              0
+com.apama.dataview.DataViewItemDeleted                       0
+com.apama.dataview.DataViewItemException                     0
+com.apama.dataview.DataViewService_Impl_Dict._Item           0
+com.apama.dataview.DataViewServiceUnloaded                   0
+com.apama.dataview.DataViewUpdateItem                        1
+com.apama.dataview.DataViewUpdateItemDelta                   1
+com.apama.memorystore.Finished                               0
+com.apama.memorystore.ForwardMemoryStoreUpdatesTo            1
+com.apama.memorystore.Iterator                               0
+com.apama.memorystore.MemoryStoreScenarioImpl.InvalidRequestHandler 0
+com.apama.memorystore.MemoryStoreScenarioImpl.RequestInstancesHandler 0
+com.apama.memorystore.MissedRowChanges                       0
+com.apama.memorystore.Row                                    0
+com.apama.memorystore.RowChanged                             0
+com.apama.memorystore.Schema                                 0
+com.apama.memorystore.Storage                                0
+com.apama.memorystore.Store                                  0
+com.apama.memorystore.Table                                  0
+com.apama.scenario.Acknowledge                               0
+com.apama.scenario.AllConfiguration                          0
+com.apama.scenario.CallbackHelper                            0
+com.apama.scenario.Configuration                             0
+com.apama.scenario.ConfigureUpdates                          3
+com.apama.scenario.Create                                    2
+com.apama.scenario.Created                                   0
+com.apama.scenario.Delete                                    1
+com.apama.scenario.Deleted                                   0
+com.apama.scenario.Edit                                      1
+com.apama.scenario.Edited                                    0
+com.apama.scenario.FinishedScenarioRecovery                  0
+com.apama.scenario.GetAllConfiguration                       2
+com.apama.scenario.GetConfiguration                          2
+com.apama.scenario.Instance                                  1
+com.apama.scenario.InstanceDied                              0
+com.apama.scenario.OperationCompleted                        0
+com.apama.scenario.ParallelStarting                          0
+com.apama.scenario.ParentChildRelationship                   0
+com.apama.scenario.RequestInstancesDone                      1
+com.apama.scenario.RequestInstancesInternal                  1
+com.apama.scenario.RequestInstancesOnChannel                 1
+com.apama.scenario.RequestInstancesOnChannelByUser           1
+com.apama.scenario.RequestInstancesParallel                  1
+com.apama.scenario.RequestInstancesParallelDone              0
+com.apama.scenario.RequestScenarios                          1
+com.apama.scenario.RequestScenariosAck                       0
+com.apama.scenario.RequestScenariosDone                      0
+com.apama.scenario.Scenario                                  2
+com.apama.scenario.ScenarioFinished                          0
+com.apama.scenario.ScenarioProcessedUpdates                  0
+com.apama.scenario.ScenarioService.PendingOperation          0
+com.apama.scenario.ScenarioServiceLibrary                    0
+com.apama.scenario.ScenarioServiceLoaded                     0
+com.apama.scenario.ScenarioServiceUnloaded                   0
+com.apama.scenario.ScenarioServiceUpdaterBase                0
+com.apama.scenario.ScenarioServiceUpdaterMultipleInstances   0
+com.apama.scenario.ScenarioServiceUpdaterSingleInstance      0
+com.apama.scenario.ScenarioUnloaded                          2
+com.apama.scenario.SendQueuedUpdatesNow                      0
+com.apama.scenario.SetThrottlingPeriod                       1
+com.apama.scenario.StartScenarioRecovery                     2
+com.apama.scenario.StateChange                               0
+com.apama.scenario.Update                                    0
+com.industry.analytics.Analytic                              4
+com.industry.analytics.AnalyticInterface                     0
+com.industry.analytics.AnalyticManagement                    0
+com.industry.analytics.AnalyticObject                        0
+com.industry.analytics.Cache                                 0
+com.industry.analytics.CheckVersion                          1
+com.industry.analytics.ClearCache                            0
+com.industry.analytics.ClearDataView                         0
+com.industry.analytics.Constants                             0
+com.industry.analytics.CurrentVersion                        0
+com.industry.analytics.Data                                  2
+com.industry.analytics.DataConstants                         0
+com.industry.analytics.DataDetails                           0
+com.industry.analytics.DataView                              0
+com.industry.analytics.InternAnalytic.StayAlive              1
+com.industry.analytics.InternConstants.StayAlive             1
+com.industry.analytics.InternData.StayAlive                  1
+com.industry.analytics.InternDataView.StayAlive              1
+com.industry.analytics.InternLifecycleDummy.StayAlive        1
+com.industry.analytics.InternMemStoreUtil.StayAlive          1
+com.industry.analytics.KillInputChannelListeners             2
+com.industry.analytics.KillManagementChannelListeners        0
+com.industry.analytics.LifecycleDummy                        0
+com.industry.analytics.MemStoreUtil                          0
+com.industry.analytics.Ready                                 0
+com.industry.analytics.SchemaProxy                           0
+com.industry.analytics.StoreProxy                            0
+com.industry.analytics.streaming_calculations.Delta          0
+com.industry.analytics.streaming_calculations.InternDelta.StayAlive 1
+com.industry.analytics.TableProxy                            0
+com.industry.analytics.TableReady                            0
+
+
+Timers
+======
+Name                                               Num Timers
+----                                               ----------
+
+
+Contexts
+========
+Name                                  Queue Size   Num Sub Monitors   Channels
+----                                  ----------   ----------------   --------
+Delta1                                       0               1        Input 
+LifecycleDummy2                              0               1        Input 
+main                                         0               15        ANALYTICS_MANAGEMENT_CHANNEL 
+MemoryStore_emitter                          0               1        
+MemoryStore_forwarder                        0               1        
+
+
+Aggregate Functions
+===================
+Name
+----
+
+Receivers
+=========
+Name                                Address                               Queue Size   Channels
+----                                -------                               ----------   --------
+engine_receive                      127.0.0.1:59336                              0     KillMe 
+engine_receive                      127.0.0.1:59333                              0     Default 
+engine_receive                      127.0.0.1:59282                              0     TEST_OUT 
+engine_receive                      127.0.0.1:59339                              0     KillMeSecond 
+
+Plugin Receivers
+================
+Name                                  Queue Size   Channels
+----                                  ----------   --------
+

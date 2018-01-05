@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("combiner", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("COMBINER", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("CoMbInEr", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("Combiner", ["Input"], ["Output"], {})

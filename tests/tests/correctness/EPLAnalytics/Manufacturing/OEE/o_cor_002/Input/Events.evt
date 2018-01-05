@@ -1,0 +1,18 @@
+"Availability", com.industry.analytics.Data("Availability", "r", "source", 0, 1, "", 0.0, 0.0, 0.0, {})
+"Quality",      com.industry.analytics.Data("Quality",      "r", "source", 1, 1, "", 0.0, 0.0, 0.0, {})
+"Performance",  com.industry.analytics.Data("Performance",  "r", "source", 2, 1, "", 0.0, 0.0, 0.0, {})
+
+// Different values
+"Availability", com.industry.analytics.Data("Availability", "r", "source", 3, 0.5, "", 0.0, 0.0, 0.0, {})
+"Quality",      com.industry.analytics.Data("Quality",      "r", "source", 4, 0.5, "", 0.0, 0.0, 0.0, {})
+"Performance",  com.industry.analytics.Data("Performance",  "r", "source", 5, 0.5, "", 0.0, 0.0, 0.0, {})
+
+// Different order
+"Performance",  com.industry.analytics.Data("Performance",  "r", "source", 6, 1, "", 0.0, 0.0, 0.0, {})
+"Availability", com.industry.analytics.Data("Availability", "r", "source", 7, 1, "", 0.0, 0.0, 0.0, {})
+"Quality",      com.industry.analytics.Data("Quality",      "r", "source", 8, 1, "", 0.0, 0.0, 0.0, {})
+
+// All at the same time
+"Availability", com.industry.analytics.Data("Availability", "r", "source", 9, 0.5, "", 0.0, 0.0, 0.0, {})
+"Quality",      com.industry.analytics.Data("Quality",      "r", "source", 9, 0.5, "", 0.0, 0.0, 0.0, {})
+"Performance",  com.industry.analytics.Data("Performance",  "r", "source", 9, 0.5, "", 0.0, 0.0, 0.0, {})

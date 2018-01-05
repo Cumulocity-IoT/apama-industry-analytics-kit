@@ -1,0 +1,5 @@
+com.industry.analytics.Data("Output","c","s1",1500000000.6,0.9999999999999981,"",0,0,0,{})
+com.industry.analytics.Data("Output","c","s1",1500000000.7,1,"",0,0,0,{})
+com.industry.analytics.Data("Output","c","s1",1500000000.8,1,"",0,0,0,{})
+com.industry.analytics.Data("Output","c","s1",1500000000.9,1,"",0,0,0,{})
+com.industry.analytics.Data("Output","c","s1",1500000001,0.9999993558872563,"",0,0,0,{})

@@ -1,0 +1,320 @@
+2017-11-08 13:18:42.799 ##### [5844] - Correlator, version 10.1.0.0.315635 (build rel/10.1.0.x@315635 on amd64-win), started.
+2017-11-08 13:18:42.799 ##### [5844] - Log moving to correlator.log
+2017-11-08 13:18:42.799 ##### [5844] - Running on host 'MCBCL02.eur.ad.sag'.
+2017-11-08 13:18:42.799 ##### [5844] - Running on platform 'Windows 7 Enterprise (Service Pack 1)'.
+2017-11-08 13:18:42.799 ##### [5844] - Running on CPU 'GenuineIntel family 6 model 10 stepping 9        Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz'.
+2017-11-08 13:18:42.799 ##### [5844] - Running with process Id 14620.
+2017-11-08 13:18:42.799 ##### [5844] - Running with 16257.45MB of physical memory.
+2017-11-08 13:18:42.799 ##### [5844] - There are 4 CPU(s)
+2017-11-08 13:18:42.799 ##### [5844] - Correlator command line: C:\SoftwareAG101\Apama\bin\correlator --name correlator -p 35128 -l C:\Users\Public\SoftwareAG\ApamaWork_10.1\license\ApamaServerLicense.xml -f correlator.log -v INFO -Xclock --inputLog input.log
+2017-11-08 13:18:42.799 ##### [5844] - Current Working Directory: C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\tests\correctness\EPLAnalytics\GeoLocation\GeoFence\gf_cor_006\Output\win32
+2017-11-08 13:18:42.799 ##### [5844] - PATH: C:\SoftwareAG101\Apama\third_party\python;C:\Users\Public\SoftwareAG\ApamaWork_10.1\lib;C:\SoftwareAG101\Apama\bin;C:\SoftwareAG101\Apama\adapters\bin;C:\SoftwareAG101\jvm\jvm\jre\bin\server;C:\SoftwareAG101\jvm\jvm\jre\bin;C:\SoftwareAG101\Apama\third_party\apache_ant\bin;C:\SoftwareAG101\Apama\third_party\python;C:\SoftwareAG101\jvm\jvm\jre\..\bin;C:\SoftwareAG101\Apama\..\UniversalMessaging\cplus\lib\x86_64;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\SysWOW64\Empirum;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files\SlikSvn\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files\Git\cmd;c:\tools;c:\tools\apache-maven-3.3.9\bin;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Brackets\command;C:\Program Files\nodejs\;C:\tools;C:\Program Files (x86)\PuTTY;C:\Users\BCL\AppData\Roaming\npm
+2017-11-08 13:18:42.799 ##### [5844] - Current UTC time: 2017-11-08 13:18:42, local timezone: GMT Standard Time
+2017-11-08 13:18:42.799 ##### [5844] - Input value - port                     = 35128
+2017-11-08 13:18:42.799 ##### [5844] - Input value - output queue size        = 10000
+2017-11-08 13:18:42.799 ##### [5844] - Input value - output queue batch size  = 100
+2017-11-08 13:18:42.799 ##### [5844] - Input value - output queue mode        = blocking
+2017-11-08 13:18:42.799 ##### [5844] - Input value - environment variable     = APAMA_LIBRARY_VERSION=10.1
+2017-11-08 13:18:42.799 ##### [5844] - Input value - environment variable     = APAMA_ENVSET=10.1:C:\SoftwareAG101\Apama:amd64-win
+2017-11-08 13:18:42.799 ##### [5844] - Input value - environment variable     = APAMA_CORRELATOR_HOME=C:\SoftwareAG101\Apama
+2017-11-08 13:18:42.799 ##### [5844] - Input value - environment variable     = APAMA_WORK=C:\Users\Public\SoftwareAG\ApamaWork_10.1
+2017-11-08 13:18:42.799 ##### [5844] - Input value - environment variable     = APAMA_JRE=C:\SoftwareAG101\jvm\jvm\jre
+2017-11-08 13:18:42.799 ##### [5844] - Input value - environment variable     = APAMA_PLATFORM=amd64-win
+2017-11-08 13:18:42.799 ##### [5844] - Input value - environment variable     = APAMA_MACHTYPE=amd64-win64-msvc9
+2017-11-08 13:18:42.799 ##### [5844] - Input value - environment variable     = APAMA_MANAGEMENT_HOME=C:\SoftwareAG101\Apama
+2017-11-08 13:18:42.799 ##### [5844] - Input value - environment variable     = APAMA_COMMON_JRE=C:\SoftwareAG101\jvm\jvm\jre
+2017-11-08 13:18:42.799 ##### [5844] - Input value - environment variable     = APAMA_DASHBOARD_HOME=C:\SoftwareAG101\Apama
+2017-11-08 13:18:42.799 ##### [5844] - Input value - environment variable     = APAMA_DEV_HOME=C:\SoftwareAG101\Apama
+2017-11-08 13:18:42.799 ##### [5844] - Input value - environment variable     = APAMA_HOME=C:\SoftwareAG101\Apama
+2017-11-08 13:18:42.799 ##### [5844] - Using memory allocator                 = TBB scalable allocator
+2017-11-08 13:18:42.799 ##### [5844] - License File: C:\Users\Public\SoftwareAG\ApamaWork_10.1\license\ApamaServerLicense.xml
+2017-11-08 13:18:42.818 ##### [5844] - ================= Software AG License Data =================
+2017-11-08 13:18:42.818 ##### [5844] - Sales Information
+2017-11-08 13:18:42.818 ##### [5844] -      Serial Number      : 0000364914
+2017-11-08 13:18:42.818 ##### [5844] -      Customer ID        : 3150000
+2017-11-08 13:18:42.818 ##### [5844] -      Customer Name      : Software AG for Solution Book Internal USE ONLY
+2017-11-08 13:18:42.818 ##### [5844] - Product Information
+2017-11-08 13:18:42.818 ##### [5844] -      Product Name       : Apama Platform for CEP (Core)
+2017-11-08 13:18:42.818 ##### [5844] -      Product Code       : PAMSE
+2017-11-08 13:18:42.818 ##### [5844] -      Operating System   : win
+2017-11-08 13:18:42.818 ##### [5844] -      Product Version    : 10.1
+2017-11-08 13:18:42.818 ##### [5844] -      Product Usage      : 
+2017-11-08 13:18:42.818 ##### [5844] -      Expiration Date    : 2018/10/24
+2017-11-08 13:18:42.818 ##### [5844] - License Information
+2017-11-08 13:18:42.818 ##### [5844] -      License Type       : 
+2017-11-08 13:18:42.818 ##### [5844] -      Price Unit         : UVU
+2017-11-08 13:18:42.818 ##### [5844] -      Price Quantity     : 100
+2017-11-08 13:18:42.818 ##### [5844] -      Extended Rights    : 
+2017-11-08 13:18:42.818 ##### [5844] -      License Version    : 1.2
+2017-11-08 13:18:42.818 ##### [5844] - Physical Hardware
+2017-11-08 13:18:42.818 ##### [5844] -      Model              : Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz
+2017-11-08 13:18:42.818 ##### [5844] -      Sockets            : 1
+2017-11-08 13:18:42.818 ##### [5844] -      Physical cores     : 2
+2017-11-08 13:18:42.818 ##### [5844] -      Logical cores      : 4
+2017-11-08 13:18:42.818 ##### [5844] -      Performance Bucket : CoreB
+2017-11-08 13:18:42.818 ##### [5844] -      Virtualization     : no
+2017-11-08 13:18:42.818 ##### [5844] - ==================== End License Data ======================
+2017-11-08 13:18:42.818 ##### [5844] - 
+2017-11-08 13:18:42.820 ##### [5844] - Input value - pidfile                  = 
+2017-11-08 13:18:42.820 ##### [5844] - Input value - per receiver queue size  = 10 s
+2017-11-08 13:18:42.820 ##### [5844] - Input value - per receiver queue size  = 10240 kb
+2017-11-08 13:18:42.820 ##### [5844] - Input value - input queue size         = 20000
+2017-11-08 13:18:42.820 ##### [5844] - External clocking                      = enabled
+2017-11-08 13:18:42.820 ##### [5844] - Input value - logfile                  = correlator.log
+2017-11-08 13:18:42.820 ##### [5844] - Input value - loglevel                 = INFO
+2017-11-08 13:18:42.821 ##### [5844] - Input value - inputLog                 = input.log
+2017-11-08 13:18:42.821 ##### [5844] - Compiler optimizations                 = enabled - the debugger cannot be used; specify command line option "-g" to use it.
+2017-11-08 13:18:42.821 ##### [5844] - Using EPL runtime                      = interpreted
+2017-11-08 13:18:42.859 ##### [5844] - Java support                           = disabled
+2017-11-08 13:18:42.865 CRIT  [5844] - Opening new input log: input.log
+2017-11-08 13:18:42.867 INFO  [5844] - Will log queue size every 5.000000 seconds
+2017-11-08 13:18:42.867 INFO  [5844] - Starting scheduler with 4 threads (determined from hardware)
+2017-11-08 13:18:42.876 INFO  [5844] - Server socket opened listening on 0.0.0.0:35128
+2017-11-08 13:18:42.877 ##### [5844] - Component ID: correlator (correlator/6486032502096693344/6486032502096693344)
+2017-11-08 13:18:42.877 ##### [5844] - Correlator, version 10.1.0.0.315635, running
+2017-11-08 13:18:43.453 INFO  [8740] - Sender engine_send (BCL) (00000000002E3AD0) (component ID 6486032506174867552/6485751031198156896) connected from 127.0.0.1:64025
+2017-11-08 13:18:43.453 INFO  [11764] - Set time to 0.00
+2017-11-08 13:18:43.453 INFO  [8740] - Receiver engine_receive (000000000475EC30) (component ID 6486032505782175840/6485751030805465184) connected from 127.0.0.1:64028
+2017-11-08 13:18:43.453 INFO  [8740] - Receiver engine_receive (000000000475EC30) initially subscribed to <no channels>
+2017-11-08 13:18:43.453 INFO  [8740] - Blocking receiver engine_receive (000000000475EC30) will be blocked after 10.000000 seconds or 10240 kb if slow
+2017-11-08 13:18:43.453 INFO  [15376] - Receiver engine_receive (000000000475EC30) unsubscribed from all channels
+2017-11-08 13:18:43.453 INFO  [13500] - Receiver engine_receive (000000000475EC30) added subscriptions to [TEST_OUT]
+2017-11-08 13:18:43.543 INFO  [8740] - Sender engine_inject (BCL) (00000000002E4520) (component ID 6486032506175653984/6485751031198943328) connected from 127.0.0.1:64037
+2017-11-08 13:18:43.633 INFO  [18040] - Added monitor com.apama.scenario.ScenarioService
+2017-11-08 13:18:43.633 INFO  [18040] - Added monitor com.apama.scenario.RequestInstancesHandler
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.ScenarioServiceUpdaterMultipleInstances
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.ScenarioServiceUpdaterSingleInstance
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.ScenarioServiceUpdaterBase
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.CallbackHelper
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.ScenarioServiceLibrary
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.AllConfiguration
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.GetAllConfiguration
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.ScenarioProcessedUpdates
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.OperationCompleted
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.Configuration
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.GetConfiguration
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.ParallelStarting
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.RequestInstancesParallelDone
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.RequestInstancesParallel
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.FinishedScenarioRecovery
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.StartScenarioRecovery
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.ScenarioFinished
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.RequestInstancesInternal
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.SendQueuedUpdatesNow
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.ConfigureUpdates
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.SetThrottlingPeriod
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.ScenarioServiceUnloaded
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.ScenarioServiceLoaded
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.Instance
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.ScenarioUnloaded
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.Scenario
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.RequestInstancesDone
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.RequestInstancesOnChannelByUser
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.RequestInstancesOnChannel
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.RequestScenariosAck
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.RequestScenariosDone
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.RequestScenarios
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.StateChange
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.Acknowledge
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.Update
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.InstanceDied
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.Deleted
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.Delete
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.Edited
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.Edit
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.ParentChildRelationship
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.Created
+2017-11-08 13:18:43.633 INFO  [18040] - Added type com.apama.scenario.Create
+2017-11-08 13:18:43.633 INFO  [18040] - Injected MonitorScript from file C:\SoftwareAG101\Apama\monitors\ScenarioService.mon (7322337fb605a9214b3003aed0293748), size 74870 bytes, compile time 0.09 seconds
+2017-11-08 13:18:43.633 INFO  [17500] - com.apama.scenario.ScenarioService [1] ScenarioService interface loaded. MetaData: {"interface.fileName":"ScenarioService.mon","interface.fullVersion":"rel/10.1.0.x@315635","interface.language":"MonitorScript","interface.name":"ScenarioService","interface.package":"com.apama.scenario","interface.vendor":"Apama","interface.version":"10.1.0.0.315635"}
+2017-11-08 13:18:43.633 INFO  [13500] - Sender engine_inject (BCL) (00000000002E4520) (component ID 6486032506175653984/6485751031198943328) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:43.734 INFO  [8740] - Sender engine_inject (BCL) (0000000008208870) (component ID 6486032506510149728/6485751031533439072) connected from 127.0.0.1:64054
+2017-11-08 13:18:43.743 INFO  [17124] - Loading EPL plugin MemoryStorePlugin from library MemoryStorePlugin.dll
+2017-11-08 13:18:43.745 INFO  [17124] - MemoryStorePlugin version 10.1.0.0.315635 (build rel/10.1.0.x@315635 on amd64-win), loaded.
+2017-11-08 13:18:43.755 INFO  [17124] - Plugin library MemoryStorePlugin (C++ API v9.0) loaded OK
+2017-11-08 13:18:43.795 INFO  [10800] - Added type com.apama.memorystore.Storage
+2017-11-08 13:18:43.795 INFO  [10800] - Added type com.apama.memorystore.Store
+2017-11-08 13:18:43.795 INFO  [10800] - Added type com.apama.memorystore.Table
+2017-11-08 13:18:43.795 INFO  [10800] - Added type com.apama.memorystore.Iterator
+2017-11-08 13:18:43.795 INFO  [10800] - Added type com.apama.memorystore.MissedRowChanges
+2017-11-08 13:18:43.795 INFO  [10800] - Added type com.apama.memorystore.RowChanged
+2017-11-08 13:18:43.795 INFO  [10800] - Added type com.apama.memorystore.Row
+2017-11-08 13:18:43.795 INFO  [10800] - Added type com.apama.memorystore.Schema
+2017-11-08 13:18:43.795 INFO  [10800] - Added type com.apama.memorystore.Finished
+2017-11-08 13:18:43.795 INFO  [10800] - Injected MonitorScript from file C:\SoftwareAG101\Apama\monitors\data_storage\MemoryStore.mon (9a3a94168c72490cc0116c66273f54df), size 52267 bytes, compile time 0.06 seconds
+2017-11-08 13:18:43.795 INFO  [13500] - Sender engine_inject (BCL) (0000000008208870) (component ID 6486032506510149728/6485751031533439072) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:43.918 INFO  [8740] - Sender engine_inject (BCL) (0000000008208870) (component ID 6486032506518014048/6485751031541303392) connected from 127.0.0.1:64070
+2017-11-08 13:18:43.928 INFO  [18040] - Added monitor com.apama.memorystore.MemoryStoreScenarioImpl
+2017-11-08 13:18:43.928 INFO  [18040] - Added type com.apama.memorystore.ForwardMemoryStoreUpdatesTo
+2017-11-08 13:18:43.928 INFO  [18040] - Injected MonitorScript from file C:\SoftwareAG101\Apama\monitors\data_storage\MemoryStoreScenarioImpl.mon (d6fd01295e03b209b5219f5f07b4174c), size 10652 bytes, compile time 0.01 seconds
+2017-11-08 13:18:43.929 INFO  [13500] - Sender engine_inject (BCL) (0000000008208870) (component ID 6486032506518014048/6485751031541303392) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:44.051 INFO  [8740] - Sender engine_inject (BCL) (0000000008208870) (component ID 6486032510691084384/6485751035714373728) connected from 127.0.0.1:64087
+2017-11-08 13:18:44.059 INFO  [10800] - Added monitor com.apama.dataview.DataViewService_Interface
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewServiceUnloaded
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewItemException
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewException
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewFieldLookup
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewAllItemsDeleted
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewItemDeleted
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewItem
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewDefinitionDeleted
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewDefinition
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewDeleteAllItems
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewDeleteItem
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewUpdateItemDelta
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewUpdateItem
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewAddOrUpdateItem
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewAddItem
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewGetFieldLookup
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewDeleteDefinition
+2017-11-08 13:18:44.059 INFO  [10800] - Added type com.apama.dataview.DataViewAddDefinition
+2017-11-08 13:18:44.059 INFO  [10800] - Injected MonitorScript from file C:\SoftwareAG101\Apama\monitors\DataViewService_interface.mon (00b578d80491fb94d6cb0c5ea232f838), size 20389 bytes, compile time 0.01 seconds
+2017-11-08 13:18:44.059 INFO  [17500] - com.apama.dataview.DataViewService_Interface [6] DataViewService interface loaded. MetaData: {"interface.fileName":"DataViewService_Interface.mon","interface.fullVersion":"rel/10.1.0.x@315635","interface.language":"MonitorScript","interface.name":"DataViewService_Interface","interface.package":"com.apama.dataview","interface.vendor":"Apama","interface.version":"10.1.0.0.315635"}
+2017-11-08 13:18:44.133 INFO  [10800] - Added monitor com.apama.dataview.DataViewService_Impl_Dict
+2017-11-08 13:18:44.134 INFO  [10800] - Injected MonitorScript from file C:\SoftwareAG101\Apama\monitors\DataViewService_Impl_Dict.mon (3d0705181467e37be48cafa8be64d42b), size 59718 bytes, compile time 0.07 seconds
+2017-11-08 13:18:44.136 INFO  [17500] - com.apama.dataview.DataViewService_Impl_Dict [7] DataViewService implementation loaded. MetaData: {"implementation.fileName":"DataViewService_Impl_Dict.mon","implementation.fullVersion":"rel/10.1.0.x@315635","implementation.language":"MonitorScript","implementation.name":"DataViewService_Impl_Dict","implementation.package":"com.apama.dataview","implementation.vendor":"Apama","implementation.version":"10.1.0.0.315635"}
+2017-11-08 13:18:44.137 INFO  [15376] - Sender engine_inject (BCL) (0000000008208870) (component ID 6486032510691084384/6485751035714373728) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:44.247 INFO  [8740] - Sender engine_inject (BCL) (000000000BBA3F00) (component ID 6486032510878255200/6485751035901544544) connected from 127.0.0.1:64095
+2017-11-08 13:18:44.259 INFO  [18040] - Added monitor com.industry.analytics.InternConstants
+2017-11-08 13:18:44.259 INFO  [18040] - Added type com.industry.analytics.Constants
+2017-11-08 13:18:44.260 INFO  [18040] - Injected MonitorScript from file C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\..\output\windows\Industry Analytics Kit 2.1.0.0\Industry Analytics Kit\eventdefinitions\Constants.mon (bd04e9ca541f6e6da60388942382ccf4), size 5973 bytes, compile time 0.00 seconds
+2017-11-08 13:18:44.264 INFO  [13500] - Sender engine_inject (BCL) (000000000BBA3F00) (component ID 6486032510878255200/6485751035901544544) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:44.393 INFO  [8740] - Sender engine_inject (BCL) (000000000BEFD160) (component ID 6486032510910498912/6485751035933788256) connected from 127.0.0.1:64110
+2017-11-08 13:18:44.423 INFO  [10800] - Added monitor com.industry.analytics.InternMemStoreUtil
+2017-11-08 13:18:44.423 INFO  [10800] - Added type com.industry.analytics.MemStoreUtil
+2017-11-08 13:18:44.423 INFO  [10800] - Added type com.industry.analytics.TableReady
+2017-11-08 13:18:44.423 INFO  [10800] - Added type com.industry.analytics.StoreProxy
+2017-11-08 13:18:44.423 INFO  [10800] - Added type com.industry.analytics.SchemaProxy
+2017-11-08 13:18:44.423 INFO  [10800] - Added type com.industry.analytics.TableProxy
+2017-11-08 13:18:44.423 INFO  [10800] - Injected MonitorScript from file C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\..\output\windows\Industry Analytics Kit 2.1.0.0\Industry Analytics Kit\monitors\cache\MemStoreUtil.mon (58f4a179d14ac378084a1f5217f804fc), size 14152 bytes, compile time 0.03 seconds
+2017-11-08 13:18:44.433 INFO  [10800] - Added type com.industry.analytics.Cache
+2017-11-08 13:18:44.433 INFO  [10800] - Added type com.industry.analytics.ClearCache
+2017-11-08 13:18:44.433 INFO  [10800] - Injected MonitorScript from file C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\..\output\windows\Industry Analytics Kit 2.1.0.0\Industry Analytics Kit\monitors\cache\Cache.mon (8ed54142da4d13d07ad8a1979c20f71e), size 4184 bytes, compile time 0.01 seconds
+2017-11-08 13:18:44.444 INFO  [10800] - Added monitor com.industry.analytics.InternDataView
+2017-11-08 13:18:44.444 INFO  [10800] - Added type com.industry.analytics.DataView
+2017-11-08 13:18:44.444 INFO  [10800] - Added type com.industry.analytics.ClearDataView
+2017-11-08 13:18:44.444 INFO  [10800] - Injected MonitorScript from file C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\..\output\windows\Industry Analytics Kit 2.1.0.0\Industry Analytics Kit\monitors\cache\DataView.mon (4c2418bcf4a79012cc655713ec3400a3), size 9213 bytes, compile time 0.01 seconds
+2017-11-08 13:18:44.444 INFO  [15376] - Sender engine_inject (BCL) (000000000BEFD160) (component ID 6486032510910498912/6485751035933788256) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:44.597 INFO  [8740] - Sender engine_inject (BCL) (00000000082094D0) (component ID 6486032510777329760/6485751035800619104) connected from 127.0.0.1:64123
+2017-11-08 13:18:44.597 INFO  [18040] - Added monitor com.industry.analytics.InternData
+2017-11-08 13:18:44.597 INFO  [18040] - Added type com.industry.analytics.Data
+2017-11-08 13:18:44.597 INFO  [18040] - Added type com.industry.analytics.DataDetails
+2017-11-08 13:18:44.597 INFO  [18040] - Added type com.industry.analytics.DataConstants
+2017-11-08 13:18:44.597 INFO  [18040] - Injected MonitorScript from file C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\..\output\windows\Industry Analytics Kit 2.1.0.0\Industry Analytics Kit\eventdefinitions\Data.mon (292255911c0f58f7bbd91d05f94e841b), size 8403 bytes, compile time 0.00 seconds
+2017-11-08 13:18:44.627 INFO  [18040] - Added monitor com.industry.analytics.InternAnalytic
+2017-11-08 13:18:44.627 INFO  [18040] - Added type com.industry.analytics.AnalyticManagement
+2017-11-08 13:18:44.627 INFO  [18040] - Added type com.industry.analytics.Analytic
+2017-11-08 13:18:44.627 INFO  [18040] - Injected MonitorScript from file C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\..\output\windows\Industry Analytics Kit 2.1.0.0\Industry Analytics Kit\eventdefinitions\Analytic.mon (c9f7cf024fd7432c7de6796c6f900522), size 39407 bytes, compile time 0.02 seconds
+2017-11-08 13:18:44.627 INFO  [18040] - Added type com.industry.analytics.Ready
+2017-11-08 13:18:44.627 INFO  [18040] - Injected MonitorScript from file C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\..\output\windows\Industry Analytics Kit 2.1.0.0\Industry Analytics Kit\eventdefinitions\Ready.mon (03ecc1ed2327b66d7144916aafd02658), size 1294 bytes, compile time 0.00 seconds
+2017-11-08 13:18:44.627 INFO  [15376] - Sender engine_inject (BCL) (00000000082094D0) (component ID 6486032510777329760/6485751035800619104) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:44.703 INFO  [8740] - Sender engine_inject (BCL) (00000000082094D0) (component ID 6486032510833428576/6485751035856717920) connected from 127.0.0.1:64129
+2017-11-08 13:18:44.707 INFO  [10800] - Added type com.industry.analytics.AnalyticInterface
+2017-11-08 13:18:44.707 INFO  [10800] - Injected MonitorScript from file C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\..\output\windows\Industry Analytics Kit 2.1.0.0\Industry Analytics Kit\monitors\interfaces\AnalyticInterface.mon (2f395e89ce869a8023a28419ad9e3deb), size 5391 bytes, compile time 0.00 seconds
+2017-11-08 13:18:44.708 INFO  [13500] - Sender engine_inject (BCL) (00000000082094D0) (component ID 6486032510833428576/6485751035856717920) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:44.851 INFO  [8740] - Sender engine_inject (BCL) (00000000082094D0) (component ID 6486032510113056864/6485751035136346208) connected from 127.0.0.1:64137
+2017-11-08 13:18:44.871 INFO  [18040] - Added monitor com.industry.analytics.InternAnalyticObject
+2017-11-08 13:18:44.871 INFO  [18040] - Added type com.industry.analytics.AnalyticObject
+2017-11-08 13:18:44.871 INFO  [18040] - Added type com.industry.analytics.KillManagementChannelListeners
+2017-11-08 13:18:44.871 INFO  [18040] - Added type com.industry.analytics.KillInputChannelListeners
+2017-11-08 13:18:44.871 INFO  [18040] - Injected MonitorScript from file C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\..\output\windows\Industry Analytics Kit 2.1.0.0\Industry Analytics Kit\monitors\objects\AnalyticObject.mon (dfb94c8885e96946cfdf7084644711b0), size 23883 bytes, compile time 0.02 seconds
+2017-11-08 13:18:44.871 INFO  [13500] - Sender engine_inject (BCL) (00000000082094D0) (component ID 6486032510113056864/6485751035136346208) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:44.987 INFO  [8740] - Sender engine_inject (BCL) (00000000082094D0) (component ID 6486032510142416992/6485751035165706336) connected from 127.0.0.1:64149
+2017-11-08 13:18:44.997 INFO  [10800] - Added monitor com.industry.analytics.VersioningService
+2017-11-08 13:18:44.997 INFO  [10800] - Added type com.industry.analytics.CurrentVersion
+2017-11-08 13:18:44.997 INFO  [10800] - Added type com.industry.analytics.CheckVersion
+2017-11-08 13:18:44.997 INFO  [10800] - Injected MonitorScript from file C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\..\output\windows\Industry Analytics Kit 2.1.0.0\Industry Analytics Kit\monitors\objects\VersioningService.mon (c3fa89ba2de4fec61c6f957defc9259c), size 6039 bytes, compile time 0.01 seconds
+2017-11-08 13:18:45.002 INFO  [15376] - Sender engine_inject (BCL) (00000000082094D0) (component ID 6486032510142416992/6485751035165706336) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:45.143 INFO  [8740] - Sender engine_inject (BCL) (000000000B52F010) (component ID 6486032514929952864/6485751039953242208) connected from 127.0.0.1:64157
+2017-11-08 13:18:45.213 INFO  [18040] - Added monitor com.industry.analytics.geolocation.InternGeofence
+2017-11-08 13:18:45.213 INFO  [18040] - Added type com.industry.analytics.geolocation.GeoFence
+2017-11-08 13:18:45.213 INFO  [18040] - Added type com.industry.analytics.geolocation.Polygon
+2017-11-08 13:18:45.213 INFO  [18040] - Added type com.industry.analytics.geolocation.Point
+2017-11-08 13:18:45.213 INFO  [18040] - Added type com.industry.analytics.geolocation.Exit
+2017-11-08 13:18:45.213 INFO  [18040] - Injected MonitorScript from file C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\..\output\windows\Industry Analytics Kit 2.1.0.0\Industry Analytics Kit\monitors\analytics\core\GeoLocation\GeoFence.mon (ffdbf596f8a06f8923b69fb524fe471e), size 64472 bytes, compile time 0.06 seconds
+2017-11-08 13:18:45.223 WARN  [17124] - A persistent monitor com.industry.analytics.geolocation.GeoFenceService injected into a non-persistent correlator
+2017-11-08 13:18:45.223 INFO  [18040] - Added monitor com.industry.analytics.geolocation.GeoFenceService
+2017-11-08 13:18:45.223 INFO  [18040] - Injected MonitorScript from file C:\work\Industry Analytics Labcase\dev\2.1.0.0\tests\..\output\windows\Industry Analytics Kit 2.1.0.0\Industry Analytics Kit\monitors\analytics\core\GeoLocation\GeoFenceService.mon (998e57c680544cd2196ea39779fc76fe), size 2069 bytes, compile time 0.00 seconds
+2017-11-08 13:18:45.233 INFO  [15376] - Sender engine_inject (BCL) (000000000B52F010) (component ID 6486032514929952864/6485751039953242208) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:45.345 INFO  [8740] - Receiver engine_receive (000000000475EE80) (component ID 6486032514512619616/6485751039535908960) connected from 127.0.0.1:64181
+2017-11-08 13:18:45.345 INFO  [8740] - Receiver engine_receive (000000000475EE80) initially subscribed to <no channels>
+2017-11-08 13:18:45.345 INFO  [8740] - Blocking receiver engine_receive (000000000475EE80) will be blocked after 10.000000 seconds or 10240 kb if slow
+2017-11-08 13:18:45.345 INFO  [15376] - Receiver engine_receive (000000000475EE80) unsubscribed from all channels
+2017-11-08 13:18:45.345 INFO  [13500] - Receiver engine_receive (000000000475EE80) added subscriptions to [Fixed Offset]
+2017-11-08 13:18:45.415 INFO  [8740] - Receiver engine_receive (000000000475F0D0) (component ID 6486032514909243488/6485751039932532832) connected from 127.0.0.1:64189
+2017-11-08 13:18:45.415 INFO  [8740] - Receiver engine_receive (000000000475F0D0) initially subscribed to <no channels>
+2017-11-08 13:18:45.415 INFO  [8740] - Blocking receiver engine_receive (000000000475F0D0) will be blocked after 10.000000 seconds or 10240 kb if slow
+2017-11-08 13:18:45.425 INFO  [15376] - Receiver engine_receive (000000000475F0D0) unsubscribed from all channels
+2017-11-08 13:18:45.425 INFO  [13500] - Receiver engine_receive (000000000475F0D0) added subscriptions to [Cartesian Fixed Offset]
+2017-11-08 13:18:45.500 INFO  [8740] - Receiver engine_receive (000000000475F320) (component ID 6486032515167193184/6485751040190482528) connected from 127.0.0.1:64199
+2017-11-08 13:18:45.500 INFO  [8740] - Receiver engine_receive (000000000475F320) initially subscribed to <no channels>
+2017-11-08 13:18:45.500 INFO  [8740] - Blocking receiver engine_receive (000000000475F320) will be blocked after 10.000000 seconds or 10240 kb if slow
+2017-11-08 13:18:45.501 INFO  [13500] - Receiver engine_receive (000000000475F320) unsubscribed from all channels
+2017-11-08 13:18:45.501 INFO  [13500] - Receiver engine_receive (000000000475F320) added subscriptions to [Fixed Radius]
+2017-11-08 13:18:45.597 INFO  [8740] - Receiver engine_receive (000000000475F570) (component ID 6486032514961148000/6485751039984437344) connected from 127.0.0.1:64208
+2017-11-08 13:18:45.597 INFO  [8740] - Receiver engine_receive (000000000475F570) initially subscribed to <no channels>
+2017-11-08 13:18:45.598 INFO  [8740] - Blocking receiver engine_receive (000000000475F570) will be blocked after 10.000000 seconds or 10240 kb if slow
+2017-11-08 13:18:45.605 INFO  [15376] - Receiver engine_receive (000000000475F570) unsubscribed from all channels
+2017-11-08 13:18:45.605 INFO  [13500] - Receiver engine_receive (000000000475F570) added subscriptions to [Cartesian Fixed Radius]
+2017-11-08 13:18:45.687 INFO  [8740] - Receiver engine_receive (000000000475F7C0) (component ID 6486032515150678112/6485751040173967456) connected from 127.0.0.1:64217
+2017-11-08 13:18:45.687 INFO  [8740] - Receiver engine_receive (000000000475F7C0) initially subscribed to <no channels>
+2017-11-08 13:18:45.687 INFO  [8740] - Blocking receiver engine_receive (000000000475F7C0) will be blocked after 10.000000 seconds or 10240 kb if slow
+2017-11-08 13:18:45.697 INFO  [15376] - Receiver engine_receive (000000000475F7C0) unsubscribed from all channels
+2017-11-08 13:18:45.697 INFO  [13500] - Receiver engine_receive (000000000475F7C0) added subscriptions to [Fixed Polygon]
+2017-11-08 13:18:45.767 INFO  [8740] - Receiver engine_receive (000000000475FA10) (component ID 6486032515179251808/6485751040202541152) connected from 127.0.0.1:64225
+2017-11-08 13:18:45.767 INFO  [8740] - Receiver engine_receive (000000000475FA10) initially subscribed to <no channels>
+2017-11-08 13:18:45.767 INFO  [8740] - Blocking receiver engine_receive (000000000475FA10) will be blocked after 10.000000 seconds or 10240 kb if slow
+2017-11-08 13:18:45.767 INFO  [13500] - Receiver engine_receive (000000000475FA10) unsubscribed from all channels
+2017-11-08 13:18:45.767 INFO  [13500] - Receiver engine_receive (000000000475FA10) added subscriptions to [Relative Fixed Polygon]
+2017-11-08 13:18:45.857 INFO  [8740] - Receiver engine_receive (000000000475FC60) (component ID 6486032514408286304/6485751039431575648) connected from 127.0.0.1:64235
+2017-11-08 13:18:45.857 INFO  [8740] - Receiver engine_receive (000000000475FC60) initially subscribed to <no channels>
+2017-11-08 13:18:45.857 INFO  [8740] - Blocking receiver engine_receive (000000000475FC60) will be blocked after 10.000000 seconds or 10240 kb if slow
+2017-11-08 13:18:45.857 INFO  [13500] - Receiver engine_receive (000000000475FC60) unsubscribed from all channels
+2017-11-08 13:18:45.857 INFO  [13500] - Receiver engine_receive (000000000475FC60) added subscriptions to [Cartesian Fixed Polygon]
+2017-11-08 13:18:46.022 INFO  [8740] - Receiver engine_receive (000000000475FEB0) (component ID 6486032515056306272/6485751040079595616) connected from 127.0.0.1:64247
+2017-11-08 13:18:46.022 INFO  [8740] - Receiver engine_receive (000000000475FEB0) initially subscribed to <no channels>
+2017-11-08 13:18:46.022 INFO  [8740] - Blocking receiver engine_receive (000000000475FEB0) will be blocked after 10.000000 seconds or 10240 kb if slow
+2017-11-08 13:18:46.022 INFO  [13500] - Receiver engine_receive (000000000475FEB0) unsubscribed from all channels
+2017-11-08 13:18:46.022 INFO  [15376] - Receiver engine_receive (000000000475FEB0) added subscriptions to [Cartesian Relative Fixed Polygon]
+2017-11-08 13:18:46.134 INFO  [8740] - Sender engine_send (BCL) (000000000C2800A0) (component ID 6486032519153354848/6485751044176644192) connected from 127.0.0.1:64259
+2017-11-08 13:18:46.135 INFO  [14432] - com.industry.analytics.geolocation.GeoFenceService [17] Validating com.industry.analytics.Analytic("GeoFence",["Input"],["Fixed Offset"],{"dwellTime":"2.0","enableDwell":"true","enableEntry":"true","enableExit":"true","enableInside":"true","enableOutside":"true","geoFenceLatitude":"0","geoFenceLongitude":"0","geoFenceOffset":"10000","realtimeDwell":"false","useHypertree":"true"})
+2017-11-08 13:18:46.135 INFO  [14432] - Interning Input
+2017-11-08 13:18:46.135 INFO  [14432] - Interning Fixed Offset
+2017-11-08 13:18:46.135 INFO  [14432] - com.industry.analytics.geolocation.GeoFenceService [17] Analytic GeoFence started for inputDataNames ["Input"]
+2017-11-08 13:18:46.135 INFO  [17500] - com.industry.analytics.geolocation.GeoFenceService [19] Validating com.industry.analytics.Analytic("GeoFence",["Input"],["Fixed Radius"],{"dwellTime":"2.0","enableDwell":"true","enableEntry":"true","enableExit":"true","enableInside":"true","enableOutside":"true","geoFenceLatitude":"0","geoFenceLongitude":"0","geoFenceRadius":"10000","realtimeDwell":"false","useHypertree":"true"})
+2017-11-08 13:18:46.136 INFO  [12424] - com.industry.analytics.geolocation.GeoFenceService [18] Validating com.industry.analytics.Analytic("GeoFence",["Input"],["Cartesian Fixed Offset"],{"dwellTime":"2.0","enableDwell":"true","enableEntry":"true","enableExit":"true","enableInside":"true","enableOutside":"true","geoFenceLatitude":"0","geoFenceLongitude":"0","geoFenceOffset":"0.09000011","realtimeDwell":"false","useCartesianCoords":"true","useHypertree":"true"})
+2017-11-08 13:18:46.136 INFO  [17500] - Interning Fixed Radius
+2017-11-08 13:18:46.136 INFO  [17500] - com.industry.analytics.geolocation.GeoFenceService [19] Analytic GeoFence started for inputDataNames ["Input"]
+2017-11-08 13:18:46.136 INFO  [12424] - Interning Cartesian Fixed Offset
+2017-11-08 13:18:46.136 INFO  [12424] - com.industry.analytics.geolocation.GeoFenceService [18] Analytic GeoFence started for inputDataNames ["Input"]
+2017-11-08 13:18:46.137 INFO  [14432] - com.industry.analytics.geolocation.GeoFenceService [20] Validating com.industry.analytics.Analytic("GeoFence",["Input"],["Cartesian Fixed Radius"],{"dwellTime":"2.0","enableDwell":"true","enableEntry":"true","enableExit":"true","enableInside":"true","enableOutside":"true","geoFenceLatitude":"0","geoFenceLongitude":"0","geoFenceRadius":"0.09000011","realtimeDwell":"false","useCartesianCoords":"true","useHypertree":"true"})
+2017-11-08 13:18:46.137 INFO  [12424] - com.industry.analytics.geolocation.GeoFenceService [21] Validating com.industry.analytics.Analytic("GeoFence",["Input"],["Fixed Polygon"],{"dwellTime":"2.0","enableDwell":"true","enableEntry":"true","enableExit":"true","enableInside":"true","enableOutside":"true","geoFencePolygon":"[\"0, 0.09\", \"0.09, 0\", \"0, -0.09\", \"-0.09, 0\"]","realtimeDwell":"false","useHypertree":"true"})
+2017-11-08 13:18:46.137 INFO  [14432] - Interning Cartesian Fixed Radius
+2017-11-08 13:18:46.137 INFO  [14432] - com.industry.analytics.geolocation.GeoFenceService [20] Analytic GeoFence started for inputDataNames ["Input"]
+2017-11-08 13:18:46.137 INFO  [12424] - Interning Fixed Polygon
+2017-11-08 13:18:46.137 INFO  [12424] - com.industry.analytics.geolocation.GeoFenceService [21] Analytic GeoFence started for inputDataNames ["Input"]
+2017-11-08 13:18:46.138 INFO  [17500] - com.industry.analytics.geolocation.GeoFenceService [22] Validating com.industry.analytics.Analytic("GeoFence",["Input"],["Relative Fixed Polygon"],{"dwellTime":"2.0","enableDwell":"true","enableEntry":"true","enableExit":"true","enableInside":"true","enableOutside":"true","geoFenceLatitude":"0","geoFenceLongitude":"0","geoFencePolygon":"[\"0, 0.09\", \"0.09, 0\", \"0, -0.09\", \"-0.09, 0\"]","realtimeDwell":"false","useHypertree":"true"})
+2017-11-08 13:18:46.138 INFO  [12424] - com.industry.analytics.geolocation.GeoFenceService [23] Validating com.industry.analytics.Analytic("GeoFence",["Input"],["Cartesian Fixed Polygon"],{"dwellTime":"2.0","enableDwell":"true","enableEntry":"true","enableExit":"true","enableInside":"true","enableOutside":"true","geoFencePolygon":"[\"0, 0.09\", \"0.09, 0\", \"0, -0.09\", \"-0.09, 0\"]","realtimeDwell":"false","useCartesianCoords":"true","useHypertree":"true"})
+2017-11-08 13:18:46.138 INFO  [17500] - Interning Relative Fixed Polygon
+2017-11-08 13:18:46.138 INFO  [12424] - Interning Cartesian Fixed Polygon
+2017-11-08 13:18:46.138 INFO  [12424] - com.industry.analytics.geolocation.GeoFenceService [23] Analytic GeoFence started for inputDataNames ["Input"]
+2017-11-08 13:18:46.138 INFO  [17500] - com.industry.analytics.geolocation.GeoFenceService [22] Analytic GeoFence started for inputDataNames ["Input"]
+2017-11-08 13:18:46.139 INFO  [12424] - com.industry.analytics.geolocation.GeoFenceService [24] Validating com.industry.analytics.Analytic("GeoFence",["Input"],["Cartesian Relative Fixed Polygon"],{"dwellTime":"2.0","enableDwell":"true","enableEntry":"true","enableExit":"true","enableInside":"true","enableOutside":"true","geoFenceLatitude":"0","geoFenceLongitude":"0","geoFencePolygon":"[\"0, 0.09\", \"0.09, 0\", \"0, -0.09\", \"-0.09, 0\"]","realtimeDwell":"false","useCartesianCoords":"true","useHypertree":"falsetrue"})
+2017-11-08 13:18:46.139 INFO  [12424] - Interning Cartesian Relative Fixed Polygon
+2017-11-08 13:18:46.139 INFO  [12424] - com.industry.analytics.geolocation.GeoFenceService [24] Analytic GeoFence started for inputDataNames ["Input"]
+2017-11-08 13:18:46.186 INFO  [15376] - Sender engine_send (BCL) (000000000C2800A0) (component ID 6486032519153354848/6485751044176644192) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:46.328 INFO  [8740] - Sender engine_send (BCL) (000000000C2800A0) (component ID 6486032519467665504/6485751044490954848) connected from 127.0.0.1:64283
+2017-11-08 13:18:46.398 INFO  [13500] - Sender engine_send (BCL) (000000000C2800A0) (component ID 6486032519467665504/6485751044490954848) disconnected cleanly: Other party requested disconnection
+2017-11-08 13:18:46.648 ##### [14844] - Shutting down correlator in response to client (127.0.0.1:64310) request: Shutdown requested by test
+2017-11-08 13:18:46.658 INFO  [5844] - MemoryStorePlugin unloaded.
+2017-11-08 13:18:46.658 INFO  [5844] - MessageSenderImpl.Shutdown() - Disconnecting remote receiver 6486032505782175840:6485751030805465184
+2017-11-08 13:18:46.668 INFO  [5844] - MessageSenderImpl.Shutdown() - Disconnecting remote receiver 6486032514408286304:6485751039431575648
+2017-11-08 13:18:46.668 INFO  [5844] - MessageSenderImpl.Shutdown() - Disconnecting remote receiver 6486032514512619616:6485751039535908960
+2017-11-08 13:18:46.668 INFO  [5844] - MessageSenderImpl.Shutdown() - Disconnecting remote receiver 6486032514909243488:6485751039932532832
+2017-11-08 13:18:46.668 INFO  [5844] - MessageSenderImpl.Shutdown() - Disconnecting remote receiver 6486032514961148000:6485751039984437344
+2017-11-08 13:18:46.678 INFO  [5844] - MessageSenderImpl.Shutdown() - Disconnecting remote receiver 6486032515056306272:6485751040079595616
+2017-11-08 13:18:46.678 INFO  [5844] - MessageSenderImpl.Shutdown() - Disconnecting remote receiver 6486032515150678112:6485751040173967456
+2017-11-08 13:18:46.678 INFO  [5844] - MessageSenderImpl.Shutdown() - Disconnecting remote receiver 6486032515167193184:6485751040190482528
+2017-11-08 13:18:46.678 INFO  [5844] - MessageSenderImpl.Shutdown() - Disconnecting remote receiver 6486032515179251808:6485751040202541152
+2017-11-08 13:18:46.679 INFO  [5844] - MessageReceiverImpl.Shutdown() - Disconnecting remote sender 6486032506174867552:6485751031198156896
+2017-11-08 13:18:46.679 INFO  [5844] - Correlator shutdown is complete

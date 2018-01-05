@@ -1,0 +1,7 @@
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, -20.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0,  20.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0,   0.0, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 1e3, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, -1e3, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, 1e-3, "", 0.0, 0.0, 0.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.0, -1e-3, "", 0.0, 0.0, 0.0, {})

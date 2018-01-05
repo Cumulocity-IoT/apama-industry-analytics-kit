@@ -1,0 +1,44 @@
+BATCH 0
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.2, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.2, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s3", 0.2, 15.0, "", 1.0, 2.0, 3.0, {})
+
+BATCH 500
+"Input", com.industry.analytics.Data("Input", "r", "s1", 0.7, 25.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 0.7, 20.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s3", 0.7, 10.0, "", 1.0, 2.0, 3.0, {})
+
+BATCH 1000
+"Input", com.industry.analytics.Data("Input", "r", "s1", 1.2, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 1.2, 25.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s3", 1.2, 20.0, "", 1.0, 2.0, 3.0, {})
+
+BATCH 1500
+"Input", com.industry.analytics.Data("Input", "r", "s1", 1.7, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 1.7, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s3", 1.7, 10.0, "", 1.0, 2.0, 3.0, {})
+
+BATCH 2000
+"Input", com.industry.analytics.Data("Input", "r", "s1", 2.2, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 2.2, 25.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s3", 2.2, 20.0, "", 1.0, 2.0, 3.0, {})
+
+BATCH 2500
+"Input", com.industry.analytics.Data("Input", "r", "s1", 2.7, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 2.7, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s3", 2.7, 25.0, "", 1.0, 2.0, 3.0, {})
+
+BATCH 3000
+"Input", com.industry.analytics.Data("Input", "r", "s1", 3.2, 20.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 3.2, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s3", 3.2, 10.0, "", 1.0, 2.0, 3.0, {})
+
+BATCH 3500
+"Input", com.industry.analytics.Data("Input", "r", "s1", 3.7, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 3.7, 15.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s3", 3.7, 25.0, "", 1.0, 2.0, 3.0, {})
+
+BATCH 4000
+"Input", com.industry.analytics.Data("Input", "r", "s1", 4.2, 20.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s2", 4.2, 10.0, "", 1.0, 2.0, 3.0, {})
+"Input", com.industry.analytics.Data("Input", "r", "s3", 4.2, 10.0, "", 1.0, 2.0, 3.0, {})

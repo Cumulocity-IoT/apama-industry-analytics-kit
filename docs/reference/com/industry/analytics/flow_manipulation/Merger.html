@@ -1,0 +1,675 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Merger</TITLE>
+<META NAME="keywords" CONTENT="Merger&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="Merger";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/flow_manipulation/Merger.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Merger.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/flow_manipulation/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics.flow_manipulation</FONT>
+<BR>Event Merger</H2>
+<HR>The Merger Analytic either adds static data or merges data from another channel onto a single data event on the output channel.<br>
+<br> The "mapping" dictionary contains instuctions on what to set the output fields to. The format is {"outputFieldName":"outputFieldValue"} eg. {"dValue":"${xValue}","sValue":"helloWorld","xValue":"${param.number}"}<br>
+<br> If a merging stream is provided then the analytic will not output until it has received a data event on both channels and will output every event thereafter.<br>
+<br> To avoid having to escape double quotes with backslashes in the "mapping" param, use a dictionary literal and call ".toString()" (see the Example Usage)<br>
+<br> <dl><dt><b>Input Data events:</b></dt> <dd>A stream of data events to modify and optionally a stream of data events to merge.</dd> </dl> <dl><dt><b>Output Data events:</b></dt> <dd>Only a single output Data stream name must be provided.  All the non-overwritten <font face="courier" size="-1">params</font> from the input Data are copied to the output Data events.</dd> </dl> <dl><dt><b>Params:</b></dt> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr> <tr><td><b>mapping</b></td><td>The field to set (as the dictionary's key) and the value (as the dictionary's value). The value uses substitution to get the values from the merging stream eg. "${sValue}__HelloWorld"</td> <td>The key must contain one of "sourceId","timestamp","dValue","sValue","xValue","yValue","zValue","param.myParamName","params". All params can be merged using "params":"*"</td><td>Stringified dictionary&ltstring,string&gt</td><td>true</td><td></td></tr> <tr><td><b>overwriteExistingParams</b></td><td>Should the analytic overwrite params if they already exist on the data stream.</td> <td></td><td>boolean</td><td>false</td><td>true</td></tr> <tr><td><b>bySourceId</b></td><td>Causes the analytic to merge only where the input data's sourceId matches the merge data's sourceId.</td> <td></td><td>boolean</td><td>false</td><td>true</td></tr> </table></dd> </dl> <dl><dt><b>Example usage:</b></dt> <dd><pre><br>// Static enrichment, setting the sValue to "helloWorld"<br>send com.industry.analytics.Analytic("Merger", ["Input1"], ["Output1"], {mapping: {"sValue":"helloWorld"}.toString()})<br>
+<br>// Merge another channel. Setting the sValue to be the sValue from the merged channel and adding a param<br>send com.industry.analytics.Analytic("Merger", ["Input1"], ["Output1"], {{mapping: {"sValue":"${sValue}","param.abc":"helloWorld"}.toString()} ) to "";<br></pre></dd> </dl><HR>
+<A NAME="constant_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Constant Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Merger.html#BY_SOURCE_ID">BY_SOURCE_ID</A> := "bySourceId"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether or not the data will be partitioned by the <font face="courier" size="-1">sourceId</font></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Merger.html#MAPPING">MAPPING</A> := "mapping"</B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Merger.html#NAME">NAME</A> := "Merger"</B></CODE>
+<br>
+<br>This constant defines the name of the Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="Merger.html#OVERWRITE_EXISTING_PARAMS">OVERWRITE_EXISTING_PARAMS</A> := "overwriteExistingParams"</B></CODE>
+<br>
+</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="member_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Member Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;boolean</CODE></FONT></TD><TD><CODE><B><A HREF="Merger.html#_overwriteExisting">_overwriteExisting</A></B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;dictionary&lt;string,&nbsp;action&lt;<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>,&nbsp;string&nbsp;&gt;&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="Merger.html#_outputHandlers">_outputHandlers</A></B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;dictionary&lt;string,&nbsp;action&lt;<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;&gt;&nbsp;returns&nbsp;string&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="Merger.html#_valueGetters">_valueGetters</A></B></CODE>
+<br>
+</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#blankToZero()">blankToZero</A></B>(string&nbsp;value)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;boolean</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#containsValidSubstitution()">containsValidSubstitution</A></B>(string&nbsp;test)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#dValueGetter()">dValueGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#dValueOut()">dValueOut</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#init()">init</A></B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;boolean</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#isParamField()">isParamField</A></B>(string&nbsp;outputField)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;boolean</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#isValidPropertyName()">isValidPropertyName</A></B>(string&nbsp;name)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#merge()">merge</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;source,&nbsp;<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;merge)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;float</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#parseOrZero()">parseOrZero</A></B>(string&nbsp;value)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#performSubstitution()">performSubstitution</A></B>(string&nbsp;template,&nbsp;<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#reset()">reset</A></B>()</CODE>
+<br>
+<br>Optional action to reset the state of the Analytic instance back to its initialisation state. This is called internally by the Analytic Object, and should not be called directly by the Users application.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#sourceIdGetter()">sourceIdGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#sourceIdOut()">sourceIdOut</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#sValueGetter()">sValueGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#sValueOut()">sValueOut</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;dictionary&lt;string,&nbsp;string&nbsp;&gt;</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#tidyMappingKeys()">tidyMappingKeys</A></B>(dictionary&lt;string,&nbsp;string&nbsp;&gt;&nbsp;mapping)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#timestampGetter()">timestampGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#timestampOut()">timestampOut</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#typeGetter()">typeGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#typeOut()">typeOut</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;boolean</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#validateMapping()">validateMapping</A></B>(dictionary&lt;string,&nbsp;string&nbsp;&gt;&nbsp;mapping)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#xValueGetter()">xValueGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#xValueOut()">xValueOut</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#yValueGetter()">yValueGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#yValueOut()">yValueOut</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#zValueGetter()">zValueGetter</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="Merger.html#zValueOut()">zValueOut</A></B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</CODE>
+<br>
+</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="constant_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Constant Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="BY_SOURCE_ID"></A>
+<H3>BY_SOURCE_ID</H3>
+<PRE>constant string&nbsp;<B>BY_SOURCE_ID := "bySourceId"</B>
+</PRE>This constant defines the configuration parameter name that defines whether or not the data will be partitioned by the <font face="courier" size="-1">sourceId</font><HR>
+<A NAME="MAPPING"></A>
+<H3>MAPPING</H3>
+<PRE>constant string&nbsp;<B>MAPPING := "mapping"</B>
+</PRE>
+<HR>
+<A NAME="NAME"></A>
+<H3>NAME</H3>
+<PRE>constant string&nbsp;<B>NAME := "Merger"</B>
+</PRE>This constant defines the name of the Analytic.<HR>
+<A NAME="OVERWRITE_EXISTING_PARAMS"></A>
+<H3>OVERWRITE_EXISTING_PARAMS</H3>
+<PRE>constant string&nbsp;<B>OVERWRITE_EXISTING_PARAMS := "overwriteExistingParams"</B>
+</PRE>
+<HR>
+<A NAME="member_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Member Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="_outputHandlers"></A>
+<H3>_outputHandlers</H3>
+<PRE>dictionary&lt;string,&nbsp;action&lt;<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>,&nbsp;string&nbsp;&gt;&nbsp;&gt;&nbsp;<B>_outputHandlers</B>
+</PRE>
+<HR>
+<A NAME="_overwriteExisting"></A>
+<H3>_overwriteExisting</H3>
+<PRE>boolean&nbsp;<B>_overwriteExisting</B>
+</PRE>
+<HR>
+<A NAME="_valueGetters"></A>
+<H3>_valueGetters</H3>
+<PRE>dictionary&lt;string,&nbsp;action&lt;<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;&gt;&nbsp;returns&nbsp;string&nbsp;&gt;&nbsp;<B>_valueGetters</B>
+</PRE>
+<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="blankToZero()"></A>
+<H3>blankToZero</H3>
+<PRE>string&nbsp;<B>blankToZero</B>(string&nbsp;value)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="containsValidSubstitution()"></A>
+<H3>containsValidSubstitution</H3>
+<PRE>boolean&nbsp;<B>containsValidSubstitution</B>(string&nbsp;test)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>test</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="dValueGetter()"></A>
+<H3>dValueGetter</H3>
+<PRE>string&nbsp;<B>dValueGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="dValueOut()"></A>
+<H3>dValueOut</H3>
+<PRE>void&nbsp;<B>dValueOut</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration that will be used for this instance</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The action callback to call when the new Analytic has been created, or if an error occured.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration event object.</DD>
+<DD>
+<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that can be used to interact with the Analytic.</DD>
+</DL>
+<HR>
+<A NAME="isParamField()"></A>
+<H3>isParamField</H3>
+<PRE>boolean&nbsp;<B>isParamField</B>(string&nbsp;outputField)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>outputField</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="isValidPropertyName()"></A>
+<H3>isValidPropertyName</H3>
+<PRE>boolean&nbsp;<B>isValidPropertyName</B>(string&nbsp;name)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>name</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="merge()"></A>
+<H3>merge</H3>
+<PRE>
+<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;<B>merge</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;source,&nbsp;<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;merge)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>source</tt>
+</DD>
+<DD>
+<tt>merge</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="parseOrZero()"></A>
+<H3>parseOrZero</H3>
+<PRE>float&nbsp;<B>parseOrZero</B>(string&nbsp;value)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="performSubstitution()"></A>
+<H3>performSubstitution</H3>
+<PRE>string&nbsp;<B>performSubstitution</B>(string&nbsp;template,&nbsp;<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>template</tt>
+</DD>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="reset()"></A>
+<H3>reset</H3>
+<PRE>void&nbsp;<B>reset</B>()</PRE>Optional action to reset the state of the Analytic instance back to its initialisation state. This is called internally by the Analytic Object, and should not be called directly by the Users application.<HR>
+<A NAME="sourceIdGetter()"></A>
+<H3>sourceIdGetter</H3>
+<PRE>string&nbsp;<B>sourceIdGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="sourceIdOut()"></A>
+<H3>sourceIdOut</H3>
+<PRE>void&nbsp;<B>sourceIdOut</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="sValueGetter()"></A>
+<H3>sValueGetter</H3>
+<PRE>string&nbsp;<B>sValueGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="sValueOut()"></A>
+<H3>sValueOut</H3>
+<PRE>void&nbsp;<B>sValueOut</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="tidyMappingKeys()"></A>
+<H3>tidyMappingKeys</H3>
+<PRE>dictionary&lt;string,&nbsp;string&nbsp;&gt;&nbsp;<B>tidyMappingKeys</B>(dictionary&lt;string,&nbsp;string&nbsp;&gt;&nbsp;mapping)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>mapping</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="timestampGetter()"></A>
+<H3>timestampGetter</H3>
+<PRE>string&nbsp;<B>timestampGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="timestampOut()"></A>
+<H3>timestampOut</H3>
+<PRE>void&nbsp;<B>timestampOut</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="typeGetter()"></A>
+<H3>typeGetter</H3>
+<PRE>string&nbsp;<B>typeGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="typeOut()"></A>
+<H3>typeOut</H3>
+<PRE>void&nbsp;<B>typeOut</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="validateMapping()"></A>
+<H3>validateMapping</H3>
+<PRE>boolean&nbsp;<B>validateMapping</B>(dictionary&lt;string,&nbsp;string&nbsp;&gt;&nbsp;mapping)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>mapping</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="xValueGetter()"></A>
+<H3>xValueGetter</H3>
+<PRE>string&nbsp;<B>xValueGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="xValueOut()"></A>
+<H3>xValueOut</H3>
+<PRE>void&nbsp;<B>xValueOut</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="yValueGetter()"></A>
+<H3>yValueGetter</H3>
+<PRE>string&nbsp;<B>yValueGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="yValueOut()"></A>
+<H3>yValueOut</H3>
+<PRE>void&nbsp;<B>yValueOut</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="zValueGetter()"></A>
+<H3>zValueGetter</H3>
+<PRE>string&nbsp;<B>zValueGetter</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="zValueOut()"></A>
+<H3>zValueOut</H3>
+<PRE>void&nbsp;<B>zValueOut</B>(<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;d,&nbsp;string&nbsp;value)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>d</tt>
+</DD>
+<DD>
+<tt>value</tt>
+</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/flow_manipulation/Merger.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="Merger.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/flow_manipulation/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

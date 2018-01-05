@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bundle name="Industry Analytics Kit" type="monitorscript" singleton="true">
+	<version>
+		<id>1.0</id>
+		<date>2015-10-06</date>
+		<author>Software AG</author>
+		<comments/>
+	</version>
+	<description>
+		Apama Bundle for Industry Analytics Kit
+	</description>
+	<monitors>
+		<fileset dir="../eventdefinitions">
+			<include name="Constants.mon"/>
+			<include name="DataSource.mon"/>
+			<include name="Data.mon"/>
+			<include name="Analytic.mon"/>
+			<include name="Ready.mon"/>
+		</fileset>
+		<fileset dir="../monitors/interfaces">
+			<include name="AnalyticInterface.mon"/>
+		</fileset>
+		<fileset dir="../monitors/cache">
+			<include name="DataSourceService.mon"/>
+			<include name="Cache.mon"/>
+			<include name="DataView.mon"/>
+			<include name="MemStoreUtil.mon"/>
+		</fileset>
+		<fileset dir="../monitors/objects">
+			<include name="AnalyticObject.mon"/>
+			<include name="VersioningService.mon"/>
+		</fileset>
+		<fileset dir="../monitors/components">
+			<include name="BucketSystem.mon"/>
+			<include name="TimeWeightedBollinger.mon"/>
+			<include name="TimeWeightedMovingAverage.mon"/>
+			<include name="TimeWeightedVariance.mon"/>
+			<include name="ComplexNumber.mon"/>
+			<include name="fft.mon"/>
+			<include name="GeoUtil.mon"/>
+		</fileset>
+		<fileset dir="../monitors/analytics/core/Detectors">
+			<include name="Corridor.mon"/>
+			<include name="CorridorService.mon"/>
+			<include name="Drift.mon"/>
+			<include name="DriftService.mon"/>
+			<include name="MissingData.mon"/>
+			<include name="MissingDataService.mon"/>
+			<include name="PeerAnalysis.mon"/>
+			<include name="PeerAnalysisService.mon"/>
+			<include name="Spike.mon"/>
+			<include name="SpikeService.mon"/>
+			<include name="Threshold.mon"/>
+			<include name="ThresholdService.mon"/>
+		</fileset>
+		<fileset dir="../monitors/analytics/core/Extensions">
+		</fileset>
+		<fileset dir="../monitors/analytics/core/Flow_Manipulation">
+			<include name="Combiner.mon"/>
+			<include name="CombinerService.mon"/>
+			<include name="Duplicator.mon"/>
+			<include name="DuplicatorService.mon"/>
+			<include name="Merger.mon"/>
+			<include name="MergerService.mon"/>
+			<include name="EventRate.mon"/>
+			<include name="EventRateService.mon"/>
+			<include name="Filter.mon"/>
+			<include name="FilterService.mon"/>
+			<include name="Mapper.mon"/>
+			<include name="MapperService.mon"/>
+			<include name="Repeater.mon"/>
+			<include name="RepeaterService.mon"/>
+			<include name="Slicer.mon"/>
+			<include name="SlicerService.mon"/>
+			<include name="Sorter.mon"/>
+			<include name="SorterService.mon"/>
+			<include name="Suppressor.mon"/>
+			<include name="SuppressorService.mon"/>
+			<include name="Throttler.mon"/>
+			<include name="ThrottlerService.mon"/>
+		</fileset>
+		<fileset dir="../monitors/analytics/core/GeoLocation">
+			<include name="GeoFence.mon"/>
+			<include name="GeoFenceService.mon"/>
+			<include name="Distance.mon"/>
+			<include name="DistanceService.mon"/>
+			<include name="Speed.mon"/>
+			<include name="SpeedService.mon"/>
+		</fileset>
+		<fileset dir="../monitors/analytics/core/Streaming_Calculations">
+			<include name="Average.mon"/>
+			<include name="AverageService.mon"/>
+			<include name="Delta.mon"/>
+			<include name="DeltaService.mon"/>
+			<include name="Expression.mon"/>
+			<include name="ExpressionService.mon"/>
+			<include name="FFTAnalysis.mon"/>
+			<include name="FFTAnalysisService.mon"/>
+			<include name="Gradient.mon"/>
+			<include name="GradientService.mon"/>
+			<include name="MinMax.mon"/>
+			<include name="MinMaxService.mon"/>
+			<include name="Mode.mon"/>
+			<include name="ModeService.mon"/>
+			<include name="Spread.mon"/>
+			<include name="SpreadService.mon"/>
+			<include name="Sum.mon"/>
+			<include name="SumService.mon"/>
+			<include name="Volatility.mon"/>
+			<include name="VolatilityService.mon"/>
+		</fileset>
+		<fileset dir="../monitors/analytics/core/Utilities">
+			<include name="DataSimulator.mon"/>
+			<include name="DataSimulatorService.mon"/>
+			<include name="DataViewer.mon"/>
+			<include name="DataViewerService.mon"/>
+			<include name="MemoryStore.mon"/>
+			<include name="MemoryStoreService.mon"/>
+			<include name="Logger.mon"/>
+			<include name="LoggerService.mon"/>
+		</fileset>
+		<fileset dir="../monitors/reflectors">
+			<include name="DataViewReflector.mon"/>
+			<include name="Reflector.mon"/>
+		</fileset>
+	</monitors>
+	<block-catalogs>
+	</block-catalogs>
+	<configurations>
+	</configurations>
+	<static-files>
+	</static-files>
+	<events>
+		<file name="../events/Ready.evt"/>
+	</events>
+	<libraries>
+	</libraries>
+	<jars>
+	</jars>
+	<dependencies>
+		<dependency bundle-filename="MemoryStore.bnd" catalog="${APAMA_HOME}/catalogs/bundles"/>
+		<dependency bundle-filename="DataViewService.bnd" catalog="${APAMA_HOME}/catalogs/bundles"/>
+	</dependencies>
+</bundle>

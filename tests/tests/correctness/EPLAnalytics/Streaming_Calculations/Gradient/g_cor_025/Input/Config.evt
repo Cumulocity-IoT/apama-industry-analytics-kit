@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("gradient", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("GRADIENT", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("GrAdIeNt", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("Gradient", ["Input"], ["Output"], {})

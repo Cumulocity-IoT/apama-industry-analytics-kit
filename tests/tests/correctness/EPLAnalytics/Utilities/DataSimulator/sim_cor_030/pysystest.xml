@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pysystest state="runnable" type="auto">
+	<description>
+		<title>Test Falling Sawtooth wave Data simulator with default values</title>
+		<purpose>
+		<![CDATA[Test jiggle.]]>
+		</purpose>
+	</description>
+	<classification>
+		<groups>
+			<group>DataSimulator</group>
+			<group>Utilities</group>
+			<group>Industry_Analytics</group>
+			<group>EPL</group>
+		</groups>
+	</classification>
+	<data>
+		<class module="run" name="PySysTest"></class>
+	</data>
+	<traceability>
+		<requirements>
+			<requirement></requirement>
+		</requirements>
+	</traceability>
+</pysystest>

@@ -1,0 +1,2 @@
+// actionBySource true, resetBySource false
+com.industry.analytics.Analytic("Suppressor", ["Input1"], ["Output1"], {"triggerParam":"trigger", "actionParam":"action", "resetParam":"reset", "bySourceId":"true", "timeWindow":"10"})

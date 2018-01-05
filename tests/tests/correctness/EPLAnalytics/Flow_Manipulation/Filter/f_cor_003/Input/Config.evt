@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("Filter", ["Input1"], ["OutputAll"], {})
+
+com.industry.analytics.Analytic("Filter", ["Input1"], ["sourceId_OnlyLeafNodes"], {"sourceId_OnlyLeafNodes":"[\"T\"]"})
+com.industry.analytics.Analytic("Filter", ["Input1"], ["sourceId_AllChildren"], {"assetsForChildren":"[\"T\"]"})

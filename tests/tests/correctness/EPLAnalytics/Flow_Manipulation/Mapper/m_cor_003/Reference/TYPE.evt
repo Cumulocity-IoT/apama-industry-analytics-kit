@@ -1,0 +1,4 @@
+com.industry.analytics.Data("TYPE","success","source",0,1,"abc",2,3,4,{"input":"def"})
+com.industry.analytics.Data("TYPE","a","source",0,2,"zyx",3,4,5,{"input":"wvu"})
+com.industry.analytics.Data("TYPE","","",0,0,"",0,0,0,{"input":""})
+com.industry.analytics.Data("TYPE","","",0,0,"",0,0,0,{})

@@ -1,0 +1,4 @@
+com.industry.analytics.Analytic("eventRate", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("EVENTRATE", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("EvEnTrAtE", ["Input"], ["Output"], {})
+com.industry.analytics.Analytic("EventRate", ["Input"], ["Output"], {})

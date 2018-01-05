@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("Slicer", ["Input"], ["Output"], {"sliceType":"sliceSize", "sliceValue":"2.0"})

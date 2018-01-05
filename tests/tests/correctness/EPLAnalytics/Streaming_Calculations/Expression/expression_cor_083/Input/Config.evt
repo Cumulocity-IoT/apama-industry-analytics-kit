@@ -1,0 +1,23 @@
+// Invalid expressions - Should use "abs()" for nested
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"round()"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"ceil()"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"floor()"})
+
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output1"], {"expression":"round(0.5)"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output2"], {"expression":"ceil(0.5)"})
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output3"], {"expression":"floor(0.5)"})
+// Valid expression - should result in 2
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output4"], {"expression":"round(1.5)"})
+// Valid expression - should result in 2
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output5"], {"expression":"ceil(1.5)"})
+// Valid expression - should result in 1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output6"], {"expression":"floor(1.5)"})
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output7"], {"expression":"round(-0.5)"})
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output8"], {"expression":"ceil(-0.5)"})
+// Valid expression - should result in -1
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output9"], {"expression":"floor(-0.5)"})

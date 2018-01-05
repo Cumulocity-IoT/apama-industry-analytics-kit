@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("Performance", ["PartProduced","MachineStatus"], ["bySourceId"], {"timeWindow":"10", "smoothingFactor": "10","minCycleTime":"1", "bySourceId":"true"})
+com.industry.analytics.Analytic("Performance", ["PartProduced","MachineStatus"], ["notBySourceId"], {"timeWindow":"10", "smoothingFactor": "10","minCycleTime":"1", "bySourceId":"false"})

@@ -1,0 +1,120 @@
+//*****************************************************************************
+// Title:         Volatility test
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.Volatility_cor_004;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.streaming_calculations.Volatility;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the Volatility - with valid values should pass
+		(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, [ "Input1" ], [ "Output1" ], 
+														 { Volatility.TIMEWINDOW : "1.0" } ), 
+							 initComplete );
+
+		// Test minimal params with empty TIMEWINDOW value - Should fail
+		on NextTest( testNum=2 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Volatility.TIMEWINDOW : "" } ), 
+								 initComplete );
+		}
+		
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=3 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Volatility.TIMEWINDOW : "  " } ), 
+								 initComplete );
+		}
+		
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=4 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Volatility.TIMEWINDOW : "foobar" } ), 
+								 initComplete );
+		}
+		
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=5 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Volatility.TIMEWINDOW : "[]" } ), 
+								 initComplete );
+		}		
+		
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=6 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Volatility.TIMEWINDOW : "[1.0]" } ), 
+								 initComplete );
+		}		
+
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=7 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Volatility.TIMEWINDOW : "{}" } ), 
+								 initComplete );
+		}
+		
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=8 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Volatility.TIMEWINDOW : "0.0" } ), 
+								 initComplete );
+		}
+		
+		// Test minimal params with invalid TIMEWINDOW value - Should fail
+		on NextTest( testNum=9 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, [ "Input1" ], [ "Output1" ], 
+															 { Volatility.TIMEWINDOW : "-1.0" } ), 
+								 initComplete );
+		}
+		
+
+		// Test minimal params with valid TIMEWINDOW name - Should pass as parameters are case insensitive
+		on NextTest( testNum=10 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, [ "Input1" ], [ "Output1" ], 
+															 { "TIMEWINDOW" : "0.1" } ), 
+								 initComplete );
+		}
+		
+		// Test minimal params with valid TIMEWINDOW name - Should pass as parameters are case insensitive
+		on NextTest( testNum=11 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, [ "Input1" ], [ "Output1" ], 
+															 { "timewindow" : "0.1" } ), 
+								 initComplete );
+		}
+		
+		// Test minimal params with valid TIMEWINDOW name and value - Should pass
+		on NextTest( testNum=12 ) { 
+			(new Volatility).init( com.industry.analytics.Analytic( Volatility.NAME, [ "Input1" ], [ "Output1" ], 
+															 { "timeWindow" : "0.1" } ), 
+								 initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

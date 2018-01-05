@@ -1,0 +1,656 @@
+<?xml version="1.0" encoding="UTF-8"?><configuration>
+<intAttribute key="com.apama.text.CONFIG_VERSION" value="3"/>
+<listAttribute key="com.apama.text.COMPONENTS">
+<listEntry>
+<component clear="true" correlatorLog="false" correlatorLogLocation="logs/${LAUNCH_CONFIG_NAME}_${CORRELATOR_NAME}.output.log" dataLocationDir="${project_loc:Industry Analytics Peer Analysis Sample}/database/defaultCorrelator" distMemoryStoreEnabled="false" enabled="true" extraArguments="" hostname="localhost" inputLog="true" inputLogLocation="logs/defaultCorrelator_${START_TIME}_${ID}.input.log" isAutomaticOrdering="true" isPeristanceEnabled="false" javaEnabled="true" jmsResiliencyEnabled="false" logLevel="INFO" maxMBLocalHeap="512" maxMBLocalHeapEnabled="false" maxMBLocalOffHeap="16384" maxMBLocalOffHeapEnabled="false" name="defaultCorrelator" persistenceStartupOption="CLEAR_REINJECT" port="15903" reuse="false" type="CORRELATOR" umConfigurationEnabled="false" workingDir="/Industry Analytics Peer Analysis Sample" xConfigEnabled="false" xConfigLocation="${project_loc:Industry Analytics Peer Analysis Sample}/config/CorrelatorConfig.yaml">
+<runtimeDependencyEntry enabled="true" path="${APAMA_HOME}/monitors/data_storage/MemoryStore.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="The MemoryStore"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="The MemoryStore"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="${APAMA_HOME}/monitors/ScenarioService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Scenario Service"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Scenario Service"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="${APAMA_HOME}/monitors/data_storage/MemoryStoreScenarioImpl.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="The MemoryStore"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="The MemoryStore"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="${APAMA_HOME}/monitors/DataViewService_Interface.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="DataView Service"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="DataView Service"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="${APAMA_HOME}/monitors/DataViewService_Impl_Dict.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="DataView Service"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="DataView Service"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="${APAMA_HOME}/monitors/scenario_support/ScenarioDeleterSupport.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Scenario Service"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Scenario Service"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../eventdefinitions/Constants.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../eventdefinitions/Analytic.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../eventdefinitions/Data.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../eventdefinitions/DataSource.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../eventdefinitions/Ready.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/interfaces/AnalyticInterface.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/objects/AnalyticObject.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Detectors/Corridor.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Detectors/CorridorService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/components/TimeWeightedMovingAverage.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/components/TimeWeightedVariance.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Detectors/Drift.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Detectors/DriftService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Detectors/MissingData.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Detectors/MissingDataService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Detectors/Threshold.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/Average.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/Spread.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Detectors/PeerAnalysis.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Detectors/PeerAnalysisService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/components/TimeWeightedBollinger.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Detectors/Spike.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Detectors/SpikeService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Detectors/ThresholdService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/Combiner.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/CombinerService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/Duplicator.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/DuplicatorService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/EventRate.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/EventRateService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/cache/MemStoreUtil.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/cache/Cache.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/cache/DataSourceService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/Filter.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/FilterService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/Slicer.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/SlicerService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/Sorter.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/SorterService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/Suppressor.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Flow_Manipulation/SuppressorService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/GeoLocation/GeoFence.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/GeoLocation/GeoFenceService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/AverageService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/Delta.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/DeltaService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/Gradient.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/GradientService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/MinMax.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/MinMaxService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/SpreadService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/Sum.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/SumService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/Volatility.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Streaming_Calculations/VolatilityService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Utilities/DataSimulator.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Utilities/DataSimulatorService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/cache/DataView.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Utilities/DataViewer.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Utilities/DataViewerService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Utilities/MemoryStore.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/analytics/Utilities/MemoryStoreService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/objects/VersioningService.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/reflectors/DataViewReflector.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="../monitors/reflectors/Reflector.mon" type="PROJECT_BUNDLE_MON_FILE">
+<attributes>
+<attribute name="bundle-name" value="Industry Analytics Kit"/>
+<attribute name="origin-path" value="INDUSTRY_ANALYTICS_KIT_HOME/bundles"/>
+<attribute name="origin" value="VARIABLE"/>
+<attribute name="bundle-file" value="Industry Analytics Kit.bnd"/>
+<attribute name="bundle-display-name" value="Industry Analytics Kit"/>
+</attributes>
+</runtimeDependencyEntry>
+<runtimeDependencyEntry enabled="true" path="/Industry Analytics Peer Analysis Sample/monitors/PeerAnalysisSample.mon" type="PROJECT_MON_FILE"/>
+<runtimeDependencyEntry enabled="true" path="/Industry Analytics Peer Analysis Sample/bundle_instance_files/Industry_Analytics_Kit/Ready.evt" type="PROJECT_EVENT_FILE"/>
+</component>
+</listEntry>
+</listAttribute>
+<booleanAttribute key="com.apama.text.OPEN_DASHBOARD_ATTR" value="true"/>
+<booleanAttribute key="com.apama.text.OPEN_DEFAULT_DASHBOARD_ATTR" value="true"/>
+<stringAttribute key="com.apama.text.DASHBOARD_PATH_ATTR" value="dashboards/MainPanel.rtv"/>
+<booleanAttribute key="com.apama.text.OPEN_ENABLE_DATAPLAYER_MODE_ATTR" value="false"/>
+<booleanAttribute key="com.apama.text.GENERATE_TIME_EVENTS_ATTR" value="true"/>
+<stringAttribute key="com.apama.text.DASHBOARD_VIEWER_ARGS" value="--nomenus"/>
+</configuration>

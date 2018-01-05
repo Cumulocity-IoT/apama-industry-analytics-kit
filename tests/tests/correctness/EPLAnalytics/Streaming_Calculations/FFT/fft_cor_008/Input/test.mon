@@ -1,0 +1,125 @@
+//*****************************************************************************
+// Title:         FFTAnalysis test
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.FFTAnalysis_cor_008;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.streaming_calculations.FFTAnalysis;
+
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the FFTAnalysis - Missing the parameter - should pass as it's not required
+		(new FFTAnalysis).init( com.industry.analytics.Analytic( FFTAnalysis.NAME, 
+		                                                   [ "Input1" ], 
+		 		                                           [ "Output1" ], 
+		 												   { FFTAnalysis.TIMEWINDOW : "1.0", FFTAnalysis.SAMPLE_FREQUENCY : "1" } ), 
+		                       initComplete );
+		
+		// Create the FFTAnalysis - valid value for the optional parameter - should pass
+		on NextTest( testNum=2 ) { 
+			(new FFTAnalysis).init( com.industry.analytics.Analytic( FFTAnalysis.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { FFTAnalysis.TIMEWINDOW : "1.0", FFTAnalysis.SAMPLE_FREQUENCY : "1", 
+															     FFTAnalysis.EXPOSE_DATAVIEW : "true" } ), 
+								   initComplete );
+		}
+		
+		// Create the FFTAnalysis - valid value for the optional parameter - should pass
+		on NextTest( testNum=3 ) { 
+			(new FFTAnalysis).init( com.industry.analytics.Analytic( FFTAnalysis.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { FFTAnalysis.TIMEWINDOW : "1.0", FFTAnalysis.SAMPLE_FREQUENCY : "1", 
+															     FFTAnalysis.EXPOSE_DATAVIEW : "false" } ), 
+								   initComplete );
+		}
+		
+		// Create the FFTAnalysis - invalid values defined for optional param - should fail
+		on NextTest( testNum=4 ) { 
+			(new FFTAnalysis).init( com.industry.analytics.Analytic( FFTAnalysis.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { FFTAnalysis.TIMEWINDOW : "1.0", FFTAnalysis.SAMPLE_FREQUENCY : "1", 
+															     FFTAnalysis.EXPOSE_DATAVIEW : "1234" } ), 
+								   initComplete );
+		}
+
+		// Create the FFTAnalysis - invalid values defined for optional param - should fail
+		on NextTest( testNum=5 ) { 
+			(new FFTAnalysis).init( com.industry.analytics.Analytic( FFTAnalysis.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { FFTAnalysis.TIMEWINDOW : "1.0", FFTAnalysis.SAMPLE_FREQUENCY : "1", 
+															     FFTAnalysis.EXPOSE_DATAVIEW : "" } ), 
+								   initComplete );
+		}
+		
+		// Create the FFTAnalysis - invalid values defined for optional param - should fail
+		on NextTest( testNum=6 ) { 
+			(new FFTAnalysis).init( com.industry.analytics.Analytic( FFTAnalysis.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { FFTAnalysis.TIMEWINDOW : "1.0", FFTAnalysis.SAMPLE_FREQUENCY : "1", 
+															     FFTAnalysis.EXPOSE_DATAVIEW : " " } ), 
+								   initComplete );
+		}
+
+		// Create the FFTAnalysis - Invalid case for optional parameter (which will be ignored) - should pass
+		on NextTest( testNum=7 ) { 
+			(new FFTAnalysis).init( com.industry.analytics.Analytic( FFTAnalysis.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { FFTAnalysis.TIMEWINDOW : "1.0", FFTAnalysis.SAMPLE_FREQUENCY : "1", 
+															     "EXPOSEDATAVIEW" : "true" } ), 
+								   initComplete );
+		}
+
+		// Create the FFTAnalysis - Invalid case for optional parameter (which will be ignored) - should pass
+		on NextTest( testNum=8 ) { 
+			(new FFTAnalysis).init( com.industry.analytics.Analytic( FFTAnalysis.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { FFTAnalysis.TIMEWINDOW : "1.0", FFTAnalysis.SAMPLE_FREQUENCY : "1",
+																 "exposedataview" : "true" } ), 
+								   initComplete );
+		}
+
+		// Create the FFTAnalysis - Correct case for required parameter - should pass
+		on NextTest( testNum=9 ) { 
+			(new FFTAnalysis).init( com.industry.analytics.Analytic( FFTAnalysis.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   { FFTAnalysis.TIMEWINDOW : "1.0", FFTAnalysis.SAMPLE_FREQUENCY : "1",
+																 "exposeDataview" : "true" } ), 
+									   initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

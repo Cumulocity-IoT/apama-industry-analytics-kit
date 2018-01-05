@@ -1,0 +1,199 @@
+//*****************************************************************************
+// Title: Analytic Template implementation
+//
+// Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//*****************************************************************************
+
+package com.industry.analytics.samples;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Constants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+
+/* @AnalyticDefinition
+{
+	"name": "MyAnalyticName",
+	"description": "The metadata describing the new custom Analytic",
+	"group": "Flow Manipulation",
+	"inputChannels": [
+		{
+			"name": "Data",
+			"description": "The incoming data"
+		}
+	],
+	"outputChannels": [
+		{
+			"name": "Output",
+			"description": "The generated data"
+		}
+	],
+	"properties": [
+		{
+			"name": "MY_ANALYTIC_STRING_PARAM",
+			"description": "A placeholder string parameter",
+			"type": "string"
+		},{
+			"name": "MY_ANALYTIC_DECIMAL_PARAM",
+			"description": "A placeholder decimal parameter",
+			"type": "decimal",
+			"optional": true
+		}
+	]
+}
+*/
+/**
+ *  This event is defined to be a template for implementing your own
+ *  Analytics that can be used in the Industry Analytic Kit. 
+ */
+event MyAnalyticTemplate {
+	// ****************************************************** 
+	// *** TODO: The name of the Analytic must be unique. *** 
+	// ****************************************************** 
+	/** This constant defines the name of the Analytic. */
+	constant string NAME := "MyAnalyticName";
+	
+	/** The Analytic Base Object implementation 
+	 *  @private */
+	AnalyticObject _analyticObject;
+	
+	/** Local cached output Data name. Used when sending Data events
+	 *  @private */
+	string _outputDataName;
+	
+	/** 
+	 *  This action creates a new instance of the Analytic.
+	 *  Typically, this is called internally by the associated Analytics 
+	 *  service monitor when a com.industry.analytics.Analytic event is 
+	 *  sent for this type of Analytic.
+	 *
+	 *  @param  config        The Analytic configuration that 
+	 *                        will be used for this instance
+	 *  @param  initComplete  The action callback to call when the new Analytic  
+	 *                        has been created, or if an error occured.
+     *
+	 *  @see com.industry.analytics.Analytic           The Analytic configuration event object.
+	 *  @see com.industry.analytics.AnalyticInterface  The action interface that can be used 
+	 *                                                 to interact with the Analytic.
+	 */
+	action init( Analytic config,
+	             action<boolean, AnalyticInterface> initComplete ) {
+
+		// Validate the Analytic instances configuration
+		if( not _validateConfiguration( config ) ) then {
+			initComplete( false, new AnalyticInterface );
+			return;
+		}
+
+		// Create the new Analytic Object instance.
+		_analyticObject := new AnalyticObject;
+		_analyticObject.init( config,         /* The original Analytic event that was used */ 
+		                      processData,    /* Optional action to process Data events that are received. In this case call the overridden processData() action */
+		                      reset,          /* Optional action called when the Analytic instance is being reset */
+		                      initComplete ); /* Callback action the implementation MUST call when the instance has been initialised */
+	}
+		
+	/** 
+	 *  This helper action validates configuration that was
+	 *  used when trying to create a new instance of the Analytic.
+	 *  
+	 *  @param   config  The Analytic configuration object that is being validated
+	 *  @returns         A boolean value indicating whether the configuration was valid or not.
+	 * 
+	 *  @private
+	 */
+	action _validateConfiguration( Analytic config ) returns boolean {
+		// ******************************************************************************** 
+		// *** TODO: The "validateParams" action should be called with the set of       *** 
+		// ***       configuration parameter names and type information, and also       ***
+		// ***       whether the parameter is mandatory or optional. This action        ***
+		// ***       performs both type and case insensitive validations of parameters  *** 
+		// ***       and also ensures that all mandatory parameters are provided        *** 
+		// ******************************************************************************** 
+		boolean result := config.validateParams( NAME, /* The name of the Analytic */
+		                                         1, 1, /* The number of input and output Data channel names */
+		                                         [ "MY_ANALYTIC_STRING_PARAM", "MY_ANALYTIC_DECIMAL_PARAM" ], 
+		                                         [ Constants.STRING,           Constants.DECIMAL ], 
+		  		                               	 [ true, /*mandatory*/         false /*optional*/ ] );
+
+		// If the initial set of parameter checks were valid
+		if( result ) then {
+			// Cache the output channel name, as may be used to publish Data events
+			_outputDataName := config.outputDataNames[0];
+
+			// ******************************************************************************** 
+			// *** TODO: The Analytic implementation should perform any further validation  ***
+			// ***       checks specific to the Analytic implementation here. For example,  *** 
+			// ***       providing default values for optional configuration parameters, or *** 
+			// ***       validating the value is within a defined range.  The Analytic      *** 
+			// ***       configuration provides helper actions to handle checking and       ***
+			// ***       retrieving configuration parameters.                               ***        
+			// ******************************************************************************** 
+			if( config.hasParam( "MY_ANALYTIC_STRING_PARAM" ) ) then {
+				string  myStringParam  := config.getString( "MY_ANALYTIC_STRING_PARAM" );
+				decimal myDecimalParam := config.getOrDecimal( "MY_ANALYTIC_DECIMAL_PARAM", 10.0d );
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 *  This action implements the Analytic Data event processing. 
+	 *  This is called internally by the Analytic Object, and  
+	 *  should not be called directly by the Users application.
+	 *  If the application has created this Analytic using the 
+	 *  #init() action directly, then the <font face="courier" size="-1">processData</font>
+	 *  action on the <font face="courier" size="-1">com.industry.analytics.AnalyticInterface</font> 
+	 *  that was returned should be used instead.
+	 *
+	 *  @param   dataIn  The input Data event to be processed by this Analytic
+	 * 
+	 *  @private
+	 */
+	action processData( Data dataIn ) {
+		log "Processing " + dataIn.toString() at DEBUG;
+		
+		// ******************************************************************************** 
+		// *** TODO: Perform any calculations/mutations on the incoming data event here ***
+		// ***       and send (if required) a Data event out on the output channel      ***		
+		// ******************************************************************************** 
+		
+		// Clone the incoming Data event
+		Data dataOut := dataIn.clone();
+		
+		// Change the streamName to the output channel
+		// and change the type to be Anomaly
+		dataOut.streamName := _outputDataName;
+		dataOut.type := DataConstants.ANOMALY;
+
+		// Send the Data to the output channel
+		_analyticObject.sendData( dataOut );
+	}
+
+	/**
+	 *  Optional action to reset the state of the Analytic instance
+	 *  back to its initialisation state.
+	 *  This is called internally by the Analytic Object, and  
+	 *  should not be called directly by the Users application.
+	 */
+	action reset() {
+		// ******************************************************************************** 
+		// *** TODO: Reset/Clear any locally cached data used by your Analytic          *** 
+		// ***       implementation here                                                *** 
+		// ******************************************************************************** 
+	}
+}

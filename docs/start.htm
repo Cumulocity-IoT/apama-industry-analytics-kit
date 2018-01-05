@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
+    <title>Industry Analytics Kit Documentation</title>
+    <meta name="COPYRIGHT" content="Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or its licensors.
+Licensed under the Apache License, Version 2.0 (the 'License');you may not use this file except in compliance with the License.You may obtain a copy of the License at    http://www.apache.org/licenses/LICENSE-2.0Unless required by applicable law or agreed to in writing, softwaredistributed under the License is distributed on an 'AS IS' BASIS,WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.See the License for the specific language governing permissions andlimitations under the License.">
+    <style type="text/css" media="screen"> <!-- .H1 { color: #006666; font-size: medium; font-family: Verdana }
+	.Body { font-size:small; font-family: Verdana, Arial, Helvetica, sans-serif }
+	.BodySmall { font-size:extra-small; font-family: Verdana, Arial, Helvetica, sans-serif }
+	--></style>
+  </head>
+  <body alink="#2b547e" link="#2b547e" vlink="#2b547e">
+    <blockquote>
+      <table align="center" border="0" cellpadding="2%" width="96%">
+        <tbody>
+          <tr>
+            <td font="" color="Black" face="Arial, Verdana, Helvetica, sans-serif"
+
+              align="right" height="25" valign="middle" width="100%"> <a href="http://www.softwareag.com">
+                <img src="images/SoftwareAG_logo.png" alt="SoftwareAG" align="right"
+
+                  border="0" height="35" width="226"></a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p> </p>
+      <table align="center" border="0" cellpadding="2%" width="96%">
+        <tbody>
+          <tr>
+            <td colspan="2" align="left" height="25"><font face="Arial, Verdana, Helvetica, sans-serif"
+
+                color="#2b547e" size="6"> <b>Industry Analytics Kit Documentation
+                  version ${IAK_VERSION}</b> </font></td>
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
+          <tr>
+            <td height="25" valign="middle" width="6%"><br>
+            </td>
+            <td colspan="2"><br>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
+          <tr>
+            <td height="25" valign="middle" width="6%"> <img src="images/eclipse1.gif"
+                alt="pdf" border="0" height="32" width="32"></td>
+            <td colspan="2"><font face="Arial, Verdana, Helvetica, sans-serif" color="Black"
+
+                size="3"><font face="Arial, Verdana, Helvetica, sans-serif" color="Black"
+
+                  size="3"><b>Industry Analytics Kit Readme</b> <a href="../Readme.pdf">
+                    Industry Analytics Kit Readme</a> - This document provides an overview of the Industry Analytics Kit</td>
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
+           <tr>
+            <td height="25" valign="middle" width="6%"> <img src="images/eclipse1.gif"
+                alt="HTMLDoc" border="0" height="32" width="32"></td>
+            <td colspan="2"><font face="Arial, Verdana, Helvetica, sans-serif" color="Black"
+
+                size="3"><font face="Arial, Verdana, Helvetica, sans-serif" color="Black"
+
+                  size="3"><b>Industry Analytics Kit Deployment Guide</b> <a href="Industry%20Analytics%20Kit%20Deployment.html">
+                    Industry Analytics Kit Deployment Guide</a> - This document
+                  guides users in importing the Industry Analytics Kit into SAG
+                  Designer for use in your application</font>. This includes the
+                sample.</font></td>
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
+          <tr>
+            <td height="25" valign="middle" width="6%"> <img src="images/eclipse1.gif"
+
+                alt="HTMLDoc" border="0" height="32" width="32"></td>
+            <td colspan="2"><font face="Arial, Verdana, Helvetica, sans-serif" color="Black"
+
+                size="3"><b>Apama API Reference </b><a href="reference/index.html">
+                  Industry Analytics Kit ApamaDoc Reference API</a> - Provides
+                technical documentation on the Industry Analytics Kit API </font></td>
+				
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
+          <tr>
+            <td height="25" valign="middle" width="6%"> <img src="images/eclipse1.gif"
+
+                alt="HTMLDoc" border="0" height="32" width="32"></td>
+            <td colspan="2"><font face="Arial, Verdana, Helvetica, sans-serif" color="Black"
+
+                size="3"><b>Metadata Documentation </b><a href="Industry%20Analytics%20Kit%20Metadata.html">
+                  Industry Analytics Kit Metadata Development Guide</a> - Provides
+                documentation for the <span style="font-family: courier">@AnalyticDefinition</span> metadata tags </font></td>
+				
+          </tr>
+        </tbody>
+      </table>
+    </blockquote>
+    <br>
+    <table align="center" border="0" cellpadding="1" cellspacing="0" width="96%">
+      <tbody>
+        <tr>
+          <td black"=" face=" arial,="" verdana,="" helvetica,="" sans-serif"=""
+
+            font="" size="1">
+            <p>The Industry Analytics Kit allows consists of a set of re-usable and
+              scalable Analytics that perform a range of streaming analytics
+              over event streams. The scope of the Industry Analytics Kit is that
+              they consume and generate defined "Data" events. Integration
+              into and out of a Analytics network is not defined and allows
+              for integration with any system.</p>
+            <p>A Data event is a normalized event structure which will be
+              used within the framework for passing around values. Events coming
+              in from external sources will need to be converted prior to use
+              within the framework.</p>
+            <p>The intent is to have a set of delivered computation Analytics
+              which can be chained together as desired with the framework, and
+              to allow users to easily create their own Analytics. It is
+              anticipated that the modules will largely be EPL monitors rather
+              than EPL queries largely due to performance reasons, especially with
+              regard to memory use and the need to potentially keep large
+              amounts of data within potentially long windows. It seems likely
+              that using techniques such as EWMA (Exponentially Weighted Moving
+              Average) will be more than sufficient for the analyses needed
+              whilst being far more efficient in terms of the amount of
+              individual data points which need to be tracked at any given
+              point.</p>
+            <p>Analytics will have to have the ability to listen for
+              Data events, so that they can use incoming raw data, and the ability
+              to send Data events so that EPL queries and other components can be used
+              if required.</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table align="center" bgcolor="#EEEEEE" border="0" cellpadding="1" cellspacing="0"
+
+      width="96%">
+      <tbody>
+        <tr>
+          <td black"="" face="Arial, Verdana, Helvetica, sans-serif" font="" size="1"
+
+            align="left" valign="bottom
+	  &lt;font color=">Copyright © 2015-2017 Software AG, Darmstadt, Germany and/or
+            Software AG USA Inc., Reston, VA, USA, and/or its Subsidiaries and
+            or/its Affiliates and/or their licensors. </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

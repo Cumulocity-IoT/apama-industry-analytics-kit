@@ -1,0 +1,46 @@
+//*****************************************************************************
+// Title:         Average006
+//*****************************************************************************
+
+package com.industry.analytics.streaming_calculations.Average006;
+
+using com.industry.analytics.streaming_calculations.Average;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	Average _average;
+	
+	action onload()
+	{
+		Analytic config := Analytic("Average", ["Input"], ["Output"], {"timeWindow":"1"});
+		_average.init(config, _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			Data currData := Data.init("Input", DataConstants.RAW, "asset1");
+			currData.dValue := 1.0d;
+			_average.processData( currData );
+			currData.sourceId := "asset2";
+			currData.dValue := 2.345d;
+			_average.processData( currData );
+			log "Average Pre-Reset State:" at INFO;
+			log "  _movingAverages: " + _average._movingAverages.toString() at INFO;
+			_average.reset();
+			log "Average Post-Reset State:" at INFO;
+			log "  _movingAverages: " + _average._movingAverages.toString() at INFO;
+		}
+		else
+		{
+			log "Error spawning Average instance." at ERROR;
+		}
+	}
+}

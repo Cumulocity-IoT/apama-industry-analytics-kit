@@ -1,0 +1,4 @@
+com.industry.analytics.Data("Output","a","source1",1,2,"b",3,4,5,{"abc":"c","roast":"potatoes"})
+com.industry.analytics.Data("Output","a","source1",1,2,"b",3,4,5,{"abc":"c","cranberry":"sauce"})
+com.industry.analytics.Data("Output","a","source2",6,7,"d",8,9,10,{"abc":"e","roast":"potatoes"})
+com.industry.analytics.Data("Output","a","source2",6,7,"d",8,9,10,{"abc":"e","cranberry":"sauce"})

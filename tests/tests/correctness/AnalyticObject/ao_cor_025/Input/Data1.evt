@@ -1,0 +1,8 @@
+"TestInputData1", com.industry.analytics.Data("TestInputData1", "r", "sensor1", 0.1, 1.0, "", 0.0, 0.0, 0.0, {})
+"TestInputData2", com.industry.analytics.Data("TestInputData2", "r", "sensor2", 0.1, 2.0, "", 0.0, 0.0, 0.0, {})
+"TestInputData3", com.industry.analytics.Data("TestInputData3", "r", "sensor3", 0.1, 3.0, "", 0.0, 0.0, 0.0, {})
+
+"TestInputData1", com.industry.analytics.Data("TestInputData1", "r", "sensor1", 0.2, 4.0, "", 0.0, 0.0, 0.0, {})
+"TestInputData2", com.industry.analytics.Data("TestInputData2", "r", "sensor2", 0.2, 5.0, "", 0.0, 0.0, 0.0, {})
+"TestInputData3", com.industry.analytics.Data("TestInputData3", "r", "sensor3", 0.2, 6.0, "", 0.0, 0.0, 0.0, {})
+

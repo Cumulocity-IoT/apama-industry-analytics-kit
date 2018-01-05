@@ -1,0 +1,52 @@
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output1"], {"expression":"(1e6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output2"], {"expression":"(1e-5)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output3"], {"expression":"(-1e6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output4"], {"expression":"(-1e-5)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output5"], {"expression":"(1e3+1e6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output6"], {"expression":"(1e-3+1e6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output7"], {"expression":"(-1e3+1e6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output8"], {"expression":"(-1e-3+1e6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output9"], {"expression":"(1e3+1e-6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output10"], {"expression":"(1e-3+1e-6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output11"], {"expression":"(-1e3+1e-6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output12"], {"expression":"(-1e-3+1e-6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output13"], {"expression":"(-1e3+-1e-6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output14"], {"expression":"(-1e-3+-1e-6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output15"], {"expression":"(1e3-1e6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output16"], {"expression":"(1e-3-1e6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output17"], {"expression":"(-1e3-1e6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output18"], {"expression":"(-1e-3-1e6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output19"], {"expression":"(1e3-1e-6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output20"], {"expression":"(1e-3-1e-6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output21"], {"expression":"(-1e3-1e-6)"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output22"], {"expression":"(-1e-3-1e-6)"})
+// Invalid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output23"], {"expression":"(1e3--1e-6)"})
+// Invalid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output24"], {"expression":"(1e-3--1e-6)"})
+// Invalid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output25"], {"expression":"(-1e3--1e-6)"})
+// Invalid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output26"], {"expression":"(-1e-3--1e-6)"})

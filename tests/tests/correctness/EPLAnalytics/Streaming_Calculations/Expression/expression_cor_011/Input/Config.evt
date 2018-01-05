@@ -1,0 +1,8 @@
+// Invalid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output1"], {"expression":"--20"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output2"], {"expression":"-20"})
+// Invalid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output3"], {"expression":"--${DVALUE}"})
+// Valid expression 
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output4"], {"expression":"-${DVALUE}"})

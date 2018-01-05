@@ -1,0 +1,6 @@
+com.industry.analytics.Data("notBySourceId","r","source1",0,1,"pass",0,0,0,{})
+com.industry.analytics.Data("notBySourceId","r","source2",1,0.5,"defect",0,0,0,{})
+com.industry.analytics.Data("notBySourceId","r","source1",2,0.6666666666666667,"pass",0,0,0,{})
+com.industry.analytics.Data("notBySourceId","r","source2",3,0.5,"defect",0,0,0,{})
+com.industry.analytics.Data("notBySourceId","r","source1",4,0.5,"pass",0,0,0,{})
+com.industry.analytics.Data("notBySourceId","r","source2",5,0.5,"defect",0,0,0,{})

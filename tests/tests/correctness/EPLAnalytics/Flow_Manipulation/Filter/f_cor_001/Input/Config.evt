@@ -1,0 +1,6 @@
+com.industry.analytics.Analytic("Filter", [], [], {})
+com.industry.analytics.Analytic("Filter", ["Input1"], ["Output1", "Output2"], {"type":"[\"type1\"]"})
+com.industry.analytics.Analytic("Filter", ["Input1", "Input2"], ["Output1"], {"type":"[\"type1\"]"})
+com.industry.analytics.Analytic("Filter", ["Input1"], ["Output1"], {"type":"", "sourceId": "", "hasParam":"", "!type":"", "!sourceId":"", "!hasParam":"", "sourceId_OnlyLeafNodes":"", "sourceId_AllChildren":""})
+com.industry.analytics.Analytic("Filter", ["Input1"], ["Output1"], {"type":"[\"type1\"]"})
+

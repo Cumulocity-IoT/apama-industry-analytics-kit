@@ -1,0 +1,8 @@
+// triggerExtension false, actionBySource false
+com.industry.analytics.Analytic("Suppressor", ["Input1"], ["OutputTEfABAf"], {"triggerParam":"trigger", "triggerExtension":"false", "actionParam":"action", "bySourceId":"false", "resetParam":"reset", "timeWindow":"10"})
+// triggerExtension true, actionBySource false
+com.industry.analytics.Analytic("Suppressor", ["Input1"], ["OutputTEtABAf"], {"triggerParam":"trigger", "triggerExtension":"true", "actionParam":"action", "bySourceId":"false", "resetParam":"reset", "timeWindow":"10"})
+//triggerExtension false, actionBySource true
+com.industry.analytics.Analytic("Suppressor", ["Input1"], ["OutputTEfABAt"], {"triggerParam":"trigger", "triggerExtension":"false", "actionParam":"action", "bySourceId":"true", "resetParam":"reset", "timeWindow":"10"})
+//triggerExtension true, actionBySource true
+com.industry.analytics.Analytic("Suppressor", ["Input1"], ["OutputTEtABAt"], {"triggerParam":"trigger", "triggerExtension":"true", "actionParam":"action", "bySourceId":"true", "resetParam":"reset", "timeWindow":"10"})

@@ -1,0 +1,260 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>AnalyticObject</TITLE>
+<META NAME="keywords" CONTENT="AnalyticObject&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="AnalyticObject";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/AnalyticObject.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="AnalyticObject.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/analytics/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics</FONT>
+<BR>Event AnalyticObject</H2>
+<HR>The AnalyticObject event defines the base functionality that is common across all Analytic implementations.  This object provides functionality to setup any listeners that are required, and to send generated Data events to the set of places required.<br>
+<br> User-defined implementations of a Analytic should use the AnalyticInterface instance that is returned from the #init() action to control/manage the base functionality of a Analytic.<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;-&nbsp;The Data event that Analytics process</DD>
+<DD>
+<A HREF="../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration object</DD>
+<DD>
+<A HREF="../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that should used to control/manage the Analytic implementations base functionality.</DD>
+</DL>
+<DL>
+<DT>
+<B>Sends:</B>
+</DT>
+<DD>
+<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;-&nbsp;</DD>
+</DL>
+<DL>
+<DT>
+<B>Listens:</B>
+</DT>
+<DD>
+<A HREF="../../../com/industry/analytics/AnalyticManagement.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticManagement</A>&nbsp;-&nbsp;</DD>
+<DD>
+<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;-&nbsp;</DD>
+</DL>
+<HR>
+<A NAME="member_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Member Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;string</CODE></FONT></TD><TD><CODE><B><A HREF="AnalyticObject.html#_managementId">_managementId</A></B></CODE>
+<br>
+<br>This is an external id, provided as a param within the Analytic event for picking up the relevant AnalyticManagement events. This is not necessarily unique, allowing a chain of Analytics to all respond to the same management event.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="AnalyticObject.html#getConfig()">getConfig</A></B>()</CODE>
+<br>
+<br>This helper action returns the Analytic configuration.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="AnalyticObject.html#init()">init</A></B>(<A HREF="../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;&gt;&nbsp;processData,&nbsp;action&lt;&nbsp;&gt;&nbsp;resetCb,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new AnalyticObject instance, and calls the user application back with an instance of the AnalyticInterface once it is complete.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="AnalyticObject.html#initExtended()">initExtended</A></B>(<A HREF="../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;&gt;&nbsp;processData,&nbsp;action&lt;dictionary&lt;string,&nbsp;<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;&gt;&nbsp;&gt;&nbsp;processDataStream,&nbsp;boolean&nbsp;synchronous,&nbsp;action&lt;&nbsp;&gt;&nbsp;resetCb,&nbsp;action&lt;&nbsp;&gt;&nbsp;onDelete,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new AnalyticObject instance, and calls the user application back with an instance of the AnalyticInterface once it is complete. This action is the same as the <font face="courier" size="-1">init()</font> action, but allows more advanced options to be defined (such as the processDataStream and onDelete actions).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="AnalyticObject.html#sendData()">sendData</A></B>(<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;dataOut)</CODE>
+<br>
+<br>This action sends the specified Data event to the output. The method of sending the Data depends on the Analytics configuration, and whether one or more action callbacks have been added.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="member_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Member Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="_managementId"></A>
+<H3>_managementId</H3>
+<PRE>string&nbsp;<B>_managementId</B>
+</PRE>This is an external id, provided as a param within the Analytic event for picking up the relevant AnalyticManagement events. This is not necessarily unique, allowing a chain of Analytics to all respond to the same management event.<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="getConfig()"></A>
+<H3>getConfig</H3>
+<PRE>
+<A HREF="../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;<B>getConfig</B>()</PRE>This helper action returns the Analytic configuration.<DL>
+<DT>
+<B>Returns:</B>
+</DT>
+<DD>The Analytic configuration object.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration object</DD>
+</DL>
+<HR>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;&gt;&nbsp;processData,&nbsp;action&lt;&nbsp;&gt;&nbsp;resetCb,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new AnalyticObject instance, and calls the user application back with an instance of the AnalyticInterface once it is complete.<br>
+<br> User-defined implementations of a Analytic can use the AnalyticInterface instance to control/manage the base functionality of a Analytic.<br>
+<br> The optional action arguments are optional in the sense that a full action need not be defined. For example, if you have no onDelete() action, you can call init with the onDelete argument as <font face="courier" size="-1">new action<></font>.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration object</DD>
+<DD>
+<tt>processData</tt>&nbsp;-&nbsp;Optional. The user-defined action that processes/manipulates each and every incoming Data event.</DD>
+<DD>
+<tt>resetCb</tt>&nbsp;-&nbsp;Optional. User-defined action to be called when a analytic instance is ordered to to be reset, triggered by an appropriate AnalyticManagement event.</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The user-defined action that is called once the AnalyticObject has been completely initialised.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;-&nbsp;The Data event that Analytics process.</DD>
+<DD>
+<A HREF="../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration object.</DD>
+<DD>
+<A HREF="../../../com/industry/analytics/AnalyticManagement.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticManagement</A>&nbsp;-&nbsp;The Analytic management object.</DD>
+<DD>
+<A HREF="../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that should used to control/manage the Analytic implementations base functionality.</DD>
+</DL>
+<HR>
+<A NAME="initExtended()"></A>
+<H3>initExtended</H3>
+<PRE>void&nbsp;<B>initExtended</B>(<A HREF="../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;&gt;&nbsp;processData,&nbsp;action&lt;dictionary&lt;string,&nbsp;<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;&gt;&nbsp;&gt;&nbsp;processDataStream,&nbsp;boolean&nbsp;synchronous,&nbsp;action&lt;&nbsp;&gt;&nbsp;resetCb,&nbsp;action&lt;&nbsp;&gt;&nbsp;onDelete,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new AnalyticObject instance, and calls the user application back with an instance of the AnalyticInterface once it is complete. This action is the same as the <font face="courier" size="-1">init()</font> action, but allows more advanced options to be defined (such as the processDataStream and onDelete actions).<br>
+<br> User-defined implementations of a Analytic can use the AnalyticInterface instance to control/manage the base functionality of a Analytic.<br>
+<br> The optional action arguments are optional in the sense that a full action need not be defined. For example, if you have no onDelete() action, you can call init with the onDelete argument as <font face="courier" size="-1">new action<></font>.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration object</DD>
+<DD>
+<tt>processData</tt>&nbsp;-&nbsp;Optional. The user-defined action that processes/manipulates each and every incoming Data event.</DD>
+<DD>
+<tt>processDataStream</tt>&nbsp;-&nbsp;Optional. The user-defined action that processes/manipulates a set of Data events coming across several input channels, so that they may be processed as a coherent group.</DD>
+<DD>
+<tt>synchronous</tt>&nbsp;-&nbsp;Only relevant for processDataStream. If true processDataStream is only called when the set of events all have the same timestamp. If false then processDataStream is called every time a new Data is received.</DD>
+<DD>
+<tt>resetCb</tt>&nbsp;-&nbsp;Optional. User-defined action to be called when a analytic instance is ordered to to be reset, triggered by an appropriate AnalyticManagement event.</DD>
+<DD>
+<tt>onDelete</tt>&nbsp;-&nbsp;Optional. User-defined action to be called when a analytic instance is ordered to to be deleted, triggered by an appropriate AnalyticManagement event.</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The user-defined action that is called once the AnalyticObject has been completely initialised.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;-&nbsp;The Data event that Analytics process.</DD>
+<DD>
+<A HREF="../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration object.</DD>
+<DD>
+<A HREF="../../../com/industry/analytics/AnalyticManagement.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticManagement</A>&nbsp;-&nbsp;The Analytic management object.</DD>
+<DD>
+<A HREF="../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that should used to control/manage the Analytic implementations base functionality.</DD>
+</DL>
+<HR>
+<A NAME="sendData()"></A>
+<H3>sendData</H3>
+<PRE>void&nbsp;<B>sendData</B>(<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;dataOut)</PRE>This action sends the specified Data event to the output. The method of sending the Data depends on the Analytics configuration, and whether one or more action callbacks have been added.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>dataOut</tt>&nbsp;-&nbsp;The Data event that it to be sent by the Analytic.</DD>
+</DL>
+<DL>
+<DT>
+<B>Sends:</B>
+</DT>
+<DD>
+<A HREF="../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;-&nbsp;</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/analytics/AnalyticObject.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="AnalyticObject.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/analytics/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

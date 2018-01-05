@@ -1,0 +1,21 @@
+// Check normal
+"Input", com.industry.analytics.Data("Input", "r", "source", 0,   0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "r", "source", 0.5, 0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "r", "source", 1,   0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "r", "source", 1.5, 0, "", 0, 0, 0, {})
+"Input", com.industry.analytics.Data("Input", "r", "source", 2,   0, "", 0, 0, 0, {})
+
+// Check differing
+"Input", com.industry.analytics.Data("Input", "r", "source", 2.5, 0, "", 0, 0, 0, {"param1":"abc"})
+"Input", com.industry.analytics.Data("Input", "r", "source", 3,   0, "", 0, 0, 0, {"param1":"xyz"})
+"Input", com.industry.analytics.Data("Input", "r", "source", 3.5, 0, "", 0, 0, 0, {"param1":"xyz"})
+"Input", com.industry.analytics.Data("Input", "r", "source", 4,   0, "", 0, 0, 0, {"param1":"xyz"})
+"Input", com.industry.analytics.Data("Input", "r", "source", 4.5, 0, "", 0, 0, 0, {"param1":"xyz"})
+"Input", com.industry.analytics.Data("Input", "r", "source", 5,   0, "", 0, 0, 0, {"param1":"xyz"})
+
+"Input", com.industry.analytics.Data("Input", "r", "source", 5.5, 0, "", 0, 0, 0, {"param1":"xyz", "param2":"abc"})
+"Input", com.industry.analytics.Data("Input", "r", "source", 6,   0, "", 0, 0, 0, {"param1":"xyz", "param2":"xyz"})
+"Input", com.industry.analytics.Data("Input", "r", "source", 6.5, 0, "", 0, 0, 0, {"param1":"xyz", "param2":"xyz"})
+"Input", com.industry.analytics.Data("Input", "r", "source", 7,   0, "", 0, 0, 0, {"param1":"xyz", "param2":"xyz"})
+"Input", com.industry.analytics.Data("Input", "r", "source", 7.5, 0, "", 0, 0, 0, {"param1":"xyz", "param2":"xyz"})
+"Input", com.industry.analytics.Data("Input", "r", "source", 8,   0, "", 0, 0, 0, {"param1":"xyz", "param2":"xyz"})

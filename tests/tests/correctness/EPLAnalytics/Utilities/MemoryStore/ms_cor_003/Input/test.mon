@@ -1,0 +1,192 @@
+//*****************************************************************************
+// Title:         MemoryStore test
+//*****************************************************************************
+
+package com.industry.analytics.utilities.MemoryStore_cor_003;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.utilities.MemoryStore;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the MemoryStore - Zero input should fail
+		(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+		                                                   new sequence<string>, 
+		 		                                           [ "Output1" ], 
+		 												   new dictionary<string,string> ), 
+		                       initComplete );
+
+		// Create the MemoryStore - Single input with an output should fail
+		on NextTest( testNum=2 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1" ], 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore - Check more than one input fails
+		on NextTest( testNum=3 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1", "Input2" ], 
+															   new sequence<string>, 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore - Empty name for input should fail
+		on NextTest( testNum=4 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "" ], 
+															   new sequence<string>, 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore - blank name for input should fail
+		on NextTest( testNum=5 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "  " ], 
+															   new sequence<string>, 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore - Check more than one output fails
+		on NextTest( testNum=6 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   [ "Output1", "Output2" ], 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore - Check zero output passes
+		on NextTest( testNum=7 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore - Empty name for output should fail
+		on NextTest( testNum=8 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   [ "" ], 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore - blank name for output should fail
+		on NextTest( testNum=9 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   [ "  " ], 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore - Check no inputs or outputs fails
+		on NextTest( testNum=10 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   new sequence<string>, 
+															   new sequence<string>, 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore - Check two inputs/outputs - should fail
+		on NextTest( testNum=11 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1", "Input2" ], 
+															   [ "Output1", "Output2" ], 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+	
+		// Create the MemoryStore - Check four inputs/outputs - should fail
+		on NextTest( testNum=12 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1", "Input2", "Input3", "Input4" ], 
+															   [ "Output1", "Output2", "Output3", "Output4" ], 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore - Check null value for Analytic name fails
+		on NextTest( testNum=13 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( "", 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore- with invalid Analytic name fails
+		on NextTest( testNum=14 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( "foobar", 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore- with invalid case for Analytic name fails
+		on NextTest( testNum=15 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( "MEMORYSTORE", 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   new dictionary<string,string> ), 
+								   initComplete );
+		}
+		
+		// Create the MemoryStore - with specified table name - should pass
+		on NextTest( testNum=16 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { MemoryStore.TABLE_NAME : "MyTable",
+															     MemoryStore.EXPOSE_PERSISTENT_VIEW : "false",
+															     MemoryStore.EXPOSE_MEMORY_VIEW : "false" } ), 
+
+								   initComplete );
+		}
+		
+		// Create the MemoryStore - with valid configuration values without table name - should pass
+		on NextTest( testNum=17 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { MemoryStore.EXPOSE_PERSISTENT_VIEW : "true",
+															     MemoryStore.EXPOSE_MEMORY_VIEW : "false" } ), 
+								   initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

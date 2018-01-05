@@ -1,0 +1,17 @@
+com.industry.analytics.Analytic("GeoFence", [], [], {})
+com.industry.analytics.Analytic("GeoFence", ["Input1", "Input2"], ["Output1", "Output2"], {})
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {})
+
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {"geoFenceLatitude":"0", "geoFenceLatitudeParam":"x", "enableEntry":"false", "enableExit":"false", "enableInside":"false", "enableOutside":"false", "enableDwell":"false"})
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {"geoFenceLongitude":"0", "geoFenceLongitudeParam":"x", "enableEntry":"true"})
+
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {"geoFenceLatitudeParam":"", "geoFenceLongitudeParam":"", "enableEntry":"true"})
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {"geoFenceLatitudeParam":"x", "geoFenceLongitudeParam":"", "enableEntry":"true"})
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {"geoFenceLatitudeParam":"", "geoFenceLongitudeParam":"x", "enableEntry":"true"})
+
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {"geoFenceOffset":"0", "geoFenceLatitudeParam":"x", "geoFenceLongitudeParam":"x", "enableEntry":"true"})
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {"geoFenceRadius":"0", "geoFenceLatitudeParam":"y", "geoFenceLongitudeParam":"x", "enableEntry":"true"})
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {"geoFencePolygon":"", "geoFenceLatitudeParam":"y", "geoFenceLongitudeParam":"x", "enableEntry":"true"})
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {"geoFencePolygon":"[]", "geoFenceLatitudeParam":"y", "geoFenceLongitudeParam":"x", "enableEntry":"true"})
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {"geoFencePolygon":"[\"1 2\"]", "geoFenceLatitudeParam":"y", "geoFenceLongitudeParam":"x", "enableEntry":"true"})
+com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output"], {"geoFencePolygon":"[\"1 2\", \"3 4\"]", "geoFenceLatitudeParam":"y", "geoFenceLongitudeParam":"x", "enableEntry":"true"})

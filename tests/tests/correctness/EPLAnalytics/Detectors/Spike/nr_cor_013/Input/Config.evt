@@ -1,0 +1,3 @@
+com.industry.analytics.Analytic("Spike", ["Input1"], ["SpikeResult0"], {"timeWindow":"10.0", "standardDeviationMultiple":"2", "warmUp": "0"})
+com.industry.analytics.Analytic("Spike", ["Input1"], ["SpikeResult3"], {"timeWindow":"10.0", "standardDeviationMultiple":"2", "warmUp": "3"})
+com.industry.analytics.Analytic("Spike", ["Input1"], ["SpikeResult5"], {"timeWindow":"10.0", "standardDeviationMultiple":"2", "warmUp": "5"})

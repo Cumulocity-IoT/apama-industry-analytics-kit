@@ -1,0 +1,134 @@
+//*****************************************************************************
+// Title:         MemoryStore test
+//*****************************************************************************
+
+package com.industry.analytics.utilities.MemoryStore_cor_004;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.utilities.MemoryStore;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the MemoryStore - with valid values should pass
+		(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+														   [ "Input1" ], 
+														   new sequence<string>, 
+		 												   new dictionary<string,string> ), 
+		                       initComplete );
+
+		// Test minimal params with empty EXPOSE_MEMORY_VIEW value - Should fail
+		on NextTest( testNum=2 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { MemoryStore.EXPOSE_MEMORY_VIEW : "" } ), 
+								   initComplete );
+		}
+		
+		// Test minimal params with invalid EXPOSE_MEMORY_VIEW value - Should fail
+		on NextTest( testNum=3 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { MemoryStore.EXPOSE_MEMORY_VIEW : "  " } ), 
+								   initComplete );
+		}
+		
+		// Test minimal params with valid EXPOSE_MEMORY_VIEW value - Should pass as parameters are case insensitive
+		on NextTest( testNum=4 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { MemoryStore.EXPOSE_MEMORY_VIEW : "TRUE" } ), 
+								   initComplete );
+		}
+		
+		// Test minimal params with invalid EXPOSE_MEMORY_VIEW value - Should fail
+		on NextTest( testNum=5 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { MemoryStore.EXPOSE_MEMORY_VIEW : "foobar" } ), 
+								   initComplete );
+		}		
+		
+		// Test minimal params with invalid EXPOSE_MEMORY_VIEW value - Should fail
+		on NextTest( testNum=6 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { MemoryStore.EXPOSE_MEMORY_VIEW : "1" } ), 
+								   initComplete );
+		}
+		
+		// Test minimal params with valid EXPOSE_MEMORY_VIEW value - Should pass
+		on NextTest( testNum=7 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { MemoryStore.EXPOSE_MEMORY_VIEW : "true" } ), 
+								   initComplete );
+		}
+
+		// Test minimal params with valid EXPOSE_MEMORY_VIEW value - Should pass
+		on NextTest( testNum=8 ) { 
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { MemoryStore.EXPOSE_MEMORY_VIEW : "false" } ), 
+								   initComplete );
+		}
+	
+		// Test minimal params with valid EXPOSE_MEMORY_VIEW name - Should pass as parameters are case insensitive
+		on NextTest( testNum=9 ) {
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { "EXPOSEMEMORYVIEW" : "false" } ), 
+								   initComplete );
+		}
+
+		// Test minimal params with ialid EXPOSE_MEMORY_VIEW name - Should pass as parameters are case insensitive
+		on NextTest( testNum=10 ) {
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { "exposememoryview" : "false" } ), 
+								   initComplete );
+		}
+
+		// Test full params - Valid EXPOSE_MEMORY_VIEW name and value - Should pass
+		on NextTest( testNum=11 ) {
+			(new MemoryStore).init( com.industry.analytics.Analytic( MemoryStore.NAME, 
+															   [ "Input1" ], 
+															   new sequence<string>, 
+															   { "exposeMemoryView" : "false" } ), 
+								   initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

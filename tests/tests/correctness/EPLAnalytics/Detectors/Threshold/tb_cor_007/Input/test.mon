@@ -1,0 +1,139 @@
+//*****************************************************************************
+// Title:         Threshold test
+//*****************************************************************************
+
+package com.industry.analytics.detectors.Threshold_cor_007;
+
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.detectors.Threshold;
+
+event NextTest {
+	integer testNum;
+}
+
+monitor Test {
+	integer testNum := 1;
+	
+	action onload()	{		
+		// Create the Threshold - with valid values should pass
+		(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																{ Threshold.DIRECTION : "crossing",
+																  Threshold.THRESHOLD  : "1.0" } ), 
+									initComplete );
+
+		// Test minimal params with empty THRESHOLD value - Should fail
+		on NextTest( testNum=2 ) { 
+			(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.DIRECTION : "crossing",
+																	  Threshold.THRESHOLD  : "" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid THRESHOLD value - Should fail
+		on NextTest( testNum=3 ) { 
+			(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.DIRECTION : "crossing",
+																	  Threshold.THRESHOLD  : "  " } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid THRESHOLD value - Should fail
+		on NextTest( testNum=4 ) { 
+			(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.DIRECTION : "crossing",
+																	  Threshold.THRESHOLD  : "foobar" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid THRESHOLD value - Should fail
+		on NextTest( testNum=5 ) { 
+			(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.DIRECTION : "crossing",
+																	  Threshold.THRESHOLD  : "[]" } ), 
+										initComplete );
+		}		
+		
+		// Test minimal params with invalid THRESHOLD value - Should fail
+		on NextTest( testNum=6 ) { 
+			(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.DIRECTION : "crossing",
+																	  Threshold.THRESHOLD  : "[1.0]" } ), 
+										initComplete );
+		}		
+
+		// Test minimal params with invalid THRESHOLD value - Should fail
+		on NextTest( testNum=7 ) { 
+			(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.DIRECTION : "crossing",
+																	  Threshold.THRESHOLD  : "{}" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with valid THRESHOLD value - Should pass
+		on NextTest( testNum=8 ) { 
+			(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.DIRECTION : "crossing",
+																	  Threshold.THRESHOLD  : "0.0" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with valid THRESHOLD value - Should pass
+		on NextTest( testNum=9 ) { 
+			(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.DIRECTION : "crossing",
+																	  Threshold.THRESHOLD  : "-1.0" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with valid THRESHOLD value - Should pass
+		on NextTest( testNum=10 ) { 
+			(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.DIRECTION : "crossing",
+																	  Threshold.THRESHOLD  : "0.1" } ), 
+										initComplete );
+		}
+
+		// Test minimal params with invalid THRESHOLD name - Should pas as the param name is case-insensitive
+		on NextTest( testNum=11 ) { 
+			(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.DIRECTION : "crossing",
+																	  "THRESHOLD" : "0.1" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with invalid THRESHOLD name - Should fail as the param name is case-insensitive
+		on NextTest( testNum=12 ) { 
+			(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.DIRECTION : "crossing",
+																	  "Threshold" : "0.1" } ), 
+										initComplete );
+		}
+		
+		// Test minimal params with valid THRESHOLD name and value - Should pass
+		on NextTest( testNum=13 ) { 
+			(new Threshold).init( com.industry.analytics.Analytic( Threshold.NAME, [ "Input1" ], [ "Output1" ], 
+																	{ Threshold.DIRECTION : "crossing",
+																	  "threshold" : "0.1" } ), 
+										initComplete );
+
+			// Log that we have completed the test
+			log "TEST COMPLETE";
+		}
+	}
+	
+	action initComplete( boolean success, AnalyticInterface ti ) {
+		
+		if( success ) then {
+			log "TEST PASSED: "+testNum.toString();
+		} else {
+			log "FAILED TO CREATE ANALYTIC: "+testNum.toString() at ERROR; 
+		}
+		
+		// Increment the test number
+		testNum := testNum+1; 
+		
+		// Send the next step event
+		route NextTest( testNum );
+    }
+}

@@ -1,0 +1,7 @@
+com.industry.analytics.Data("Output10","c","s1",0,19.999,"",0,0,0,{})
+com.industry.analytics.Data("Output10","c","s1",0,-20.001,"",0,0,0,{})
+com.industry.analytics.Data("Output10","c","s1",0,-0.001,"",0,0,0,{})
+com.industry.analytics.Data("Output10","c","s1",0,-1000.001,"",0,0,0,{})
+com.industry.analytics.Data("Output10","c","s1",0,999.999,"",0,0,0,{})
+com.industry.analytics.Data("Output10","c","s1",0,-0.002,"",0,0,0,{})
+com.industry.analytics.Data("Output10","c","s1",0,0,"",0,0,0,{})

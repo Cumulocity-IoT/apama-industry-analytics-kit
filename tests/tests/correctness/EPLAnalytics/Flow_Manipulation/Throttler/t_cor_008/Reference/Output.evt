@@ -1,0 +1,8 @@
+com.industry.analytics.Data("Output","c","source",0,0,"",0,0,0,{})
+com.industry.analytics.Data("Output","c","source",2,0,"",0,0,0,{})
+com.industry.analytics.Data("Output","c","source",2.5,0,"",0,0,0,{"param1":"abc"})
+com.industry.analytics.Data("Output","c","source",3,0,"",0,0,0,{"param1":"xyz"})
+com.industry.analytics.Data("Output","c","source",5,0,"",0,0,0,{"param1":"xyz"})
+com.industry.analytics.Data("Output","c","source",5.5,0,"",0,0,0,{"param1":"xyz","param2":"abc"})
+com.industry.analytics.Data("Output","c","source",6,0,"",0,0,0,{"param1":"xyz","param2":"xyz"})
+com.industry.analytics.Data("Output","c","source",8,0,"",0,0,0,{"param1":"xyz","param2":"xyz"})

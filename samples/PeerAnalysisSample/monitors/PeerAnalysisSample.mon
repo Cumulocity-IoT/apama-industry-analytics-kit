@@ -1,0 +1,109 @@
+//*****************************************************************************
+// Title:         Basic Industry Analytics Kit Sample
+// Description:   This sample demonstrates how some of the features of the 
+//                Industry Analytics Kit are used.
+//
+// Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or its licensors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//*****************************************************************************
+
+package com.industry.demo;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+
+// This event is used by the user interface to send manual 
+// updates to the value of a specified data source
+event ManualValue {
+	string  sourceId;
+	decimal value;
+}
+
+// This monitor creates a set of Analytics to monitor a group
+// of simulated data sources
+monitor PeerAnalysisSample {
+	// These variables are simply placeholders we can use instead
+	// of creating new empty sequences/dictionaries to pass into the 
+	// Analytics we are creating
+	sequence<string>           emptySequence;
+	dictionary<string, string> emptyDictionary;
+	
+	// Defines the time window to use for the Analytics
+	constant string TIME_WINDOW := "30.0"; 
+	// Defines the upper/lower threshold to use for the Analytics
+	constant string THRESHOLD   := "20.0"; 
+	
+	action onload() {
+		
+		/////////////////////////////////////////////////////////////////////////
+		// Set up the Industry Analytics Kit Analytic network
+		/////////////////////////////////////////////////////////////////////////
+		
+		// Start generating simulated values for 200 individual data sources
+		send com.industry.analytics.Analytic( "DataSimulator", emptySequence, ["RAW_VALUES"],
+											  { "sourceIdCount":"200",
+									 		    "sourceIdPrefix":"ID" } ) to "";
+
+		// Create the Average Analytic to calculate the moving average for the raw data values
+		// using a 30second timewindow instead of the default timewindow
+		send com.industry.analytics.Analytic( "Average", ["RAW_VALUES"], ["RAW_AVERAGES"], { "timeWindow":TIME_WINDOW } ) to "";
+		
+		// Create the Combiner Analytic and connect an Average Analytic to it so that 
+		// we can calculate the overall moving average for ALL data sources
+		// using a 30second timewindow instead of the default timewindow
+		send com.industry.analytics.Analytic( "Combiner", ["RAW_AVERAGES"],      ["COMBINED_AVERAGES"], { "aggregatedSourceId":"all" } ) to "";
+		send com.industry.analytics.Analytic( "Average",  ["COMBINED_AVERAGES"], ["OVERALL_AVERAGES"],  { "timeWindow":TIME_WINDOW } ) to "";
+		
+		// Also create a Min/Max Analytic to monitor the minimum and maximum values of 
+		// both the individual and overall moving average calculations
+		send com.industry.analytics.Analytic( "MinMax", ["RAW_AVERAGES"],     ["INDV_MIN_MAX_AVERAGES"], emptyDictionary ) to "";
+		send com.industry.analytics.Analytic( "MinMax", ["OVERALL_AVERAGES"], ["MIN_MAX_AVERAGES"],      emptyDictionary ) to "";
+
+		
+		// Create a PeerAnalysis Analytic that will detect when there are deviations
+		// from the normal range of values for a data source
+		send com.industry.analytics.Analytic( "PeerAnalysis", ["RAW_VALUES"], ["PEER_ANOMALIES"], 
+											 { "timeWindow":TIME_WINDOW, "threshold":THRESHOLD, "direction":"rising" } ) to "";
+		
+
+		/////////////////////////////////////////////////////////////////////////
+		// Create a set of DataViewer Analytics for the various data values 
+		// so that we can visualize these values in the Dashboard 
+		/////////////////////////////////////////////////////////////////////////
+		// Create a Dataviewer for the raw data values from the Data Simulator
+		send com.industry.analytics.Analytic( "DataViewer", ["RAW_VALUES"],            emptySequence, emptyDictionary ) to "";    
+		// Create a Dataviewer for the moving Average per-data source
+		send com.industry.analytics.Analytic( "DataViewer", ["RAW_AVERAGES"],          emptySequence, emptyDictionary ) to ""; 
+		// Create a Dataviewer for the overall moving Average
+		send com.industry.analytics.Analytic( "DataViewer", ["OVERALL_AVERAGES"],      emptySequence, emptyDictionary ) to ""; 
+		// Create a Dataviewer for the Min/Max values for the overall moving Average
+		send com.industry.analytics.Analytic( "DataViewer", ["MIN_MAX_AVERAGES"],      emptySequence, emptyDictionary ) to "";
+		// Create a Dataviewer for the Min/Max values for the individual moving Averages
+		send com.industry.analytics.Analytic( "DataViewer", ["INDV_MIN_MAX_AVERAGES"], emptySequence, emptyDictionary ) to "";
+		// Create a Dataviewer for any anomalies from the PeerAnalysis calculation
+		send com.industry.analytics.Analytic( "DataViewer", ["PEER_ANOMALIES"],        emptySequence, emptyDictionary ) to "";
+		
+		
+		/////////////////////////////////////////////////////////////////////////
+		// Create a listener for manual value updates to the raw data from the UI
+		/////////////////////////////////////////////////////////////////////////
+		on all ManualValue() as mv {
+			// Create a new Data event and send it onto the channel of all the raw data values
+			Data spikeData := Data.init( "RAW_VALUES", DataConstants.RAW, mv.sourceId );
+			spikeData.timestamp := currentTime.toDecimal();
+			spikeData.dValue    := mv.value;
+			send spikeData to "RAW_VALUES";
+		}
+	}
+}

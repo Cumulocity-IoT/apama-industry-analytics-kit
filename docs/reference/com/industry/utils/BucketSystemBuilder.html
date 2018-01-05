@@ -1,0 +1,344 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>BucketSystemBuilder</TITLE>
+<META NAME="keywords" CONTENT="BucketSystemBuilder&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="BucketSystemBuilder";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/utils/BucketSystemBuilder.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="BucketSystemBuilder.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/utils/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.utils</FONT>
+<BR>Event BucketSystemBuilder</H2>
+<HR>A Builder through which to construct a BucketSystem Eg. <pre><br>BucketSystem bucketSystem := BucketSystemBuilder.create()<br>												.toValue(getTimestampFromData)<br>												.updateBucket(addDataToBucket)<br>												.totalSize(10.0)<br>												.bucketCount(4)<br>												.build();<br></pre><HR>
+<A NAME="member_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Member Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;optional&lt;float&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="BucketSystemBuilder.html#_bucketSize">_bucketSize</A></B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;optional&lt;float&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="BucketSystemBuilder.html#_totalSize">_totalSize</A></B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;optional&lt;integer&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="BucketSystemBuilder.html#_bucketCount">_bucketCount</A></B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;optional&lt;boolean&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="BucketSystemBuilder.html#_skipForwardOnGap">_skipForwardOnGap</A></B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;action&lt;any&nbsp;&gt;&nbsp;returns&nbsp;float</CODE></FONT></TD><TD><CODE><B><A HREF="BucketSystemBuilder.html#_toValue">_toValue</A></B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>,&nbsp;any&nbsp;&gt;&nbsp;returns&nbsp;any</CODE></FONT></TD><TD><CODE><B><A HREF="BucketSystemBuilder.html#_updateBucket">_updateBucket</A></B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="BucketSystemBuilder.html#_onBucketExpired">_onBucketExpired</A></B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;</CODE></FONT></TD><TD><CODE><B><A HREF="BucketSystemBuilder.html#_onBucketCreated">_onBucketCreated</A></B></CODE>
+<br>
+</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#bucketCount()">bucketCount</A></B>(integer&nbsp;bucketCount)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#bucketSize()">bucketSize</A></B>(float&nbsp;bucketSize)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystem.html" title="type in com.industry.utils">com.industry.utils.BucketSystem</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#build()">build</A></B>()</CODE>
+<br>
+<br>Create a BucketSystem from the pre-provided params Throws an Exception if any required params have not been set. Must provide 2 of [bucketSize, totalSize, bucketCount]. BucketCount should be larger than 0 BucketSize should be larger than 0 TotalSize should be larger than 0 Must provide an updateBucket function. Must provide a toValue function</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="BucketSystemBuilder.html#create()">create</A></B>()</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#onBucketCreated()">onBucketCreated</A></B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;onBucketCreated)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#onBucketExpired()">onBucketExpired</A></B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;onBucketExpired)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#skipForwardOnGap()">skipForwardOnGap</A></B>(boolean&nbsp;skipForwardOnGap)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#totalSize()">totalSize</A></B>(float&nbsp;totalSize)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#toValue()">toValue</A></B>(action&lt;any&nbsp;&gt;&nbsp;returns&nbsp;float&nbsp;toValue)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#updateBucket()">updateBucket</A></B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>,&nbsp;any&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;updateBucket)</CODE>
+<br>
+</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="member_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Member Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="_bucketCount"></A>
+<H3>_bucketCount</H3>
+<PRE>optional&lt;integer&nbsp;&gt;&nbsp;<B>_bucketCount</B>
+</PRE>
+<HR>
+<A NAME="_bucketSize"></A>
+<H3>_bucketSize</H3>
+<PRE>optional&lt;float&nbsp;&gt;&nbsp;<B>_bucketSize</B>
+</PRE>
+<HR>
+<A NAME="_onBucketCreated"></A>
+<H3>_onBucketCreated</H3>
+<PRE>action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;<B>_onBucketCreated</B>
+</PRE>
+<HR>
+<A NAME="_onBucketExpired"></A>
+<H3>_onBucketExpired</H3>
+<PRE>action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;<B>_onBucketExpired</B>
+</PRE>
+<HR>
+<A NAME="_skipForwardOnGap"></A>
+<H3>_skipForwardOnGap</H3>
+<PRE>optional&lt;boolean&nbsp;&gt;&nbsp;<B>_skipForwardOnGap</B>
+</PRE>
+<HR>
+<A NAME="_totalSize"></A>
+<H3>_totalSize</H3>
+<PRE>optional&lt;float&nbsp;&gt;&nbsp;<B>_totalSize</B>
+</PRE>
+<HR>
+<A NAME="_toValue"></A>
+<H3>_toValue</H3>
+<PRE>action&lt;any&nbsp;&gt;&nbsp;returns&nbsp;float&nbsp;<B>_toValue</B>
+</PRE>
+<HR>
+<A NAME="_updateBucket"></A>
+<H3>_updateBucket</H3>
+<PRE>action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>,&nbsp;any&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;<B>_updateBucket</B>
+</PRE>
+<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="bucketCount()"></A>
+<H3>bucketCount</H3>
+<PRE>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>bucketCount</B>(integer&nbsp;bucketCount)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>bucketCount</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="bucketSize()"></A>
+<H3>bucketSize</H3>
+<PRE>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>bucketSize</B>(float&nbsp;bucketSize)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>bucketSize</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="build()"></A>
+<H3>build</H3>
+<PRE>
+<A HREF="../../../com/industry/utils/BucketSystem.html" title="type in com.industry.utils">com.industry.utils.BucketSystem</A>&nbsp;<B>build</B>()</PRE>Create a BucketSystem from the pre-provided params Throws an Exception if any required params have not been set. Must provide 2 of [bucketSize, totalSize, bucketCount]. BucketCount should be larger than 0 BucketSize should be larger than 0 TotalSize should be larger than 0 Must provide an updateBucket function. Must provide a toValue function<HR>
+<A NAME="create()"></A>
+<H3>create</H3>
+<PRE>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;static <B>create</B>()</PRE>
+<HR>
+<A NAME="onBucketCreated()"></A>
+<H3>onBucketCreated</H3>
+<PRE>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>onBucketCreated</B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;onBucketCreated)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>onBucketCreated</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="onBucketExpired()"></A>
+<H3>onBucketExpired</H3>
+<PRE>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>onBucketExpired</B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;onBucketExpired)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>onBucketExpired</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="skipForwardOnGap()"></A>
+<H3>skipForwardOnGap</H3>
+<PRE>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>skipForwardOnGap</B>(boolean&nbsp;skipForwardOnGap)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>skipForwardOnGap</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="totalSize()"></A>
+<H3>totalSize</H3>
+<PRE>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>totalSize</B>(float&nbsp;totalSize)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>totalSize</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="toValue()"></A>
+<H3>toValue</H3>
+<PRE>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>toValue</B>(action&lt;any&nbsp;&gt;&nbsp;returns&nbsp;float&nbsp;toValue)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>toValue</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="updateBucket()"></A>
+<H3>updateBucket</H3>
+<PRE>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>updateBucket</B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>,&nbsp;any&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;updateBucket)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>updateBucket</tt>
+</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../index.html?com/industry/utils/BucketSystemBuilder.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="BucketSystemBuilder.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../..//com/industry/utils/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_summary">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;CONSTANT&nbsp;|&nbsp;<A HREF="#member_detail">MEMBER</A>&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

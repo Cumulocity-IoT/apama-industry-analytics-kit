@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("MissingData", ["Input1"], ["OutputIndividual"], {"repeats":"3", "interval":"5", "intervalType":"seconds", "bySourceId":"true", "timeFactor":"4"})

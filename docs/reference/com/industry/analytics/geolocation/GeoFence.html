@@ -1,0 +1,385 @@
+<HTML><!-- saved from url=(0014)about:internet -->
+
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>GeoFence</TITLE>
+<META NAME="keywords" CONTENT="GeoFence&nbsp;event">
+<LINK REL="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<SCRIPT type="text/javascript">function windowTitle()
+          {
+          parent.document.title="GeoFence";
+          }
+          </SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/geolocation/GeoFence.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="GeoFence.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/geolocation/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+<H2>
+<FONT SIZE="-1">com.industry.analytics.geolocation</FONT>
+<BR>Event GeoFence</H2>
+<HR>The Geofence Analytic takes a set of input Data sourceIds and uses the location object as either a cartesian or GPS location. Based on the Analytic configuration, a Data event will be generated whenever an input Data event's location activates one of five triggers in the configuration. The sourceId could be the device identifier, a completely synthetic identifier, or perhaps an sourceId higher up a hierarchy for a group calculation in which the original Data sourceId values are irrelevant. The triggers are defined within the configuration based on whether the Data is inside the geoFence, outside the geoFence, has entered the geoFence, has exited the geoFence or has dwelled within the geoFence longer than a defined period of time. At least one of these five triggers must be enabled.<br>
+<br> There are three types of geoFence available, of which only one can be used in a given analytic instance.<br> 1) Square, aligned with the x-axis (geoFenceOffset).<br> 2) Circle (geoFenceRadius).<br> 3) Polygon (geoFencePolygon).<br>
+<br> A square and a circle always require a geoFence reference point for their centre, either defined with the geoFenceLatitude, geoFenceLongitude parameter pair, or with the geoFenceLatitudeParam, geoFenceLongitude parameter pair. Polygons can also use the parameter pairs, but may also be defined absolutely with just the vertex points, without being relative to a reference point. In this latter case, do not define either of the parameter pairs mentioned.<br>
+<br> A cartesian coordinate system is taken as flat and completely arbitrary. As such, no boundary validation is done on the coordinates received. For GPS, the latitude and longitude are validated, and the dateline handled. A current limitation is that the analytic will not correctly handle geoFences which cross over either pole, nor does it it check for violating this limit. GPS distance calculations use a Haversine calculation. For cartesian coordinates latitude parameters are read as the y axis and longitude as the x axis.<br>
+<br> When defining a polygon geoFence, it is assumed that no polygon vertex will be more than half a hemisphere from it's nearest neighbour. This assumption is used when deciding whether the link between vertices crosses the dateline or not. The polygon links are assumed to be straight lines, an assumption which works acceptable over localised areas, but will become inaccurate over large areas. The polygon is defined in the configuration as a stringified sequence of stringified vertex points. Each point contains two decimal values, using space and/or comma as separators. Eg:<br> ["0 0", "10 10", "10 0"]<br> ["0,0", "10,10", "10,0"]<br> ["0, 0", "10, 10", "10, 0"]<br> There must be at least 3 vertices as neither a point nor a line is valid.<br>
+<br> GeoFences can be defined in absolute terms or relative to given coordinates provided within each Data event. This allows a variety of different use cases to be used.<br>
+<br> The analytic has two running modes. The first is the standard Industry Analytics Kit mode of using the processData action for receiving each Data event. The second is to use the correlator hypertree directly, via listeners, for Data events. In the second case, the geoFence can only be defined upfront at init time, and is fixed for the lifetime of the analytic.<br>
+<br> The incoming Data events must have their xValues and yValues set to the coordinates to be checked. xValue must be the x cartesian value or longitude, yValue the y cartesian value or latitude.<br>
+<br> The analytic can give an output when the source has dwelt within the geofence for a defined length of time. This can either be based on the Data timestamps, in which case the output will be generated on the first Data event received after the dwellTime period. Alternatively, this can be done in real time, using a correlator wait listener. This should only be used if the data is being received in real time and the correlator time resolution is acceptable (default = 100ms). In essence, the first method requires confirmation that the source is still resident in the geoFence after the expiration of the dwell period, whereas the second method will assume the source is still resident if it has not been explicitly told otherwise. Only one dwell output will be generated per stay within the geoFence in both cases.<br>
+<br> <dl><dt><b>Input Data events:</b></dt> <dd>Only one Data stream name must be provided. Its Data events must have the xValue and yValue parameters set to the coordinates of the input.</dd> </dl> <dl><dt><b>Output Data events:</b></dt> <dd>A single Data stream name must be provided. The resulting Data events will have the same <font face="courier" size="-1">sourceId</font> as the incoming Data event. The string value ("sValue") will contain the action state of either "ENTERED", "EXITED", "DWELLED", "INSIDE" or "OUTSIDE". All the <font face="courier" size="-1">params</font> from the triggering input Data are copied to the output Data events.</dd> </dl> <dl><dt><b>Params:</b></dt> <dd> <table border="1" style="border-collapse: collapse;width:100%"> <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr> <tr><td><b>enableEntry</b></td><td>Defines whether a Data event will be generated when the incoming Data event enters the defined location.</td> <td>Stringified boolean</td><td>Boolean</td><td>False</td><td>false</td></tr> <tr><td><b>enableExit</b></td><td>Defines whether a Data event will be generated when the incoming Data event leaves the defined location.</td> <td>Stringified boolean</td><td>Boolean</td><td>False</td><td>false</td></tr> <tr><td><b>enableDwell</b></td><td>Defines whether a Data event will be generated when the incoming Data event dwells in the defined location for the period defined by the "dwellTime" parameter. </td> <td>Stringified boolean</td><td>Boolean</td><td>False</td><td>false</td></tr> <tr><td><b>enableInside</b></td><td>Defines whether a Data event will be generated when the incoming Data event is inside the defined location. </td> <td>Stringified boolean</td><td>Boolean</td><td>False</td><td>false</td></tr> <tr><td><b>enableOutside</b></td><td>Defines whether a Data event will be generated when the incoming Data event is outside the defined location. </td> <td>Stringified boolean</td><td>Boolean</td><td>False</td><td>false</td></tr> <tr><td><b>dwellTime</b></td><td>Defines the duration in seconds that a source needs to be within a geoFence to be considered as dwelling.</td> <td>Stringified decimal</td><td>Decimal</td><td>True, if enableDwell is enabled.</td><td>0.0</td></tr> <tr><td><b>realtimeDwell</b></td><td>Defines whether the dwell should be based on the Data timestamps or be real time.</td> <td>Stringified boolean</td><td>Boolean</td><td>False</td><td>true, if useHypertree is enabled, otherwise false.</td></tr> <tr><td><b>geoFenceOffset</b></td><td>Defines the offset of the geoFenced square boundary from it's centre in metres</td> <td>Stringified decimal</td><td>Decimal</td><td>False</td><td>0.0</td></tr> <tr><td><b>geoFenceRadius</b></td><td>Defines the radius of the geoFenced circle in metres</td> <td>Stringified decimal</td><td>Decimal</td><td>False</td><td>0.0</td></tr> <tr><td><b>geoFencePolygon</b></td><td>Defines the vertices of the polygon. See examples above.</td> <td>Stringified sequence<string></td><td>String</td><td>False</td><td>[]</td></tr> <tr><td><b>geoFenceLatitude<br>geoFenceLongitude</b></td><td>Use as a pair. Defines the latitude and longitude coordinates for the reference point of the GeoFence.</td> <td>Stringified decimal</td><td>Decimal</td><td>False</td><td>0.0</td></tr> <tr><td><b>geoFenceLatitudeParam<br>geoFenceLongitudeParam</b></td><td>Use as a pair. Defines the parameters which will contain the latitude and longitude coordinates for the reference point of the GeoFence. This option cannot be used with the hypertree.</td> <td>String</td><td>String</td><td>False</td><td>0.0</td></tr> <tr><td><b>useCartesianCoords</b></td><td>Whether to use cartesian coordinates (true) or GPS coordinates (false).</td> <td>Stringified boolean</td><td>Boolean</td><td>False</td><td>false</td></tr> <tr><td><b>useHypertree</b></td><td>Whether to use the hypertree (true) or the Analytics object processData action (false).</td> <td>Stringified boolean</td><td>Boolean</td><td>False</td><td>false</td></tr> </table></dd> </dl> <dl><dt><b>Example usage:</b></dt> <dd><pre><br>// Define a GeoFence Analytic which takes Data events on the channel "Input1"  <br>// and uses the events xValue and yValue parameters as latitude and longitude<br>// to listen for events that are entering or leaving a 100m radius of Big Ben in London. <br>// If there a event was received that entered/exited the defined area, then the<br>// Analytic will publish the event on the output channel "Output1" with the "sValue"<br>// parameter modified to indicate either "ENTERED" or "EXITED".  This example is better<br>// used when a small number of GeoFences are required, and a large number of Data events<br>// for that location are required.<br>send com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output1"], {"geoFenceRadius":"100", "geoFenceLatitude":"51.500755", <br>                                                                          "geoFenceLongitude":"-0.124627", "enableEntry":"true", <br>                                                                          "enableExit":"true"} ) to "";<br>
+<br>// Define a GeoFence Analytic which takes Data events on the channel "Input1"  <br>// and checks the events parameters for a "home_latitude" and "home_longitude"<br>// values to define a center point at which to calculate whether or not the <br>// events xValue and yValue parameters (treated as latitude and longitude)<br>// are within 20m of that radius. If there a event was received that entered<br>// the defined area and stayed/dwelled inside that area for 60 seconds, then <br>// the Analytic will publish the event on the output channel "Output1" with the <br>// "sValue" parameter modified to indicate it "DWELLED".  This example is better<br>// used when a very large number of GeoFences with a lower number of location <br>// Data events are required.<br>send com.industry.analytics.Analytic("GeoFence", ["Input"], ["Output1"], {"geoFenceRadius":"100", "geoFenceLatitudeParam":"home_latitude", <br>                                                                          "geoFenceLongitudeParam":"home_longitude", "enableDwell":"true", <br>                                                                          "dwellTime":"60.0"} ) to "";<br></pre></dd> </dl><DL>
+<DT>
+<B>Listens:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Data.html" title="type in com.industry.analytics">com.industry.analytics.Data</A>&nbsp;-&nbsp;</DD>
+</DL>
+<HR>
+<A NAME="constant_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Constant Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#DWELL_TIME">DWELL_TIME</A> := "dwellTime"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines the minium duration (in seconds) a Data event will need to stay in the location before a Data event is generated for the dwell action.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#DWELLED">DWELLED</A> := "DWELLED"</B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant decimal</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#EARTH_RADIUS">EARTH_RADIUS</A> := 6371000.0d</B></CODE>
+<br>
+<br>Radius of the Earth in metres. No point being more precise with spherical model.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#ENABLE_DWELL">ENABLE_DWELL</A> := "enableDwell"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether a Data event will be generated when the incoming Data event dwells within the defined location for at least the duration specified by the "dwellTime" parameter</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#ENABLE_ENTRY">ENABLE_ENTRY</A> := "enableEntry"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether a Data event will be generated when the incoming Data event enters the defined location</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#ENABLE_EXIT">ENABLE_EXIT</A> := "enableExit"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether a Data event will be generated when the incoming Data event exits the defined location</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#ENABLE_INSIDE">ENABLE_INSIDE</A> := "enableInside"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether a Data event will be generated when the incoming Data event has a Geolocation that is inside the GeoFenced area.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#ENABLE_OUTSIDE">ENABLE_OUTSIDE</A> := "enableOutside"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether a Data event will be generated when the incoming Data event has a Geolocation that is outside the GeoFenced area.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#ENTERED">ENTERED</A> := "ENTERED"</B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#EXITED">EXITED</A> := "EXITED"</B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#GEOFENCE_LATITUDE">GEOFENCE_LATITUDE</A> := "geoFenceLatitude"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines the latitude of the geofenced area</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#GEOFENCE_LATITUDE_PARAM">GEOFENCE_LATITUDE_PARAM</A> := "geoFenceLatitudeParam"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name in the Data event that defines the latitude of the geofenced area</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#GEOFENCE_LONGITUDE">GEOFENCE_LONGITUDE</A> := "geoFenceLongitude"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines the longitude of the geofenced area</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#GEOFENCE_LONGITUDE_PARAM">GEOFENCE_LONGITUDE_PARAM</A> := "geoFenceLongitudeParam"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name in the Data event that defines the longitude of the geofenced area</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#GEOFENCE_OFFSET">GEOFENCE_OFFSET</A> := "geoFenceOffset"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines the offset of the geofenced area in metres, when using a square geofence.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#GEOFENCE_POLYGON">GEOFENCE_POLYGON</A> := "geoFencePolygon"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines the corners of a polygon, when using a polygon geofence.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#GEOFENCE_RADIUS">GEOFENCE_RADIUS</A> := "geoFenceRadius"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines the radius of the geofenced area in metres, when using a circular geofence.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#INSIDE">INSIDE</A> := "INSIDE"</B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant decimal</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#METERS_PER_DEGREE_LATITUDE">METERS_PER_DEGREE_LATITUDE</A> := 111111.1111d</B></CODE>
+<br>
+<br>Defines the constant value for the number of meters in a degree of latitude. Typically used in geo-location distance calculations.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#NAME">NAME</A> := "GeoFence"</B></CODE>
+<br>
+<br>This constant defines the name of the Analytic.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#OUTSIDE">OUTSIDE</A> := "OUTSIDE"</B></CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#REALTIME_DWELL">REALTIME_DWELL</A> := "realtimeDwell"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether the dwell uses a realtime EPL wait listener or is based soley on Data event timestamps.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#USE_CARTESIAN_COORDS">USE_CARTESIAN_COORDS</A> := "useCartesianCoords"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether the coordinates should be treated as GPS latitude/longitude points or as cartesian coordinates</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;constant string</CODE></FONT></TD><TD><CODE><B><A HREF="GeoFence.html#USE_HYPERTREE">USE_HYPERTREE</A> := "useHypertree"</B></CODE>
+<br>
+<br>This constant defines the configuration parameter name that defines whether hypertree listeners should be used when geoFenceLatitude and geoFenceLongitude are specified.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="action_summary"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2"><B>Action Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="GeoFence.html#_calculateGeoLocation()">_calculateGeoLocation</A></B>(decimal&nbsp;geoFenceLatitude,&nbsp;decimal&nbsp;geoFenceLongitude)</CODE>
+<br>
+</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="GeoFence.html#init()">init</A></B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</CODE>
+<br>
+<br>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.</TD>
+</TR>
+</TABLE>&nbsp;<A NAME="constant_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Constant Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="DWELL_TIME"></A>
+<H3>DWELL_TIME</H3>
+<PRE>constant string&nbsp;<B>DWELL_TIME := "dwellTime"</B>
+</PRE>This constant defines the configuration parameter name that defines the minium duration (in seconds) a Data event will need to stay in the location before a Data event is generated for the dwell action.<HR>
+<A NAME="DWELLED"></A>
+<H3>DWELLED</H3>
+<PRE>constant string&nbsp;<B>DWELLED := "DWELLED"</B>
+</PRE>
+<HR>
+<A NAME="EARTH_RADIUS"></A>
+<H3>EARTH_RADIUS</H3>
+<PRE>constant decimal&nbsp;<B>EARTH_RADIUS := 6371000.0d</B>
+</PRE>Radius of the Earth in metres. No point being more precise with spherical model.<HR>
+<A NAME="ENABLE_DWELL"></A>
+<H3>ENABLE_DWELL</H3>
+<PRE>constant string&nbsp;<B>ENABLE_DWELL := "enableDwell"</B>
+</PRE>This constant defines the configuration parameter name that defines whether a Data event will be generated when the incoming Data event dwells within the defined location for at least the duration specified by the "dwellTime" parameter<HR>
+<A NAME="ENABLE_ENTRY"></A>
+<H3>ENABLE_ENTRY</H3>
+<PRE>constant string&nbsp;<B>ENABLE_ENTRY := "enableEntry"</B>
+</PRE>This constant defines the configuration parameter name that defines whether a Data event will be generated when the incoming Data event enters the defined location<HR>
+<A NAME="ENABLE_EXIT"></A>
+<H3>ENABLE_EXIT</H3>
+<PRE>constant string&nbsp;<B>ENABLE_EXIT := "enableExit"</B>
+</PRE>This constant defines the configuration parameter name that defines whether a Data event will be generated when the incoming Data event exits the defined location<HR>
+<A NAME="ENABLE_INSIDE"></A>
+<H3>ENABLE_INSIDE</H3>
+<PRE>constant string&nbsp;<B>ENABLE_INSIDE := "enableInside"</B>
+</PRE>This constant defines the configuration parameter name that defines whether a Data event will be generated when the incoming Data event has a Geolocation that is inside the GeoFenced area.<HR>
+<A NAME="ENABLE_OUTSIDE"></A>
+<H3>ENABLE_OUTSIDE</H3>
+<PRE>constant string&nbsp;<B>ENABLE_OUTSIDE := "enableOutside"</B>
+</PRE>This constant defines the configuration parameter name that defines whether a Data event will be generated when the incoming Data event has a Geolocation that is outside the GeoFenced area.<HR>
+<A NAME="ENTERED"></A>
+<H3>ENTERED</H3>
+<PRE>constant string&nbsp;<B>ENTERED := "ENTERED"</B>
+</PRE>
+<HR>
+<A NAME="EXITED"></A>
+<H3>EXITED</H3>
+<PRE>constant string&nbsp;<B>EXITED := "EXITED"</B>
+</PRE>
+<HR>
+<A NAME="GEOFENCE_LATITUDE"></A>
+<H3>GEOFENCE_LATITUDE</H3>
+<PRE>constant string&nbsp;<B>GEOFENCE_LATITUDE := "geoFenceLatitude"</B>
+</PRE>This constant defines the configuration parameter name that defines the latitude of the geofenced area<HR>
+<A NAME="GEOFENCE_LATITUDE_PARAM"></A>
+<H3>GEOFENCE_LATITUDE_PARAM</H3>
+<PRE>constant string&nbsp;<B>GEOFENCE_LATITUDE_PARAM := "geoFenceLatitudeParam"</B>
+</PRE>This constant defines the configuration parameter name in the Data event that defines the latitude of the geofenced area<HR>
+<A NAME="GEOFENCE_LONGITUDE"></A>
+<H3>GEOFENCE_LONGITUDE</H3>
+<PRE>constant string&nbsp;<B>GEOFENCE_LONGITUDE := "geoFenceLongitude"</B>
+</PRE>This constant defines the configuration parameter name that defines the longitude of the geofenced area<HR>
+<A NAME="GEOFENCE_LONGITUDE_PARAM"></A>
+<H3>GEOFENCE_LONGITUDE_PARAM</H3>
+<PRE>constant string&nbsp;<B>GEOFENCE_LONGITUDE_PARAM := "geoFenceLongitudeParam"</B>
+</PRE>This constant defines the configuration parameter name in the Data event that defines the longitude of the geofenced area<HR>
+<A NAME="GEOFENCE_OFFSET"></A>
+<H3>GEOFENCE_OFFSET</H3>
+<PRE>constant string&nbsp;<B>GEOFENCE_OFFSET := "geoFenceOffset"</B>
+</PRE>This constant defines the configuration parameter name that defines the offset of the geofenced area in metres, when using a square geofence.<HR>
+<A NAME="GEOFENCE_POLYGON"></A>
+<H3>GEOFENCE_POLYGON</H3>
+<PRE>constant string&nbsp;<B>GEOFENCE_POLYGON := "geoFencePolygon"</B>
+</PRE>This constant defines the configuration parameter name that defines the corners of a polygon, when using a polygon geofence.<HR>
+<A NAME="GEOFENCE_RADIUS"></A>
+<H3>GEOFENCE_RADIUS</H3>
+<PRE>constant string&nbsp;<B>GEOFENCE_RADIUS := "geoFenceRadius"</B>
+</PRE>This constant defines the configuration parameter name that defines the radius of the geofenced area in metres, when using a circular geofence.<HR>
+<A NAME="INSIDE"></A>
+<H3>INSIDE</H3>
+<PRE>constant string&nbsp;<B>INSIDE := "INSIDE"</B>
+</PRE>
+<HR>
+<A NAME="METERS_PER_DEGREE_LATITUDE"></A>
+<H3>METERS_PER_DEGREE_LATITUDE</H3>
+<PRE>constant decimal&nbsp;<B>METERS_PER_DEGREE_LATITUDE := 111111.1111d</B>
+</PRE>Defines the constant value for the number of meters in a degree of latitude. Typically used in geo-location distance calculations.<HR>
+<A NAME="NAME"></A>
+<H3>NAME</H3>
+<PRE>constant string&nbsp;<B>NAME := "GeoFence"</B>
+</PRE>This constant defines the name of the Analytic.<HR>
+<A NAME="OUTSIDE"></A>
+<H3>OUTSIDE</H3>
+<PRE>constant string&nbsp;<B>OUTSIDE := "OUTSIDE"</B>
+</PRE>
+<HR>
+<A NAME="REALTIME_DWELL"></A>
+<H3>REALTIME_DWELL</H3>
+<PRE>constant string&nbsp;<B>REALTIME_DWELL := "realtimeDwell"</B>
+</PRE>This constant defines the configuration parameter name that defines whether the dwell uses a realtime EPL wait listener or is based soley on Data event timestamps.<HR>
+<A NAME="USE_CARTESIAN_COORDS"></A>
+<H3>USE_CARTESIAN_COORDS</H3>
+<PRE>constant string&nbsp;<B>USE_CARTESIAN_COORDS := "useCartesianCoords"</B>
+</PRE>This constant defines the configuration parameter name that defines whether the coordinates should be treated as GPS latitude/longitude points or as cartesian coordinates<HR>
+<A NAME="USE_HYPERTREE"></A>
+<H3>USE_HYPERTREE</H3>
+<PRE>constant string&nbsp;<B>USE_HYPERTREE := "useHypertree"</B>
+</PRE>This constant defines the configuration parameter name that defines whether hypertree listeners should be used when geoFenceLatitude and geoFenceLongitude are specified.<HR>
+<A NAME="action_detail"></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2"><B>Action Detail</B></FONT></TH>
+</TR>
+</TABLE>
+<A NAME="_calculateGeoLocation()"></A>
+<H3>_calculateGeoLocation</H3>
+<PRE>void&nbsp;<B>_calculateGeoLocation</B>(decimal&nbsp;geoFenceLatitude,&nbsp;decimal&nbsp;geoFenceLongitude)</PRE>
+<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>geoFenceLatitude</tt>
+</DD>
+<DD>
+<tt>geoFenceLongitude</tt>
+</DD>
+</DL>
+<HR>
+<A NAME="init()"></A>
+<H3>init</H3>
+<PRE>void&nbsp;<B>init</B>(<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;config,&nbsp;action&lt;boolean,&nbsp;<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;&gt;&nbsp;initComplete)</PRE>This action creates a new instance of the Analytic. Typically, this is called internally by the associated Analytics service monitor when a com.industry.analytics.Analytic event is sent for this type of Analytic.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>config</tt>&nbsp;-&nbsp;The Analytic configuration that will be used for this instance</DD>
+<DD>
+<tt>initComplete</tt>&nbsp;-&nbsp;The action callback to call when the new Analytic has been created, or if an error occured.</DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>
+<A HREF="../../../../com/industry/analytics/Analytic.html" title="type in com.industry.analytics">com.industry.analytics.Analytic</A>&nbsp;-&nbsp;The Analytic configuration event object.</DD>
+<DD>
+<A HREF="../../../../com/industry/analytics/AnalyticInterface.html" title="type in com.industry.analytics">com.industry.analytics.AnalyticInterface</A>&nbsp;-&nbsp;The action interface that can be used to interact with the Analytic.</DD>
+</DL>
+<HR>
+<HR>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2"><A target="_top" HREF="../../../../index.html?com/industry/analytics/geolocation/GeoFence.html"><B>FRAMES</B></A>  &nbsp;
+
+            &nbsp;<A target="_top" HREF="GeoFence.html"><B>NO FRAMES</B></A>  &nbsp;
+            &nbsp;<SCRIPT type="text/javascript"></SCRIPT>
+<NOSCRIPT>
+<A HREF="../../../../alltypes-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+</FONT></TD>
+</TR>
+<TR>
+<TD COLSPAN="2" BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR ALIGN="center" VALIGN="top">
+<TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1"><A HREF="../../../..//com/industry/analytics/geolocation/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;
+              </TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT>&nbsp;
+                </A></TD><TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" WIDTH="100%" ALIGN="RIGHT"></TD>
+</TR>
+</TABLE>
+</TD><TD ALIGN="right" VALIGN="top" ROWSPAN="3"><EM></EM></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">SUMMARY:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_summary">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_summary">ACTION</A></FONT></TD><TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">DETAIL:&nbsp;IMPORT&nbsp;|&nbsp;<A HREF="#constant_detail">CONSTANT</A>&nbsp;|&nbsp;MEMBER&nbsp;|&nbsp;<A HREF="#action_detail">ACTION</A></FONT></TD>
+</TR>
+</TABLE>
+<HR>
+</BODY>
+</HTML>

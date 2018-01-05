@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<apama-project>
+	<dependency>
+		<dependencyentry path="" kind="src" excluding="monitors/objects/JMSHandler.mon|monitors/simulator/simulator.mon|events/|apama/bundles/|monitors/analytics/Extensions/"/>
+	</dependency>
+	<catalogs>
+	</catalogs>
+	<bundles>
+		<bundle file="MemoryStore.bnd" origin-path="" origin="PRODUCT_CATALOG">
+			<instance name=""/>
+			<config-files>
+			</config-files>
+			<bundle-instance-files>
+			</bundle-instance-files>
+			<static-files>
+			</static-files>
+			<dashboard-files>
+			</dashboard-files>
+			<evt-files>
+			</evt-files>
+		</bundle>
+		<bundle file="PredictiveAnalyticsPlugin.bnd" origin-path="" origin="ADAPTER_CATALOG">
+			<instance name="PredictiveAnalyticsPlug-in"/>
+			<config-files>
+			</config-files>
+			<bundle-instance-files>
+			</bundle-instance-files>
+			<static-files>
+			</static-files>
+			<dashboard-files>
+			</dashboard-files>
+			<evt-files>
+			</evt-files>
+		</bundle>
+		<bundle file="DataViewService.bnd" origin-path="" origin="PRODUCT_CATALOG">
+			<instance name=""/>
+			<config-files>
+			</config-files>
+			<bundle-instance-files>
+			</bundle-instance-files>
+			<static-files>
+			</static-files>
+			<dashboard-files>
+			</dashboard-files>
+			<evt-files>
+			</evt-files>
+		</bundle>
+	</bundles>
+</apama-project>

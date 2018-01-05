@@ -1,0 +1,47 @@
+//*****************************************************************************
+// Title:         Suppressor017
+//*****************************************************************************
+
+package com.industry.analytics.flow_manipulation.Suppressor017;
+
+using com.industry.analytics.flow_manipulation.Suppressor;
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticInterface;
+
+
+monitor Test
+{
+	Suppressor _Suppressor;
+	
+	action onload()
+	{
+		Analytic config := Analytic("Suppressor", ["Input"], ["Output"], {"triggerParam":"abc", "timeWindow":"1"});
+		_Suppressor.init(config, _initComplete);
+	}
+	
+	
+	action _initComplete(boolean success, AnalyticInterface ti)
+	{
+		if success then
+		{
+			Data currData := Data.init("Input", DataConstants.RAW, "asset1");
+			currData.dValue := 1.0d;
+			currData.params["abc"] := "";
+			_Suppressor.processData( currData );
+			currData.sourceId := "asset2";
+			currData.dValue := 2.345d;
+			_Suppressor.processData( currData );
+			log "Suppressor Pre-Reset State:" at INFO;
+			log "  _activeSuppressions: " + _Suppressor._activeSourceIds.toString() at INFO;
+			_Suppressor.reset();
+			log "Suppressor Post-Reset State:" at INFO;
+			log "  _activeSuppressions: " + _Suppressor._activeSourceIds.toString() at INFO;
+		}
+		else
+		{
+			log "Error spawning Suppressor instance." at ERROR;
+		}
+	}
+}

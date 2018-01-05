@@ -1,0 +1,19 @@
+// Invalid expressions - Should use "abs()" for nested
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"degtorad()"})
+com.industry.analytics.Analytic("Expression", ["Input"], ["NoOutput"], {"expression":"radtodeg()"})
+
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output1"], {"expression":"radToDeg(0)"})
+// Valid expression - should result in 0
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output2"], {"expression":"degToRad(0)"})
+// Valid expression - should result in 90
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output3"], {"expression":"radToDeg(PI/2)"})
+// Valid expression - should result in PI/2
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output4"], {"expression":"degToRad(90)"})
+// Valid expression - should result in 180
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output5"], {"expression":"radToDeg(PI)"})
+// Valid expression - should result in PI
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output6"], {"expression":"degToRad(180)"})
+
+// Valid expression - should result in 180
+com.industry.analytics.Analytic("Expression", ["Input"], ["Output7"], {"expression":"RaDtOdEg(dEgToRaD(radtodeg(degtorad(RADTODEG(DEGTORAD(radToDeg(degToRad(90*2))))))))"})

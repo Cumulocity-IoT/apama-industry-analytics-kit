@@ -1,0 +1,3 @@
+com.industry.analytics.Analytic("Logger", [], [], {})
+com.industry.analytics.Analytic("Logger", ["Input1"], ["Output1"], {})
+com.industry.analytics.Analytic("Logger", ["Input3"], [], {"fields":"[\"invalid\"]"})

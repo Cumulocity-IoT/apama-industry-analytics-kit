@@ -1,0 +1,48 @@
+//*****************************************************************************
+// Title:         Test
+//*****************************************************************************
+
+package com.industry.analytics.test002;
+
+using com.industry.analytics.geolocation.Point;
+
+
+monitor Test
+{
+	action onload()
+	{
+		Point p;
+
+		// Empty string
+		p := Point.init("");
+		log "Empty string: valid: " + p.isValid().toString() at INFO;
+		
+		// Whitespace string
+		p := Point.init(" ");
+		log "Whitespace string: valid: " + p.isValid().toString() at INFO;
+		
+		// Single string
+		p := Point.init("64");
+		log "Single string: valid: " + p.isValid().toString() at INFO;
+		
+		// Non-decimal strings
+		p := Point.init("xxx yyy");
+		log "Non-decimal strings: valid: " + p.isValid().toString() at INFO;
+		
+		// Integer format strings
+		p := Point.init("32 64");
+		log "Integer format strings: valid: " + p.isValid().toString() at INFO;
+		
+		// Float format strings
+		p := Point.init("32.0 64.0");
+		log "Float format strings: valid: " + p.isValid().toString() at INFO;
+		
+		// Decimal format strings
+		p := Point.init("32.0d 64.0d");
+		log "Decimal format strings: valid: " + p.isValid().toString() at INFO;
+		
+		// Decimal format strings, comma separated
+		p := Point.init("32.0d,64.0d");
+		log "Decimal format strings, comma separated: valid: " + p.isValid().toString() at INFO;
+	}
+}
