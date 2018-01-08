@@ -279,6 +279,9 @@ event Availability {
 			Data dataOut := dataIn.clone();
 			dataOut.dValue := availabilityBucket.uptime / (availabilityBucket.uptime + availabilityBucket.downtime);
 			dataOut.streamName := _outputStreamName;
+	      	if dataOut.type = DataConstants.RAW {
+	      		dataOut.type := DataConstants.COMPUTED;
+	      	}
 			_analyticObject.sendData(dataOut);
 		}
 	}

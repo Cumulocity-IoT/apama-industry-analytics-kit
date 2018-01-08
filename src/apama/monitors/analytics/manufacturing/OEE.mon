@@ -1,5 +1,5 @@
 //*****************************************************************************
-// Title: Availability Analytic implementation
+// Title: OEE Analytic implementation
 //
 // Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or its licensors.
 //
@@ -239,6 +239,9 @@ event OEE {
 			Data dataOut := dataIn.clone();
 			dataOut.dValue := oeeParts.calculateOEE();
 			dataOut.streamName := _outputStreamName;
+	      	if dataOut.type = DataConstants.RAW {
+	      		dataOut.type := DataConstants.COMPUTED;
+	      	}
 			_analyticObject.sendData(dataOut);
 		}
 	}

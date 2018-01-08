@@ -298,6 +298,9 @@ event Performance {
 			dataOut.dValue := performanceBucket.numberProduced / (performanceBucket.uptime / _minCycleTime);
 		
 			dataOut.streamName := _outputStreamName;
+	      	if dataOut.type = DataConstants.RAW {
+	      		dataOut.type := DataConstants.COMPUTED;
+	      	}
 			_analyticObject.sendData(dataOut);
 		}
 	}

@@ -252,17 +252,20 @@ event Quality {
 		
 		QualityBucket qualityBucket := <QualityBucket> bucketSystem.reduce(reduceQualityBucketsToSingle, new QualityBucket);
 
-    decimal bucketTotal := qualityBucket.good + qualityBucket.bad;
-    
-    if bucketTotal > 0.0d {
-      decimal quality := qualityBucket.good / bucketTotal;
-      
-      Data dataOut := dataIn.clone();
-      dataOut.dValue := quality;
-    
-      dataOut.streamName := _outputStreamName;
-      _analyticObject.sendData(dataOut);
-    }
+	    decimal bucketTotal := qualityBucket.good + qualityBucket.bad;
+	    
+	    if bucketTotal > 0.0d {
+	    	decimal quality := qualityBucket.good / bucketTotal;
+	      
+	      	Data dataOut := dataIn.clone();
+	      	dataOut.dValue := quality;
+	    
+	      	dataOut.streamName := _outputStreamName;
+	      	if dataOut.type = DataConstants.RAW {
+	      		dataOut.type := DataConstants.COMPUTED;
+	      	}
+	      	_analyticObject.sendData(dataOut);
+	    }
 	}
 	
 	action getTimestampFromData(any data) returns float {
