@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("ResourceUsage", ["unitProduced", "resourceLevel"], ["Output"], {"timeWindow":"4", "smoothingFactor": "4"})

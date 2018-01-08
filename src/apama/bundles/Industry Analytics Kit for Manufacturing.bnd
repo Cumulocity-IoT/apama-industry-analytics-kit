@@ -11,6 +11,7 @@
 	</description>
 	<monitors>
 		<fileset dir="../monitors/analytics/Manufacturing">
+			<include name="ManufacturingConstants.mon"/>
 			<include name="Availability.mon"/>
 			<include name="AvailabilityService.mon"/>
 			<include name="Performance.mon"/>
@@ -19,6 +20,8 @@
 			<include name="QualityService.mon"/>
 			<include name="OEE.mon"/>
 			<include name="OEEService.mon"/>
+			<include name="ResourceUsage.mon"/>
+			<include name="ResourceUsageService.mon"/>
 		</fileset>
 	</monitors>
 	<block-catalogs>

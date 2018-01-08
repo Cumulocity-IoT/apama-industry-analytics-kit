@@ -214,6 +214,9 @@ class AnalyticsBaseTest(IndustrySolutionsBaseTest):
 		
 	def injectOEE(self, correlator):
 		correlator.injectMonitorscript(['OEE.mon', 'OEEService.mon'], self.MANUFACTURING_ANALYTICS_ROOT)
+		
+	def injectResourceUsage(self, correlator):
+		correlator.injectMonitorscript(['ResourceUsage.mon', 'ResourceUsageService.mon'], self.MANUFACTURING_ANALYTICS_ROOT)
 
 	####################################################
 	# STREAMING_CALCULATIONS group injection functions #

@@ -1,0 +1,20 @@
+"resourceLevel", com.industry.analytics.Data("resourceLevel", "r", "source", 0, 10, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 1, 1, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 2, 1, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 3, 1, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 4, 1, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 5, 1, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 6, 1, "", 0.0, 0.0, 0.0, {})
+"resourceLevel", com.industry.analytics.Data("resourceLevel", "r", "source", 6, 4, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 7, 1, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 8, 1, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 9, 1, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 10, 1, "", 0.0, 0.0, 0.0, {})
+
+// Gap
+
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 20, 1, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 21, 1, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 22, 1, "", 0.0, 0.0, 0.0, {})
+"unitProduced", com.industry.analytics.Data("unitProduced", "r", "source", 23, 1, "", 0.0, 0.0, 0.0, {})
+"resourceLevel", com.industry.analytics.Data("resourceLevel", "r", "source", 23, 0, "", 0.0, 0.0, 0.0, {})

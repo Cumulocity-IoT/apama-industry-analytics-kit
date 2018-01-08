@@ -1,0 +1,344 @@
+//*****************************************************************************
+// Title: ResourceUsage Analytic implementation
+//
+// Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or its licensors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//*****************************************************************************
+
+package com.industry.analytics.manufacturing;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Constants;
+
+using com.industry.utils.Bucket;
+using com.industry.utils.BucketSystem;
+using com.industry.utils.BucketSystemBuilder;
+
+event ResourceUsageBucket {
+	decimal resourceLevel;
+	decimal unitsProduced;
+}
+
+event InitializeResourceUsageBucketWithResourceLevel {
+	dictionary<string, BucketSystem> bucketSystemsBySourceId;
+	string sourceId;
+	
+	static action create(dictionary<string, BucketSystem> bucketSystemsBySourceId, string sourceId) returns action<Bucket> {
+		return InitializeResourceUsageBucketWithResourceLevel(bucketSystemsBySourceId, sourceId).onBucketCreated;
+	}
+	
+	action onBucketCreated(Bucket bucket) {
+		sequence<Bucket> buckets := bucketSystemsBySourceId.getOrDefault(sourceId).getBuckets();
+		// Grab the resourceLevel from the previous bucket, or set it to zero if there isn't one
+		// This bucket is the last bucket so the previous bucket is n= (size() - 2)
+		if buckets.size() < 2 {
+			bucket.data := new ResourceUsageBucket;
+		} else {
+			bucket.data := ResourceUsageBucket((<ResourceUsageBucket> buckets[buckets.size() - 2].data).resourceLevel, 0.0d);
+		}
+	}
+}
+
+event UpdateStartingResourceLevel {
+	dictionary<string, decimal> _startingResourceLevelBySourceId;	
+	string sourceId;
+	
+	static action create(dictionary<string, decimal> startingResourceLevelBySourceId, string sourceId) returns action<Bucket> {
+		return UpdateStartingResourceLevel(startingResourceLevelBySourceId, sourceId).onBucketExpired;
+	}
+	
+	action onBucketExpired(Bucket bucket) {
+		_startingResourceLevelBySourceId[sourceId] := (<ResourceUsageBucket> bucket.data).resourceLevel;
+	}
+}
+
+/* @AnalyticDefinition
+{
+	"name": "ResourceUsage",
+	"description": "Calculates the resourceUsage (qty/unit)  from a series of product status events.",
+	"group": "Manufacturing",
+	"documentation": "com/industry/analytics/manufacturing/ResourceUsage.html",
+	"inputChannels": [
+		{
+			"name": "Unit Produced",
+			"description": "The channel containing units produced",
+			"dataProperties": ["dValue"]
+		},{
+			"name": "Resource Level",
+			"description": "The channel containing the current resource level",
+			"dataProperties": ["dValue"]
+		}
+	],
+	"outputChannels": [
+		{
+			"name": "ResourceUsage",
+			"description": "ResourceUsage (qty/unit) data channel",
+			"dataProperties": ["+dValue"]
+		}
+	],
+	"properties": [
+		{
+			"name": "timeWindow",
+			"description": "The window of time to calculate the resourceUsage over.",
+			"type": "decimal",
+			"defaultValue": 60,
+			"optional": true,
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }",
+			"postfix": "(Seconds)"
+		},{
+			"name": "smoothingFactor",
+			"description": "The number of buckets to divide the timeWindow into.",
+			"type": "integer",
+			"defaultValue": 10,
+			"optional": true,
+			"advanced": true
+		},{
+			"name": "bySourceId",
+			"description": "Calculate separate ResourceUsage by sourceId",
+			"type": "boolean",
+			"defaultValue": true,
+			"optional": true,
+			"advanced": true
+		},{
+            "name": "managementId",
+            "description": "The id used for management of the analytic",
+            "type": "string",
+            "optional": true,
+            "advanced": true
+        }
+	]
+}
+*/
+/**
+ *  The ResourceUsage Analytic calculates the amount of resource required per unit produced.
+ *
+ * 	This is calculated by dividing the total resource usage within a time window by the number of units within a time window.
+ *
+ *  <dl><dt><b>Input Data events:</b></dt>
+ *  <dd>2 input Data stream name must be provided. The first being the "Unit Produced" events, containing a dValue with the number produced (as a delta not a cummulative total). The second is the resource level events, containing a dValue with the current resource level</dd>
+ *  </dl>
+ *  <dl><dt><b>Output Data events:</b></dt>
+ *  <dd>Only a single output Data stream name must be provided.</dd>
+ * 	<dd>Contains the calculated resource usage in the dValue field. (All other fields from the incoming data event are copied)</dd>
+ *  </dl>
+ *  <dl><dt><b>Params:</b></dt>
+ *  <dd>
+ *  <table border="1" style="border-collapse: collapse;width:100%">
+ *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
+ *  <tr><td><b>timeWindow</b></td><td>The maximum time window (in seconds) over which to calculate the resourceUsage (ResourceUsage will be calculated over a shorter time window if this has not yet ellapsed).</td>
+ *      <td>Stringified decimal <font face="courier" size="-1">>0.0d</font></td><td>Decimal</td><td>False</td><td>60.0</td></tr>
+ *  <tr><td><b>smoothingFactor</b></td><td>The number of buckets in which to divide the timeWindow and aggregate the data (The oldest bucket is replaced when the timeWindow ellapses).</td>
+ *      <td>true or false</td><td>String</td><td>False</td><td>False</td></tr>
+ *  <tr><td><b>bySourceId</b></td><td>Separate calculations per sourceId</td>
+ *      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr>
+ *  </table></dd>
+ *  </dl>
+ *  <dl><dt><b>Example usage:</b></dt>
+ <dd><code>
+// Create a ResourceUsage Analytic to calculate the average amount of resource used per unit produced in the last hour.
+send com.industry.analytics.Analytic("ResourceUsage", ["Unit Produced", "Resource Level"], ["Resource Usage"], { "timeWindow": (60.0d * 60.0d).toString() } ) to "";
+</code></dd>
+ *</dl>
+ */
+event ResourceUsage {
+	/** The name of the analytic. */
+	constant string NAME := "ResourceUsage";
+	
+	constant string TIMEWINDOW := "timeWindow";
+	constant string SMOOTHING_FACTOR := "smoothingFactor";
+	
+	/** This constant defines the configuration parameter name
+	 *  that defines whether or not the drift calculation will be
+	 *  partitioned by the <font face="courier" size="-1">sourceId</font>*/
+	constant string BY_SOURCEID := "bySourceId";
+		
+	/** @private */
+	string _outputStreamName;
+	
+	string _resourceLevelStreamName;
+
+	float _timeWindow;
+	integer _smoothingFactor;
+	boolean _bySourceId;
+
+	dictionary<string, BucketSystem> _bucketSystemBySourceId;
+	dictionary<string, decimal> _startingResourceLevelBySourceId;
+	
+	constant string INTERNAL_SOURCEID := "__internal_shared_sourceId";
+		  
+	/** The Analytic Base Object implementation 
+	 *  @private */
+	AnalyticObject _analyticObject;
+
+	/** 
+	 *  This action creates a new instance of the Analytic.
+	 *  Typically, this is called internally by the associated Analytics 
+	 *  service monitor when a com.industry.analytics.Analytic event is 
+	 *  sent for this type of Analytic.
+	 *
+	 *  @param  config        The Analytic configuration that 
+	 *                        will be used for this instance
+	 *  @param  initComplete  The action callback to call when the new Analytic  
+	 *                        has been created, or if an error occured.
+    *
+	 *  @see com.industry.analytics.Analytic           The Analytic configuration event object.
+	 *  @see com.industry.analytics.AnalyticInterface  The action interface that can be used 
+	 *                                            to interact with the Analytic.
+	 */
+	action init(Analytic config, action<boolean, AnalyticInterface> initComplete) {
+		if( not _validateConfiguration( config ) ) then {
+			initComplete( false, new AnalyticInterface );
+			return;
+		}
+		
+		_analyticObject := new AnalyticObject;
+		_analyticObject.init( config,
+		                      processData,
+		                      new action<>,
+		                      initComplete );
+	}
+	
+	/** 
+	 *  This helper action validates configuration that was
+	 *  used when trying to create a new instance of the Analytic.
+	 *  This is called internally, and should not be called directly by 
+	 *  the Users application.
+	 *  
+	 *  @param   config  The Analytic configuration object that is being validated
+	 *  @returns A boolean value indicating whether the configuration was valid or not.
+	 * 
+	 *  @private
+	 */
+	action _validateConfiguration(Analytic config) returns boolean {
+		boolean result := config.validateParams( NAME, 2, 1, 
+		                                       [ TIMEWINDOW, SMOOTHING_FACTOR ],
+		      		                           [ Constants.FLOAT, Constants.INTEGER ],
+		      		                           [ false, false ] );
+		
+		// Only check the specific params if the validation was okay
+		if result {
+			_resourceLevelStreamName := config.inputDataNames[1];
+			
+			_outputStreamName := config.outputDataNames[0];
+			
+			_timeWindow := config.getOrFloat(TIMEWINDOW, 60.0);
+			if _timeWindow <= 0.0 {
+				log "  Param "+ TIMEWINDOW +" must be > 0." at ERROR;
+				result := false;
+			}
+
+			_smoothingFactor := config.getOrInteger(SMOOTHING_FACTOR, 10);
+			if _smoothingFactor <= 0 {
+				log "  Param "+ SMOOTHING_FACTOR +" must be an integer > 0." at ERROR;
+				result := false;
+			}
+			
+			_bySourceId := config.getOrBoolean( BY_SOURCEID, true );
+		}
+
+		return result;
+	}
+	
+	
+	/**
+	 *  This action implements the Analytic function itself. 
+	 *  This is called internally by the Analytic Object, and  
+	 *  should not be called directly by the Users application.
+	 *  If the application has created this Analytic using the 
+	 *  #init() action directly, then the <font face="courier" size="-1">processData</font>
+	 *  action on the <font face="courier" size="-1">com.industry.analytics.AnalyticInterface</font> 
+	 *  that was returned should be used instead.
+	 *
+	 *  @param   dataIn  The input Data event to be processed by this Analytic
+	 * 
+	 *  @private
+	 */
+	action processData(Data dataIn) {
+		log "Processing " + dataIn.toString() at DEBUG;
+		
+		string sourceId := getSourceId(dataIn);
+
+		if not _bucketSystemBySourceId.hasKey(sourceId) {
+			_bucketSystemBySourceId.add(sourceId, BucketSystemBuilder.create()
+							                                       .toValue(getTimestampFromData)
+							                                       .updateBucket(addDataToBucket)
+							                                       .totalSize(_timeWindow)
+							                                       .bucketCount(_smoothingFactor)
+										                           .onBucketCreated(InitializeResourceUsageBucketWithResourceLevel.create(_bucketSystemBySourceId, sourceId))
+										                           .onBucketExpired(UpdateStartingResourceLevel.create(_startingResourceLevelBySourceId, sourceId))
+							                                       .build());
+		}
+		BucketSystem bucketSystem := _bucketSystemBySourceId[sourceId];
+	
+		bucketSystem.add(dataIn);
+		
+		ResourceUsageBucket resourceUsageBucket := <ResourceUsageBucket> bucketSystem.reduce(reduceResourceUsageBucketsToSingle, new ResourceUsageBucket);
+		
+		if _startingResourceLevelBySourceId.hasKey(sourceId) and resourceUsageBucket.unitsProduced != 0.0d {
+			Data dataOut := dataIn.clone();
+			
+			dataOut.dValue := (resourceUsageBucket.resourceLevel - _startingResourceLevelBySourceId[sourceId]) / resourceUsageBucket.unitsProduced;
+		
+			dataOut.streamName := _outputStreamName;
+			if dataOut.type = DataConstants.RAW {
+				dataOut.type := DataConstants.COMPUTED;
+			}
+			_analyticObject.sendData(dataOut);
+		}
+	}
+	
+	action getTimestampFromData(any data) returns float {
+		return (<Data> data).timestamp.toFloat();
+	}
+	
+	action addDataToBucket(Bucket bucket, any dataAsAny) returns any {
+		Data data := <Data> dataAsAny;
+		string sourceId := getSourceId(data);
+		
+		// This is safe as we are always setting a value in the onBucketCreated callback
+		ResourceUsageBucket result := <ResourceUsageBucket>bucket.data;
+		
+		if data.streamName = _resourceLevelStreamName {
+			result.resourceLevel := data.dValue;
+			if not _startingResourceLevelBySourceId.hasKey(sourceId) {
+				_startingResourceLevelBySourceId[sourceId] := data.dValue;
+			}
+		} else {
+			result.unitsProduced := result.unitsProduced + data.dValue;
+		}
+		return result;
+	}
+	  
+	action getSourceId(Data d) returns string {
+		if _bySourceId {
+			return d.sourceId;
+	    } else {
+	    	return INTERNAL_SOURCEID;
+	    }
+	}
+	
+	action reduceResourceUsageBucketsToSingle(any accumulator, Bucket bucket) returns any {
+		ResourceUsageBucket acc := <ResourceUsageBucket> accumulator;
+		ResourceUsageBucket current := <ResourceUsageBucket>bucket.data;
+		
+		acc.resourceLevel := current.resourceLevel;
+		acc.unitsProduced := acc.unitsProduced + current.unitsProduced;
+		
+		return acc;
+	}
+}

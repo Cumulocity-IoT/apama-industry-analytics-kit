@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("ResourceUsage", ["unitProduced", "resourceLevel"], ["bySourceId"], {"timeWindow":"10", "smoothingFactor": "10", "bySourceId":"true"})
+com.industry.analytics.Analytic("ResourceUsage", ["unitProduced", "resourceLevel"], ["notBySourceId"], {"timeWindow":"10", "smoothingFactor": "10", "bySourceId":"false"})
