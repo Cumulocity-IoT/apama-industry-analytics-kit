@@ -1,0 +1,23 @@
+// On time
+&TIME(0)
+"ETA", com.industry.analytics.Data("ETA", "r", "source", 0.0, 2.0, "", 0, 0, 0, {})
+&TIME(1)
+"Arrival", com.industry.analytics.Data("Arrival", "r", "source", 1.0, 0, "", 0, 0, 0, {})
+
+// Late - arrival trigger
+&TIME(3)
+"ETA", com.industry.analytics.Data("ETA", "r", "source", 3.0, 4.0, "", 0, 0, 0, {})
+"Arrival", com.industry.analytics.Data("Arrival", "r", "source", 5.0, 0, "", 0, 0, 0, {})
+&TIME(5)
+
+// Late - eta trigger
+&TIME(6)
+"ETA", com.industry.analytics.Data("ETA", "r", "source", 6.0, 7.0, "", 0, 0, 0, {})
+&TIME(7)
+&TIME(8)
+"Arrival", com.industry.analytics.Data("Arrival", "r", "source", 8.0, 0, "", 0, 0, 0, {})
+
+// Late - eta trigger, no arrival
+&TIME(9)
+"ETA", com.industry.analytics.Data("ETA", "r", "source", 9.0, 10.0, "", 0, 0, 0, {})
+&TIME(10)

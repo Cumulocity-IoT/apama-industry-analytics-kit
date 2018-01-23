@@ -1,0 +1,4 @@
+&TIME(0)
+"ETA", com.industry.analytics.Data("ETA", "r", "source", 0.0, 2.0, "", 0, 0, 0, {})
+&TIME(3)
+"Arrival", com.industry.analytics.Data("Arrival", "r", "source", 1.0, 0, "", 0, 0, 0, {})

@@ -1,0 +1,5 @@
+com.industry.analytics.Analytic("TimeOverdue", [], [], {})
+com.industry.analytics.Analytic("TimeOverdue", ["Input1"], ["Output1", "Output2"], {})
+com.industry.analytics.Analytic("TimeOverdue", ["Input1"], ["Output1"], {})
+com.industry.analytics.Analytic("TimeOverdue", ["Input1", "Input2"], [], {})
+com.industry.analytics.Analytic("TimeOverdue", [], ["Output1"], {})

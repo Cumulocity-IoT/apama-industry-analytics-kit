@@ -169,7 +169,7 @@ event OEE {
 		_analyticObject := new AnalyticObject;
 		_analyticObject.init( config,
 		                      processData,
-		                      new action<>,
+		                      reset,
 		                      initComplete );
 	}
 	
@@ -244,5 +244,9 @@ event OEE {
 	      	}
 			_analyticObject.sendData(dataOut);
 		}
+	}
+	
+	action reset() {
+		oeePartsBySourceId.clear();
 	}
 }

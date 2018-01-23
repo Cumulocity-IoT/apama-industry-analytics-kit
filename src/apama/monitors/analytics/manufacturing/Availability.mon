@@ -195,7 +195,7 @@ event Availability {
 		_analyticObject := new AnalyticObject;
 		_analyticObject.init( config,
 		                      processData,
-		                      new action<>,
+		                      reset,
 		                      initComplete );
 	}
 	
@@ -328,5 +328,10 @@ event Availability {
 			acc.downtime := acc.downtime + bucket.currentEnd().toDecimal() - current.lastStatusTimestamp;
 		}
 		return acc;
+	}
+	
+	action reset() {
+		_bucketSystemBySourceId.clear();
+		_currentMachineStatusBySourceId.clear();
 	}
 }

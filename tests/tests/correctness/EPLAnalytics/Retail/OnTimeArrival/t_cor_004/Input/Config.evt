@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("OnTimeArrival", ["ETA", "Arrival"], ["OnArrival"], {"emitOn":"arrival"})
+com.industry.analytics.Analytic("OnTimeArrival", ["ETA", "Arrival"], ["OnETA"], {"emitOn":"eta"})

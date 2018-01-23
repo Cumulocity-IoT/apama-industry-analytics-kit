@@ -1,0 +1,11 @@
+com.industry.analytics.Analytic("OnTimeArrival", [], [], {})
+com.industry.analytics.Analytic("OnTimeArrival", ["Input1"], ["Output1", "Output2"], {})
+com.industry.analytics.Analytic("OnTimeArrival", ["Input1"], ["Output1"], {})
+com.industry.analytics.Analytic("OnTimeArrival", ["Input1", "Input2"], [], {})
+com.industry.analytics.Analytic("OnTimeArrival", [], ["Output1"], {})
+
+com.industry.analytics.Analytic("OnTimeArrival", ["Input1", "Input2"], ["Output"], {"timeWindow":"0"})
+com.industry.analytics.Analytic("OnTimeArrival", ["Input1", "Input2"], ["Output"], {"timeWindow":"-1"})
+com.industry.analytics.Analytic("OnTimeArrival", ["Input1", "Input2"], ["Output"], {"smoothingFactor":"0"})
+com.industry.analytics.Analytic("OnTimeArrival", ["Input1", "Input2"], ["Output"], {"smoothingFactor":"-1"})
+com.industry.analytics.Analytic("OnTimeArrival", ["Input1", "Input2"], ["Output"], {"emitOn":"invalid"})

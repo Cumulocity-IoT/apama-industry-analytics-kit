@@ -1,0 +1,4 @@
+"ETA", com.industry.analytics.Data("ETA", "r", "source1", 0.0, 1.0, "", 0, 0, 0, {})
+"ETA", com.industry.analytics.Data("ETA", "r", "source2", 0.0, 2.0, "", 0, 0, 0, {})
+"Arrival", com.industry.analytics.Data("Arrival", "r", "source1", 3.0, 0, "", 0, 0, 0, {})
+"Arrival", com.industry.analytics.Data("Arrival", "r", "source2", 4.0, 0, "", 0, 0, 0, {})

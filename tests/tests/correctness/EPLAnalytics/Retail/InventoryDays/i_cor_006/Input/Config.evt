@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("InventoryDays", ["InventoryLevel"], ["bySourceId"], {"bySourceId":"true"})
+com.industry.analytics.Analytic("InventoryDays", ["InventoryLevel"], ["notBySourceId"], {"bySourceId":"false"})

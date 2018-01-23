@@ -81,12 +81,17 @@
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystem.html#add()">add</A></B>(any&nbsp;item)</CODE>
 <br>
-<br>Add an item to the bucketSystem Throws an exception if toValue function has not been provided See also: BucketSystem.addWithValue</TD>
+<br>Add an item to the bucketSystem Throws an exception if toValue function has not been provided</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystem.html#addWithValue()">addWithValue</A></B>(any&nbsp;item,&nbsp;float&nbsp;itemValue)</CODE>
 <br>
 <br>Add an item to the bucketSystem</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;void</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystem.html#clear()">clear</A></B>()</CODE>
+<br>
+<br>Completely empty the bucket system and return it to starting conditions</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystem.html" title="type in com.industry.utils">com.industry.utils.BucketSystem</A></CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="BucketSystem.html#create()">create</A></B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>,&nbsp;any&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;updateBucket,&nbsp;action&lt;any&nbsp;&gt;&nbsp;returns&nbsp;float&nbsp;toValue,&nbsp;float&nbsp;bucketSize,&nbsp;integer&nbsp;bucketCount)</CODE>
@@ -129,13 +134,19 @@
 </TABLE>
 <A NAME="add()"></A>
 <H3>add</H3>
-<PRE>void&nbsp;<B>add</B>(any&nbsp;item)</PRE>Add an item to the bucketSystem Throws an exception if toValue function has not been provided See also: BucketSystem.addWithValue<DL>
+<PRE>void&nbsp;<B>add</B>(any&nbsp;item)</PRE>Add an item to the bucketSystem Throws an exception if toValue function has not been provided<DL>
 <DT>
 <B>Parameters:</B>
 </DT>
 <DD>
 <tt>item</tt>
 </DD>
+</DL>
+<DL>
+<DT>
+<B>See Also:</B>
+</DT>
+<DD>BucketSystem.addWithValue&nbsp;-&nbsp;</DD>
 </DL>
 <HR>
 <A NAME="addWithValue()"></A>
@@ -152,6 +163,9 @@
 </DD>
 </DL>
 <HR>
+<A NAME="clear()"></A>
+<H3>clear</H3>
+<PRE>void&nbsp;<B>clear</B>()</PRE>Completely empty the bucket system and return it to starting conditions<HR>
 <A NAME="create()"></A>
 <H3>create</H3>
 <PRE>
@@ -187,7 +201,7 @@
 <PRE>sequence&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;<B>getBuckets</B>()</PRE>Get all buckets<HR>
 <A NAME="reduce()"></A>
 <H3>reduce</H3>
-<PRE>any&nbsp;<B>reduce</B>(action&lt;any,&nbsp;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;callback,&nbsp;any&nbsp;initialValue)</PRE>Reduce buckets to a single value or event Example: <pre><br>		// Sum all of the buckets<br>        float sum := &lt;float&gt;bucketSystem.reduce(sum, 0);<br>	<br>		action sum(any accumulator, Bucket b) returns any {<br>			return &lt;float&gt; accumulator + &lt;float&gt;b.value;<br>		}<br>	 </pre><DL>
+<PRE>any&nbsp;<B>reduce</B>(action&lt;any,&nbsp;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;callback,&nbsp;any&nbsp;initialValue)</PRE>Reduce buckets to a single value or event Example: <pre><br>		// Sum all of the buckets<br>        float sum := &lt;float&gt;bucketSystem.reduce(sum, 0);<br>	<br>		action sum(any accumulator, Bucket b) returns any {<br>			return &lt;float&gt; accumulator + &lt;float&gt;b.data;<br>		}<br>	 </pre><DL>
 <DT>
 <B>Parameters:</B>
 </DT>

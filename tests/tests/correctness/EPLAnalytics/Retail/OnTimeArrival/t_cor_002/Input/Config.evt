@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("OnTimeArrival", ["ETA", "Arrival"], ["Output"], {})

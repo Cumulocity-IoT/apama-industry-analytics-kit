@@ -209,7 +209,7 @@ event ResourceUsage {
 		_analyticObject := new AnalyticObject;
 		_analyticObject.init( config,
 		                      processData,
-		                      new action<>,
+		                      reset,
 		                      initComplete );
 	}
 	
@@ -340,5 +340,10 @@ event ResourceUsage {
 		acc.unitsProduced := acc.unitsProduced + current.unitsProduced;
 		
 		return acc;
+	}
+	
+	action reset() {
+		_bucketSystemBySourceId.clear();
+		_startingResourceLevelBySourceId.clear();
 	}
 }

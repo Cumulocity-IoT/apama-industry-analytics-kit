@@ -269,7 +269,10 @@ class AnalyticsBaseTest(IndustrySolutionsBaseTest):
 
 	#######################################
 	# RETAIL group injection functions #
-	#######################################
+	#######################################	
+	def injectCommonRetail(self, correlator):
+		correlator.injectMonitorscript(['BucketSystem.mon'], self.COMPONENTS)
+		
 	def injectBasketAnalysis(self, correlator):
 		correlator.injectMonitorscript(['TimeWeightedMovingAverage.mon'], self.COMPONENTS)
 		correlator.injectMonitorscript(['BasketAnalysis.mon',
@@ -281,6 +284,16 @@ class AnalyticsBaseTest(IndustrySolutionsBaseTest):
 		self.injectSum( correlator )
 		correlator.injectMonitorscript(['FootFall.mon',
 										'FootFallService.mon'], self.RETAIL_ANALYTICS_ROOT)
+										
+	def injectOnTimeArrival(self, correlator):
+		correlator.injectMonitorscript(['OnTimeArrival.mon','OnTimeArrivalService.mon'], self.RETAIL_ANALYTICS_ROOT)
+	
+	def injectTimeOverdue(self, correlator):
+		correlator.injectMonitorscript(['TimeOverdue.mon', 'TimeOverdueService.mon'], self.RETAIL_ANALYTICS_ROOT)
+		
+	def injectInventoryDays(self, correlator):
+		correlator.injectMonitorscript(['TimeWeightedMovingAverage.mon'], self.COMPONENTS)
+		correlator.injectMonitorscript(['InventoryDays.mon', 'InventoryDaysService.mon'], self.RETAIL_ANALYTICS_ROOT)
 
 	#######################################
 	# UTILITIES group injection functions #

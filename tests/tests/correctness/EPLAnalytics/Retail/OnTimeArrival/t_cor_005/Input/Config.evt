@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("OnTimeArrival", ["ETA", "Arrival"], ["bySourceId"], {"bySourceId":"true"})
+com.industry.analytics.Analytic("OnTimeArrival", ["ETA", "Arrival"], ["notBySourceId"], {"bySourceId":"false"})

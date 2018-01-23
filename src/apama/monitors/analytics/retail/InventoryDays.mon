@@ -1,0 +1,245 @@
+//*****************************************************************************
+// Title: Performance Analytic implementation
+//
+// Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or its licensors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//*****************************************************************************
+
+package com.industry.analytics.retail;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Constants;
+using com.industry.analytics.TimeWeightedMovingAverage;
+
+using com.apama.exceptions.Exception;
+
+/* @AnalyticDefinition
+{
+	"name": "InventoryDays",
+	"description": "Calculate how long the current inventory will last (Assuming no resupply).",
+	"group": "Retail",
+	"documentation": "com/industry/analytics/retail/InventoryDays.html",
+	"inputChannels": [
+		{
+			"name": "Inventory Level",
+			"description": "The channel containing the current inventory level",
+			"dataProperties": ["dValue"]
+		}
+
+	],
+	"outputChannels": [
+		{
+			"name": "Inventory Days",
+			"description": "The duration in seconds that the current inventory is predicted to last",
+			"dataProperties": ["+dValue"]
+		}
+	],
+	"properties": [
+		{
+			"name": "timeWindow",
+			"description": "The period of time to use in the prediction calculation.",
+			"type": "decimal",
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }",
+			"postfix": "(Seconds)"
+		},{
+			"name": "bySourceId",
+			"description": "Create different predictions for each sourceId",
+			"type": "boolean",
+			"defaultValue": true,
+			"optional": true,
+			"advanced": true
+		},{
+            "name": "managementId",
+            "description": "The id used for management of the analytic",
+            "type": "string",
+            "optional": true,
+            "advanced": true
+        }
+	]
+}
+*/
+/**
+ *  The InventoryDays Analytic calculates the expected time (in seconds) before the inventory level reaches zero.
+ *
+ *  <dl><dt><b>Input Data events:</b></dt>
+ *  <dd>1 input Data stream name must be provided.</dd>
+ *  <dd>Contains the current inventory level in the dValue field.</dd>
+ *  </dl>
+ *  <dl><dt><b>Output Data events:</b></dt>
+ *  <dd>Only a single output Data stream name must be provided.</dd>
+ * 	<dd>Contains the calculated expected time that the inventory will last (in seconds). All other fields from the triggering data event are copied</dd>
+ *  </dl>
+ *  <dl><dt><b>Params:</b></dt>
+ *  <dd>
+ *  <table border="1" style="border-collapse: collapse;width:100%">
+ *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
+ *  <tr><td><b>timeWindow</b></td><td>The time window to use in the calculation of the inventoryDays.</td>
+ *      <td>Stringified decimal <font face="courier" size="-1">>0.0d</font></td><td>Decimal</td><td>True</td><td></td></tr>
+ *  <tr><td><b>bySourceId</b></td><td>If true then the analytic creates different predictions for each unique sourceId</td>
+ *      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr>
+ *  </table></dd>
+ *  </dl>
+ *  <dl><dt><b>Example usage:</b></dt>
+ <dd><code>
+// Create an InventoryDays Analytic which takes inventoryLevel updates on the channel "InventoryLevel"  
+// It outputs the number of seconds to the channel "TimeBeforeOutage".
+send com.industry.analytics.Analytic("OnTimeArrival", ["InventoryLevel"], ["TimeBeforeOutage"], { "timeWindow": (8.0d * 60.0d * 60.0d).toString() } ) to "";
+</code></dd>
+ *</dl>
+ */
+event InventoryDays {
+	/** The name of the analytic. */
+	constant string NAME := "InventoryDays";
+
+	constant string TIMEWINDOW := "timeWindow";
+
+	constant string BY_SOURCEID := "bySourceId";
+	
+	constant string INTERNAL_SOURCEID := "__internal_shared_sourceId";
+		
+	/** @private */
+	string _outputStreamName;
+
+	decimal _timeWindow;
+	boolean _bySourceId;
+
+	dictionary<string, Data> _previousDataBySourceId;
+	dictionary<string, TimeWeightedMovingAverage> _twmaBySourceId;
+		
+	/** The Analytic Base Object implementation 
+	 *  @private */
+	AnalyticObject _analyticObject;
+
+	/** 
+	 *  This action creates a new instance of the Analytic.
+	 *  Typically, this is called internally by the associated Analytics 
+	 *  service monitor when a com.industry.analytics.Analytic event is 
+	 *  sent for this type of Analytic.
+	 *
+	 *  @param  config        The Analytic configuration that 
+	 *                        will be used for this instance
+	 *  @param  initComplete  The action callback to call when the new Analytic  
+	 *                        has been created, or if an error occured.
+     *
+	 *  @see com.industry.analytics.Analytic           The Analytic configuration event object.
+	 *  @see com.industry.analytics.AnalyticInterface  The action interface that can be used 
+	 *                                            to interact with the Analytic.
+	 */
+	action init(Analytic config, action<boolean, AnalyticInterface> initComplete) {
+		if( not _validateConfiguration( config ) ) then {
+			initComplete( false, new AnalyticInterface );
+			return;
+		}
+		
+		_analyticObject := new AnalyticObject;
+		_analyticObject.init( config,
+		                      processData,
+		                      reset,
+		                      initComplete );
+	}
+	
+	/** 
+	 *  This helper action validates configuration that was
+	 *  used when trying to create a new instance of the Analytic.
+	 *  This is called internally, and should not be called directly by 
+	 *  the Users application.
+	 *  
+	 *  @param   config  The Analytic configuration object that is being validated
+	 *  @returns A boolean value indicating whether the configuration was valid or not.
+	 * 
+	 *  @private
+	 */
+	action _validateConfiguration(Analytic config) returns boolean {
+		boolean result := config.validateParams( NAME, 1, 1, 
+		                                       [ TIMEWINDOW ],
+		      		                           [ Constants.FLOAT ],
+		      		                           [ false ] );
+		
+		// Only check the specific params if the validation was okay
+		if not result {
+			return false;
+		}
+		
+		_outputStreamName := config.outputDataNames[0];
+		
+		_timeWindow := config.getOrDecimal(TIMEWINDOW, 60.0d);
+		if _timeWindow <= 0.0d {
+			log "  Param "+ TIMEWINDOW +" must be > 0." at ERROR;
+			return false;
+		}
+		
+		_bySourceId := config.getOrBoolean( BY_SOURCEID, true );
+
+		return result;
+	}
+	
+	action processData(Data dataIn) {
+		log "Processing " + dataIn.toString() at DEBUG;
+		
+		string sourceId := getSourceId(dataIn);
+	
+		if _previousDataBySourceId.hasKey(sourceId) {
+			Data previousData := _previousDataBySourceId[sourceId];
+			
+			if dataIn.timestamp <= previousData.timestamp {
+				log "Skipping: " + dataIn.toString() + " Data needs to arrive in chronological order" at WARN;
+				return;
+			}
+			
+			// Only process decreases in inventory, we're not interested in restock
+			if dataIn.dValue < previousData.dValue {
+				decimal gradient := (dataIn.dValue - previousData.dValue) / (dataIn.timestamp - previousData.timestamp);
+				
+				decimal avgGradient;
+				if _twmaBySourceId.hasKey(sourceId) {
+					TimeWeightedMovingAverage twma := _twmaBySourceId[sourceId];
+					twma.update(gradient, dataIn.timestamp);
+					avgGradient := twma.eMa();
+				} else { 
+					_twmaBySourceId.add(sourceId, TimeWeightedMovingAverage.create(gradient, dataIn.timestamp, _timeWindow));
+					avgGradient := gradient;
+				}
+				
+				decimal timeRemaining := -dataIn.dValue / avgGradient;
+				
+				Data dataOut := dataIn.clone();
+				dataOut.dValue := timeRemaining;
+				dataOut.streamName := _outputStreamName;
+		      	if dataOut.type = DataConstants.RAW {
+		      		dataOut.type := DataConstants.COMPUTED;
+		      	}
+				_analyticObject.sendData(dataOut);
+			}
+		}
+		
+		_previousDataBySourceId[sourceId] := dataIn;
+	}
+	  
+	action getSourceId(Data d) returns string {
+		if _bySourceId {
+			return d.sourceId;
+	    } else {
+	    	return INTERNAL_SOURCEID;
+	    }
+	}
+	
+	action reset() {
+		_previousDataBySourceId.clear();
+		_twmaBySourceId.clear();
+	}
+}

@@ -1,0 +1,7 @@
+com.industry.analytics.Analytic("InventoryDays", [], [], {})
+com.industry.analytics.Analytic("InventoryDays", ["Input1"], ["Output1", "Output2"], {})
+com.industry.analytics.Analytic("InventoryDays", ["Input1"], [], {})
+com.industry.analytics.Analytic("InventoryDays", ["Input1", "Input2"], [], {})
+com.industry.analytics.Analytic("InventoryDays", [], ["Output1"], {})
+com.industry.analytics.Analytic("InventoryDays", ["Input1"], ["Output1"], {"timeWindow":"0"})
+com.industry.analytics.Analytic("InventoryDays", ["Input1"], ["Output1"], {"timeWindow":"-1"})

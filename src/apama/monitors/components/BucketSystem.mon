@@ -141,14 +141,14 @@ event BucketSystem {
 			return;
 		}
 		
-    // Handle out of order events by never letting the currentSize (of a bucket) reduce
+		// Handle out of order events by never letting the currentSize (of a bucket) reduce
 		b.currentSize := float.max(b.currentSize, itemValue - b.start);
 		b.data := updateBucket(b.clone(), item);
 	}
 	
 	/** Add an item to the bucketSystem
 	 * Throws an exception if toValue function has not been provided
-	 * See also: BucketSystem.addWithValue
+	 * @see BucketSystem.addWithValue
 	 */
 	action add(any item) {
 		ifpresent toValue {
@@ -222,7 +222,7 @@ event BucketSystem {
         float sum := &lt;float&gt;bucketSystem.reduce(sum, 0);
 	
 		action sum(any accumulator, Bucket b) returns any {
-			return &lt;float&gt; accumulator + &lt;float&gt;b.value;
+			return &lt;float&gt; accumulator + &lt;float&gt;b.data;
 		}
 	 </code> 
 	 */
@@ -232,6 +232,13 @@ event BucketSystem {
 			initialValue := callback(initialValue, b);
 		}
 		return initialValue;
+	}
+	
+	/**
+	 * Completely empty the bucket system and return it to starting conditions
+	 */
+	action clear() {
+		buckets.clear();
 	}
 }
 
@@ -258,20 +265,38 @@ event BucketSystemBuilder {
 	action<Bucket> _onBucketExpired;
 	action<Bucket> _onBucketCreated;
 	
+	/**
+	 * Create a new BucketSystemBuilder
+	 */
 	static action create() returns BucketSystemBuilder {
 		return new BucketSystemBuilder;
 	}
 	
+	/**
+	 * Optional - A callback used to determine which bucket a peice of data should be added to
+	 * The callback is provided with the data provided to the bucketSystem.add(...) or bucketSystem.addWithValue(...) as the only argument.
+	 * The callback's return value is the float used by the bucket system to determine which bucket to use (Normally a timestamp)
+	 */
 	action toValue(action<any> returns float toValue) returns BucketSystemBuilder {
 		_toValue := toValue;
 		return self;
 	}
 	
+	/**
+	 * Set the callback to be used to add data to the appropriate bucket
+	 * The callback is provided with 2 arguments:
+	 * The first - The bucket which the data should be added to
+	 * The second - The data to be added (This is the data that was provided to the bucketSystem.add(...) or bucketSystem.addWithValue(...) actions)
+	 * The value returned from the callback is the new value of the bucket
+	 */
 	action updateBucket(action<Bucket, any>  returns any updateBucket) returns BucketSystemBuilder {
 		_updateBucket := updateBucket;
 		return self;
 	}
 	
+	/**
+	 * Set the individual size of each bucket.
+	 */
 	action bucketSize(float bucketSize) returns BucketSystemBuilder {
 		_bucketSize := bucketSize;
 		ifpresent _totalSize {
@@ -284,6 +309,9 @@ event BucketSystemBuilder {
 		return self;
 	}
 	
+	/**
+	 * Set the maximum number of buckets in the bucket system.
+	 */
 	action bucketCount(integer bucketCount) returns BucketSystemBuilder {
 		_bucketCount := bucketCount;
 		ifpresent _totalSize {
@@ -296,6 +324,9 @@ event BucketSystemBuilder {
 		return self;
 	}
 	
+	/**
+	 * Set the total size of the bucket system.
+	 */
 	action totalSize(float totalSize) returns BucketSystemBuilder {
 		_totalSize := totalSize;
 		ifpresent _bucketCount {
@@ -308,16 +339,41 @@ event BucketSystemBuilder {
 		return self;
 	}
 	
+	/**
+	 * Optional - If true then the bucket system will skip bucket creation when there is a large gap in the incoming data (>= 2 * the total size of the system).
+	 * The onBucketExpired and onBucketCreated are still called as appropriate but not for any skipped buckets.
+	 * Default - True
+	 * @param skipforwardOnGap Whether to allow the bucket system to skip any bucket creation when appropriate
+	 */ 
 	action skipForwardOnGap(boolean skipForwardOnGap) returns BucketSystemBuilder {
 		_skipForwardOnGap := skipForwardOnGap;
 		return self;
 	}
 
+	/**
+	 * Optional - A callback to be called after a bucket is removed from the system. The callback is provided with the expired bucket as the only argument.
+	 * Example: <code>
+		action removeBucketValueFromTotal(Bucket b) {
+			runningTotal := runningTotal - getValueFromBucket(b);
+		}
+	 </code>
+	 * @param onBucketExpired a callback to be called after the bucket system expires a bucket
+	 */ 
 	action onBucketExpired(action<Bucket> onBucketExpired) returns BucketSystemBuilder {
 		_onBucketExpired := onBucketExpired;
 		return self;
 	}
 	
+	/**
+	 * Optional - A callback to be called after a new bucket has been added to the system. The callback is provided with the new bucket as the only argument.
+	 * Often used for initialisation of a bucket. Example:
+	 * <code>
+		action initialiseBucket(Bucket b) {
+			b.data := MyBucketContents(5.0);
+		}
+	 </code>
+	 * @param onBucketCreated a callback to be called after the bucket system creates a new bucket
+	 */ 
 	action onBucketCreated(action<Bucket> onBucketCreated) returns BucketSystemBuilder {
 		_onBucketCreated := onBucketCreated;
 		return self;

@@ -172,7 +172,7 @@ event Quality {
 		_analyticObject := new AnalyticObject;
 		_analyticObject.init( config,
 		                      processData,
-		                      new action<>,
+		                      reset,
 		                      initComplete );
 	}
 	
@@ -296,5 +296,9 @@ event Quality {
 		acc.good := acc.good + current.good;
 		acc.bad := acc.bad + current.bad;
 		return acc;
+	}
+	
+	action reset() {
+		_bucketSystemBySourceId.clear();
 	}
 }

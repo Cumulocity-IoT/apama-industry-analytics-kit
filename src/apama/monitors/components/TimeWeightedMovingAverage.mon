@@ -87,6 +87,18 @@ event TimeWeightedMovingAverage {
 		_timeWindow := timeWindow;
 	}
 
+	/** 
+	 *  Creates a new instance of the Time Weighted Moving Average, automaticallying initialising.
+	 *  
+	 *  @param	value	    The first decimal value in the set of data to be averaged.
+	 *  @param	timestamp	The decimal timestamp when the first value was generated.
+	 *	@param	timeWindow	The time window for the weight: T in the above formulas.
+	 */
+	static action create(decimal value, decimal timestamp, decimal timeWindow) returns TimeWeightedMovingAverage {
+		TimeWeightedMovingAverage twma := new TimeWeightedMovingAverage;
+		twma.init(value, timestamp, timeWindow);
+		return twma;
+	}
 
 	/** 
 	 *  Returns the intermediate value a from the above formulas. Required by the

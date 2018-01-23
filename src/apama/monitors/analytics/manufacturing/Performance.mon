@@ -207,7 +207,7 @@ event Performance {
 		_analyticObject := new AnalyticObject;
 		_analyticObject.init( config,
 		                      processData,
-		                      new action<>,
+		                      reset,
 		                      initComplete );
 	}
 	
@@ -355,5 +355,10 @@ event Performance {
 		}
 		
 		return acc;
+	}
+	
+	action reset() {
+		_bucketSystemBySourceId.clear();
+		_currentMachineStatusBySourceId.clear();
 	}
 }

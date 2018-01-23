@@ -99,12 +99,12 @@
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#bucketCount()">bucketCount</A></B>(integer&nbsp;bucketCount)</CODE>
 <br>
-</TD>
+<br>Set the maximum number of buckets in the bucket system.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#bucketSize()">bucketSize</A></B>(float&nbsp;bucketSize)</CODE>
 <br>
-</TD>
+<br>Set the individual size of each bucket.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystem.html" title="type in com.industry.utils">com.industry.utils.BucketSystem</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#build()">build</A></B>()</CODE>
@@ -114,37 +114,37 @@
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="BucketSystemBuilder.html#create()">create</A></B>()</CODE>
 <br>
-</TD>
+<br>Create a new BucketSystemBuilder</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#onBucketCreated()">onBucketCreated</A></B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;onBucketCreated)</CODE>
 <br>
-</TD>
+<br>Optional - A callback to be called after a new bucket has been added to the system. The callback is provided with the new bucket as the only argument. Often used for initialisation of a bucket. Example: <pre></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#onBucketExpired()">onBucketExpired</A></B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;onBucketExpired)</CODE>
 <br>
-</TD>
+<br>Optional - A callback to be called after a bucket is removed from the system. The callback is provided with the expired bucket as the only argument. Example: <pre></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#skipForwardOnGap()">skipForwardOnGap</A></B>(boolean&nbsp;skipForwardOnGap)</CODE>
 <br>
-</TD>
+<br>Optional - If true then the bucket system will skip bucket creation when there is a large gap in the incoming data (>= 2 * the total size of the system). The onBucketExpired and onBucketCreated are still called as appropriate but not for any skipped buckets. Default - True</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#totalSize()">totalSize</A></B>(float&nbsp;totalSize)</CODE>
 <br>
-</TD>
+<br>Set the total size of the bucket system.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#toValue()">toValue</A></B>(action&lt;any&nbsp;&gt;&nbsp;returns&nbsp;float&nbsp;toValue)</CODE>
 <br>
-</TD>
+<br>Optional - A callback used to determine which bucket a peice of data should be added to The callback is provided with the data provided to the bucketSystem.add(...) or bucketSystem.addWithValue(...) as the only argument. The callback's return value is the float used by the bucket system to determine which bucket to use (Normally a timestamp)</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A></CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="BucketSystemBuilder.html#updateBucket()">updateBucket</A></B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>,&nbsp;any&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;updateBucket)</CODE>
 <br>
-</TD>
+<br>Set the callback to be used to add data to the appropriate bucket The callback is provided with 2 arguments: The first - The bucket which the data should be added to The second - The data to be added (This is the data that was provided to the bucketSystem.add(...) or bucketSystem.addWithValue(...) actions) The value returned from the callback is the new value of the bucket</TD>
 </TR>
 </TABLE>&nbsp;<A NAME="member_detail"></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
@@ -201,8 +201,7 @@
 <A NAME="bucketCount()"></A>
 <H3>bucketCount</H3>
 <PRE>
-<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>bucketCount</B>(integer&nbsp;bucketCount)</PRE>
-<DL>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>bucketCount</B>(integer&nbsp;bucketCount)</PRE>Set the maximum number of buckets in the bucket system.<DL>
 <DT>
 <B>Parameters:</B>
 </DT>
@@ -214,8 +213,7 @@
 <A NAME="bucketSize()"></A>
 <H3>bucketSize</H3>
 <PRE>
-<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>bucketSize</B>(float&nbsp;bucketSize)</PRE>
-<DL>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>bucketSize</B>(float&nbsp;bucketSize)</PRE>Set the individual size of each bucket.<DL>
 <DT>
 <B>Parameters:</B>
 </DT>
@@ -231,39 +229,33 @@
 <A NAME="create()"></A>
 <H3>create</H3>
 <PRE>
-<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;static <B>create</B>()</PRE>
-<HR>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;static <B>create</B>()</PRE>Create a new BucketSystemBuilder<HR>
 <A NAME="onBucketCreated()"></A>
 <H3>onBucketCreated</H3>
 <PRE>
-<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>onBucketCreated</B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;onBucketCreated)</PRE>
-<DL>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>onBucketCreated</B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;onBucketCreated)</PRE>Optional - A callback to be called after a new bucket has been added to the system. The callback is provided with the new bucket as the only argument. Often used for initialisation of a bucket. Example: <pre><br>		action initialiseBucket(Bucket b) {<br>			b.data := MyBucketContents(5.0);<br>		}<br>	 </pre><DL>
 <DT>
 <B>Parameters:</B>
 </DT>
 <DD>
-<tt>onBucketCreated</tt>
-</DD>
+<tt>onBucketCreated</tt>&nbsp;-&nbsp;a callback to be called after the bucket system creates a new bucket</DD>
 </DL>
 <HR>
 <A NAME="onBucketExpired()"></A>
 <H3>onBucketExpired</H3>
 <PRE>
-<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>onBucketExpired</B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;onBucketExpired)</PRE>
-<DL>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>onBucketExpired</B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>&nbsp;&gt;&nbsp;onBucketExpired)</PRE>Optional - A callback to be called after a bucket is removed from the system. The callback is provided with the expired bucket as the only argument. Example: <pre><br>		action removeBucketValueFromTotal(Bucket b) {<br>			runningTotal := runningTotal - getValueFromBucket(b);<br>		}<br>	 </pre><DL>
 <DT>
 <B>Parameters:</B>
 </DT>
 <DD>
-<tt>onBucketExpired</tt>
-</DD>
+<tt>onBucketExpired</tt>&nbsp;-&nbsp;a callback to be called after the bucket system expires a bucket</DD>
 </DL>
 <HR>
 <A NAME="skipForwardOnGap()"></A>
 <H3>skipForwardOnGap</H3>
 <PRE>
-<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>skipForwardOnGap</B>(boolean&nbsp;skipForwardOnGap)</PRE>
-<DL>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>skipForwardOnGap</B>(boolean&nbsp;skipForwardOnGap)</PRE>Optional - If true then the bucket system will skip bucket creation when there is a large gap in the incoming data (>= 2 * the total size of the system). The onBucketExpired and onBucketCreated are still called as appropriate but not for any skipped buckets. Default - True<DL>
 <DT>
 <B>Parameters:</B>
 </DT>
@@ -275,8 +267,7 @@
 <A NAME="totalSize()"></A>
 <H3>totalSize</H3>
 <PRE>
-<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>totalSize</B>(float&nbsp;totalSize)</PRE>
-<DL>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>totalSize</B>(float&nbsp;totalSize)</PRE>Set the total size of the bucket system.<DL>
 <DT>
 <B>Parameters:</B>
 </DT>
@@ -288,8 +279,7 @@
 <A NAME="toValue()"></A>
 <H3>toValue</H3>
 <PRE>
-<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>toValue</B>(action&lt;any&nbsp;&gt;&nbsp;returns&nbsp;float&nbsp;toValue)</PRE>
-<DL>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>toValue</B>(action&lt;any&nbsp;&gt;&nbsp;returns&nbsp;float&nbsp;toValue)</PRE>Optional - A callback used to determine which bucket a peice of data should be added to The callback is provided with the data provided to the bucketSystem.add(...) or bucketSystem.addWithValue(...) as the only argument. The callback's return value is the float used by the bucket system to determine which bucket to use (Normally a timestamp)<DL>
 <DT>
 <B>Parameters:</B>
 </DT>
@@ -301,8 +291,7 @@
 <A NAME="updateBucket()"></A>
 <H3>updateBucket</H3>
 <PRE>
-<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>updateBucket</B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>,&nbsp;any&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;updateBucket)</PRE>
-<DL>
+<A HREF="../../../com/industry/utils/BucketSystemBuilder.html" title="type in com.industry.utils">com.industry.utils.BucketSystemBuilder</A>&nbsp;<B>updateBucket</B>(action&lt;<A HREF="../../../com/industry/utils/Bucket.html" title="type in com.industry.utils">com.industry.utils.Bucket</A>,&nbsp;any&nbsp;&gt;&nbsp;returns&nbsp;any&nbsp;updateBucket)</PRE>Set the callback to be used to add data to the appropriate bucket The callback is provided with 2 arguments: The first - The bucket which the data should be added to The second - The data to be added (This is the data that was provided to the bucketSystem.add(...) or bucketSystem.addWithValue(...) actions) The value returned from the callback is the new value of the bucket<DL>
 <DT>
 <B>Parameters:</B>
 </DT>

@@ -15,6 +15,12 @@
 			<include name="FootFallService.mon"/>
 			<include name="BasketAnalysis.mon"/>
 			<include name="BasketAnalysisService.mon"/>
+			<include name="OnTimeArrival.mon"/>
+			<include name="OnTimeArrivalService.mon"/>
+			<include name="TimeOverdue.mon"/>
+			<include name="TimeOverdueService.mon"/>
+			<include name="InventoryDays.mon"/>
+			<include name="InventoryDaysService.mon"/>
 		</fileset>
 	</monitors>
 	<block-catalogs>

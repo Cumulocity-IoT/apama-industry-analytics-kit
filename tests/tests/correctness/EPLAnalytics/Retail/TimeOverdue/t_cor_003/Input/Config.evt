@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("TimeOverdue", ["ETA", "Arrival"], ["ignoreEarly"], {"ignoreEarly":"true"})
+com.industry.analytics.Analytic("TimeOverdue", ["ETA", "Arrival"], ["notIgnoreEarly"], {"ignoreEarly":"false"})

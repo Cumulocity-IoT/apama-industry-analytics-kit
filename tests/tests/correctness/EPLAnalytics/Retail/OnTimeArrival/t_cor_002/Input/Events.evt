@@ -1,0 +1,17 @@
+// On time
+"ETA", com.industry.analytics.Data("ETA", "r", "source", 0.0, 2.0, "", 0, 0, 0, {})
+"Arrival", com.industry.analytics.Data("Arrival", "r", "source", 1.0, 0, "", 0, 0, 0, {})
+
+// Late
+"ETA", com.industry.analytics.Data("ETA", "r", "source", 3.0, 4.0, "", 0, 0, 0, {})
+"Arrival", com.industry.analytics.Data("Arrival", "r", "source", 5.0, 0, "", 0, 0, 0, {})
+
+// Change in ETA - Now on time
+"ETA", com.industry.analytics.Data("ETA", "r", "source", 6.0, 7.0, "", 0, 0, 0, {})
+"ETA", com.industry.analytics.Data("ETA", "r", "source", 7.0, 8.0, "", 0, 0, 0, {})
+"Arrival", com.industry.analytics.Data("Arrival", "r", "source", 8.0, 0, "", 0, 0, 0, {})
+
+// Change in ETA - Now late
+"ETA", com.industry.analytics.Data("ETA", "r", "source", 9.0, 12.0, "", 0, 0, 0, {})
+"ETA", com.industry.analytics.Data("ETA", "r", "source", 10.0, 11.0, "", 0, 0, 0, {})
+"Arrival", com.industry.analytics.Data("Arrival", "r", "source", 12.0, 0, "", 0, 0, 0, {})

@@ -1,0 +1,371 @@
+//*****************************************************************************
+// Title: Performance Analytic implementation
+//
+// Copyright (c) 2015-2017 Software AG, Darmstadt, Germany and/or its licensors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//*****************************************************************************
+
+package com.industry.analytics.retail;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Constants;
+
+using com.industry.utils.Bucket;
+using com.industry.utils.BucketSystem;
+using com.industry.utils.BucketSystemBuilder;
+
+using com.apama.exceptions.Exception;
+
+event OnTimeArrivalBucket {
+	integer totalArrivals;
+	integer onTimeArrivals;
+}
+
+event OnTimeArrivalEta {
+	decimal eta;
+	listener etaListener;
+	boolean expired;
+}
+
+/* @AnalyticDefinition
+{
+	"name": "OnTimeArrival",
+	"description": "Calculate the percentage of on time arrivals.",
+	"group": "Retail",
+	"documentation": "com/industry/analytics/retail/OnTimeArrival.html",
+	"inputChannels": [
+		{
+			"name": "ETA Updates",
+			"description": "The channel containing the ETA for the journey",
+			"dataProperties": ["dValue"]
+		},{
+			"name": "Arrival",
+			"description": "The channel containing the 'Journey Completed' events"
+		}
+
+	],
+	"outputChannels": [
+		{
+			"name": "On Time Arrival",
+			"description": "The percentage of arrivals that are on time",
+			"dataProperties": ["+dValue"]
+		}
+	],
+	"properties": [
+		{
+			"name": "timeWindow",
+			"description": "The period of time to calculate the OnTimeArrival percentage over.",
+			"type": "decimal",
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }",
+			"postfix": "(Seconds)"
+		},{
+			"name": "emitOn",
+			"description": "The period of time to calculate the OnTimeArrival percentage over.",
+			"type": "string",
+			"optional": true,
+			"defaultValue": "ETA",
+			"validValues": ["ETA", "Arrival"]
+		},{
+			"name": "smoothingFactor",
+			"description": "The number of buckets to divide the timeWindow into.",
+			"type": "integer",
+			"defaultValue": 10,
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }",
+			"optional": true,
+			"advanced": true
+		},{
+			"name": "bySourceId",
+			"description": "Link ETA and Arrival by sourceId",
+			"type": "boolean",
+			"defaultValue": true,
+			"optional": true,
+			"advanced": true
+		},{
+            "name": "managementId",
+            "description": "The id used for management of the analytic",
+            "type": "string",
+            "optional": true,
+            "advanced": true
+        }
+	]
+}
+*/
+/**
+ *  The OnTimeArrival Analytic calculates the percentage of arrival that are on time based on an earlier provided ETA.
+ *
+ *  Important Notes: <br/>
+ *  By default, and when using "bySourceId":"true", the analytic matches events based on the sourceId, this allows multiple journeys to be tracked at the same time by a single analytic. This differs from other anlytics in that it does not calculate a separate OnTimeArrival per sourceId.
+ *  By default, and when using "emitOn":"eta", the correlator creates an on wait(...) listener with waitTime = (eta.dValue - eta.timestamp) and will send a new result when the timer expires or an arrival event is received (whichever is first).
+ *
+ *  <dl><dt><b>Input Data events:</b></dt>
+ *  <dd>2 input Data stream name must be provided. The first being the "ETA" events, containing a dValue with the timestamp (in Seconds from epoch) that the arival event is expected by. The second is the Arrival events, which do not need to contain anything (except the timestamp).</dd>
+ *  </dl>
+ *  <dl><dt><b>Output Data events:</b></dt>
+ *  <dd>Only a single output Data stream name must be provided.</dd>
+ * 	<dd>Contains the calculated OnTimeArrival in the dValue field. (All other fields from the triggering data event (Either the eta or the arrival event) are copied)</dd>
+ *  </dl>
+ *  <dl><dt><b>Params:</b></dt>
+ *  <dd>
+ *  <table border="1" style="border-collapse: collapse;width:100%">
+ *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
+ *  <tr><td><b>timeWindow</b></td><td>The maximum time window over which to calculate the OnTimeArrival (OnTimeArrival will be calculated over a shorter time window if this has not yet ellapsed).</td>
+ *      <td>Stringified decimal <font face="courier" size="-1">>0.0d</font></td><td>Decimal</td><td>True</td><td></td></tr>
+ *  <tr><td><b>emitOn</b></td><td>When the analytic should output a value. If ETA is used then the analytic outputs for the ETA expiring or the arrival event (whichever is first). If Arrival is used then the analytic outputs only after receiving an arrival event.</td>
+ *      <td><font face="courier" size="-1">"eta","arrival"</font></td><td>String</td><td>False</td><td>"eta"</td></tr>
+ *  <tr><td><b>smoothingFactor</b></td><td>The number of buckets in which to divide the timeWindow and aggregate the data (The oldest bucket is replaced when the timeWindow ellapses).</td>
+ *      <td>true or false</td><td>String</td><td>False</td><td>False</td></tr>
+ *  <tr><td><b>bySourceId</b></td><td>Use the sourceId to determine which eta matches which arrival, otherwise any arrival will terminate any eta</td>
+ *      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr>
+ *  </table></dd>
+ *  </dl>
+ *  <dl><dt><b>Example usage:</b></dt>
+ <dd><code>
+// Create an OnTimeArrival Analytic which takes eta updates on the channel "ETA" and arrivals on the "Arrival" channel  
+// It outputs to the channel "OnTimeArrivalProbability". This is calculated for a rolling time window of 8 hours (Until 8 Hours is reached it will be the ellapsed time).
+send com.industry.analytics.Analytic("OnTimeArrival", ["ETA", "Arrival"], ["OnTimeArrivalProbability"], { "timeWindow": (8.0d * 60.0d * 60.0d).toString() } ) to "";
+</code></dd>
+ *</dl>
+ */
+event OnTimeArrival {
+	/** The name of the analytic. */
+	constant string NAME := "OnTimeArrival";
+
+	constant string TIMEWINDOW := "timeWindow";
+	constant string SMOOTHING_FACTOR := "smoothingFactor";
+	constant string EMIT_ON := "emitOn";
+	constant string EMIT_ON_ARRIVAL := "arrival";
+	constant string EMIT_ON_ETA := "eta";
+
+	constant string BY_SOURCEID := "bySourceId";
+	
+	constant string INTERNAL_SOURCEID := "__internal_shared_sourceId";
+		
+	/** @private */
+	string _outputStreamName;
+	
+	string _arrivalStreamName;
+
+	float _timeWindow;
+	integer _smoothingFactor;
+	boolean _isEmitOnEta;
+	boolean _bySourceId;
+
+	dictionary<string, OnTimeArrivalEta> _etaBySourceId;
+	
+	BucketSystem _bucketSystem;	  
+	
+	/** The Analytic Base Object implementation 
+	 *  @private */
+	AnalyticObject _analyticObject;
+
+	/** 
+	 *  This action creates a new instance of the Analytic.
+	 *  Typically, this is called internally by the associated Analytics 
+	 *  service monitor when a com.industry.analytics.Analytic event is 
+	 *  sent for this type of Analytic.
+	 *
+	 *  @param  config        The Analytic configuration that 
+	 *                        will be used for this instance
+	 *  @param  initComplete  The action callback to call when the new Analytic  
+	 *                        has been created, or if an error occured.
+     *
+	 *  @see com.industry.analytics.Analytic           The Analytic configuration event object.
+	 *  @see com.industry.analytics.AnalyticInterface  The action interface that can be used 
+	 *                                            to interact with the Analytic.
+	 */
+	action init(Analytic config, action<boolean, AnalyticInterface> initComplete) {
+		if( not _validateConfiguration( config ) ) then {
+			initComplete( false, new AnalyticInterface );
+			return;
+		}
+		
+		_bucketSystem := BucketSystemBuilder.create()
+								        .updateBucket(addToBucket)
+								        .totalSize(_timeWindow)
+								        .bucketCount(_smoothingFactor)
+								        .onBucketCreated(initializeOnTimeArrivalBucket)
+								        .build();
+		
+		_analyticObject := new AnalyticObject;
+		_analyticObject.init( config,
+		                      processData,
+		                      reset,
+		                      initComplete );
+	}
+	
+	/** 
+	 *  This helper action validates configuration that was
+	 *  used when trying to create a new instance of the Analytic.
+	 *  This is called internally, and should not be called directly by 
+	 *  the Users application.
+	 *  
+	 *  @param   config  The Analytic configuration object that is being validated
+	 *  @returns A boolean value indicating whether the configuration was valid or not.
+	 * 
+	 *  @private
+	 */
+	action _validateConfiguration(Analytic config) returns boolean {
+		boolean result := config.validateParams( NAME, 2, 1, 
+		                                       [ TIMEWINDOW, EMIT_ON, SMOOTHING_FACTOR ],
+		      		                           [ Constants.FLOAT, Constants.STRING, Constants.INTEGER ],
+		      		                           [ false, false, false ] );
+		
+		// Only check the specific params if the validation was okay
+		if not result {
+			return false;
+		}
+		
+		_arrivalStreamName := config.inputDataNames[1];
+		
+		_outputStreamName := config.outputDataNames[0];
+		
+		_timeWindow := config.getOrFloat(TIMEWINDOW, 60.0);
+		if _timeWindow <= 0.0 {
+			log "  Param "+ TIMEWINDOW +" must be > 0." at ERROR;
+			return false;
+		}
+
+		_smoothingFactor := config.getOrInteger(SMOOTHING_FACTOR, 10);
+		if _smoothingFactor <= 0 {
+			log "  Param "+ SMOOTHING_FACTOR +" must be an integer > 0." at ERROR;
+			return false;
+		}
+		
+		string emitOn := config.getOrString(EMIT_ON, EMIT_ON_ETA).toLower();
+		dictionary<string, boolean> isEmitOnEta := {
+			EMIT_ON_ARRIVAL: false,
+			EMIT_ON_ETA: true
+		};
+		if not isEmitOnEta.hasKey(emitOn) {
+			log "  Param "+ EMIT_ON +" must be one of " + isEmitOnEta.keys().toString() at ERROR;
+			return false;
+		}			
+		_isEmitOnEta := isEmitOnEta[emitOn];
+		
+		_bySourceId := config.getOrBoolean( BY_SOURCEID, true );
+
+		return result;
+	}
+	
+	action processData(Data dataIn) {
+		log "Processing " + dataIn.toString() at DEBUG;
+		
+		string sourceId := getSourceId(dataIn);
+		
+		if dataIn.streamName = _arrivalStreamName {
+			boolean isLate := false;
+			if _etaBySourceId.hasKey(sourceId) {
+				isLate := dataIn.timestamp > _etaBySourceId[sourceId].eta;
+			}
+				
+			// If the listener has expired then we don't need to do anything (except remove the eta) - the value has already been added to the bucket system
+			if not _etaBySourceId.getOrDefault(sourceId).expired {
+				arrivedOrEtaExpired(dataIn, isLate);
+			} else {
+				if not isLate { // If the timer expired but the arrival was on time then this analytic is probably misconfigured and should use "emitOn":"arrival"
+					log "The arrival was not late but was received after the ETA ellapsed, this will result in an incorrect calculation - Consider using \"emitOn\":\"arrival\" to avoid these warnings" at WARN;
+				}
+			}
+			clearEta(sourceId);
+		} else { // It's an eta event
+			clearEta(sourceId); // delete any existing listeners as this eta will replace the existing one
+			OnTimeArrivalEta eta := new OnTimeArrivalEta;
+			eta.eta := dataIn.dValue;
+			if _isEmitOnEta {
+				eta.etaListener := on wait((dataIn.dValue - dataIn.timestamp).toFloat()) {
+					// Use the eta as the timestamp for the output event
+					dataIn.timestamp := eta.eta;
+					arrivedOrEtaExpired(dataIn, true);
+					// Don't remove the eta, but mark it as expired so that when we eventually get an arrival we don't add anything to the bucket system
+					_etaBySourceId.getOrDefault(sourceId).expired := true;
+				}
+			}
+			_etaBySourceId[sourceId] := eta;
+		}
+	}
+	
+	action arrivedOrEtaExpired(Data dataIn, boolean isLate) {
+		
+		_bucketSystem.addWithValue(isLate, dataIn.timestamp.toFloat());
+		OnTimeArrivalBucket result := <OnTimeArrivalBucket>_bucketSystem.reduce(reduceOTABucketsToSingle, new OnTimeArrivalBucket);
+		
+		Data dataOut := dataIn.clone();
+		dataOut.dValue := result.onTimeArrivals.toDecimal() / result.totalArrivals.toDecimal();
+		dataOut.streamName := _outputStreamName;
+      	if dataOut.type = DataConstants.RAW {
+      		dataOut.type := DataConstants.COMPUTED;
+      	}
+		_analyticObject.sendData(dataOut);
+	}
+	
+	action addToBucket(Bucket bucket, any isLateAsAny) returns any {
+		boolean isLate := <boolean> isLateAsAny;
+		
+		// This is safe as we are always setting a value in the onBucketCreated callback
+		OnTimeArrivalBucket result := <OnTimeArrivalBucket>bucket.data;
+		
+		if not isLate {
+			result.onTimeArrivals := result.onTimeArrivals + 1;
+		}
+		result.totalArrivals := result.totalArrivals + 1;
+		
+		return result;
+	}
+	  
+	action getSourceId(Data d) returns string {
+		if _bySourceId {
+			return d.sourceId;
+	    } else {
+	    	return INTERNAL_SOURCEID;
+	    }
+	}
+	
+	action initializeOnTimeArrivalBucket(Bucket bucket) {
+		bucket.data := new OnTimeArrivalBucket;
+	}
+	
+	action reduceOTABucketsToSingle(any accumulator, Bucket bucket) returns any {
+		OnTimeArrivalBucket acc := <OnTimeArrivalBucket> accumulator;
+		OnTimeArrivalBucket current := <OnTimeArrivalBucket>bucket.data;
+		
+		acc.onTimeArrivals := acc.onTimeArrivals + current.onTimeArrivals;
+		acc.totalArrivals := acc.totalArrivals + current.totalArrivals;
+		
+		return acc;
+	}
+	
+	action clearEta(string sourceId) {
+		if _etaBySourceId.hasKey(sourceId) {
+			ifpresent _etaBySourceId[sourceId].etaListener as etaListener {
+				etaListener.quit();
+			}
+			_etaBySourceId.remove(sourceId);
+		}
+	}
+	
+	action reset() {
+		OnTimeArrivalEta eta;
+		for eta in _etaBySourceId.values() {
+			ifpresent eta.etaListener as etaListener {
+				etaListener.quit();
+			}
+		}
+		_etaBySourceId.clear();
+		_bucketSystem.clear();
+	}
+}

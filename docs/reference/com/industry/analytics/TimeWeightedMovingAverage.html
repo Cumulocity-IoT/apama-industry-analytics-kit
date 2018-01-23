@@ -61,6 +61,11 @@
 <br>Returns the intermediate value a from the above formulas. Required by the variance calculation, for example.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;<A HREF="../../../com/industry/analytics/TimeWeightedMovingAverage.html" title="type in com.industry.analytics">com.industry.analytics.TimeWeightedMovingAverage</A></CODE></FONT></TD><TD><CODE>static </CODE><CODE><B><A HREF="TimeWeightedMovingAverage.html#create()">create</A></B>(decimal&nbsp;value,&nbsp;decimal&nbsp;timestamp,&nbsp;decimal&nbsp;timeWindow)</CODE>
+<br>
+<br>Creates a new instance of the Time Weighted Moving Average, automaticallying initialising.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1"><CODE>&nbsp;decimal</CODE></FONT></TD><TD><CODE></CODE><CODE><B><A HREF="TimeWeightedMovingAverage.html#currentCount()">currentCount</A></B>()</CODE>
 <br>
 <br>Get the count of the values at the current timestamp (Used by variance calculation)</TD>
@@ -108,6 +113,21 @@
 <B>Returns:</B>
 </DT>
 <DD>Decimal value of a.</DD>
+</DL>
+<HR>
+<A NAME="create()"></A>
+<H3>create</H3>
+<PRE>
+<A HREF="../../../com/industry/analytics/TimeWeightedMovingAverage.html" title="type in com.industry.analytics">com.industry.analytics.TimeWeightedMovingAverage</A>&nbsp;static <B>create</B>(decimal&nbsp;value,&nbsp;decimal&nbsp;timestamp,&nbsp;decimal&nbsp;timeWindow)</PRE>Creates a new instance of the Time Weighted Moving Average, automaticallying initialising.<DL>
+<DT>
+<B>Parameters:</B>
+</DT>
+<DD>
+<tt>value</tt>&nbsp;-&nbsp;The first decimal value in the set of data to be averaged.</DD>
+<DD>
+<tt>timestamp</tt>&nbsp;-&nbsp;The decimal timestamp when the first value was generated.</DD>
+<DD>
+<tt>timeWindow</tt>&nbsp;-&nbsp;The time window for the weight: T in the above formulas.</DD>
 </DL>
 <HR>
 <A NAME="currentCount()"></A>
