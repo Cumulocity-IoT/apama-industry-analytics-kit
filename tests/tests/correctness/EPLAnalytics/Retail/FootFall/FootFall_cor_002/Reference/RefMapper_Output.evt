@@ -1,5 +1,5 @@
 com.industry.analytics.Data("__internalChannel_FOOTFALL_MAPPER_Output","c","s1",1,1,"ENTERED",.121794,52.204004,3,{})
-com.industry.analytics.Data("__internalChannel_FOOTFALL_MAPPER_Output","c","s1",2,-1,"EXITED",52.204004,.121794,3,{})
+com.industry.analytics.Data("__internalChannel_FOOTFALL_MAPPER_Output","c","s1",2,0,"EXITED",52.204004,.121794,3,{"dwellTime":"1"})
 com.industry.analytics.Data("__internalChannel_FOOTFALL_MAPPER_Output","c","s3",3,1,"ENTERED",.121794,52.204004,3,{})
 com.industry.analytics.Data("__internalChannel_FOOTFALL_MAPPER_Output","c","s4",4,1,"ENTERED",.121794,52.204004,3,{})
 com.industry.analytics.Data("__internalChannel_FOOTFALL_MAPPER_Output","c","s5",5,1,"ENTERED",.121794,52.204004,3,{})

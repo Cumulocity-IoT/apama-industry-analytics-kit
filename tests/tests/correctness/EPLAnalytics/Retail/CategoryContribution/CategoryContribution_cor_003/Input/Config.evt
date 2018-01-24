@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("CategoryContribution", ["Input","Input_Category"], ["Output"], {"ignoreUnknown": "false","timeWindow": "60.0", "smoothingFactor":"60.0"})

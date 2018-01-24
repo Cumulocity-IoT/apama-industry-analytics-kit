@@ -284,6 +284,11 @@ class AnalyticsBaseTest(IndustrySolutionsBaseTest):
 		self.injectSum( correlator )
 		correlator.injectMonitorscript(['FootFall.mon',
 										'FootFallService.mon'], self.RETAIL_ANALYTICS_ROOT)
+	
+	def injectSalesPerArea(self, correlator):
+		self.injectSum( correlator )
+		correlator.injectMonitorscript(['SalesPerArea.mon',
+										'SalesPerAreaService.mon'], self.RETAIL_ANALYTICS_ROOT)
 										
 	def injectOnTimeArrival(self, correlator):
 		correlator.injectMonitorscript(['OnTimeArrival.mon','OnTimeArrivalService.mon'], self.RETAIL_ANALYTICS_ROOT)
@@ -295,6 +300,15 @@ class AnalyticsBaseTest(IndustrySolutionsBaseTest):
 		correlator.injectMonitorscript(['TimeWeightedMovingAverage.mon'], self.COMPONENTS)
 		correlator.injectMonitorscript(['InventoryDays.mon', 'InventoryDaysService.mon'], self.RETAIL_ANALYTICS_ROOT)
 
+	def injectCategoryContribution(self, correlator):
+		self.injectSum( correlator )
+		correlator.injectMonitorscript(['CategoryContribution.mon',
+										'CategoryContributionService.mon'], self.RETAIL_ANALYTICS_ROOT)
+
+	def injectSalesPerVisitor(self, correlator):
+		correlator.injectMonitorscript(['BucketSystem.mon'], self.COMPONENTS)
+		correlator.injectMonitorscript(['SalesPerVisitor.mon',
+										'SalesPerVisitorService.mon'], self.RETAIL_ANALYTICS_ROOT)
 	#######################################
 	# UTILITIES group injection functions #
 	#######################################

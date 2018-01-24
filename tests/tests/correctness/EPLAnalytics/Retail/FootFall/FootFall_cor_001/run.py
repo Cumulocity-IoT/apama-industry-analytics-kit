@@ -15,7 +15,7 @@ class PySysTest(AnalyticsBaseTest):
 		correlator.send('Config.evt')
 		self.waitForSignal('correlator.out',
 						   expr='Analytic FootFall started for inputDataNames',
-						   condition='==1',
+						   condition='==3',
 						   timeout=5)
 
 		
@@ -23,6 +23,4 @@ class PySysTest(AnalyticsBaseTest):
 		self.assertGrep('correlator.out', expr='Mandatory param geoFenceLatitude missing', condition='==1')
 		self.assertGrep('correlator.out', expr='Mandatory param geoFenceLongitude missing', condition='==2')
 		self.assertGrep('correlator.out', expr='Mandatory param geoFenceRadius missing', condition='==3')
-		self.assertGrep('correlator.out', expr='Mandatory param timeWindow missing', condition='==4')
-		self.assertGrep('correlator.out', expr='Mandatory param smoothingFactor missing', condition='==5')
-		self.checkSanity()	
+		self.checkSanity()

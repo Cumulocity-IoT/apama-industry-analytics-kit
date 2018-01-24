@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("SalesPerArea", ["Input"], ["Output"], {"calculation": "squareMeter", "areaValue":"2000","category": "All","store": "All","timeWindow": "60.0", "smoothingFactor":"60.0"})

@@ -1,0 +1,378 @@
+//*****************************************************************************
+// Title:         SalesPerVisit
+// Description:   SalesPerVisit description
+// Dependencies:  None
+// Author:        
+//
+//*****************************************************************************
+package com.industry.analytics.retail;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Constants;
+
+using com.industry.utils.Bucket;
+using com.industry.utils.BucketSystem;
+using com.industry.utils.BucketSystemBuilder;
+
+/** This event object is used as bucket data for caching total sales and visitors.  
+*   This is only used for internal purposes, and is not exposed to the Users 
+*  	application.
+*	@private 
+*/
+event SumSalesVisitors {
+	decimal totalSales;
+	decimal totalVisitors;
+}
+
+/* @AnalyticDefinition
+{
+	"name": "SalesPerVisitor",
+	"description": "Calculates SalesPerVisitor of a store in a given timewindow.",
+	"group": "Streaming Calculations",
+	"documentation": "com/industry/analytics/retail/SalesPerVisitor.html",
+	"inputChannels": [
+		{
+			"name": "Data_Sales",
+			"description": "The channel to calculate total sales",
+			"dataProperties": ["dValue"]
+		},
+		{
+			"name": "Data_Visitors",
+			"description": "The channel to calculate total visitors",
+			"dataProperties": ["dValue"]
+		}
+	],
+	"outputChannels": [
+		{
+			"name": "SalesPerVisitor",
+			"description": "The channel to output SalesPerVisitor within a timewindow",
+			"dataProperties": ["+dValue"]
+		}
+	],
+	"properties": [
+		{
+			"name": "timeWindow",
+			"description": "Defines the timeWindow for calculating SalesPerVisitor.",
+			"type": "decimal",
+			"optional": true,
+			"defaultValue": 3600,
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+		},{
+			"name": "smoothingFactor",
+			"description": "Defines the smoothing factor to be used for precision.",
+			"type": "integer",
+			"optional": true,
+			"defaultValue": 60,
+			"advanced":true,
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+		},{
+			"name": "bySourceId",
+			"description": "If defined, the SalesPerVisitor calculations are partitioned based on the sourceId parameter of the input data stream.",
+			"type": "boolean",
+			"defaultValue": true,
+			"optional": true,
+			"advanced":true
+		}
+	]
+}
+*/
+
+/**
+*  The SalesPerVisitor Analytic computation generates a Data containing 
+*  a moving sales per visitor calculation for each input Data received for sales and visitors. 
+*  The SalesPerVisitor is calculated based on the number of events recieved within a time window (in seconds). 
+*  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
+*
+*  <dl><dt><b>Input Data events:</b></dt>
+*  <dd>Two input Data stream names must be provided.</dd>
+*  <dd><b>Note:</b> The input Data events timestamp value should be defined as the number of seconds since the epoch (1st January 1970).</dd>
+*  </dl>
+*  <dl><dt><b>Output Data events:</b></dt>
+*  <dd>Only a single output Data stream name must be provided. Only Data events of Computed type are generated.</dd>
+*  </dl>
+*  <dl><dt><b>Params:</b></dt>
+*  <dd>
+*  <table border="1" style="border-collapse: collapse;width:100%">
+*  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
+*  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow for calculating SalesPerVisitor.</td>
+*      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">3600.0d</font> </td></tr>
+*  <tr><td><b>smoothingFactor</b></td><td>Defines the smoothing factor to be used for precision.</td>
+*      <td>Stringified integer</td><td>Integer</td><td>False</td><td><font face="courier" size="-1">60</font> </td></tr>
+*  <tr><td><b>bySourceId</b></td><td>If defined, the SalesPerVisitor calculations are partitioned based on the <font face="courier" size="-1">sourceId</font> of the <font face="courier" size="-1">Data</font> events</td>
+*      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr>
+*
+*  </table></dd>
+*  </dl>
+*  <dl><dt><b>Example usage:</b></dt>
+<dd><code>
+//Define a SalesPerVisitor Analytic which takes visitors input Data events on the channel "Input_Customers" 
+// and sales input Data on channel "Input_Sales" of a single store 
+//and calculate the moving sales per visitor within timeWindow of 60 seconds with smoothingFactor of 10 for precision. It publishes
+//a Data event with the calculated value of SalesPerVisitor on the output channel "Output" after receiving every Data event. 
+send com.industry.analytics.Analytic("SalesPerVisitor", ["Input_Customers","Input_Sales"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
+
+//Define a SalesPerVisitor Analytic which takes visitors input Data events on the channel "Input_Customers" 
+//and sales input Data on channel "Input_Sales" of all stores
+//and calculate the moving sales per visitor within timeWindow of 60 seconds with smoothingFactor of 10 for precision. It publishes
+//a Data event with the calculated value of SalesPerVisitor on the output channel "Output" after receiving every Data event. 
+send com.industry.analytics.Analytic("SalesPerVisitor", ["Input_Customers","Input_Sales"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10", "bySourceId":"false"}) to "";
+</code></dd>
+*</dl>
+*/
+
+
+event SalesPerVisitor {
+	
+	/** This constant defines the name of the Analytic. */
+	constant string NAME := "SalesPerVisitor";
+	
+	/** This constant defines the configuration parameter timeWindow value  */
+	constant string TIMEWINDOW := "timeWindow";
+	/**Constant defining bySourceId param  */
+	constant string BY_SOURCE_ID := "bySourceId";
+	/**This constant defines the configuration parameter name
+	 *  that specifies the smoothing factor used to calculate the SalesPerVisitor.*/
+	constant string SMOOTHING_FACTOR := "smoothingFactor";
+	
+	/** This constant defines the internal name used to define "all sourceIds"
+	 *  used when not partitioning by sourceId.
+	 *  @private */
+	constant string CONST_INTERNAL_ALL_SOURCES := "__internalSourceIdWildcard";
+	
+	//Algo specific variables
+	/** Local cached input Data name for customers location data
+	 *  @private */
+	string _inputDataCustomer;
+	/** Local cached input Data name for Sales data
+	 *  @private */
+	string _inputDataSale;
+	/** Local cached output Data name
+	 *  @private */
+	string _outputDataName;
+
+	/** Local cached timewindow value
+	 *  @private */
+	decimal _timewindow;
+	/** local cache value for bySourceId param
+	* @private
+	*/
+	boolean _bySourceId;
+	/** Local cached smoothingFactor param value
+	 *  @private */
+	integer _smoothingFactor;
+	
+	/** The Analytic Base Object implementation 
+	 *  @private */
+	AnalyticObject _analyticObject;
+	
+	/**Bucket System Object
+	* @private
+	*/
+	dictionary<string, BucketSystem> _bucketSystem;
+
+	/** 
+	 *  This action creates a new instance of the Analytic.
+	 *  Typically, this is called internally by the associated Analytics 
+	 *  service monitor when a com.industry.analytics.Analytic event is 
+	 *  sent for this type of Analytic.
+	 *
+	 *  @param  config        The Analytic configuration that 
+	 *                        will be used for this instance
+	 *  @param  initComplete  The action callback to call when the new Analytic  
+	 *                        has been created, or if an error occured.
+   *
+	 *  @see com.industry.analytics.Analytic           The Analytic configuration event object.
+	 *  @see com.industry.analytics.AnalyticInterface  The action interface that can be used 
+	 *                                                 to interact with the Analytic.
+	 */
+	
+	action init(Analytic config, 
+	            action<boolean, AnalyticInterface> initComplete) {
+		
+		
+		
+		if( not _validateConfiguration( config ) ) then {
+			initComplete( false, new AnalyticInterface );
+			return;
+		}
+		
+		_analyticObject := new AnalyticObject;
+		_analyticObject.init( config,
+		                      processData,
+		                      reset,
+		                      initComplete );
+		
+	}
+	/** 
+	 *  This helper action validates configuration that was
+	 *  used when trying to create a new instance of the Analytic.
+	 *  This is called internally, and should not be called directly by 
+	 *  the Users application.
+	 *  
+	 *  @param   config  The Analytic configuration object that is being validated
+	 *  @returns A boolean value indicating whether the configuration was valid or not.
+	 * 
+	 *  @private
+	 */
+	action _validateConfiguration( Analytic config ) returns boolean {
+		boolean result := config.validateParams( NAME, 2, 1, 
+		                                         [ TIMEWINDOW, BY_SOURCE_ID, SMOOTHING_FACTOR ], 
+		                                         [ Constants.DECIMAL, Constants.BOOLEAN, Constants.INTEGER ], 
+		                                         [ false, false, false ] );
+		if(result) {
+			 //Cache the input/output channel names
+			_inputDataCustomer  := config.inputDataNames[0];
+			_inputDataSale := config.inputDataNames[1];
+			_outputDataName := config.outputDataNames[0];
+			_bySourceId := config.getOrBoolean(BY_SOURCE_ID, true);
+			_timewindow := config.getOrDecimal(TIMEWINDOW, 3600.0d);
+			if _timewindow <= 0.0d {
+				log "  Param "+TIMEWINDOW+" must be positive. Given value: " + _timewindow.toString() at ERROR;
+				result := false;
+			}
+			
+			_smoothingFactor := config.getOrInteger(SMOOTHING_FACTOR, 60);
+			if( _smoothingFactor <= 0 ) then {
+				log "  Param "+SMOOTHING_FACTOR+" must be positive. Given value: " + _smoothingFactor.toString() at ERROR;
+				result := false;
+			}
+			
+		}
+		return result;
+	}
+	/**Action to get timestamp from Data event
+	* @private
+	*/
+	action getTimestamp(any dataAsAny) returns float {
+		return ((<Data> dataAsAny).timestamp).toFloat();
+	}
+	
+	/**Action to add Data event to bucket system
+	* @private
+	*/
+	action addDataToBucket(Bucket b, any dataAsAny) returns any {
+		Data d := <Data> dataAsAny;
+		SumSalesVisitors currentValue := <SumSalesVisitors>b.data;
+		
+		if(d.streamName=_inputDataCustomer) {
+			currentValue.totalVisitors:= currentValue.totalVisitors + d.dValue;
+			
+		} else if (d.streamName=_inputDataSale) {
+			currentValue.totalSales := currentValue.totalSales + d.dValue;
+		}
+		
+		return currentValue;
+	}
+	
+	/**Init bucket
+	* @private
+	*/
+	action initBucket(Bucket b) {
+		b.data := new SumSalesVisitors;
+	}
+	
+	/**Action to calculate sum for all buckets
+	* @private
+	*/
+	action calculateSumValues(any acculator, Bucket nextBucket) returns any {
+		SumSalesVisitors accu := <SumSalesVisitors> acculator;
+		SumSalesVisitors current := <SumSalesVisitors> nextBucket.data;
+		
+		accu.totalSales := accu.totalSales + current.totalSales;
+		accu.totalVisitors := accu.totalVisitors + current.totalVisitors;	
+		return accu;
+	}
+	
+	/**
+	 *  This action implements the Analytic function itself. 
+	 *  This is called internally by the Analytic Object, and  
+	 *  should not be called directly by the Users application.
+	 *  If the application has created this Analytic using the 
+	 *  #init() action directly, then the <font face="courier" size="-1">processData</font>
+	 *  action on the <font face="courier" size="-1">com.industry.analytics.AnalyticInterface</font> 
+	 *  that was returned should be used instead.
+	 *
+	 *  @param   dIn  The input Data event to be processed by this Analytic
+	 * 
+	 *  @private
+	 */
+	action processData(Data dataIn) {
+		log "Processing " + dataIn.toString() at DEBUG;
+		string sourceId := dataIn.sourceId;
+		if not _bySourceId {
+			sourceId := CONST_INTERNAL_ALL_SOURCES;
+		}
+		if(not _bucketSystem.hasKey(sourceId)) {
+			_bucketSystem.add(sourceId, BucketSystemBuilder.create()
+			.totalSize(_timewindow.toFloat())
+			.bucketCount(_smoothingFactor)
+			.toValue(getTimestamp)
+			.updateBucket(addDataToBucket)
+			.onBucketCreated(initBucket)
+			.build());
+		}
+		
+		_bucketSystem[sourceId].add(dataIn);
+		
+		SumSalesVisitors value := <SumSalesVisitors> _bucketSystem[sourceId].reduce(calculateSumValues, new SumSalesVisitors);
+		if(value.totalSales > 0.0d and value.totalVisitors > 0.0d ) {
+			Data dataOut := new Data;
+			dataOut.streamName := _outputDataName;
+			dataOut.sourceId := dataIn.sourceId;
+			dataOut.timestamp := dataIn.timestamp;
+			dataOut.type := DataConstants.COMPUTED;
+			dataOut.dValue := value.totalSales/value.totalVisitors;
+			send dataOut to dataOut.streamName;
+		}
+
+		
+	}
+	
+	/**
+	 *  Optional action to reset the state of the Analytic instance
+	 *  back to its initialisation state.
+	 *  If the application has created this Analytic using the 
+	 *  #init() action directly, then the <font face="courier" size="-1">reset</font>
+	 *  action on the <font face="courier" size="-1">com.industry.analytics.AnalyticInterface</font> 
+	 *  that was returned should be used instead.
+	 *
+	 *  @private
+	 */
+	action reset() {
+		// Reset all bockets
+		_bucketSystem.clear();
+
+	}
+}
+
+/** 
+*  This internal Monitor is used to automatically intern 
+*  any string constants that are defined that are associated
+*  with the SalesPerVisitor Analytic in order to improve  
+*  performance when handling strings.
+*
+*  Note: The listener that is created is required in order
+*        to keep the monitor alive between a Persistant  
+*        Correlators recovery.  Otherwise, this would be a 
+*        transient monitor, and it would not be recovered.  
+*        Which would then mean that the strings would not
+*        interned in the recovered Correlator.
+*
+*  @private
+*/
+monitor InternSalesPerVisitorChannel {
+	event StayAlive {}
+	
+	action onload() {
+		string discard := SalesPerVisitor.NAME.intern();
+		discard := SalesPerVisitor.BY_SOURCE_ID.intern();
+		discard := SalesPerVisitor.TIMEWINDOW.intern();
+		discard := SalesPerVisitor.CONST_INTERNAL_ALL_SOURCES.intern();
+		discard := SalesPerVisitor.SMOOTHING_FACTOR.intern();
+		on all StayAlive() {}
+	}
+}

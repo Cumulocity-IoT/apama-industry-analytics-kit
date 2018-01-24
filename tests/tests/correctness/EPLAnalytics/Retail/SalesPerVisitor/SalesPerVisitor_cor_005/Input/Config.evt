@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("SalesPerVisitor", ["Input_Customers","Input_Sales"], ["Output"], {"timeWindow": "10.0", "smoothingFactor":"10", "bySourceId":"false"})

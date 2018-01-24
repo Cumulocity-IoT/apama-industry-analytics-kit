@@ -74,6 +74,10 @@ enqueue com.industry.analytics.Analytic("Threshold", ["GRADIENT"], ["THRESHOLDS"
  *  <tr><td>Flow Manipulation</td><td><b><a href="flow_manipulation/Throttler.html">Throttler</a></b></td><td>Stops repeated events.</td></tr>
  *  <tr><td>GeoLocation</td><td><b><a href="geolocation/GeoFence.html">GeoFence</a></b></td><td>Monitors provided locations against a variety of conditions and possible geoFence shapes.</td></tr>
  *  <tr><td>Retail</td><td><b><a href="retail/BasketAnalysis.html">BasketAnalysis</a></b></td><td>Basket Analysis for retail shopping basket.</td></tr>
+ *  <tr><td>Retail</td><td><b><a href="retail/FootFall.html">FootFall</a></b></td><td>Number of people in a store or entering/exiting a store.</td></tr>
+ *  <tr><td>Retail</td><td><b><a href="retail/SalesPerArea.html">SalesPerArea</a></b></td><td>Calculates the sale per area for a store or/and category.</td></tr>
+ *  <tr><td>Retail</td><td><b><a href="retail/CategoryContribution.html">CategoryContribution</a></b></td><td>Calculates the total sale for a category.</td></tr>
+ *  <tr><td>Retail</td><td><b><a href="retail/SalesPerVisitor.html">SalesPerVisitor</a></b></td><td>Calculates the total SalesPerVisitor of a store for within a timewindow.</td></tr>
  *  <tr><td>Streaming Calculations</td><td><b><a href="streaming_calculations/Average.html">Average</a></b></td><td>Time weighted moving average.</td></tr>
  *  <tr><td>Streaming Calculations</td><td><b><a href="streaming_calculations/Delta.html">Delta</a></b></td><td>Calculates the differences between two neighboring values.</td></tr>
  *  <tr><td>Streaming Calculations</td><td><b><a href="streaming_calculations/Expression.html">Expression</a></b></td><td>Calculates the result of an expression for each data event.</td></tr>

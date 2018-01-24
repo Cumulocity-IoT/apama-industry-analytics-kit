@@ -36,42 +36,83 @@ using com.industry.analytics.streaming_calculations.Sum;
 			"name": "geoFenceLatitude",
 			"description": "Defines the latitude of the retail store",
 			"type": "decimal",
-			"optional": true,
-			"defaultValue": 0.0
+			"optional": false
 			
 		},{
 			"name": "geoFenceLongitude",
 			"description": "Defines the longitude of the retail store",
 			"type": "decimal",
-			"optional": true,
-			"defaultValue": 0.0
+			"optional": false
 		},{
 			"name": "geoFenceRadius",
 			"description": "Defines the radius to be used for geofence of the retail store",
 			"type": "decimal",
-			"optional": true,
-			"defaultValue": 0.0
+			"optional": false
 		},{
+			"name": "timeWindow",
+			"description": "Defines the timewindow for which footfall is calculated. If set to zero, footfall will give number of customers in the store.",
+			"type": "decimal",
+			"optional": true,
+			"defaultValue": 0
+			
+		},
+		{
 			"name": "smoothingFactor",
 			"description": "Defines the smoothing factor to be used for precision.",
 			"type": "decimal",
 			"optional": true,
-			"defaultValue": 10,
-			"advanced":true,
-			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
-			
-		},
-		{
-			"name": "calculationType",
-			"description": "Defines whether the sum calculation is based on timeWindow or count of last ‘N’ events.",
-			"type": "string",
-			"optional": false,
-			"validValues": ["sampleCount", "timeWindow"]
+			"defaultValue": 60
 		}
 	]
 }
 */
 
+/**
+*  The FootFall Analytic computation generates a Data containing number of people in a store at a given point.
+*  It does this by calculating sum of people entering/exiting a store geofence. 
+*  This Analytic utilizes the Geofence, Mapper and Sum analytics internally to do the FootFall calculation.
+*  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
+*  When timewindow is set to 0, FootFall will generate live data for number of people inside store at a time. 
+*  When timestamp is greater than zero then FootFall Analytic will generate data regarding number of persons entering the store in rolling timewindow.
+*
+*  <dl><dt><b>Input Data events:</b></dt>
+*  <dd>Only one input Data stream names must be provided.</dd>
+*  <dd><b>Note:</b> The input Data events timestamp value should be defined as the number of seconds since the epoch (1st January 1970).</dd>
+*  </dl>
+*  <dl><dt><b>Output Data events:</b></dt>
+*  <dd>Only a single output Data stream name must be provided. Only Data events of Computed type are generated.</dd>
+*  </dl>
+*  <dl><dt><b>Params:</b></dt>
+*  <dd>
+*  <table border="1" style="border-collapse: collapse;width:100%">
+*  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
+*  <tr><td><b>geoFenceLatitude</b></td><td>Defines the latitude coordinate for store geofence.</td>
+*      <td>Stringified decimal</td><td>Decimal</td><td>True</td><td> </td></tr>
+*  <tr><td><b>geoFenceLongitude</b></td><td>Defines the longitude coordinate for store geofence.</td>
+*      <td>Stringified decimal</td><td>Decimal</td><td>True</td><td> </td></tr>
+*  <tr><td><b>geoFenceRadius</b></td><td>Defines the radius for store geofence.</td>
+*      <td>Stringified decimal</td><td>Decimal</td><td>True</td><td> </td></tr>
+*  <tr><td><b>timewindow</b></td><td>If set to 0, it FootFall will generate number of people inside store, else only persons entering store.</td>
+*      <td>Stringified decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">0.0d</font> </td></tr>
+*  <tr><td><b>smoothingFactor</b></td><td>Defines the smoothing factor to be used for precision</td>
+*      <td>Stringified decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">60.0d</font></td></tr>
+*
+*  </table></dd>
+*  </dl>
+*  <dl><dt><b>Example usage:</b></dt>
+<dd><code>
+//Define a FootFall Analytic which takes Data events on the channel "Input"  
+//and calculate the number of customers entering the Store specified by Geofence params(Lat, Lon and radius). It publishes
+//a Data event with the calculated value of FootFall on the output channel "Output" after receiving every Data event. 
+send com.industry.analytics.Analytic("FootFall", ["Input"], ["Output"], {"geoFenceLatitude": "52.204004", "geoFenceLongitude":"0.121794","geoFenceRadius": "60.0","timeWindow": "60.0", "smoothingFactor":"1.0"}) to "";
+
+//Define a FootFall Analytic which takes Data events on the channel "Input"  
+//and calculate the number of customers inside the Store (live data) specified by Geofence params(Lat, Lon and radius). It publishes
+//a Data event with the calculated value of FootFall on the output channel "Output" after receiving every Data event. 
+send com.industry.analytics.Analytic("FootFall", ["Input"], ["Output"], {"geoFenceLatitude": "52.204004", "geoFenceLongitude":"0.121794","geoFenceRadius": "60.0"}) to "";
+</code></dd>
+*</dl>
+*/
 
 
 event FootFall
@@ -103,12 +144,45 @@ event FootFall
 	 *  that specifies the smoothing factor used to calculate the sum.*/
 	constant string SMOOTHING_FACTOR := "smoothingFactor";
 	
+	/**Constant defining ENTERED string
+	* @private */
 	constant string ENTERED := "ENTERED";
+	/**Constant defining EXITED string
+	* @private */
 	constant string EXITED := "EXITED";
-	
+	/**Constant defining enableEntry geofence param
+	* @private */
 	constant string ENABLE_ENTRY := "enableEntry";
+	/**Constant defining enableExit geofence param
+	* @private */
 	constant string ENABLE_EXIT := "enableExit";
+	/**Constant defining useHypertree geofence param
+	* @private */
 	constant string USE_HYPERTREE := "useHypertree";
+	/**Constant defining inputField Mapper param
+	* @private */
+	constant string INPUT_FIELD:= "inputField";
+	/**Constant defining outputField Mapper param
+	* @private */
+	constant string OUTPUT_FIELD:= "outputField";
+	/**Constant defining sValue string
+	* @private */
+	constant string S_VALUE := "sValue";
+	/**Constant defining dValue string
+	* @private */
+	constant string D_VALUE := "dValue";
+	/**Constant defining mapping Mapper param
+	* @private */
+	constant string MAPPING := "mapping";
+	/**Constant defining calculationType param for Sum Analytic
+	* @private */
+	constant string CALCULATION_TYPE := "calculationType";
+	/**Constant defining calculationValue param for Sum Analytic
+	* @private */
+	constant string CALCULATION_VALUE := "calculationValue";
+	/**Constant defining bySourceId param for Sum Analytic
+	* @private */
+	constant string BY_SOURCE_ID := "bySourceId";
 	
 	//Algo specific variables
 	/** Local cached input Data name
@@ -117,6 +191,21 @@ event FootFall
 	/** Local cached output Data name
 	 *  @private */
 	string _outputDataName;
+	/** Local cached store latitude
+	 *  @private */
+	decimal _latitude;
+	/** Local cached store longitude
+	 *  @private */
+	decimal _longitude;
+	/** Local cached radius
+	 *  @private */
+	decimal _radius;
+	/** Local cached timewindow value
+	 *  @private */
+	decimal _timewindow;
+	/** Local cached smoothingFactor param value
+	 *  @private */
+	decimal _smoothingFactor;
 	
 	/** The Analytic Base Object implementation 
 	 *  @private */
@@ -165,9 +254,9 @@ event FootFall
 	            action<boolean, AnalyticInterface> initComplete) {
 		
 		boolean result := config.validateParams( NAME, 1, 1, 
-		                                         new sequence<string>,
-		                                         new sequence<string>,
-		                                         new sequence<boolean> );
+		                                         [ GEOFENCE_LATITUDE, GEOFENCE_LONGITUDE, GEOFENCE_RADIUS, TIMEWINDOW, SMOOTHING_FACTOR ], 
+		                                         [ Constants.DECIMAL, Constants.DECIMAL, Constants.DECIMAL, Constants.DECIMAL, Constants.DECIMAL ], 
+		                                         [ true, true, true, false, false ] );
 
 		// Only check the specific params if the validation was okay
 		if( result ) then {
@@ -175,6 +264,11 @@ event FootFall
 			// Cache the input/output channel names
 			_inputDataName  := config.inputDataNames[0];
 			_outputDataName := config.outputDataNames[0];
+			_latitude := config.getDecimal(GEOFENCE_LATITUDE);
+			_longitude := config.getDecimal(GEOFENCE_LONGITUDE);
+			_radius := config.getDecimal(GEOFENCE_RADIUS);
+			_timewindow := config.getOrDecimal(TIMEWINDOW, 0.0d);
+			_smoothingFactor := config.getOrDecimal(SMOOTHING_FACTOR, 1.0d);
 
 			// Cache the completion closure action
 			_initCompleteFootFallAnalysis := initComplete;
@@ -182,17 +276,13 @@ event FootFall
 			// Cache the original configuration
 			_config := config;
 			
-			dictionary<string, string> _geoFenceParam := _config.params.clone();
-			if(not _geoFenceParam.hasKey(ENABLE_ENTRY)) {
-				_geoFenceParam.add(ENABLE_ENTRY, "true");
-			}
-			if(not _geoFenceParam.hasKey(ENABLE_EXIT)) {
-				_geoFenceParam.add(ENABLE_EXIT, "true");
-			}
-			if(not _geoFenceParam.hasKey(USE_HYPERTREE)) {
-				_geoFenceParam.add(USE_HYPERTREE, "false");
-			}
-			
+			dictionary<string, string> _geoFenceParam := new dictionary<string, string>;
+			_geoFenceParam.add(GEOFENCE_LATITUDE, _latitude.toString());
+			_geoFenceParam.add(GEOFENCE_LONGITUDE, _longitude.toString());
+			_geoFenceParam.add(GEOFENCE_RADIUS, _radius.toString());
+			_geoFenceParam.add(ENABLE_ENTRY, "true");
+			_geoFenceParam.add(ENABLE_EXIT, "true");
+			_geoFenceParam.add(USE_HYPERTREE, "false");
 			// Create Geofence Analytic using the defined input channel
 			// and creating an internal channel for the Geofence.
 			(new GeoFence).init( com.industry.analytics.Analytic( GeoFence.NAME, 
@@ -220,12 +310,16 @@ event FootFall
 			
 			dictionary<string,string> mapping := new dictionary<string,string>;
 			mapping.add(ENTERED,"1.0d");
-			mapping.add(EXITED,"-1.0d");
+			if(_timewindow = 0.0d) {
+				mapping.add(EXITED,"-1.0d");
+			} else {
+				mapping.add(EXITED,"0.0d");
+			}
 			
 			dictionary<string, string> _mapperParam := new dictionary<string, string>;
-			_mapperParam.add("inputField","sValue");
-			_mapperParam.add("outputField","dValue");
-			_mapperParam.add("mapping",mapping.toString());
+			_mapperParam.add(INPUT_FIELD,S_VALUE);
+			_mapperParam.add(OUTPUT_FIELD,D_VALUE);
+			_mapperParam.add(MAPPING,mapping.toString());
 			// Create Mapper Analytic using the created geofence as input channel 
 			// and the internally created Mapper Analytic channel output
 			// We pass in all the configuration parameters to ensure 
@@ -252,10 +346,15 @@ event FootFall
 			// Cache the Mapper Analytic interface object 
 			_mapperAnalyticInterface := tInterface;
 
-			dictionary<string, string> _sumParam := _config.params.clone();
-			_sumParam.add("calculationType","timeWindow");
-			_sumParam.add("calculationValue",_config.getOrDecimal(TIMEWINDOW, 600.0d).toString());
-			_sumParam.add("bySourceId","false");
+			dictionary<string, string> _sumParam := new dictionary<string, string>;
+			_sumParam.add(CALCULATION_TYPE,TIMEWINDOW);
+			if(_timewindow = 0.0d) {
+				_sumParam.add(CALCULATION_VALUE,decimal.MAX.toString());
+			} else {
+				_sumParam.add(CALCULATION_VALUE,_timewindow.toString());
+			}
+			_sumParam.add(SMOOTHING_FACTOR, _smoothingFactor.toString());
+			_sumParam.add(BY_SOURCE_ID,"false");
 			// Create Mapper Analytic using the created mapper as input channel 
 			// and the internally created Sum Analytic channel output
 			// We pass in all the configuration parameters to ensure 
@@ -348,7 +447,7 @@ event FootFall
 /** 
 *  This internal Monitor is used to automatically intern 
 *  any string constants that are defined that are associated
-*  with the Combiner Analytic in order to improve  
+*  with the FootFall Analytic in order to improve  
 *  performance when handling strings.
 *
 *  Note: The listener that is created is required in order
@@ -365,6 +464,25 @@ monitor InternFootFallChannel {
 	
 	action onload() {
 		string discard := FootFall.NAME.intern();
+		discard := FootFall.BY_SOURCE_ID.intern();
+		discard := FootFall.CALCULATION_TYPE.intern();
+		discard := FootFall.CALCULATION_VALUE.intern();
+		discard := FootFall.CHANNEL_PREFIX.intern();
+		discard := FootFall.D_VALUE.intern();
+		discard := FootFall.ENABLE_ENTRY.intern();
+		discard := FootFall.ENABLE_EXIT.intern();
+		discard := FootFall.ENTERED.intern();
+		discard := FootFall.EXITED.intern();
+		discard := FootFall.GEOFENCE_LATITUDE.intern();
+		discard := FootFall.GEOFENCE_LONGITUDE.intern();
+		discard := FootFall.GEOFENCE_RADIUS.intern();
+		discard := FootFall.INPUT_FIELD.intern();
+		discard := FootFall.MAPPING.intern();
+		discard := FootFall.OUTPUT_FIELD.intern();
+		discard := FootFall.S_VALUE.intern();
+		discard := FootFall.SMOOTHING_FACTOR.intern();
+		discard := FootFall.TIMEWINDOW.intern();
+		discard := FootFall.USE_HYPERTREE.intern();
 		on all StayAlive() {}
 	}
 }

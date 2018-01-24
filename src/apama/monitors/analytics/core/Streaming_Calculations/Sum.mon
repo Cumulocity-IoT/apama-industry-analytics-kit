@@ -274,7 +274,7 @@ event MovingSum
 			"validValues": ["dValue", "xValue", "yValue","zValue"]
 		},{
 			"name": "bySourceId",
-			"description": "If defined, the Drift calculations are partitioned based on the sourceId parameter of the input data stream",
+			"description": "If defined, the Sum calculations are partitioned based on the sourceId parameter of the input data stream",
 			"type": "boolean",
 			"defaultValue": true,
 			"optional": true,
@@ -314,7 +314,7 @@ event MovingSum
 *      <td>Valid values are either<font face="courier" size="-1">dValue</font> or <font face="courier" size="-1">xValue</font> or 
 *			<font face="courier" size="-1">yValue</font> or <font face="courier" size="-1">zValue</font>
 *		</td><td>String</td><td>False</td><td><font face="courier" size="-1">dValue</font> </td></tr>
-*  <tr><td><b>bySourceId</b></td><td>If defined, the Drift calculations are partitioned based on the <font face="courier" size="-1">sourceId</font> of the <font face="courier" size="-1">Data</font> events</td>
+*  <tr><td><b>bySourceId</b></td><td>If defined, the Sum calculations are partitioned based on the <font face="courier" size="-1">sourceId</font> of the <font face="courier" size="-1">Data</font> events</td>
 *      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr>
 *
 *  </table></dd>

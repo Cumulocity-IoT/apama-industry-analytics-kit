@@ -1,0 +1,7 @@
+com.industry.analytics.Analytic("SalesPerVisitor", ["Input_Customers"], ["Output"], {})
+com.industry.analytics.Analytic("SalesPerVisitor", ["Input_Customers","Input_Sales"], ["Output"], {})
+com.industry.analytics.Analytic("SalesPerVisitor", ["Input_Customers","Input_Sales"], ["Output"], {"timeWindow": "-1.0"})
+com.industry.analytics.Analytic("SalesPerVisitor", ["Input_Customers","Input_Sales"], ["Output"], {"timeWindow": "60.0"})
+com.industry.analytics.Analytic("SalesPerVisitor", ["Input_Customers","Input_Sales"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"-1"})
+com.industry.analytics.Analytic("SalesPerVisitor", ["Input_Customers","Input_Sales"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"60"})
+com.industry.analytics.Analytic("SalesPerVisitor", ["Input_Customers","Input_Sales"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"60", "bySourceId":"true"})
