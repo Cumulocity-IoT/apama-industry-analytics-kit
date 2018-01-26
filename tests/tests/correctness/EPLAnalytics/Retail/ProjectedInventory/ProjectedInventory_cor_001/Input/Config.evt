@@ -1,0 +1,5 @@
+com.industry.analytics.Analytic("ProjectedInventory", ["Input_Inventory"], ["Output"], {})
+com.industry.analytics.Analytic("ProjectedInventory", ["Input_Inventory"], ["Output"], {"inventoryThreshold": "60.0"})
+com.industry.analytics.Analytic("ProjectedInventory", ["Input_Inventory"], ["Output"], {"inventoryThreshold": "60.0", "timeToThreshold":"5"})
+com.industry.analytics.Analytic("ProjectedInventory", ["Input_Inventory"], ["Output"], {"inventoryThreshold": "60.0", "timeToThreshold":"5", "timeWindow": "-1.0", "bySourceId":"false"})
+com.industry.analytics.Analytic("ProjectedInventory", ["Input_Inventory"], ["Output"], {"inventoryThreshold": "60.0", "timeToThreshold":"5", "timeWindow": "60.0", "bySourceId":"false"})

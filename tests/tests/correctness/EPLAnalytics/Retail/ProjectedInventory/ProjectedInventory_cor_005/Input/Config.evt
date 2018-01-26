@@ -1,0 +1,1 @@
+com.industry.analytics.Analytic("ProjectedInventory", ["Input_Inventory"], ["Output"], {"inventoryThreshold": "60.0", "timeToThreshold":"20", "timeWindow": "60.0", "bySourceId":"true"})

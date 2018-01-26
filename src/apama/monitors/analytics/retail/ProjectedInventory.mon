@@ -1,0 +1,374 @@
+//*****************************************************************************
+// Title:         ProjectedInventory
+// Description:   ProjectedInventory description
+// Dependencies:  None
+// Author:        
+//
+//*****************************************************************************
+package com.industry.analytics.retail;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Constants;
+using com.industry.analytics.retail.InventoryDays;
+
+/* @AnalyticDefinition
+{
+	"name": "ProjectedInventory",
+	"description": "Calculates ProjectedInventory of a store in a given timewindow.",
+	"group": "Streaming Calculations",
+	"documentation": "com/industry/analytics/retail/ProjectedInventory.html",
+	"inputChannels": [
+		{
+			"name": "Inventory Level",
+			"description": "The channel containing the current inventory level",
+			"dataProperties": ["dValue"]
+		}
+	],
+	"outputChannels": [
+		{
+			"name": "ProjectedInventory",
+			"description": "The channel to output ProjectedInventory within a timewindow",
+			"dataProperties": ["+dValue"]
+		}
+	],
+	"properties": [
+		{
+			"name": "timeWindow",
+			"description": "Defines the timeWindow for calculating ProjectedInventory.",
+			"type": "decimal",
+			"optional": true,
+			"defaultValue": 60.0,
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+		},{
+			"name": "inventoryThreshold",
+			"description": "Defines the threshold inventory level to reach before generating alert.",
+			"type": "decimal",
+			"optional": false,
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+		},{
+			"name": "timeToThreshold",
+			"description": "Defines the time to reach the threshold inventory level before generating alert.",
+			"type": "decimal",
+			"optional": false,
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+		},{
+			"name": "bySourceId",
+			"description": "If defined, the ProjectedInventory calculations are partitioned based on the sourceId parameter of the input data stream.",
+			"type": "boolean",
+			"defaultValue": true,
+			"optional": true,
+			"advanced":true
+		}
+	]
+}
+*/
+
+/**
+*  The ProjectedInventory Analytic computation generates a Data of type 
+*  anomaly when inventory level will reach threshold value within in certain time. 
+*  The ProjectedInventory is calculated based on the number of events recieved containing inventory update  within a time window (in seconds).
+*
+*  <dl><dt><b>Input Data events:</b></dt>
+*  <dd>Only a single input Data stream names must be provided.</dd>
+*  <dd><b>Note:</b> The input Data events timestamp value should be defined as the number of seconds since the epoch (1st January 1970).</dd>
+*  </dl>
+*  <dl><dt><b>Output Data events:</b></dt>
+*  <dd>Only a single output Data stream name must be provided. Only Data events of Computed type are generated.</dd>
+*  </dl>
+*  <dl><dt><b>Params:</b></dt>
+*  <dd>
+*  <table border="1" style="border-collapse: collapse;width:100%">
+*  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
+*  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow for calculating ProjectedInventory.</td>
+*      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">60.0d</font> </td></tr>
+*  <tr><td><b>inventoryThreshold</b></td><td>Defines the threshold inventory level to reach before generating alert.</td>
+*      <td>Stringified decimal</td><td>Decimal</td><td>True</td><td></td></tr>
+*  <tr><td><b>timeToThreshold</b></td><td>Defines the time to reach the threshold inventory level before generating alert.</td>
+*      <td>Stringified decimal</td><td>Decimal</td><td>True</td><td></td></tr>
+*  <tr><td><b>bySourceId</b></td><td>If defined, the ProjectedInventory calculations are partitioned based on the <font face="courier" size="-1">sourceId</font> of the <font face="courier" size="-1">Data</font> events</td>
+*      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">true</font></td></tr>
+*
+*  </table></dd>
+*  </dl>
+*  <dl><dt><b>Example usage:</b></dt>
+<dd><code>
+//Define a ProjectedInventory Analytic which takes inventory level on  "Input_Inventory" 
+// and generate output Data event if specified threshold levels will be breached within a timewindow of 60 seconds. 
+send com.industry.analytics.Analytic("ProjectedInventory", ["Input_Inventory"], ["Output"], {"inventoryThreshold": "60.0", "timeToThreshold":"30", "timeWindow": "60.0", "bySourceId":"false"}) to "";
+
+</code></dd>
+*</dl>
+*/
+
+event ProjectedInventory {
+	/** This constant defines the name of the Analytic. */
+	constant string NAME := "ProjectedInventory";
+	/** This constant defines the prefix used for the internal
+	 *  channel names.
+	 *  @private */
+	constant string CHANNEL_PREFIX := "__internalChannel_PROJECTED_INVENTORY";
+	/**This constant defines the Threshold value for generating alert in case of low stock */
+	constant string INVENTORY_THRESHOLD := "inventoryThreshold";
+	
+	/**This constant defines the Threshold value for generating alert in case of low stock */
+	constant string TIME_TO_THRESHOLD := "timeToThreshold";
+	
+	/**This constant defines the timewindow value for calculation */
+	constant string TIMEWINDOW := "timeWindow";
+	/** This constant defines the configuration parameter name
+	 *  that defines whether or not the Event Rate calculation will be
+	 *  partitioned by the <font face="courier" size="-1">sourceId</font>*/
+	constant string BY_SOURCEID := "bySourceId";
+	
+	/** Local cached closure for the initialisation of the 
+	 *  CategoryContribution Analysis Analytic.
+	 *  @private */
+	action<boolean, AnalyticInterface> _initCompleteProjectedInventory;
+	
+	/** Local cached input channel name for stock update
+	 *  @private */
+	string _inputChannelInventory;
+	
+	/** Local cached output channel name
+	 *  @private */
+	string _outputChannel;
+	
+	/** Local cached inventoryThreshold param
+	 *  @private */
+	decimal _inventoryThreshold;
+	
+	/** Local cached timeToThreshold param
+	 *  @private */
+	decimal _timeToThreshold;
+	
+	/** Local cached timewindow param
+	 *  @private */
+	decimal _timeWindow;
+	/** Local cached bySourceId param
+	 *  @private */
+	boolean _bySourceId;
+	
+	/** Local cached AnalyticInterface object for the internally
+	 *  created InventoryDays Analytic.
+	 *  @private */
+	AnalyticInterface _inventoryDaysAnalyticInterface;
+	
+	/** Local cached AnalyticInterface object for the internally
+	 *  created Threshold Analytic.
+	 *  @private */
+	AnalyticInterface _thresholdAnalyticInterface;
+	
+	/** The Analytic Base Object implementation 
+	 *  @private */
+	AnalyticObject _analyticObject;
+	
+	/** Local cached copy of the original configuration provided
+	 *  for the CategoryContribution Analysis Analytic.
+	 *  @private */
+	Analytic _config;
+	
+	/** 
+	 *  This action creates a new instance of the Analytic.
+	 *  Typically, this is called internally by the associated Analytics 
+	 *  service monitor when a com.industry.analytics.Analytic event is 
+	 *  sent for this type of Analytic.
+	 *
+	 *  @param  config        The Analytic configuration that 
+	 *                        will be used for this instance
+	 *  @param  initComplete  The action callback to call when the new Analytic  
+	 *                        has been created, or if an error occured.
+ *
+	 *  @see com.industry.analytics.Analytic           The Analytic configuration event object.
+	 *  @see com.industry.analytics.AnalyticInterface  The action interface that can be used 
+	 *                                                 to interact with the Analytic.
+	 */
+	
+	action init(Analytic config, 
+	            action<boolean, AnalyticInterface> initComplete) {
+		boolean result := config.validateParams( NAME, 1, 1, 
+		                                         [INVENTORY_THRESHOLD, TIME_TO_THRESHOLD, TIMEWINDOW, BY_SOURCEID], 
+		                                         [Constants.DECIMAL, Constants.DECIMAL, Constants.DECIMAL, Constants.BOOLEAN], 
+		                                         [true, true, false, false] );
+		if( result ) then {
+			
+			//Cache the input/output channel names
+			_inputChannelInventory := config.inputDataNames[0];
+			_outputChannel := config.outputDataNames[0];
+
+			
+
+			_bySourceId := config.getOrBoolean( BY_SOURCEID, true );
+			
+			_inventoryThreshold := config.getDecimal(INVENTORY_THRESHOLD);
+			if(_inventoryThreshold <= 0.0d ) then {
+				log "  Param "+INVENTORY_THRESHOLD+" must be positive. Given value: " + _inventoryThreshold.toString() at ERROR;
+				result := false;
+			}
+			
+			
+			if(result) {
+				_timeToThreshold := config.getDecimal(TIME_TO_THRESHOLD);
+				if(_timeToThreshold <= 0.0d ) then {
+					log "  Param "+TIME_TO_THRESHOLD+" must be positive. Given value: " + _timeToThreshold.toString() at ERROR;
+					result := false;
+				}
+			}
+			if(result) {
+				_timeWindow := config.getOrDecimal(TIMEWINDOW, 60.0d);
+				if _timeWindow <= 0.0d {
+					log "  Param "+ TIMEWINDOW +" must be > 0." at ERROR;
+					result := false;
+				}
+			}
+			
+			if(result) {
+			
+				// Cache the original configuration
+				_config := config.clone();
+				
+				_initCompleteProjectedInventory := initComplete;
+			
+				dictionary<string, string> _inventoryDaysParam := new dictionary<string, string>;
+				_inventoryDaysParam.add(TIMEWINDOW,_timeWindow.toString());
+				_inventoryDaysParam.add(BY_SOURCEID,_bySourceId.toString());
+
+				// Create Sum Analytic using the internally created Sum Analytic channel output
+				// We pass in all the configuration parameters to ensure 
+				// future compatibility with new features of the Analytics
+				(new InventoryDays).init( com.industry.analytics.Analytic( InventoryDays.NAME, 
+				                                                    [ CHANNEL_PREFIX+"_INVENTORY_DAYS_"+_inputChannelInventory ], 
+				                                                    [CHANNEL_PREFIX+"_INVENTORY_DAYS_"+_outputChannel ], 
+				                                                           _inventoryDaysParam ), 
+				                      _initCompleteInventoryDays );
+			}
+			
+		}
+		
+		if( not result ) then {
+			// Call the closure 
+			initComplete( false, new AnalyticInterface );
+		}
+		
+	}
+	
+	/**
+	 *  This action defines the completion handler for the for Sum Analytic
+	 *  @private */
+	action _initCompleteInventoryDays( boolean success, AnalyticInterface tInterface ) {
+		 //If the Sum Analytic was created successfully
+		if( success ) then {
+			// Cache the Sum Analytic interface object 
+			_inventoryDaysAnalyticInterface := tInterface;
+			
+			_inventoryDaysAnalyticInterface.start();
+			_config.inputDataNames :=[_inputChannelInventory, CHANNEL_PREFIX+"_INVENTORY_DAYS_"+_outputChannel];
+			
+			 //Create an Analytic object for the ProjectedInventory.
+			// This is only required to handle the reset/deletion of 
+			// the internally created Analytics.
+			// There is no need to implement the processData action
+			// as the internally created Analytics will handle this.
+			_analyticObject := new AnalyticObject;
+			_analyticObject.initExtended( _config,
+			                              processData, 
+			                              new action<dictionary<string, Data> >,
+			                              false,
+			                              reset,
+			                              onDelete,
+			                              _initCompleteProjectedInventory );
+
+
+		
+		} else {
+			log "Error spawning ProjectedInventory Analytic - Failed to create the EventRate Analytic part of the chain" at ERROR;
+			_initCompleteProjectedInventory( false, new AnalyticInterface );
+			return;
+		}
+	}
+	
+	/**
+	 *  This action implements the Analytic function itself. 
+	 *  This is called internally by the Analytic Object, and  
+	 *  should not be called directly by the Users application.
+	 *  If the application has created this Analytic using the 
+	 *  #init() action directly, then the <font face="courier" size="-1">processData</font>
+	 *  action on the <font face="courier" size="-1">com.industry.analytics.AnalyticInterface</font> 
+	 *  that was returned should be used instead.
+	 *
+	 *  @param   dIn  The input Data event to be processed by this Analytic
+	 * 
+	 *  @private
+	 */
+	action processData(Data dataIn) {
+		log "Processing " + dataIn.toString() at DEBUG;
+		
+		//Subtract threshold inventory from data to find number of days left to reach that level
+		if(dataIn.streamName = _inputChannelInventory) {
+			if(dataIn.dValue > _inventoryThreshold) {
+				//calculate projected days to reach inventory threshold
+				Data _data := dataIn.clone();
+				_data.dValue := _data.dValue - _inventoryThreshold;
+				_data.streamName := CHANNEL_PREFIX+"_INVENTORY_DAYS_"+_inputChannelInventory;
+				send _data to _data.streamName;
+			} else {
+				//send alert event as inventory level is already below/equal to threshold
+				sendDataOut(dataIn.clone(), 0.0d);
+			}
+		} else if (dataIn.streamName = CHANNEL_PREFIX+"_INVENTORY_DAYS_"+_outputChannel){
+			//Data event recieved from Inventory days Analytics with number of days left for inventory
+			if(dataIn.dValue <= _timeToThreshold) {
+				//send alert
+				sendDataOut(dataIn.clone(), dataIn.dValue);
+			} else {
+				//do nothing is inventory still above threshold levels
+				
+			}
+		}
+	}
+	/**Populate and send output data event
+	* @private
+	*/
+	action sendDataOut(Data dOut, decimal value) {
+		
+		dOut.dValue := value;
+		dOut.type := DataConstants.ANOMALY;
+		dOut.streamName := _outputChannel;
+		send dOut to dOut.streamName;
+	}
+	
+	/**
+	 *  Optional action to reset the state of the Analytic instance
+	 *  back to its initialisation state.
+	 *  If the application has created this Analytic using the 
+	 *  #init() action directly, then the <font face="courier" size="-1">reset</font>
+	 *  action on the <font face="courier" size="-1">com.industry.analytics.AnalyticInterface</font> 
+	 *  that was returned should be used instead.
+	 *
+	 *  @private
+	 */
+	action reset() {
+		// Reset all the analytics
+		_inventoryDaysAnalyticInterface.reset();
+	}
+	
+	/**
+	 *  Optional action that is called on deleting the Analytic
+	 *  instance. This action should clear any local state/listeners
+	 *  that have been created by the Analytic instance.
+	 *  This is called internally by the Analytic Object, and  
+	 *  should not be called directly by the Users application.
+	 *
+	 *  @private
+	 */
+	action onDelete() {
+		// Stop all the internally created Analytic interfaces
+		_inventoryDaysAnalyticInterface.stop();
+
+	}
+			
+	
+}

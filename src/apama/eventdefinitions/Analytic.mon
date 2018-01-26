@@ -78,6 +78,7 @@ enqueue com.industry.analytics.Analytic("Threshold", ["GRADIENT"], ["THRESHOLDS"
  *  <tr><td>Retail</td><td><b><a href="retail/SalesPerArea.html">SalesPerArea</a></b></td><td>Calculates the sale per area for a store or/and category.</td></tr>
  *  <tr><td>Retail</td><td><b><a href="retail/CategoryContribution.html">CategoryContribution</a></b></td><td>Calculates the total sale for a category.</td></tr>
  *  <tr><td>Retail</td><td><b><a href="retail/SalesPerVisitor.html">SalesPerVisitor</a></b></td><td>Calculates the total SalesPerVisitor of a store for within a timewindow.</td></tr>
+ *  <tr><td>Retail</td><td><b><a href="retail/ProjectedInventory.html">ProjectedInventory</a></b></td><td>Calculates the ProjectedInventory for a store within a timewindow.</td></tr>
  *  <tr><td>Streaming Calculations</td><td><b><a href="streaming_calculations/Average.html">Average</a></b></td><td>Time weighted moving average.</td></tr>
  *  <tr><td>Streaming Calculations</td><td><b><a href="streaming_calculations/Delta.html">Delta</a></b></td><td>Calculates the differences between two neighboring values.</td></tr>
  *  <tr><td>Streaming Calculations</td><td><b><a href="streaming_calculations/Expression.html">Expression</a></b></td><td>Calculates the result of an expression for each data event.</td></tr>

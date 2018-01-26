@@ -309,6 +309,11 @@ class AnalyticsBaseTest(IndustrySolutionsBaseTest):
 		correlator.injectMonitorscript(['BucketSystem.mon'], self.COMPONENTS)
 		correlator.injectMonitorscript(['SalesPerVisitor.mon',
 										'SalesPerVisitorService.mon'], self.RETAIL_ANALYTICS_ROOT)
+										
+	def injectProjectedInventory(self, correlator):
+		self.injectInventoryDays( correlator )
+		correlator.injectMonitorscript(['ProjectedInventory.mon',
+										'ProjectedInventoryService.mon'], self.RETAIL_ANALYTICS_ROOT)
 	#######################################
 	# UTILITIES group injection functions #
 	#######################################

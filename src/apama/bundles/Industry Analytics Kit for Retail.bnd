@@ -27,6 +27,8 @@
 			<include name="TimeOverdueService.mon"/>
 			<include name="InventoryDays.mon"/>
 			<include name="InventoryDaysService.mon"/>
+			<include name="ProjectedInventory.mon"/>
+			<include name="ProjectedInventoryService.mon"/>
 		</fileset>
 	</monitors>
 	<block-catalogs>
