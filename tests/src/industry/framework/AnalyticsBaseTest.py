@@ -33,6 +33,7 @@ class AnalyticsBaseTest(IndustrySolutionsBaseTest):
 		self.ANALYTICS_UTILITIES   = os.path.join(self.CORE_ANALYTICS_ROOT,'Utilities')
 		self.RETAIL_ANALYTICS_ROOT         = os.path.join(self.COMPONENT_MONITORS_DIR_RETAIL,'analytics','retail')
 		self.MANUFACTURING_ANALYTICS_ROOT  = os.path.join(self.COMPONENT_MONITORS_DIR_MANUFACTURING,'analytics','manufacturing')
+		self.UTILITY_ANALYTICS_ROOT         = os.path.join(self.COMPONENT_MONITORS_DIR_UTILITY,'analytics','utility')
 		self.PMMLMODELS = os.path.join(PROJECT.root, 'tools', 'models').replace("\\","/")  #We always want to use forward slashes as this is used in event params
 	
 		self.commonInjected = {}
@@ -314,6 +315,15 @@ class AnalyticsBaseTest(IndustrySolutionsBaseTest):
 		self.injectInventoryDays( correlator )
 		correlator.injectMonitorscript(['ProjectedInventory.mon',
 										'ProjectedInventoryService.mon'], self.RETAIL_ANALYTICS_ROOT)
+										
+	#######################################
+	# UTILITY group injection functions #
+	#######################################	
+	def injectSAIDI(self, correlator):
+		correlator.injectMonitorscript(['BucketSystem.mon'], self.COMPONENTS)
+		correlator.injectMonitorscript(['SAIDI.mon',
+										'SAIDIService.mon'], self.UTILITY_ANALYTICS_ROOT)
+	
 	#######################################
 	# UTILITIES group injection functions #
 	#######################################

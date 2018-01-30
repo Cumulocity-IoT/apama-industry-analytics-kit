@@ -32,7 +32,7 @@ event SumSalesVisitors {
 {
 	"name": "SalesPerVisitor",
 	"description": "Calculates SalesPerVisitor of a store in a given timewindow.",
-	"group": "Streaming Calculations",
+	"group": "Retail",
 	"documentation": "com/industry/analytics/retail/SalesPerVisitor.html",
 	"inputChannels": [
 		{

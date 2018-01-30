@@ -19,7 +19,7 @@ using com.industry.analytics.retail.InventoryDays;
 {
 	"name": "ProjectedInventory",
 	"description": "Calculates ProjectedInventory of a store in a given timewindow.",
-	"group": "Streaming Calculations",
+	"group": "Retail",
 	"documentation": "com/industry/analytics/retail/ProjectedInventory.html",
 	"inputChannels": [
 		{

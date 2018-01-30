@@ -37,6 +37,8 @@
 	<property name="MANUFACTURING_DEPLOYMENT_DIR_NAME"  value="${BASE_DEPLOYMENT_DIR_NAME} for Manufacturing ${IAK_VERSION}"/>
 	<property name="BANKING_INPUT_ZIPFILE_NAME"         value="${BASE_INPUT_ZIPFILE_NAME}_for_Banking_${IAK_VERSION}"/>
 	<property name="BANKING_DEPLOYMENT_DIR_NAME"        value="${BASE_DEPLOYMENT_DIR_NAME} for Banking ${IAK_VERSION}"/>
+	<property name="UTILITY_INPUT_ZIPFILE_NAME"         value="${BASE_INPUT_ZIPFILE_NAME}_for_Utility_${IAK_VERSION}"/>
+	<property name="UTILITY_DEPLOYMENT_DIR_NAME"        value="${BASE_DEPLOYMENT_DIR_NAME} for Utility ${IAK_VERSION}"/>
 
 	<!-- Build properties -->
 	<property name="apama.dir"                    location="${INDUSTRY_ANALYTICS_KIT}${file.separator}apama"/>
@@ -62,6 +64,7 @@
 	<property name="retail.deployment.dir"        value="${deployment.root.dir}${file.separator}${RETAIL_DEPLOYMENT_DIR_NAME}"/>
 	<property name="manufacturing.deployment.dir" value="${deployment.root.dir}${file.separator}${MANUFACTURING_DEPLOYMENT_DIR_NAME}"/>
 	<property name="banking.deployment.dir"       value="${deployment.root.dir}${file.separator}${BANKING_DEPLOYMENT_DIR_NAME}"/>
+	<property name="utility.deployment.dir"       value="${deployment.root.dir}${file.separator}${UTILITY_DEPLOYMENT_DIR_NAME}"/>
 	
 	<!--
 	Default target prints out the usage of this ant file
@@ -169,6 +172,7 @@
 				<exclude name="monitors/analytics/retail/"/>
 				<exclude name="monitors/analytics/manufacturing/"/>
 				<exclude name="monitors/analytics/banking/"/>
+				<exclude name="monitors/analytics/utility/"/>
 			</fileset>
 		</copy>
 		<!-- Copy the Samples to the output directory -->
@@ -204,7 +208,7 @@
 	
 	
 	<!-- Create the documentation for the Industry Vertical Kits -->
-	<target name="copyIndustryVerticalKitsToOutput" depends="copyRetailKitToOutput,copyManufacturingKitToOutput,copyBankingKitToOutput"/>
+	<target name="copyIndustryVerticalKitsToOutput" depends="copyRetailKitToOutput,copyManufacturingKitToOutput,copyBankingKitToOutput, copyUtilityKitToOutput"/>
 	
 	<!-- Copy the Industry Analytics Kit for Retail components to the output directory -->
 	<target name="copyRetailKitToOutput">
@@ -260,6 +264,24 @@
 		</copy>
 		
 	</target>
+	
+	<!-- Copy the Industry Analytics Kit for Utility components to the output directory -->
+	<target name="copyUtilityKitToOutput">
+		
+		<!-- Copy the Core version of the Kit as a base for the Utility Kit -->
+		<copy todir="${utility.deployment.dir}" >
+			<fileset dir="${core.deployment.dir}">
+			</fileset>
+		</copy>
+
+		<!-- Copy the bundle config and associated Apama artifacts to the output directory -->
+		<copy todir="${utility.deployment.dir}${file.separator}Industry Analytics Kit" >
+			<fileset dir="${apama.dir}">
+				<include name="monitors/analytics/utility/**"/>
+				<include name="**/Industry Analytics Kit for Utility.bnd"/>
+			</fileset>
+		</copy>
+	</target>
 		
 	<!-- Create the documentation. -->
 	<target name="createApamaDocumentation">
@@ -271,6 +293,7 @@
 				<exclude name="analytics/retail/"/>
 				<exclude name="analytics/manufacturing/"/>
 				<exclude name="analytics/banking/"/>
+				<exclude name="analytics/utility/"/>
 			</fileset>
 			<fileset dir="${apama.dir}${file.separator}eventdefinitions">
 				<include name="**/*.mon"/>
@@ -283,6 +306,7 @@
 		<antcall inheritAll="false" target="createApamaDocForRetail"/>
 		<antcall inheritAll="false" target="createApamaDocForManufacturing"/>
 		<antcall inheritAll="false" target="createApamaDocForBanking"/>
+		<antcall inheritAll="false" target="createApamaDocForUtility"/>
 	</target>
 	
 	<!-- Create the documentation for the Retail Kit -->
@@ -310,6 +334,16 @@
 		<mkdir dir="${banking.deployment.dir}${file.separator}docs${file.separator}reference"/>
 		<generate-apamadoc outputDir="${banking.deployment.dir}${file.separator}docs${file.separator}reference">
 			<fileset dir="${banking.deployment.dir}${file.separator}Industry Analytics Kit">
+				<include name="**/*.mon"/>
+			</fileset>
+		</generate-apamadoc>
+	</target>
+	
+	<!-- Create the documentation for the Utility Kit -->
+	<target name="createApamaDocForUtility">
+		<mkdir dir="${utility.deployment.dir}${file.separator}docs${file.separator}reference"/>
+		<generate-apamadoc outputDir="${utility.deployment.dir}${file.separator}docs${file.separator}reference">
+			<fileset dir="${utility.deployment.dir}${file.separator}Industry Analytics Kit">
 				<include name="**/*.mon"/>
 			</fileset>
 		</generate-apamadoc>
@@ -353,6 +387,7 @@
 		<createMetadataFile baseDir="${retail.deployment.dir}"/>
 		<createMetadataFile baseDir="${manufacturing.deployment.dir}"/>
 		<createMetadataFile baseDir="${banking.deployment.dir}"/>
+		<createMetadataFile baseDir="${utility.deployment.dir}"/>
 	</target>
 	
 	<!-- Macro for creating the metadata.json used by the AnalyticsBuilder -->
@@ -413,6 +448,7 @@
 		<zipOutput filename="${RETAIL_INPUT_ZIPFILE_NAME}"        srcDir="${retail.deployment.dir}"        prefixDir="${RETAIL_DEPLOYMENT_DIR_NAME}"/>
 		<zipOutput filename="${MANUFACTURING_INPUT_ZIPFILE_NAME}" srcDir="${manufacturing.deployment.dir}" prefixDir="${MANUFACTURING_DEPLOYMENT_DIR_NAME}"/>
 		<zipOutput filename="${BANKING_INPUT_ZIPFILE_NAME}"       srcDir="${banking.deployment.dir}"       prefixDir="${BANKING_DEPLOYMENT_DIR_NAME}"/>
+		<zipOutput filename="${UTILITY_INPUT_ZIPFILE_NAME}"       srcDir="${utility.deployment.dir}"       prefixDir="${UTILITY_DEPLOYMENT_DIR_NAME}"/>
 	</target>
 	
 	<!-- Macro for creating the metadata.json used by the AnalyticsBuilder -->

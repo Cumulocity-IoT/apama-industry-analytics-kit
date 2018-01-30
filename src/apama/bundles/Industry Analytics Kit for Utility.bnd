@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bundle name="Industry Analytics Kit for Utility" type="monitorscript" singleton="true">
+	<version>
+		<id>1.0</id>
+		<date>2018-01-29</date>
+		<author>Software AG</author>
+		<comments/>
+	</version>
+	<description>
+		Apama Bundle for Industry Analytics Kit for Utility
+	</description>
+	<monitors>
+		<fileset dir="../monitors/analytics/utility">
+			<include name="SAIDI.mon"/>
+			<include name="SAIDIService.mon"/>
+		</fileset>
+	</monitors>
+	<block-catalogs>
+	</block-catalogs>
+	<configurations>
+	</configurations>
+	<static-files>
+	</static-files>
+	<events>
+	</events>
+	<libraries>
+	</libraries>
+	<jars>
+	</jars>
+	<dependencies>
+		<dependency bundle-filename="Industry Analytics Kit.bnd" catalog="."/>
+	</dependencies>
+</bundle>

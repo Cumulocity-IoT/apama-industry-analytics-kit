@@ -58,6 +58,15 @@ class IndustrySolutionsBaseTest(BaseTest):
 		self.COMPONENT_OBJECTS_DIR_MANUFACTURING = os.path.join(self.COMPONENT_EPL_HOME_MANUFACTURING, 'objects')
 		self.COMPONENT_MONITORS_DIR_MANUFACTURING = os.path.join(self.COMPONENT_EPL_HOME_MANUFACTURING, 'monitors')
 		self.COMPONENT_QUERIES_DIR_MANUFACTURING = os.path.join(self.COMPONENT_EPL_HOME_MANUFACTURING, 'queries')
+
+		# Get the versioned directory for Utility
+		version_path_utility = (p for p in outputdirfolders if ' for Utility' in os.path.basename(p)).next()
+		self.COMPONENT_EPL_HOME_UTILITY = os.path.join(version_path_utility, 'Industry Analytics Kit' )
+		self.COMPONENT_CONFIG_DIR_UTILITY     = os.path.join(self.COMPONENT_EPL_HOME_UTILITY, 'config')
+		self.COMPONENT_EVENT_DEFS_DIR_UTILITY = os.path.join(self.COMPONENT_EPL_HOME_UTILITY, 'eventdefinitions')
+		self.COMPONENT_OBJECTS_DIR_UTILITY    = os.path.join(self.COMPONENT_EPL_HOME_UTILITY, 'objects')
+		self.COMPONENT_MONITORS_DIR_UTILITY   = os.path.join(self.COMPONENT_EPL_HOME_UTILITY, 'monitors')
+		self.COMPONENT_QUERIES_DIR_UTILITY    = os.path.join(self.COMPONENT_EPL_HOME_UTILITY, 'queries')
 		
 		self.OUTPUT_DIR = outsubdir
 		self.currDir    = os.getcwd()
