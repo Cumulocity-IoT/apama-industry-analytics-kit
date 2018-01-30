@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("SAIFI", ["Input"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"20", "totalCustomers":"50000"})
+

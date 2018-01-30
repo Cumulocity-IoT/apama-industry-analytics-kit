@@ -90,6 +90,7 @@ enqueue com.industry.analytics.Analytic("Threshold", ["GRADIENT"], ["THRESHOLDS"
  *  <tr><td>Streaming Calculations</td><td><b><a href="streaming_calculations/Volatility.html">Volatility</a></b></td><td>The volatility (deviation in variance) of data values.</td></tr>
  *  <tr><td>Utility</td><td><b><a href="utility/SAIDI.html">SAIDI</a></b></td><td>Calculates the System Average Interruption Duration Index within a timewindow.</td></tr>
  *  <tr><td>Utility</td><td><b><a href="utility/CAIDI.html">CAIDI</a></b></td><td>Calculates the Customer Average Interruption Duration Index within a timewindow.</td></tr>
+ *  <tr><td>Utility</td><td><b><a href="utility/SAIFI.html">SAIFI</a></b></td><td>Calculates the System Average Interruption Frequency Index within a timewindow.</td></tr>
  *  <tr><td>Utilities</td><td><b><a href="utilities/DataViewer.html">DataViewer</a></b></td><td>Sends the incoming events to a specified dataview.</td></tr>
  *  <tr><td>Utilities</td><td><b><a href="utilities/MemoryStore.html">MemoryStore</a></b></td><td>Caches the Data events using MemoryStore, and exposes them in a dataview.</td></tr>
  *  <tr><td>Utilities</td><td><b><a href="utilities/DataSimulator.html">DataSimulator</a></b></td><td>Generates simulated data for use by the Industry Analytics Kit.</td></tr>

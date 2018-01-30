@@ -1,7 +1,7 @@
 
 //*****************************************************************************
-// Title:         CustomerAverageInterruptionDurationIndex(CAIDI)
-// Description:   CustomerAverageInterruptionDurationIndex description
+// Title:         SystemAverageInterruptionFrequencyIndex(SAIFI)
+// Description:   SystemAverageInterruptionFrequencyIndex description
 // Dependencies:  None
 // Author:        
 //
@@ -19,38 +19,30 @@ using com.industry.utils.Bucket;
 using com.industry.utils.BucketSystem;
 using com.industry.utils.BucketSystemBuilder;
 
-/**Data Bucket for calculating CAIDI
-* @private
-*/
-event CAIDIBucket {
-	decimal sumCustomers;
-	decimal sumCustomerSeconds;
-}
-
 /* @AnalyticDefinition
 {
-	"name": "CAIDI",
-	"description": "Calculates Customer Average Interruption Duration Index in a given timewindow.",
+	"name": "SAIFI",
+	"description": "Calculates System Average Interruption Frequency Index in a given timewindow.",
 	"group": "Utility",
-	"documentation": "com/industry/analytics/utility/CAIDI.html",
+	"documentation": "com/industry/analytics/utility/SAIFI.html",
 	"inputChannels": [
 		{
 			"name": "Interruption",
-			"description": "The channel to calculate Customer Average Interruption Duration Index",
-			"dataProperties": ["dValue", "xValue"]
+			"description": "The channel to calculate System Average Interruption Frequency Index",
+			"dataProperties": ["dValue"]
 		}
 	],
 	"outputChannels": [
 		{
-			"name": "CAIDI",
-			"description": "The channel to output CAIDI within a timewindow",
+			"name": "SAIFI",
+			"description": "The channel to output SAIFI within a timewindow",
 			"dataProperties": ["+dValue"]
 		}
 	],
 	"properties": [
 		{
 			"name": "timeWindow",
-			"description": "Defines the timeWindow for calculating CAIDI.",
+			"description": "Defines the timeWindow for calculating SAIFI.",
 			"type": "decimal",
 			"optional": true,
 			"defaultValue": 86400,
@@ -63,14 +55,20 @@ event CAIDIBucket {
 			"defaultValue": 60,
 			"advanced":true,
 			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+		},{
+			"name": "totalCustomers",
+			"description": "Total customers of a utility company.",
+			"type": "Integer",
+			"optional": false,
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
 		}
 	]
 }
 */
 
 /**
-*  The CAIDI Analytic computation generates a Data containing 
-*  Customer Average Interruption Duration Index for each input recieved within a timewindow.
+*  The SAIFI Analytic computation generates a Data containing 
+*  System Average Interruption Frequency Index for each input recieved within a timewindow.
 *  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
 *
 *  <dl><dt><b>Input Data events:</b></dt>
@@ -84,30 +82,34 @@ event CAIDIBucket {
 *  <dd>
 *  <table border="1" style="border-collapse: collapse;width:100%">
 *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
-*  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow for calculating CAIDI.</td>
+*  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow for calculating SAIFI.</td>
 *      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d</font> </td></tr>
 *  <tr><td><b>smoothingFactor</b></td><td>Defines the smoothing factor to be used for precision.</td>
 *      <td>Stringified integer</td><td>Integer</td><td>False</td><td><font face="courier" size="-1">60</font> </td></tr>
+*  <tr><td><b>totalCustomers</b></td><td>Total customers of a utility company.</td>
+*      <td>Stringified Integer</td><td>Integer</td><td>true</td><td></td></tr>
 *
 *  </table></dd>
 *  </dl>
 *  <dl><dt><b>Example usage:</b></dt>
 <dd><code>
-//Define a CAIDI Analytic which takes input Data events on the channel "Input" 
-//and calculate the moving Customer Average Interruption Duration Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
-//It publishes a Data event with the calculated value of CAIDI on the output channel "Output" after receiving every Data event. 
-send com.industry.analytics.Analytic("CAIDI", ["Input"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
+//Define a SAIFI Analytic which takes input Data events on the channel "Input" 
+//and calculate the moving System Average Interruption Frequency Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
+//It publishes a Data event with the calculated value of SAIFI on the output channel "Output" after receiving every Data event. 
+send com.industry.analytics.Analytic("SAIFI", ["Input"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10", "totalCustomers":"5000"}) to "";
 </code></dd>
 *</dl>
 */
 
-event CAIDI {
+event SAIFI {
 	/** This constant defines the name of the Analytic. */
-	constant string NAME := "CAIDI";
+	constant string NAME := "SAIFI";
+	/** This constant defines the param name totalCustomers. */
+	constant string TOTAL_CUSTOMERS := "totalCustomers";
 	/** This constant defines the param name timeWindow. */
 	constant string TIMEWINDOW := "timeWindow";
 	/**This constant defines the configuration parameter name
-	 *  that specifies the smoothing factor used to calculate the CAIDI.*/
+	 *  that specifies the smoothing factor used to calculate the SAIFI.*/
 	constant string SMOOTHING_FACTOR := "smoothingFactor";
 	/** This constant defines the default timewindow. 
 	* @private
@@ -125,6 +127,10 @@ event CAIDI {
 	* @private
 	*/
 	decimal _timeWindow;
+	/** Local cache to save total customer value. 
+	* @private
+	*/
+	integer _totalCustomers;
 	/** Local cache to save smoothingFactor value. 
 	* @private
 	*/
@@ -180,42 +186,40 @@ event CAIDI {
 	}
 	
 	/**Action to get timestamp from Data event
- 	* @private
- 	*/
- 	action getTimestamp(any dataAsAny) returns float {
- 		return ((<Data> dataAsAny).timestamp).toFloat();
- 	}
- 	
- 	/**Action to add Data event to bucket system
- 	* @private
- 	*/
- 	action addDataToBucket(Bucket b, any dataAsAny) returns any {
- 		Data d := <Data> dataAsAny;
- 		CAIDIBucket currentValue := <CAIDIBucket> b.data;
- 		currentValue.sumCustomerSeconds := currentValue.sumCustomerSeconds + (d.xValue.toDecimal() * d.dValue);
- 		currentValue.sumCustomers := currentValue.sumCustomers + d.xValue.toDecimal();
- 		return currentValue;
- 	}
- 	
- 	/**Init bucket
- 	* @private
- 	*/
- 	action initBucket(Bucket b) {
- 		b.data := new CAIDIBucket;
- 	}
- 	
- 	/**Action to calculate sum for all buckets
- 	* @private
- 	*/
- 	action calculateSumValues(any acculator, Bucket nextBucket) returns any {
- 		CAIDIBucket accu := <CAIDIBucket> acculator;
- 		CAIDIBucket current := <CAIDIBucket> nextBucket.data;
- 		
- 		accu.sumCustomers := accu.sumCustomers + current.sumCustomers;
- 		accu.sumCustomerSeconds := accu.sumCustomerSeconds + current.sumCustomerSeconds;
- 		
- 		return accu;
- 	}
+	* @private
+	*/
+	action getTimestamp(any dataAsAny) returns float {
+		return ((<Data> dataAsAny).timestamp).toFloat();
+	}
+	
+	/**Action to add Data event to bucket system
+	* @private
+	*/
+	action addDataToBucket(Bucket b, any dataAsAny) returns any {
+		Data d := <Data> dataAsAny;
+		decimal currentValue := <decimal> b.data;
+		currentValue := currentValue + d.dValue;
+		return currentValue;
+	}
+	
+	/**Init bucket
+	* @private
+	*/
+	action initBucket(Bucket b) {
+		b.data := 0.0d;
+	}
+	
+	/**Action to calculate sum for all buckets
+	* @private
+	*/
+	action calculateSumValues(any acculator, Bucket nextBucket) returns any {
+		decimal accu := <decimal> acculator;
+		decimal current := <decimal> nextBucket.data;
+		
+		accu := accu + current;
+		
+		return accu;
+	}
 	
 	/** 
 	 *  This helper action validates configuration that was
@@ -230,13 +234,19 @@ event CAIDI {
 	 */
 	action _validateConfiguration(Analytic config) returns boolean {
 		boolean result := config.validateParams( NAME, 1, 1, 
-		                                         [TIMEWINDOW, SMOOTHING_FACTOR], 
-		                                         [Constants.DECIMAL, Constants.INTEGER], 
-		                                         [false, false] );
+		                                         [TOTAL_CUSTOMERS, TIMEWINDOW, SMOOTHING_FACTOR], 
+		                                         [Constants.INTEGER, Constants.DECIMAL, Constants.INTEGER], 
+		                                         [true, false, false] );
 
 		if(result) {
 			_inputDataName := config.inputDataNames[0];
 			_outputDataName := config.outputDataNames[0];
+			
+			_totalCustomers := config.getInteger(TOTAL_CUSTOMERS);
+			if(_totalCustomers <= 0) {
+				log "Param "+TOTAL_CUSTOMERS+" must be greater than zero. Given value : "+_totalCustomers.toString() at ERROR;
+				return false;
+			}
 			
 			_timeWindow := config.getOrDecimal(TIMEWINDOW, DEFAULT_TIMEWINDOW);
 			if(_timeWindow <= 0.0d) {
@@ -273,11 +283,11 @@ event CAIDI {
 		
 		_bucketSystem.add(dataIn);
 		
-		CAIDIBucket value := <CAIDIBucket>_bucketSystem.reduce(calculateSumValues,new CAIDIBucket);
+		decimal value := <decimal>_bucketSystem.reduce(calculateSumValues, 0.0d);
 		
 		Data dataOut := dataIn.clone();
 
-		dataOut.dValue := value.sumCustomerSeconds/value.sumCustomers;
+		dataOut.dValue := value/_totalCustomers.toDecimal();
 
 		dataOut.streamName := _outputDataName;
 		send dataOut to dataOut.streamName;
@@ -294,7 +304,7 @@ event CAIDI {
 /** 
 *  This internal Monitor is used to automatically intern 
 *  any string constants that are defined that are associated
-*  with the CAIDI Analytic in order to improve  
+*  with the SAIFI Analytic in order to improve  
 *  performance when handling strings.
 *
 *  Note: The listener that is created is required in order
@@ -306,13 +316,14 @@ event CAIDI {
 *
 *  @private
 */
-monitor InternCAIDIChannel {
+monitor InternSAIFIChannel {
 	event StayAlive {}
 	
 	action onload() {
-		string discard := CAIDI.NAME.intern();
-		discard := CAIDI.TIMEWINDOW.intern();
-		discard := CAIDI.SMOOTHING_FACTOR.intern();
+		string discard := SAIFI.NAME.intern();
+		discard := SAIFI.TIMEWINDOW.intern();
+		discard := SAIFI.TOTAL_CUSTOMERS.intern();
+		discard := SAIFI.SMOOTHING_FACTOR.intern();
 		on all StayAlive() {}
 	}
 }
