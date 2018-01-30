@@ -1,0 +1,318 @@
+
+//*****************************************************************************
+// Title:         CustomerAverageInterruptionDurationIndex(CAIDI)
+// Description:   SystemAverageInterruptionDurationIndex description
+// Dependencies:  None
+// Author:        
+//
+//*****************************************************************************
+package com.industry.analytics.utility;
+
+using com.industry.analytics.Data;
+using com.industry.analytics.DataConstants;
+using com.industry.analytics.Analytic;
+using com.industry.analytics.AnalyticObject;
+using com.industry.analytics.AnalyticInterface;
+using com.industry.analytics.Constants;
+
+using com.industry.utils.Bucket;
+using com.industry.utils.BucketSystem;
+using com.industry.utils.BucketSystemBuilder;
+
+/**Data Bucket for calculating CAIDI
+* @private
+*/
+event CAIDIBucket {
+	decimal sumCustomers;
+	decimal sumCustomerSeconds;
+}
+
+/* @AnalyticDefinition
+{
+	"name": "CAIDI",
+	"description": "Calculates Customer Average Interruption Duration Index in a given timewindow.",
+	"group": "Utility",
+	"documentation": "com/industry/analytics/utility/CAIDI.html",
+	"inputChannels": [
+		{
+			"name": "Interruption",
+			"description": "The channel to calculate Customer Average Interruption Duration Index",
+			"dataProperties": ["dValue", "xValue"]
+		}
+	],
+	"outputChannels": [
+		{
+			"name": "CAIDI",
+			"description": "The channel to output CAIDI within a timewindow",
+			"dataProperties": ["+dValue"]
+		}
+	],
+	"properties": [
+		{
+			"name": "timeWindow",
+			"description": "Defines the timeWindow for calculating CAIDI.",
+			"type": "decimal",
+			"optional": true,
+			"defaultValue": 86400,
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+		},{
+			"name": "smoothingFactor",
+			"description": "Defines the smoothing factor to be used for precision.",
+			"type": "integer",
+			"optional": true,
+			"defaultValue": 60,
+			"advanced":true,
+			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+		}
+	]
+}
+*/
+
+/**
+*  The CAIDI Analytic computation generates a Data containing 
+*  Customer Average Interruption Duration Index for each input recieved within a timewindow.
+*  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
+*
+*  <dl><dt><b>Input Data events:</b></dt>
+*  <dd>Only a single input Data stream name must be provided.</dd>
+*  <dd><b>Note:</b> The input Data events timestamp value should be defined as the number of seconds since the epoch (1st January 1970).</dd>
+*  </dl>
+*  <dl><dt><b>Output Data events:</b></dt>
+*  <dd>Only a single output Data stream name must be provided. Only Data events of Computed type are generated.</dd>
+*  </dl>
+*  <dl><dt><b>Params:</b></dt>
+*  <dd>
+*  <table border="1" style="border-collapse: collapse;width:100%">
+*  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
+*  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow for calculating CAIDI.</td>
+*      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d</font> </td></tr>
+*  <tr><td><b>smoothingFactor</b></td><td>Defines the smoothing factor to be used for precision.</td>
+*      <td>Stringified integer</td><td>Integer</td><td>False</td><td><font face="courier" size="-1">60</font> </td></tr>
+*
+*  </table></dd>
+*  </dl>
+*  <dl><dt><b>Example usage:</b></dt>
+<dd><code>
+//Define a CAIDI Analytic which takes input Data events on the channel "Input" 
+//and calculate the moving Customer Average Interruption Duration Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
+//It publishes a Data event with the calculated value of CAIDI on the output channel "Output" after receiving every Data event. 
+send com.industry.analytics.Analytic("CAIDI", ["Input"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
+</code></dd>
+*</dl>
+*/
+
+event CAIDI {
+	/** This constant defines the name of the Analytic. */
+	constant string NAME := "CAIDI";
+	/** This constant defines the param name timeWindow. */
+	constant string TIMEWINDOW := "timeWindow";
+	/**This constant defines the configuration parameter name
+	 *  that specifies the smoothing factor used to calculate the CAIDI.*/
+	constant string SMOOTHING_FACTOR := "smoothingFactor";
+	/** This constant defines the default timewindow. 
+	* @private
+	*/
+	constant decimal DEFAULT_TIMEWINDOW := 86400.0d;
+	/** Local cache to save input stream. 
+	* @private
+	*/
+	string _inputDataName;
+	/** Local cache to save output stream. 
+	* @private
+	*/
+	string _outputDataName;
+	/** Local cache to save timewindow value. 
+	* @private
+	*/
+	decimal _timeWindow;
+	/** Local cache to save smoothingFactor value. 
+	* @private
+	*/
+	integer _smoothingFactor;
+	
+	/** The BucketSystem Object implementation 
+	 *  @private */
+	BucketSystem _bucketSystem;
+	
+	
+	/** The Analytic Base Object implementation 
+	 *  @private */
+	AnalyticObject _analyticObject;
+	
+	/** 
+	 *  This action creates a new instance of the Analytic.
+	 *  Typically, this is called internally by the associated Analytics 
+	 *  service monitor when a com.industry.analytics.Analytic event is 
+	 *  sent for this type of Analytic.
+	 *
+	 *  @param  config        The Analytic configuration that 
+	 *                        will be used for this instance
+	 *  @param  initComplete  The action callback to call when the new Analytic  
+	 *                        has been created, or if an error occured.
+*
+	 *  @see com.industry.analytics.Analytic           The Analytic configuration event object.
+	 *  @see com.industry.analytics.AnalyticInterface  The action interface that can be used 
+	 *                                                 to interact with the Analytic.
+	 */
+	
+	action init(Analytic config, 
+	            action<boolean, AnalyticInterface> initComplete) {
+		
+		if( not _validateConfiguration( config ) ) then {
+			initComplete( false, new AnalyticInterface );
+			return;
+		}
+		_bucketSystem := BucketSystemBuilder.create()
+					        .totalSize(_timeWindow.toFloat())
+					        .bucketCount(_smoothingFactor)
+					        .toValue(getTimestamp)
+					        .updateBucket(addDataToBucket)
+					        .onBucketCreated(initBucket)
+					        .build();
+		
+		_analyticObject := new AnalyticObject;
+		_analyticObject.init( config,
+		                      processData,
+		                      reset,
+		                      initComplete );
+		
+		
+	}
+	
+	/**Action to get timestamp from Data event
+ 	* @private
+ 	*/
+ 	action getTimestamp(any dataAsAny) returns float {
+ 		return ((<Data> dataAsAny).timestamp).toFloat();
+ 	}
+ 	
+ 	/**Action to add Data event to bucket system
+ 	* @private
+ 	*/
+ 	action addDataToBucket(Bucket b, any dataAsAny) returns any {
+ 		Data d := <Data> dataAsAny;
+ 		CAIDIBucket currentValue := <CAIDIBucket> b.data;
+ 		currentValue.sumCustomerSeconds := currentValue.sumCustomerSeconds + (d.xValue.toDecimal() * d.dValue);
+ 		currentValue.sumCustomers := currentValue.sumCustomers + d.xValue.toDecimal();
+ 		return currentValue;
+ 	}
+ 	
+ 	/**Init bucket
+ 	* @private
+ 	*/
+ 	action initBucket(Bucket b) {
+ 		b.data := new CAIDIBucket;
+ 	}
+ 	
+ 	/**Action to calculate sum for all buckets
+ 	* @private
+ 	*/
+ 	action calculateSumValues(any acculator, Bucket nextBucket) returns any {
+ 		CAIDIBucket accu := <CAIDIBucket> acculator;
+ 		CAIDIBucket current := <CAIDIBucket> nextBucket.data;
+ 		
+ 		accu.sumCustomers := accu.sumCustomers + current.sumCustomers;
+ 		accu.sumCustomerSeconds := accu.sumCustomerSeconds + current.sumCustomerSeconds;
+ 		
+ 		return accu;
+ 	}
+	
+	/** 
+	 *  This helper action validates configuration that was
+	 *  used when trying to create a new instance of the Analytic.
+	 *  This is called internally, and should not be called directly by 
+	 *  the Users application.
+	 *  
+	 *  @param   config  The Analytic configuration object that is being validated
+	 *  @returns A boolean value indicating whether the configuration was valid or not.
+	 * 
+	 *  @private
+	 */
+	action _validateConfiguration(Analytic config) returns boolean {
+		boolean result := config.validateParams( NAME, 1, 1, 
+		                                         [TIMEWINDOW, SMOOTHING_FACTOR], 
+		                                         [Constants.DECIMAL, Constants.INTEGER], 
+		                                         [false, false] );
+
+		if(result) {
+			_inputDataName := config.inputDataNames[0];
+			_outputDataName := config.outputDataNames[0];
+			
+			_timeWindow := config.getOrDecimal(TIMEWINDOW, DEFAULT_TIMEWINDOW);
+			if(_timeWindow <= 0.0d) {
+				log "Param "+TIMEWINDOW+" must be greater than zero. Given value : "+_timeWindow.toString() at ERROR;
+				return false;
+			}
+			
+			_smoothingFactor := config.getOrInteger(SMOOTHING_FACTOR, 60);
+			if( _smoothingFactor <= 0 ) then {
+				log "  Param "+SMOOTHING_FACTOR+" must be positive. Given value: " + _smoothingFactor.toString() at ERROR;
+				return false;
+			}
+			
+		}
+		return result;
+		
+	}
+	
+	/**
+	 *  This action implements the Analytic function itself. 
+	 *  This is called internally by the Analytic Object, and  
+	 *  should not be called directly by the Users application.
+	 *  If the application has created this Analytic using the 
+	 *  #init() action directly, then the <font face="courier" size="-1">processData</font>
+	 *  action on the <font face="courier" size="-1">com.industry.analytics.AnalyticInterface</font> 
+	 *  that was returned should be used instead.
+	 *
+	 *  @param   dIn  The input Data event to be processed by this Analytic
+	 * 
+	 *  @private
+	 */
+	action processData(Data dataIn) {
+		log "Processing " + dataIn.toString() at DEBUG;
+		
+		_bucketSystem.add(dataIn);
+		
+		CAIDIBucket value := <CAIDIBucket>_bucketSystem.reduce(calculateSumValues,new CAIDIBucket);
+		
+		Data dataOut := dataIn.clone();
+
+		dataOut.dValue := value.sumCustomerSeconds/value.sumCustomers;
+
+		dataOut.streamName := _outputDataName;
+		send dataOut to dataOut.streamName;
+	}
+	
+	/** Reset action
+	* @private
+	*/
+	action reset() {
+		
+	}
+}
+
+/** 
+*  This internal Monitor is used to automatically intern 
+*  any string constants that are defined that are associated
+*  with the CAIDI Analytic in order to improve  
+*  performance when handling strings.
+*
+*  Note: The listener that is created is required in order
+*        to keep the monitor alive between a Persistant  
+*        Correlators recovery.  Otherwise, this would be a 
+*        transient monitor, and it would not be recovered.  
+*        Which would then mean that the strings would not
+*        interned in the recovered Correlator.
+*
+*  @private
+*/
+monitor InternCAIDIChannel {
+	event StayAlive {}
+	
+	action onload() {
+		string discard := CAIDI.NAME.intern();
+		discard := CAIDI.TIMEWINDOW.intern();
+		discard := CAIDI.SMOOTHING_FACTOR.intern();
+		on all StayAlive() {}
+	}
+}

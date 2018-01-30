@@ -323,6 +323,11 @@ class AnalyticsBaseTest(IndustrySolutionsBaseTest):
 		correlator.injectMonitorscript(['BucketSystem.mon'], self.COMPONENTS)
 		correlator.injectMonitorscript(['SAIDI.mon',
 										'SAIDIService.mon'], self.UTILITY_ANALYTICS_ROOT)
+										
+	def injectCAIDI(self, correlator):
+		correlator.injectMonitorscript(['BucketSystem.mon'], self.COMPONENTS)
+		correlator.injectMonitorscript(['CAIDI.mon',
+										'CAIDIService.mon'], self.UTILITY_ANALYTICS_ROOT)
 	
 	#######################################
 	# UTILITIES group injection functions #
