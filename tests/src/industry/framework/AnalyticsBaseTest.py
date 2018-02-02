@@ -333,6 +333,16 @@ class AnalyticsBaseTest(IndustrySolutionsBaseTest):
 		correlator.injectMonitorscript(['BucketSystem.mon'], self.COMPONENTS)
 		correlator.injectMonitorscript(['SAIFI.mon',
 										'SAIFIService.mon'], self.UTILITY_ANALYTICS_ROOT)
+										
+	def injectCAIFI(self, correlator):
+		correlator.injectMonitorscript(['BucketSystem.mon'], self.COMPONENTS)
+		correlator.injectMonitorscript(['CAIFI.mon',
+										'CAIFIService.mon'], self.UTILITY_ANALYTICS_ROOT)
+										
+	def injectCIII(self, correlator):
+		correlator.injectMonitorscript(['BucketSystem.mon'], self.COMPONENTS)
+		correlator.injectMonitorscript(['CIII.mon',
+										'CIIIService.mon'], self.UTILITY_ANALYTICS_ROOT)
 	#######################################
 	# UTILITIES group injection functions #
 	#######################################
