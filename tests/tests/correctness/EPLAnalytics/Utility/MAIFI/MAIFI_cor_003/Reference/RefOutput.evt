@@ -1,0 +1,8 @@
+com.industry.analytics.Data("Output","r","Utility_ABC",1,0.0442,"",2,2,3,{})
+com.industry.analytics.Data("Output","r","Utility_ABC",2,0.06154,"",1,2,3,{})
+com.industry.analytics.Data("Output","r","Utility_ABC",3,0.10164,"",1,2,3,{})
+com.industry.analytics.Data("Output","r","Utility_ABC",4,0.12824,"",1,2,3,{})
+com.industry.analytics.Data("Output","r","Utility_ABC",21,0.1109,"",2,2,3,{})
+com.industry.analytics.Data("Output","r","Utility_ABC",22,0.12824,"",1,2,3,{})
+com.industry.analytics.Data("Output","r","Utility_ABC",23,0.10164,"",1,2,3,{})
+com.industry.analytics.Data("Output","r","Utility_ABC",24,0.12824,"",1,2,3,{})

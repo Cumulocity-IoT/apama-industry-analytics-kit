@@ -13,6 +13,18 @@
 		<fileset dir="../monitors/analytics/utility">
 			<include name="SAIDI.mon"/>
 			<include name="SAIDIService.mon"/>
+			<include name="ASAI.mon"/>
+			<include name="ASAIService.mon"/>
+			<include name="CAIDI.mon"/>
+			<include name="CAIDIService.mon"/>
+			<include name="CAIFI.mon"/>
+			<include name="CAIFIService.mon"/>
+			<include name="CIII.mon"/>
+			<include name="CIIIService.mon"/>
+			<include name="MAIFI.mon"/>
+			<include name="MAIFIService.mon"/>
+			<include name="SAIFI.mon"/>
+			<include name="SAIFIService.mon"/>
 		</fileset>
 	</monitors>
 	<block-catalogs>

@@ -1,0 +1,11 @@
+// Falling will be triggered after duration.
+&SETTIME(0)
+&TIME(1.0)
+"Input", com.industry.analytics.Data("Input", "r", "Utility_ABC", 1.0, 1105.0, "", 2.0,2.0, 3.0, {})
+&TIME(2.0)
+"Input", com.industry.analytics.Data("Input", "r", "Utility_ABC", 2.0, 867.0, "", 1.0,2.0, 3.0, {})
+&TIME(3.0)
+"Input", com.industry.analytics.Data("Input", "r", "Utility_ABC", 3.0, 2005.0, "", 1.0,2.0, 3.0, {})
+&TIME(4.0)
+"Input", com.industry.analytics.Data("Input", "r", "Utility_ABC", 4.0, 1330.0, "", 1.0,2.0, 3.0,  {})
+&TIME(5.0)

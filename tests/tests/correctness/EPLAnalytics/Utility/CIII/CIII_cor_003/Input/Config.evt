@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("CIII", ["Input"], ["Output"], {"timeWindow": "20.0", "smoothingFactor":"10"})
+
