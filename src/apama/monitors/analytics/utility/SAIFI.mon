@@ -27,8 +27,12 @@ using com.industry.utils.BucketSystemBuilder;
 	"documentation": "com/industry/analytics/utility/SAIFI.html",
 	"inputChannels": [
 		{
-			"name": "Interruption",
+			"name": "Input_Data",
 			"description": "The channel to calculate System Average Interruption Frequency Index",
+			"dataProperties": ["dValue"]
+		}, {
+			"name": "Input_Customer",
+			"description": "The channel to update total customer data",
 			"dataProperties": ["dValue"]
 		}
 	],
@@ -101,15 +105,15 @@ using com.industry.utils.BucketSystemBuilder;
 *  </dl>
 *  <dl><dt><b>Example usage:</b></dt>
 <dd><code>
-//Define a SAIFI Analytic which takes input Data events on the channel "Input" 
+//Define a SAIFI Analytic which takes input SAIFI Data events on the channel "Input_Data" and total customer data on the channel "Input_Customer"
 //and calculate the moving System Average Interruption Frequency Index within timeWindow of one day (86400 seconds) with smoothingFactor of 60 for precision. 
 //It publishes a Data event with the calculated value of SAIFI on the output channel "Output" after receiving every Data event. 
-send com.industry.analytics.Analytic("SAIFI", ["Input"], ["Output"], {}) to "";
+send com.industry.analytics.Analytic("SAIFI", ["Input_Data", "Input_Customer"], ["Output1"], {}) to "";
 
-//Define a SAIFI Analytic which takes input Data events on the channel "Input" 
+//Define a SAIFI Analytic which takes input SAIFI Data events on the channel "Input_Data" and total customer data on the channel "Input_Customer"
 //and calculate the moving System Average Interruption Frequency Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
 //It publishes a Data event with the calculated value of SAIFI on the output channel "Output" after receiving every Data event. 
-send com.industry.analytics.Analytic("SAIFI", ["Input"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
+send com.industry.analytics.Analytic("SAIFI", ["Input_Data", "Input_Customer"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
 </code></dd>
 *</dl>
 */
