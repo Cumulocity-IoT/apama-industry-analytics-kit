@@ -1,2 +1,2 @@
-com.industry.analytics.Analytic("SAIFI", ["Input"], ["Output"], {"timeWindow": "20.0", "smoothingFactor":"10", "totalCustomers":"50000"})
+com.industry.analytics.Analytic("SAIFI", ["Input_Data", "Input_Customer"], ["Output"], {"timeWindow": "20.0", "smoothingFactor":"10"})
 
