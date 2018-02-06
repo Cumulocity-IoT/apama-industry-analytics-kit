@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("SAIDI", ["Input_Data", "Input_Customer"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"20", "bySourceId":"true"})
+

@@ -11,16 +11,17 @@ class PySysTest(AnalyticsBaseTest):
 		self.injectAnalytic(correlator)
 		self.injectSAIDI(correlator)
 		self.ready(correlator)
+		correlator.receive(filename='Output.evt', channels=['Output'])
 
 		correlator.send('Config.evt')
 		self.waitForSignal('correlator.out',
 						   expr='Analytic SAIDI started for inputDataNames',
-						   condition='==4',
+						   condition='==1',
 						   timeout=5)
+		correlator.send('Events.evt')
+		self.waitForSignal('Output.evt', expr='com.industry.analytics.Data.*', condition='==1', timeout=5)
+
 		
 	def validate(self):
-		self.assertGrep('correlator.out', expr='Param smoothingFactor must be positive', condition='==1')
-		self.assertGrep('correlator.out', expr='Param timeWindow must be greater than zero', condition='==1')
-		self.assertGrep('correlator.out', expr='Unable to parse param bySourceId as boolean', condition='==1')
-		self.assertGrep('correlator.out', expr='Error spawning SAIDI instance', condition='==3')
+		self.assertDiff('Output.evt', 'RefOutput.evt')
 		self.checkSanity()	
