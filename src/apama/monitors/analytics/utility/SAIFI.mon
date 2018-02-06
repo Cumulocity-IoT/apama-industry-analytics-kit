@@ -63,7 +63,7 @@ using com.industry.utils.BucketSystemBuilder;
 			"name": "bySourceId",
 			"description": "If defined, SAIFI calculations are partitioned based on the sourceId parameter of the input data stream.",
 			"type": "Boolean",
-			"defaultValue": true,
+			"defaultValue": false,
 			"optional": true
 		}
 	]
