@@ -63,14 +63,28 @@ event CIIIBucket {
 			"defaultValue": 60,
 			"advanced":true,
 			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+		},{
+			"name": "bySourceId",
+			"description": "If defined, CIII calculations are partitioned based on the sourceId parameter of the input data stream.",
+			"type": "Boolean",
+			"defaultValue": true,
+			"optional": true
 		}
 	]
 }
 */
 
 /**
-*  The CIII Analytic computation generates a Data containing 
-*  Customer Interrupted per Interruption Index for each input recieved within a timewindow.
+*  The Customer Interrupted per Interruption Index (CIII) gives the average number of customers interrupted during an outage.
+*  The CIII Analytic computation generates a Data containing CIII for each input recieved within a timewindow.
+*  It is the reciprocal of the CAIFI and is,
+*
+*  <b>CIII = ( SUM(N_i) )/ (SUM (N_o))</b>
+*
+*  SUM = Summation function.<br>
+*  N_o = Number of interruptions.<br>
+*  N_i = Total number of customers interrupted.<br>
+*
 *  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
 *
 *  <dl><dt><b>Input Data events:</b></dt>
@@ -85,16 +99,24 @@ event CIIIBucket {
 *  <table border="1" style="border-collapse: collapse;width:100%">
 *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
 *  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow for calculating CIII.</td>
-*      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d</font> </td></tr>
+*      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d (1 day)</font> </td></tr>
 *  <tr><td><b>smoothingFactor</b></td><td>Defines the smoothing factor to be used for precision.</td>
 *      <td>Stringified integer</td><td>Integer</td><td>False</td><td><font face="courier" size="-1">60</font> </td></tr>
+*  <tr><td><b>bySourceId</b></td><td>If defined, CIII calculations are partitioned based on the sourceId parameter of the input data stream.</td>
+*      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">false</font></td></tr>
 *
 *  </table></dd>
 *  </dl>
 *  <dl><dt><b>Example usage:</b></dt>
 <dd><code>
+
 //Define a CIII Analytic which takes input Data events on the channel "Input" 
-//and calculate the moving Customer Interrupted per Interruption Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
+//and calculate the moving Customer Average Interruption Duration Index within timeWindow of 1 day with smoothingFactor of 60 for precision. 
+//It publishes a Data event with the calculated value of CIII on the output channel "Output" after receiving every Data event. 
+send com.industry.analytics.Analytic("CIII", ["Input"], ["Output"], {}) to "";
+
+//Define a CIII Analytic which takes input Data events on the channel "Input" 
+//and calculate the moving Customer Average Interruption Duration Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
 //It publishes a Data event with the calculated value of CIII on the output channel "Output" after receiving every Data event. 
 send com.industry.analytics.Analytic("CIII", ["Input"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
 </code></dd>
@@ -104,6 +126,12 @@ send com.industry.analytics.Analytic("CIII", ["Input"], ["Output"], {"timeWindow
 event CIII {
 	/** This constant defines the name of the Analytic. */
 	constant string NAME := "CIII";
+	/** This constant defines the internal name used to define "all sourceIds"
+	 *  used when not partitioning by sourceId.
+	 *  @private */
+	constant string CONST_INTERNAL_ALL_SOURCES := "__internalSourceIdWildcard";
+	/** This constant defines the param name bySourceId. */
+	constant string BY_SOURCE_ID := "bySourceId";
 	/** This constant defines the param name timeWindow. */
 	constant string TIMEWINDOW := "timeWindow";
 	/**This constant defines the configuration parameter name
@@ -113,6 +141,10 @@ event CIII {
 	* @private
 	*/
 	constant decimal DEFAULT_TIMEWINDOW := 86400.0d;
+	/** Local cache to save bySourceId. 
+	* @private
+	*/
+	boolean _bySourceId;
 	/** Local cache to save input stream. 
 	* @private
 	*/
@@ -132,7 +164,7 @@ event CIII {
 	
 	/** The BucketSystem Object implementation 
 	 *  @private */
-	BucketSystem _bucketSystem;
+	dictionary<string,BucketSystem> _bucketSystem;
 	
 	
 	/** The Analytic Base Object implementation 
@@ -162,13 +194,6 @@ event CIII {
 			initComplete( false, new AnalyticInterface );
 			return;
 		}
-		_bucketSystem := BucketSystemBuilder.create()
-					        .totalSize(_timeWindow.toFloat())
-					        .bucketCount(_smoothingFactor)
-					        .toValue(getTimestamp)
-					        .updateBucket(addDataToBucket)
-					        .onBucketCreated(initBucket)
-					        .build();
 		
 		_analyticObject := new AnalyticObject;
 		_analyticObject.init( config,
@@ -230,13 +255,15 @@ event CIII {
 	 */
 	action _validateConfiguration(Analytic config) returns boolean {
 		boolean result := config.validateParams( NAME, 1, 1, 
-		                                         [TIMEWINDOW, SMOOTHING_FACTOR], 
-		                                         [Constants.DECIMAL, Constants.INTEGER], 
-		                                         [false, false] );
+		                                         [TIMEWINDOW, SMOOTHING_FACTOR, BY_SOURCE_ID], 
+		                                         [Constants.DECIMAL, Constants.INTEGER, Constants.BOOLEAN], 
+		                                         [false, false, false] );
 
 		if(result) {
 			_inputDataName := config.inputDataNames[0];
 			_outputDataName := config.outputDataNames[0];
+			
+			_bySourceId := config.getOrBoolean(BY_SOURCE_ID, false);
 			
 			_timeWindow := config.getOrDecimal(TIMEWINDOW, DEFAULT_TIMEWINDOW);
 			if(_timeWindow <= 0.0d) {
@@ -271,9 +298,24 @@ event CIII {
 	action processData(Data dataIn) {
 		log "Processing " + dataIn.toString() at DEBUG;
 		
-		_bucketSystem.add(dataIn);
+		string sourceId := dataIn.sourceId;
+		if( not _bySourceId ) then {
+			sourceId := CONST_INTERNAL_ALL_SOURCES;
+		} 
+		//initialise Bucket system for 
+		if not _bucketSystem.hasKey(sourceId){
+			_bucketSystem.add(sourceId, BucketSystemBuilder.create()
+						        .totalSize(_timeWindow.toFloat())
+						        .bucketCount(_smoothingFactor)
+						        .toValue(getTimestamp)
+						        .updateBucket(addDataToBucket)
+						        .onBucketCreated(initBucket)
+						        .build());
+		}
 		
-		CIIIBucket value := <CIIIBucket>_bucketSystem.reduce(calculateSumValues,new CIIIBucket);
+		_bucketSystem[sourceId].add(dataIn);
+		
+		CIIIBucket value := <CIIIBucket>_bucketSystem[sourceId].reduce(calculateSumValues,new CIIIBucket);
 		
 		Data dataOut := dataIn.clone();
 

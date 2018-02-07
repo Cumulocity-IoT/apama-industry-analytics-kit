@@ -15,11 +15,12 @@ class PySysTest(AnalyticsBaseTest):
 		correlator.send('Config.evt')
 		self.waitForSignal('correlator.out',
 						   expr='Analytic CIII started for inputDataNames',
-						   condition='==3',
+						   condition='==4',
 						   timeout=5)
 		
 	def validate(self):
 		self.assertGrep('correlator.out', expr='Param smoothingFactor must be positive', condition='==1')
 		self.assertGrep('correlator.out', expr='Param timeWindow must be greater than zero', condition='==1')
-		self.assertGrep('correlator.out', expr='Error spawning CIII instance', condition='==2')
+		self.assertGrep('correlator.out', expr='Unable to parse param bySourceId as boolean', condition='==1')
+		self.assertGrep('correlator.out', expr='Error spawning CIII instance', condition='==3')
 		self.checkSanity()	

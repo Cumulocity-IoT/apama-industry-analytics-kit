@@ -1,0 +1,5 @@
+com.industry.analytics.Data("Output","r","Utility_ABC1",1,0.0221,"",1,2,3,{})
+com.industry.analytics.Data("Output","r","Utility_ABC2",2,0.05678,"",2,2,3,{})
+com.industry.analytics.Data("Output","r","Utility_ABC3",3,0.13698,"",2,2,3,{})
+com.industry.analytics.Data("Output","r","Utility_ABC4",4,0.16358,"",1,2,3,{})
+com.industry.analytics.Data("Output","r","Utility_ABC5",5,0.20918,"",1,2,3,{})

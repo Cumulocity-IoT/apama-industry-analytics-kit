@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("CAIDI", ["Input_Data"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"20"})
+

@@ -1,0 +1,5 @@
+com.industry.analytics.Data("Output","r","Station1",1,0.0442,"",2,2,3,{})
+com.industry.analytics.Data("Output","r","Station2",2,0.03468,"",2,2,3,{})
+com.industry.analytics.Data("Output","r","Station3",3,0.802,"",2,2,3,{})
+com.industry.analytics.Data("Output","r","Station3",4,1.068,"",1,2,3,{})
+com.industry.analytics.Data("Output","r","Station1",5,0.0898,"",1,2,3,{})

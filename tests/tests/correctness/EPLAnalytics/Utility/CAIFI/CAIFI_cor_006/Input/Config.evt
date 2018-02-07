@@ -1,0 +1,2 @@
+com.industry.analytics.Analytic("CAIFI", ["Input_Data"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"20", "bySourceId":"true"})
+

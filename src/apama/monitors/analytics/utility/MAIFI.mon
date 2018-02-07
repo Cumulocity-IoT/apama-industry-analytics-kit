@@ -27,9 +27,13 @@ using com.industry.utils.BucketSystemBuilder;
 	"documentation": "com/industry/analytics/utility/MAIFI.html",
 	"inputChannels": [
 		{
-			"name": "Interruption",
+			"name": "Input_Data",
 			"description": "The channel to calculate Momentary Average Interruption Frequency Index",
 			"dataProperties": ["dValue", "xValue"]
+		}, {
+			"name": "Input_Customer",
+			"description": "The channel to update total customer data",
+			"dataProperties": ["dValue"]
 		}
 	],
 	"outputChannels": [
@@ -56,23 +60,35 @@ using com.industry.utils.BucketSystemBuilder;
 			"advanced":true,
 			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
 		},{
-			"name": "totalCustomers",
-			"description": "Total customers of a utility company.",
-			"type": "Integer",
-			"optional": false,
-			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+			"name": "bySourceId",
+			"description": "If defined, MAIFI calculations are partitioned based on the sourceId parameter of the input data stream.",
+			"type": "Boolean",
+			"defaultValue": true,
+			"optional": true
 		}
 	]
 }
 */
 
 /**
-*  The MAIFI Analytic computation generates a Data containing 
-*  Momentary Average Interruption Frequency Index for each input recieved within a timewindow.
-*  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
+*  The Momentary Average Interruption Frequency Index (MAIFI) measures the average number of momentary interruptions that a customer experiences during a given time period. 
+*  The MAIFI Analytic computation generates a Data event containing MAIFI for each input recieved within a timewindow.
+*  Most distribution systems only track momentary interruptions at the substation, which does not account for pole-mounted devices that might momentarinterrupt a customer.
+*  MAIFI is rarely used in reporting distribution indices because ofthe difficulty in knowing when a momentary interruption has occurred. 
+*  MAIFI is calculated by summing the number of device operations (opening and reclosing is counted as one event), 
+*  multiplying the operations by the number of customers affected, and dividing by the total number of customers served. 
+*  MAIFI is, 
 *
+*  <b>MAIFI = ( SUM(ID_i * N_i) )/ N_t</b>
+*
+*  SUM = Summation function.<br>
+*  ID_i = Number of interrupting device operations.<br>
+*  N_i = Total number of customers interrupted.<br>
+*  N_t = Total number of customers served.<br>
+*
+*  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
 *  <dl><dt><b>Input Data events:</b></dt>
-*  <dd>Only a single input Data stream name must be provided.</dd>
+*  <dd>Two input Data stream name must be provided, one for total customer data and another one for interruption.</dd>
 *  <dd><b>Note:</b> The input Data events timestamp value should be defined as the number of seconds since the epoch (1st January 1970).</dd>
 *  </dl>
 *  <dl><dt><b>Output Data events:</b></dt>
@@ -83,20 +99,26 @@ using com.industry.utils.BucketSystemBuilder;
 *  <table border="1" style="border-collapse: collapse;width:100%">
 *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
 *  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow for calculating MAIFI.</td>
-*      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d</font> </td></tr>
+*      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d (1 day)</font> </td></tr>
 *  <tr><td><b>smoothingFactor</b></td><td>Defines the smoothing factor to be used for precision.</td>
 *      <td>Stringified integer</td><td>Integer</td><td>False</td><td><font face="courier" size="-1">60</font> </td></tr>
-*  <tr><td><b>totalCustomers</b></td><td>Total customers of a utility company.</td>
-*      <td>Stringified Integer</td><td>Integer</td><td>true</td><td></td></tr>
+*  <tr><td><b>bySourceId</b></td><td>If defined, MAIFI calculations are partitioned based on the sourceId parameter of the input data stream.</td>
+*      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">false</font></td></tr>
 *
 *  </table></dd>
+*  <dd><b>Note:</b> 1 day = 86400 seconds.</dd>
 *  </dl>
 *  <dl><dt><b>Example usage:</b></dt>
 <dd><code>
-//Define a MAIFI Analytic which takes input Data events on the channel "Input" 
-//and calculate the moving Momentary Average Interruption Frequency Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
+//Define a MAIFI Analytic which takes input MAIFI Data events on the channel "Input_Data" and total customer data on the channel "Input_Customer"
+//and calculate the moving System Average Interruption Frequency Index within timeWindow of one day (86400 seconds) with smoothingFactor of 60 for precision. 
 //It publishes a Data event with the calculated value of MAIFI on the output channel "Output" after receiving every Data event. 
-send com.industry.analytics.Analytic("MAIFI", ["Input"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10", "totalCustomers":"5000"}) to "";
+send com.industry.analytics.Analytic("MAIFI", ["Input_Data", "Input_Customer"], ["Output"], {}) to "";
+
+//Define a MAIFI Analytic which takes input MAIFI Data events on the channel "Input_Data" and total customer data on the channel "Input_Customer"
+//and calculate the moving System Average Interruption Frequency Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
+//It publishes a Data event with the calculated value of MAIFI on the output channel "Output" after receiving every Data event. 
+send com.industry.analytics.Analytic("MAIFI", ["Input_Data", "Input_Customer"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
 </code></dd>
 *</dl>
 */
@@ -104,8 +126,12 @@ send com.industry.analytics.Analytic("MAIFI", ["Input"], ["Output"], {"timeWindo
 event MAIFI {
 	/** This constant defines the name of the Analytic. */
 	constant string NAME := "MAIFI";
-	/** This constant defines the param name totalCustomers. */
-	constant string TOTAL_CUSTOMERS := "totalCustomers";
+	/** This constant defines the internal name used to define "all sourceIds"
+	 *  used when not partitioning by sourceId.
+	 *  @private */
+	constant string CONST_INTERNAL_ALL_SOURCES := "__internalSourceIdWildcard";
+	/** This constant defines the param name bySourceId. */
+	constant string BY_SOURCE_ID := "bySourceId";
 	/** This constant defines the param name timeWindow. */
 	constant string TIMEWINDOW := "timeWindow";
 	/**This constant defines the configuration parameter name
@@ -115,10 +141,18 @@ event MAIFI {
 	* @private
 	*/
 	constant decimal DEFAULT_TIMEWINDOW := 86400.0d;
+	/** Local cache to save bySourceId. 
+	* @private
+	*/
+	boolean _bySourceId;
 	/** Local cache to save input stream. 
 	* @private
 	*/
 	string _inputDataName;
+	/** Local cache to save input total customer stream. 
+	* @private
+	*/
+	string _inputCustomerData;
 	/** Local cache to save output stream. 
 	* @private
 	*/
@@ -130,7 +164,7 @@ event MAIFI {
 	/** Local cache to save total customer value. 
 	* @private
 	*/
-	integer _totalCustomers;
+	dictionary<string, decimal> _totalCustomers;
 	/** Local cache to save smoothingFactor value. 
 	* @private
 	*/
@@ -138,7 +172,7 @@ event MAIFI {
 	
 	/** The BucketSystem Object implementation 
 	 *  @private */
-	BucketSystem _bucketSystem;
+	dictionary<string,BucketSystem> _bucketSystem;
 	
 	
 	/** The Analytic Base Object implementation 
@@ -168,14 +202,6 @@ event MAIFI {
 			initComplete( false, new AnalyticInterface );
 			return;
 		}
-		_bucketSystem := BucketSystemBuilder.create()
-					        .totalSize(_timeWindow.toFloat())
-					        .bucketCount(_smoothingFactor)
-					        .toValue(getTimestamp)
-					        .updateBucket(addDataToBucket)
-					        .onBucketCreated(initBucket)
-					        .build();
-		
 		_analyticObject := new AnalyticObject;
 		_analyticObject.init( config,
 		                      processData,
@@ -233,20 +259,17 @@ event MAIFI {
 	 *  @private
 	 */
 	action _validateConfiguration(Analytic config) returns boolean {
-		boolean result := config.validateParams( NAME, 1, 1, 
-		                                         [TOTAL_CUSTOMERS, TIMEWINDOW, SMOOTHING_FACTOR], 
-		                                         [Constants.INTEGER, Constants.DECIMAL, Constants.INTEGER], 
-		                                         [true, false, false] );
+		boolean result := config.validateParams( NAME, 2, 1, 
+		                                         [BY_SOURCE_ID, TIMEWINDOW, SMOOTHING_FACTOR], 
+		                                         [Constants.BOOLEAN, Constants.DECIMAL, Constants.INTEGER], 
+		                                         [false, false, false] );
 
 		if(result) {
 			_inputDataName := config.inputDataNames[0];
+			_inputCustomerData := config.inputDataNames[1];
 			_outputDataName := config.outputDataNames[0];
 			
-			_totalCustomers := config.getInteger(TOTAL_CUSTOMERS);
-			if(_totalCustomers <= 0) {
-				log "Param "+TOTAL_CUSTOMERS+" must be greater than zero. Given value : "+_totalCustomers.toString() at ERROR;
-				return false;
-			}
+			_bySourceId := config.getOrBoolean(BY_SOURCE_ID, false);
 			
 			_timeWindow := config.getOrDecimal(TIMEWINDOW, DEFAULT_TIMEWINDOW);
 			if(_timeWindow <= 0.0d) {
@@ -281,16 +304,47 @@ event MAIFI {
 	action processData(Data dataIn) {
 		log "Processing " + dataIn.toString() at DEBUG;
 		
-		_bucketSystem.add(dataIn);
+		string sourceId := dataIn.sourceId;
+		log "_bySourceId : "+_bySourceId.toString();
+		if( not _bySourceId ) then {
+			sourceId := CONST_INTERNAL_ALL_SOURCES;
+		} 
 		
-		decimal value := <decimal>_bucketSystem.reduce(calculateSumValues, 0.0d);
+		if(dataIn.streamName = _inputCustomerData) {
+			if(not _totalCustomers.hasKey(sourceId)) {
+				_totalCustomers.add(sourceId, dataIn.dValue);
+			} else {
+				_totalCustomers[sourceId] := dataIn.dValue;
+			}
+		}
 		
-		Data dataOut := dataIn.clone();
-
-		dataOut.dValue := value/_totalCustomers.toDecimal();
-
-		dataOut.streamName := _outputDataName;
-		send dataOut to dataOut.streamName;
+		if(dataIn.streamName = _inputDataName) {
+			//initialise Bucket system for 
+			if not _bucketSystem.hasKey(sourceId){
+				_bucketSystem.add(sourceId, BucketSystemBuilder.create()
+							        .totalSize(_timeWindow.toFloat())
+							        .bucketCount(_smoothingFactor)
+							        .toValue(getTimestamp)
+							        .updateBucket(addDataToBucket)
+							        .onBucketCreated(initBucket)
+							        .build());
+			}
+			
+			_bucketSystem[sourceId].add(dataIn);
+			
+			if(_totalCustomers.hasKey(sourceId) and  _totalCustomers[sourceId] > 0.0d) {
+				
+				decimal value := <decimal>_bucketSystem[sourceId].reduce(calculateSumValues, 0.0d);
+				
+				Data dataOut := dataIn.clone();
+		
+				dataOut.dValue := value/_totalCustomers[sourceId];
+		
+				dataOut.streamName := _outputDataName;
+				send dataOut to dataOut.streamName;
+			}
+		}
+		
 	}
 	
 	/** Reset action
@@ -322,8 +376,9 @@ monitor InternMAIFIChannel {
 	action onload() {
 		string discard := MAIFI.NAME.intern();
 		discard := MAIFI.TIMEWINDOW.intern();
-		discard := MAIFI.TOTAL_CUSTOMERS.intern();
+		discard := MAIFI.BY_SOURCE_ID.intern();
 		discard := MAIFI.SMOOTHING_FACTOR.intern();
+		discard := MAIFI.CONST_INTERNAL_ALL_SOURCES.intern();
 		on all StayAlive() {}
 	}
 }

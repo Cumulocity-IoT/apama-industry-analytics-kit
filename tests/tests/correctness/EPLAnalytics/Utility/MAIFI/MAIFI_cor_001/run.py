@@ -15,13 +15,12 @@ class PySysTest(AnalyticsBaseTest):
 		correlator.send('Config.evt')
 		self.waitForSignal('correlator.out',
 						   expr='Analytic MAIFI started for inputDataNames',
-						   condition='==1',
+						   condition='==4',
 						   timeout=5)
 		
 	def validate(self):
-		self.assertGrep('correlator.out', expr='Mandatory param totalCustomers missing', condition='==3')
 		self.assertGrep('correlator.out', expr='Param smoothingFactor must be positive', condition='==1')
 		self.assertGrep('correlator.out', expr='Param timeWindow must be greater than zero', condition='==1')
-		self.assertGrep('correlator.out', expr='Param totalCustomers must be greater than zero', condition='==1')
-		self.assertGrep('correlator.out', expr='Error spawning MAIFI instance', condition='==6')
+		self.assertGrep('correlator.out', expr='Unable to parse param bySourceId as boolean', condition='==1')
+		self.assertGrep('correlator.out', expr='Error spawning MAIFI instance', condition='==3')
 		self.checkSanity()	

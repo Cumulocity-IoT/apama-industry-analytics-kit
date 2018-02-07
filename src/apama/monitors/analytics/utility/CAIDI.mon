@@ -63,14 +63,30 @@ event CAIDIBucket {
 			"defaultValue": 60,
 			"advanced":true,
 			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+		},{
+			"name": "bySourceId",
+			"description": "If defined, CAIDI calculations are partitioned based on the sourceId parameter of the input data stream.",
+			"type": "Boolean",
+			"defaultValue": true,
+			"optional": true
 		}
 	]
 }
 */
 
 /**
-*  The CAIDI Analytic computation generates a Data containing 
-*  Customer Average Interruption Duration Index for each input recieved within a timewindow.
+*  Once an outage occurs the average time to restore service is found from the Customer Average Interruption Duration Index (CAIDI).
+*  The CAIDI Analytic computation generates a Data containing CAIDI for each input recieved within a timewindow.
+*  To calculate CAIDI, each interruption during the time period is multiplied by the duration of the interruption to find the customer-minutes of interruption. 
+*  The customer-minutes of all interruptions are then summed to determine the total customer-minutes. 
+*  To find the CAIDI value, the customer-minutes are divided by the number of customers interrupted.
+*
+*  <b>CAIDI = ( SUM(r_i * N_i) )/ (SUM (N_i))</b>
+*
+*  SUM = Summation function.<br>
+*  r_i = Restoration time in seconds.<br>
+*  N_i = Total number of customers interrupted.<br>
+*
 *  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
 *
 *  <dl><dt><b>Input Data events:</b></dt>
@@ -85,14 +101,22 @@ event CAIDIBucket {
 *  <table border="1" style="border-collapse: collapse;width:100%">
 *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
 *  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow for calculating CAIDI.</td>
-*      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d</font> </td></tr>
+*      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d (1 day)</font> </td></tr>
 *  <tr><td><b>smoothingFactor</b></td><td>Defines the smoothing factor to be used for precision.</td>
 *      <td>Stringified integer</td><td>Integer</td><td>False</td><td><font face="courier" size="-1">60</font> </td></tr>
+*  <tr><td><b>bySourceId</b></td><td>If defined, CAIDI calculations are partitioned based on the sourceId parameter of the input data stream.</td>
+*      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">false</font></td></tr>
 *
 *  </table></dd>
 *  </dl>
 *  <dl><dt><b>Example usage:</b></dt>
 <dd><code>
+
+//Define a CAIDI Analytic which takes input Data events on the channel "Input" 
+//and calculate the moving Customer Average Interruption Duration Index within timeWindow of 1 day with smoothingFactor of 60 for precision. 
+//It publishes a Data event with the calculated value of CAIDI on the output channel "Output" after receiving every Data event. 
+send com.industry.analytics.Analytic("CAIDI", ["Input"], ["Output"], {}) to "";
+
 //Define a CAIDI Analytic which takes input Data events on the channel "Input" 
 //and calculate the moving Customer Average Interruption Duration Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
 //It publishes a Data event with the calculated value of CAIDI on the output channel "Output" after receiving every Data event. 
@@ -104,6 +128,12 @@ send com.industry.analytics.Analytic("CAIDI", ["Input"], ["Output"], {"timeWindo
 event CAIDI {
 	/** This constant defines the name of the Analytic. */
 	constant string NAME := "CAIDI";
+	/** This constant defines the internal name used to define "all sourceIds"
+	 *  used when not partitioning by sourceId.
+	 *  @private */
+	constant string CONST_INTERNAL_ALL_SOURCES := "__internalSourceIdWildcard";
+	/** This constant defines the param name bySourceId. */
+	constant string BY_SOURCE_ID := "bySourceId";
 	/** This constant defines the param name timeWindow. */
 	constant string TIMEWINDOW := "timeWindow";
 	/**This constant defines the configuration parameter name
@@ -113,6 +143,10 @@ event CAIDI {
 	* @private
 	*/
 	constant decimal DEFAULT_TIMEWINDOW := 86400.0d;
+	/** Local cache to save bySourceId. 
+	* @private
+	*/
+	boolean _bySourceId;
 	/** Local cache to save input stream. 
 	* @private
 	*/
@@ -132,7 +166,7 @@ event CAIDI {
 	
 	/** The BucketSystem Object implementation 
 	 *  @private */
-	BucketSystem _bucketSystem;
+	dictionary<string,BucketSystem> _bucketSystem;
 	
 	
 	/** The Analytic Base Object implementation 
@@ -162,13 +196,6 @@ event CAIDI {
 			initComplete( false, new AnalyticInterface );
 			return;
 		}
-		_bucketSystem := BucketSystemBuilder.create()
-					        .totalSize(_timeWindow.toFloat())
-					        .bucketCount(_smoothingFactor)
-					        .toValue(getTimestamp)
-					        .updateBucket(addDataToBucket)
-					        .onBucketCreated(initBucket)
-					        .build();
 		
 		_analyticObject := new AnalyticObject;
 		_analyticObject.init( config,
@@ -230,13 +257,15 @@ event CAIDI {
 	 */
 	action _validateConfiguration(Analytic config) returns boolean {
 		boolean result := config.validateParams( NAME, 1, 1, 
-		                                         [TIMEWINDOW, SMOOTHING_FACTOR], 
-		                                         [Constants.DECIMAL, Constants.INTEGER], 
-		                                         [false, false] );
+		                                         [TIMEWINDOW, SMOOTHING_FACTOR, BY_SOURCE_ID], 
+		                                         [Constants.DECIMAL, Constants.INTEGER, Constants.BOOLEAN], 
+		                                         [false, false, false] );
 
 		if(result) {
 			_inputDataName := config.inputDataNames[0];
 			_outputDataName := config.outputDataNames[0];
+			
+			_bySourceId := config.getOrBoolean(BY_SOURCE_ID, false);
 			
 			_timeWindow := config.getOrDecimal(TIMEWINDOW, DEFAULT_TIMEWINDOW);
 			if(_timeWindow <= 0.0d) {
@@ -270,10 +299,25 @@ event CAIDI {
 	 */
 	action processData(Data dataIn) {
 		log "Processing " + dataIn.toString() at DEBUG;
+
+		string sourceId := dataIn.sourceId;
+		if( not _bySourceId ) then {
+			sourceId := CONST_INTERNAL_ALL_SOURCES;
+		} 
+		//initialise Bucket system for 
+		if not _bucketSystem.hasKey(sourceId){
+			_bucketSystem.add(sourceId, BucketSystemBuilder.create()
+						        .totalSize(_timeWindow.toFloat())
+						        .bucketCount(_smoothingFactor)
+						        .toValue(getTimestamp)
+						        .updateBucket(addDataToBucket)
+						        .onBucketCreated(initBucket)
+						        .build());
+		}
 		
-		_bucketSystem.add(dataIn);
+		_bucketSystem[sourceId].add(dataIn);
 		
-		CAIDIBucket value := <CAIDIBucket>_bucketSystem.reduce(calculateSumValues,new CAIDIBucket);
+		CAIDIBucket value := <CAIDIBucket>_bucketSystem[sourceId].reduce(calculateSumValues,new CAIDIBucket);
 		
 		Data dataOut := dataIn.clone();
 
@@ -313,6 +357,8 @@ monitor InternCAIDIChannel {
 		string discard := CAIDI.NAME.intern();
 		discard := CAIDI.TIMEWINDOW.intern();
 		discard := CAIDI.SMOOTHING_FACTOR.intern();
+		discard := CAIDI.BY_SOURCE_ID.intern();
+		discard := CAIDI.CONST_INTERNAL_ALL_SOURCES.intern();
 		on all StayAlive() {}
 	}
 }
