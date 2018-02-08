@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <pysystest state="runnable" type="auto">
 	<description>
-		<title>ASAI 003: Test ASAI Analytic for inputs within two timewindows.</title>
+		<title>ASAI 003: Test company wide ASAI Analytic (bySourceId set to false) for inputs within two timewindows.</title>
 		<purpose>
 		<![CDATA[Trigger each type of threshold and no triggering on threshold with a set duration.]]>
 		</purpose>

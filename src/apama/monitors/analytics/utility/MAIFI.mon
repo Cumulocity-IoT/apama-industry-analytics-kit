@@ -111,12 +111,12 @@ using com.industry.utils.BucketSystemBuilder;
 *  <dl><dt><b>Example usage:</b></dt>
 <dd><code>
 //Define a MAIFI Analytic which takes input MAIFI Data events on the channel "Input_Data" and total customer data on the channel "Input_Customer"
-//and calculate the moving System Average Interruption Frequency Index within timeWindow of one day (86400 seconds) with smoothingFactor of 60 for precision. 
+//and calculate the moving Momentary Average Interruption Frequency Index within timeWindow of one day (86400 seconds) with smoothingFactor of 60 for precision. 
 //It publishes a Data event with the calculated value of MAIFI on the output channel "Output" after receiving every Data event. 
 send com.industry.analytics.Analytic("MAIFI", ["Input_Data", "Input_Customer"], ["Output"], {}) to "";
 
 //Define a MAIFI Analytic which takes input MAIFI Data events on the channel "Input_Data" and total customer data on the channel "Input_Customer"
-//and calculate the moving System Average Interruption Frequency Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
+//and calculate the moving Momentary Average Interruption Frequency Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
 //It publishes a Data event with the calculated value of MAIFI on the output channel "Output" after receiving every Data event. 
 send com.industry.analytics.Analytic("MAIFI", ["Input_Data", "Input_Customer"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
 </code></dd>

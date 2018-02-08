@@ -112,12 +112,12 @@ event CAIFIBucket {
 <dd><code>
 
 //Define a CAIFI Analytic which takes input Data events on the channel "Input" 
-//and calculate the moving Customer Average Interruption Duration Index within timeWindow of 1 day with smoothingFactor of 60 for precision. 
+//and calculate the moving Customer Average Interruption Frequency Index within timeWindow of 1 day with smoothingFactor of 60 for precision. 
 //It publishes a Data event with the calculated value of CAIFI on the output channel "Output" after receiving every Data event. 
 send com.industry.analytics.Analytic("CAIFI", ["Input"], ["Output"], {}) to "";
 
 //Define a CAIFI Analytic which takes input Data events on the channel "Input" 
-//and calculate the moving Customer Average Interruption Duration Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
+//and calculate the moving Customer Average Interruption Frequency Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
 //It publishes a Data event with the calculated value of CAIFI on the output channel "Output" after receiving every Data event. 
 send com.industry.analytics.Analytic("CAIFI", ["Input"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
 </code></dd>

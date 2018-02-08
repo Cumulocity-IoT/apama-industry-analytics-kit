@@ -1,2 +1,2 @@
-com.industry.analytics.Analytic("ASAI", ["Input"], ["Output"], {"timeWindow": "20.0", "smoothingFactor":"10", "totalCustomers":"50000","timePeriod":"86400"})
+com.industry.analytics.Analytic("ASAI", ["Input_Data", "Input_Customer"], ["Output"], {"timeWindow": "86400.0", "smoothingFactor":"10"})
 

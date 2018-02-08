@@ -111,12 +111,12 @@ event CIIIBucket {
 <dd><code>
 
 //Define a CIII Analytic which takes input Data events on the channel "Input" 
-//and calculate the moving Customer Average Interruption Duration Index within timeWindow of 1 day with smoothingFactor of 60 for precision. 
+//and calculate the moving Customer Interrupted per Interruption Index within timeWindow of 1 day with smoothingFactor of 60 for precision. 
 //It publishes a Data event with the calculated value of CIII on the output channel "Output" after receiving every Data event. 
 send com.industry.analytics.Analytic("CIII", ["Input"], ["Output"], {}) to "";
 
 //Define a CIII Analytic which takes input Data events on the channel "Input" 
-//and calculate the moving Customer Average Interruption Duration Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
+//and calculate the moving Customer Interrupted per Interruption Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
 //It publishes a Data event with the calculated value of CIII on the output channel "Output" after receiving every Data event. 
 send com.industry.analytics.Analytic("CIII", ["Input"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
 </code></dd>

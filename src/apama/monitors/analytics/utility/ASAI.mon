@@ -30,6 +30,10 @@ using com.industry.utils.BucketSystemBuilder;
 			"name": "Interruption",
 			"description": "The channel to calculate Average Service Availability Index",
 			"dataProperties": ["dValue", "xValue"]
+		}, {
+			"name": "Input_Customer",
+			"description": "The channel to update total customer data",
+			"dataProperties": ["dValue"]
 		}
 	],
 	"outputChannels": [
@@ -56,29 +60,34 @@ using com.industry.utils.BucketSystemBuilder;
 			"advanced":true,
 			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
 		},{
-			"name": "totalCustomers",
-			"description": "Total customers of a utility company.",
-			"type": "Integer",
-			"optional": false,
-			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
-		},{
-			"name": "timePeriod",
-			"description": "Timeperiod (inseconds) for calculating ASAI.",
-			"type": "decimal",
-			"optional": false,
-			"validator": "function(value) { return value > 0 || 'Must be greater than 0' }"
+			"name": "bySourceId",
+			"description": "If defined, ASAI calculations are partitioned based on the sourceId parameter of the input data stream.",
+			"type": "Boolean",
+			"defaultValue": true,
+			"optional": true
 		}
 	]
 }
 */
 
 /**
-*  The ASAI Analytic computation generates a Data containing 
-*  Average Service Availability Index for each input recieved within a timewindow.
-*  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
+*  The Average Service Availability Index (ASAI) is the ratio of the total number of customer hours that service was available 
+*  during a given time period to the total customer hours demanded. This is sometimes called the service reliability index.
+*  The ASAI Analytic computation generates a Data event containing ASAI for each input recieved within a timewindow.
+*  The ASAI is usually calculated on either a monthly basis (730 hours) or a yearly basis (8,760 hours), but can be calculated for any time period.
+*  The ASAI is found as,
 *
+*  <b>ASAI = [1 - ( SUM(r_i * N_i) / (N_t * T) )] * 100</b>
+*
+*  SUM = Summation function.<br>
+*  r_i = Restoration time in seconds.<br>
+*  N_i = Total number of customers interrupted.<br>
+*  N_t = Total number of customers served.<br>
+*  T = Time period (in seconds) under study.<br>
+*
+*  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
 *  <dl><dt><b>Input Data events:</b></dt>
-*  <dd>Only a single input Data stream name must be provided.</dd>
+*  <dd>Two input Data stream name must be provided, one for total customer data and another one for interruption.</dd>
 *  <dd><b>Note:</b> The input Data events timestamp value should be defined as the number of seconds since the epoch (1st January 1970).</dd>
 *  </dl>
 *  <dl><dt><b>Output Data events:</b></dt>
@@ -88,23 +97,27 @@ using com.industry.utils.BucketSystemBuilder;
 *  <dd>
 *  <table border="1" style="border-collapse: collapse;width:100%">
 *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
-*  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow for calculating ASAI.</td>
-*      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d</font> </td></tr>
+*  <tr><td><b>timeWindow</b></td><td>Defines the time period for calculating ASAI.</td>
+*      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d (1 day)</font> </td></tr>
 *  <tr><td><b>smoothingFactor</b></td><td>Defines the smoothing factor to be used for precision.</td>
 *      <td>Stringified integer</td><td>Integer</td><td>False</td><td><font face="courier" size="-1">60</font> </td></tr>
-*  <tr><td><b>totalCustomers</b></td><td>Total customers of a utility company.</td>
-*      <td>Stringified Integer</td><td>Integer</td><td>true</td><td></td></tr>
-*  <tr><td><b>timePeriod</b></td><td>Timeperiod (inseconds) for calculating ASAI.</td>
-*      <td>Stringified Decimal</td><td>Decimal</td><td>true</td><td></td></tr>
+*  <tr><td><b>bySourceId</b></td><td>If defined, ASAI calculations are partitioned based on the sourceId parameter of the input data stream.</td>
+*      <td><font face="courier" size="-1">true</font> or <font face="courier" size="-1">false</font></td><td>Boolean</td><td>False</td><td><font face="courier" size="-1">false</font></td></tr>
 *
 *  </table></dd>
+*  <dd><b>Note:</b> 1 day = 86400 seconds.</dd>
 *  </dl>
 *  <dl><dt><b>Example usage:</b></dt>
 <dd><code>
-//Define a ASAI Analytic which takes input Data events on the channel "Input" 
+//Define a ASAI Analytic which takes input ASAI Data events on the channel "Input_Data" and total customer data on the channel "Input_Customer"
+//and calculate the moving Average Service Availability Index within timeWindow of one day (86400 seconds) with smoothingFactor of 60 for precision. 
+//It publishes a Data event with the calculated value of ASAI on the output channel "Output" after receiving every Data event. 
+send com.industry.analytics.Analytic("ASAI", ["Input_Data", "Input_Customer"], ["Output"], {}) to "";
+
+//Define a ASAI Analytic which takes input ASAI Data events on the channel "Input_Data" and total customer data on the channel "Input_Customer"
 //and calculate the moving Average Service Availability Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
 //It publishes a Data event with the calculated value of ASAI on the output channel "Output" after receiving every Data event. 
-send com.industry.analytics.Analytic("ASAI", ["Input"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10", "totalCustomers":"5000", "timePeriod":"86400"}) to "";
+send com.industry.analytics.Analytic("ASAI", ["Input_Data", "Input_Customer"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
 </code></dd>
 *</dl>
 */
@@ -112,26 +125,34 @@ send com.industry.analytics.Analytic("ASAI", ["Input"], ["Output"], {"timeWindow
 event ASAI {
 	/** This constant defines the name of the Analytic. */
 	constant string NAME := "ASAI";
-	/** This constant defines the param name totalCustomers. */
-	constant string TOTAL_CUSTOMERS := "totalCustomers";
+	/** This constant defines the internal name used to define "all sourceIds"
+	 *  used when not partitioning by sourceId.
+	 *  @private */
+	constant string CONST_INTERNAL_ALL_SOURCES := "__internalSourceIdWildcard";
+	/** This constant defines the param name bySourceId. */
+	constant string BY_SOURCE_ID := "bySourceId";
 	/** This constant defines the param name timeWindow. */
 	constant string TIMEWINDOW := "timeWindow";
 	/**This constant defines the configuration parameter name
 	 *  that specifies the smoothing factor used to calculate the ASAI.*/
 	constant string SMOOTHING_FACTOR := "smoothingFactor";
 	
-	/**This constant defines the configuration parameter name
-	 *  that specifies the time period used to calculate the ASAI.*/
-	constant string TIME_PERIOD := "timePeriod";
-	
 	/** This constant defines the default timewindow. 
 	* @private
 	*/
 	constant decimal DEFAULT_TIMEWINDOW := 86400.0d;
+	/** Local cache to save bySourceId. 
+	* @private
+	*/
+	boolean _bySourceId;
 	/** Local cache to save input stream. 
 	* @private
 	*/
 	string _inputDataName;
+	/** Local cache to save input total customer stream. 
+	* @private
+	*/
+	string _inputCustomerData;
 	/** Local cache to save output stream. 
 	* @private
 	*/
@@ -143,20 +164,15 @@ event ASAI {
 	/** Local cache to save total customer value. 
 	* @private
 	*/
-	integer _totalCustomers;
+	dictionary<string, decimal> _totalCustomers;
 	/** Local cache to save smoothingFactor value. 
 	* @private
 	*/
 	integer _smoothingFactor;
 	
-	/**Local cache to save timePeriod
-	* @private
-	**/
-	decimal _timePeriod;
-	
 	/** The BucketSystem Object implementation 
 	 *  @private */
-	BucketSystem _bucketSystem;
+	dictionary<string,BucketSystem> _bucketSystem;
 	
 	
 	/** The Analytic Base Object implementation 
@@ -186,13 +202,6 @@ event ASAI {
 			initComplete( false, new AnalyticInterface );
 			return;
 		}
-		_bucketSystem := BucketSystemBuilder.create()
-					        .totalSize(_timeWindow.toFloat())
-					        .bucketCount(_smoothingFactor)
-					        .toValue(getTimestamp)
-					        .updateBucket(addDataToBucket)
-					        .onBucketCreated(initBucket)
-					        .build();
 		
 		_analyticObject := new AnalyticObject;
 		_analyticObject.init( config,
@@ -251,26 +260,17 @@ event ASAI {
 	 *  @private
 	 */
 	action _validateConfiguration(Analytic config) returns boolean {
-		boolean result := config.validateParams( NAME, 1, 1, 
-		                                         [TOTAL_CUSTOMERS, TIMEWINDOW, SMOOTHING_FACTOR, TIME_PERIOD], 
-		                                         [Constants.INTEGER, Constants.DECIMAL, Constants.INTEGER, Constants.DECIMAL], 
-		                                         [true, false, false, true] );
+		boolean result := config.validateParams( NAME, 2, 1, 
+		                                         [BY_SOURCE_ID, TIMEWINDOW, SMOOTHING_FACTOR], 
+		                                         [Constants.BOOLEAN, Constants.DECIMAL, Constants.INTEGER], 
+		                                         [false, false, false] );
 
 		if(result) {
 			_inputDataName := config.inputDataNames[0];
+			_inputCustomerData := config.inputDataNames[1];
 			_outputDataName := config.outputDataNames[0];
 			
-			_totalCustomers := config.getInteger(TOTAL_CUSTOMERS);
-			if(_totalCustomers <= 0) {
-				log "Param "+TOTAL_CUSTOMERS+" must be greater than zero. Given value : "+_totalCustomers.toString() at ERROR;
-				return false;
-			}
-			
-			_timePeriod := config.getDecimal(TIME_PERIOD);
-			if(_timePeriod <= 0.0d) {
-				log "Param "+TIME_PERIOD+" must be greater than zero. Given value : "+_timePeriod.toString() at ERROR;
-				return false;
-			}
+			_bySourceId := config.getOrBoolean(BY_SOURCE_ID, false);
 			
 			_timeWindow := config.getOrDecimal(TIMEWINDOW, DEFAULT_TIMEWINDOW);
 			if(_timeWindow <= 0.0d) {
@@ -304,17 +304,46 @@ event ASAI {
 	 */
 	action processData(Data dataIn) {
 		log "Processing " + dataIn.toString() at DEBUG;
-		
-		_bucketSystem.add(dataIn);
-		
-		decimal value := <decimal>_bucketSystem.reduce(calculateSumValues, 0.0d);
-		
-		Data dataOut := dataIn.clone();
 
-		dataOut.dValue := (1.0d - ( value/(_totalCustomers.toDecimal() * _timePeriod))) * 100.0d;
+		string sourceId := dataIn.sourceId;
+		if( not _bySourceId ) then {
+			sourceId := CONST_INTERNAL_ALL_SOURCES;
+		} 
+		
+		if(dataIn.streamName = _inputCustomerData) {
+			if(not _totalCustomers.hasKey(sourceId)) {
+				_totalCustomers.add(sourceId, dataIn.dValue);
+			} else {
+				_totalCustomers[sourceId] := dataIn.dValue;
+			}
+		}
+		
+		if(dataIn.streamName = _inputDataName) {
+			//initialise Bucket system for 
+			if not _bucketSystem.hasKey(sourceId){
+				_bucketSystem.add(sourceId, BucketSystemBuilder.create()
+							        .totalSize(_timeWindow.toFloat())
+							        .bucketCount(_smoothingFactor)
+							        .toValue(getTimestamp)
+							        .updateBucket(addDataToBucket)
+							        .onBucketCreated(initBucket)
+							        .build());
+			}
+			
+			_bucketSystem[sourceId].add(dataIn);
+			
+			if(_totalCustomers.hasKey(sourceId) and  _totalCustomers[sourceId] > 0.0d) {
+				
+				decimal value := <decimal>_bucketSystem[sourceId].reduce(calculateSumValues, 0.0d);
 
-		dataOut.streamName := _outputDataName;
-		send dataOut to dataOut.streamName;
+				Data dataOut := dataIn.clone();
+		
+				dataOut.dValue := (1.0d - ( value/(_totalCustomers[sourceId] * _timeWindow))) * 100.0d;
+		
+				dataOut.streamName := _outputDataName;
+				send dataOut to dataOut.streamName;
+			}
+		}
 	}
 	
 	/** Reset action
@@ -346,8 +375,9 @@ monitor InternASAIChannel {
 	action onload() {
 		string discard := ASAI.NAME.intern();
 		discard := ASAI.TIMEWINDOW.intern();
-		discard := ASAI.TOTAL_CUSTOMERS.intern();
+		discard := ASAI.BY_SOURCE_ID.intern();
 		discard := ASAI.SMOOTHING_FACTOR.intern();
+		discard := ASAI.CONST_INTERNAL_ALL_SOURCES.intern();
 		on all StayAlive() {}
 	}
 }
