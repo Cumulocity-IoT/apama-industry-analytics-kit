@@ -24,4 +24,5 @@ class PySysTest(AnalyticsBaseTest):
 		
 	def validate(self):
 		self.assertDiff('Output.evt', 'RefOutput.evt')
+		self.assertGrep('Correlator.out', expr='Data event contain either 0 or negative value for interrupted customers', condition='==1')
 		self.checkSanity()	

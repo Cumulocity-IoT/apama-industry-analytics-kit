@@ -20,5 +20,3 @@
 &TIME(24.0)
 "Input", com.industry.analytics.Data("Input", "r", "Utility_ABC", 24.0, 1.0, "", 1.0,2.0, 3.0,  {})
 &TIME(25.0)
-"Input", com.industry.analytics.Data("Input", "r", "Utility_ABC", 25.0, 0.0, "", 1.0,2.0, 3.0,  {})
-&TIME(26.0)

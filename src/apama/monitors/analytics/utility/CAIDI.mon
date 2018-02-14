@@ -75,7 +75,7 @@ event CAIDIBucket {
 */
 
 /**
-*  Once an outage occurs the average time to restore service is found from the Customer Average Interruption Duration Index (CAIDI).
+*  The Customer Average Interruption Duration Index (CAIDI) is the average time to restore service once an outage occurs.
 *  The CAIDI Analytic computation generates a Data containing CAIDI for each input recieved within a timewindow.
 *  To calculate CAIDI, each interruption during the time period is multiplied by the duration of the interruption to find the customer-minutes of interruption. 
 *  The customer-minutes of all interruptions are then summed to determine the total customer-minutes. 
@@ -84,8 +84,8 @@ event CAIDIBucket {
 *  <b>CAIDI = ( SUM(r_i * N_i) )/ (SUM (N_i))</b>
 *
 *  SUM = Summation function.<br>
-*  r_i = Restoration time in seconds.<br>
-*  N_i = Total number of customers interrupted.<br>
+*  r_i = Restoration time in seconds within a timewindow.<br>
+*  N_i = Total number of customers interrupted within a timewindow.<br>
 *
 *  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
 *
@@ -100,7 +100,7 @@ event CAIDIBucket {
 *  <dd>
 *  <table border="1" style="border-collapse: collapse;width:100%">
 *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
-*  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow for calculating CAIDI.</td>
+*  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow (in seconds) for calculating CAIDI.</td>
 *      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d (1 day)</font> </td></tr>
 *  <tr><td><b>smoothingFactor</b></td><td>Defines the smoothing factor to be used for precision.</td>
 *      <td>Stringified integer</td><td>Integer</td><td>False</td><td><font face="courier" size="-1">60</font> </td></tr>
@@ -121,6 +121,9 @@ send com.industry.analytics.Analytic("CAIDI", ["Input"], ["Output"], {}) to "";
 //and calculate the moving Customer Average Interruption Duration Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
 //It publishes a Data event with the calculated value of CAIDI on the output channel "Output" after receiving every Data event. 
 send com.industry.analytics.Analytic("CAIDI", ["Input"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
+
+//Defines Data event for sending CAIDI input data of 10 interrupted customers with restoration time of 5400 seconds on "Input" stream
+com.industry.analytics.Data("Input", "r", "Utility_ABC", 1.0, 5400.0, "", 10.0,0.0, 0.0, {})
 </code></dd>
 *</dl>
 */
@@ -299,32 +302,37 @@ event CAIDI {
 	 */
 	action processData(Data dataIn) {
 		log "Processing " + dataIn.toString() at DEBUG;
+		
+		if(dataIn.dValue > 0.0d and dataIn.xValue > 0.0) {
+			string sourceId := dataIn.sourceId;
+			if( not _bySourceId ) then {
+				sourceId := CONST_INTERNAL_ALL_SOURCES;
+			} 
+			//initialise Bucket system for 
+			if not _bucketSystem.hasKey(sourceId){
+				_bucketSystem.add(sourceId, BucketSystemBuilder.create()
+							        .totalSize(_timeWindow.toFloat())
+							        .bucketCount(_smoothingFactor)
+							        .toValue(getTimestamp)
+							        .updateBucket(addDataToBucket)
+							        .onBucketCreated(initBucket)
+							        .build());
+			}
+			
+			_bucketSystem[sourceId].add(dataIn);
+			
+			CAIDIBucket value := <CAIDIBucket>_bucketSystem[sourceId].reduce(calculateSumValues,new CAIDIBucket);
+			
+			Data dataOut := dataIn.clone();
 
-		string sourceId := dataIn.sourceId;
-		if( not _bySourceId ) then {
-			sourceId := CONST_INTERNAL_ALL_SOURCES;
-		} 
-		//initialise Bucket system for 
-		if not _bucketSystem.hasKey(sourceId){
-			_bucketSystem.add(sourceId, BucketSystemBuilder.create()
-						        .totalSize(_timeWindow.toFloat())
-						        .bucketCount(_smoothingFactor)
-						        .toValue(getTimestamp)
-						        .updateBucket(addDataToBucket)
-						        .onBucketCreated(initBucket)
-						        .build());
+			dataOut.dValue := value.sumCustomerSeconds/value.sumCustomers;
+
+			dataOut.streamName := _outputDataName;
+			send dataOut to dataOut.streamName;
+		} else {
+			log "Data event contain either 0 or negative value for interrupted customers or restoration time." at WARN;
 		}
-		
-		_bucketSystem[sourceId].add(dataIn);
-		
-		CAIDIBucket value := <CAIDIBucket>_bucketSystem[sourceId].reduce(calculateSumValues,new CAIDIBucket);
-		
-		Data dataOut := dataIn.clone();
 
-		dataOut.dValue := value.sumCustomerSeconds/value.sumCustomers;
-
-		dataOut.streamName := _outputDataName;
-		send dataOut to dataOut.streamName;
 	}
 	
 	/** Reset action

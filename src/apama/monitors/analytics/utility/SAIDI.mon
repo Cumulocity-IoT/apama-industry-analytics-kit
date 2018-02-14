@@ -71,7 +71,7 @@ using com.industry.utils.BucketSystemBuilder;
 */
 
 /**
-*  The most often used performance measurement for a sustained interruption is the System Average Interruption Duration Index (SAIDI). 
+*  The System Average Interruption Duration Index (SAIDI) is most often used performance measurement for a sustained interruption. 
 *  The SAIDI Analytic computation generates a Data event containing SAIDI for each input recieved within a timewindow.
 *  This index measures the total duration of an interruption for the average customer during a given time period. 
 *  SAIDI is normally calculated on either monthly or yearly basis; however, it can also be calculated daily, or for any other time period.
@@ -82,8 +82,8 @@ using com.industry.utils.BucketSystemBuilder;
 *  <b>SAIDI = ( SUM(r_i * N_i) )/ N_t</b>
 *
 *  SUM = Summation function.<br>
-*  r_i = Restoration time in seconds.<br>
-*  N_i = Total number of customers interrupted.<br>
+*  r_i = Restoration time in seconds within a timewindow.<br>
+*  N_i = Total number of customers interrupted within a timewindow.<br>
 *  N_t = Total number of customers served.<br>
 *
 *  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
@@ -98,7 +98,7 @@ using com.industry.utils.BucketSystemBuilder;
 *  <dd>
 *  <table border="1" style="border-collapse: collapse;width:100%">
 *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
-*  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow for calculating SAIDI.</td>
+*  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow (in seconds) for calculating SAIDI.</td>
 *      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d (1 day)</font> </td></tr>
 *  <tr><td><b>smoothingFactor</b></td><td>Defines the smoothing factor to be used for precision.</td>
 *      <td>Stringified integer</td><td>Integer</td><td>False</td><td><font face="courier" size="-1">60</font> </td></tr>
@@ -111,14 +111,20 @@ using com.industry.utils.BucketSystemBuilder;
 *  <dl><dt><b>Example usage:</b></dt>
 <dd><code>
 //Define a SAIDI Analytic which takes input SAIDI Data events on the channel "Input_Data" and total customer data on the channel "Input_Customer"
-//and calculate the moving System Average Interruption Frequency Index within timeWindow of one day (86400 seconds) with smoothingFactor of 60 for precision. 
+//and calculate the moving System Average Interruption Duration Index within timeWindow of one day (86400 seconds) with smoothingFactor of 60 for precision. 
 //It publishes a Data event with the calculated value of SAIDI on the output channel "Output" after receiving every Data event. 
 send com.industry.analytics.Analytic("SAIDI", ["Input_Data", "Input_Customer"], ["Output"], {}) to "";
 
 //Define a SAIDI Analytic which takes input SAIDI Data events on the channel "Input_Data" and total customer data on the channel "Input_Customer"
-//and calculate the moving System Average Interruption Frequency Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
+//and calculate the moving System Average Interruption Duration Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
 //It publishes a Data event with the calculated value of SAIDI on the output channel "Output" after receiving every Data event. 
 send com.industry.analytics.Analytic("SAIDI", ["Input_Data", "Input_Customer"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
+
+//Defines Data event for sending Total customer value of 50,000 on "Input_Customer" stream
+com.industry.analytics.Data("Input_Customer", "r", "Utility_ABC", 1.0, 50000.0, "", 0.0,0.0, 0.0, {})
+
+//Defines Data event for sending SAIDI input data of 10 interrupted customers with restoration time of 5400 seconds on "Input_Data" stream
+com.industry.analytics.Data("Input_Data", "r", "Utility_ABC", 1.0, 5400.0, "", 10.0,0.0, 0.0, {})
 </code></dd>
 *</dl>
 */
@@ -318,30 +324,35 @@ event SAIDI {
 		}
 		
 		if(dataIn.streamName = _inputDataName) {
-			//initialise Bucket system for 
-			if not _bucketSystem.hasKey(sourceId){
-				_bucketSystem.add(sourceId, BucketSystemBuilder.create()
-							        .totalSize(_timeWindow.toFloat())
-							        .bucketCount(_smoothingFactor)
-							        .toValue(getTimestamp)
-							        .updateBucket(addDataToBucket)
-							        .onBucketCreated(initBucket)
-							        .build());
-			}
-			
-			_bucketSystem[sourceId].add(dataIn);
-			
-			if(_totalCustomers.hasKey(sourceId) and  _totalCustomers[sourceId] > 0.0d) {
+			if(dataIn.dValue > 0.0d and dataIn.xValue > 0.0) {
+				//initialise Bucket system for 
+				if not _bucketSystem.hasKey(sourceId){
+					_bucketSystem.add(sourceId, BucketSystemBuilder.create()
+								        .totalSize(_timeWindow.toFloat())
+								        .bucketCount(_smoothingFactor)
+								        .toValue(getTimestamp)
+								        .updateBucket(addDataToBucket)
+								        .onBucketCreated(initBucket)
+								        .build());
+				}
 				
-				decimal value := <decimal>_bucketSystem[sourceId].reduce(calculateSumValues, 0.0d);
+				_bucketSystem[sourceId].add(dataIn);
 				
-				Data dataOut := dataIn.clone();
-		
-				dataOut.dValue := value/_totalCustomers[sourceId];
-		
-				dataOut.streamName := _outputDataName;
-				send dataOut to dataOut.streamName;
+				if(_totalCustomers.hasKey(sourceId) and  _totalCustomers[sourceId] > 0.0d) {
+					
+					decimal value := <decimal>_bucketSystem[sourceId].reduce(calculateSumValues, 0.0d);
+					
+					Data dataOut := dataIn.clone();
+			
+					dataOut.dValue := value/_totalCustomers[sourceId];
+			
+					dataOut.streamName := _outputDataName;
+					send dataOut to dataOut.streamName;
+				}
+			} else {
+				log "Data event contain either 0 or negative value for interrupted customers or restoration time." at WARN;
 			}
+
 		}
 		
 	}

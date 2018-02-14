@@ -9,19 +9,20 @@ class PySysTest(AnalyticsBaseTest):
 		# Start the correlator
 		correlator = self.startTest()
 		self.injectAnalytic(correlator)
-		self.injectCAIFI(correlator)
+		self.injectSAIFI(correlator)
 		self.ready(correlator)
 		correlator.receive(filename='Output.evt', channels=['Output'])
 
 		correlator.send('Config.evt')
 		self.waitForSignal('correlator.out',
-						   expr='Analytic CAIFI started for inputDataNames',
+						   expr='Analytic SAIFI started for inputDataNames',
 						   condition='==1',
 						   timeout=5)
 		correlator.send('Events.evt')
-		self.waitForSignal('Output.evt', expr='com.industry.analytics.Data.*', condition='==9', timeout=5)
+		self.waitForSignal('Output.evt', expr='com.industry.analytics.Data.*', condition='==5', timeout=5)
 
 		
 	def validate(self):
 		self.assertDiff('Output.evt', 'RefOutput.evt')
+		self.assertGrep('Correlator.out',expr='Data event contain either 0 or negative value for interrupted customers', condition='==2')
 		self.checkSanity()	

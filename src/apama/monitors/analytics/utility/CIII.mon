@@ -77,13 +77,12 @@ event CIIIBucket {
 /**
 *  The Customer Interrupted per Interruption Index (CIII) gives the average number of customers interrupted during an outage.
 *  The CIII Analytic computation generates a Data containing CIII for each input recieved within a timewindow.
-*  It is the reciprocal of the CAIFI and is,
 *
 *  <b>CIII = ( SUM(N_i) )/ (SUM (N_o))</b>
 *
 *  SUM = Summation function.<br>
-*  N_o = Number of interruptions.<br>
-*  N_i = Total number of customers interrupted.<br>
+*  N_o = Number of interruptions per time window.<br>
+*  N_i = Total number of customers interrupted per time window.<br>
 *
 *  A smoothing factor is used make result precise. Larger the number for <font face="courier" size="-1">smoothingFactor</font> better the precision.</br>
 *
@@ -98,7 +97,7 @@ event CIIIBucket {
 *  <dd>
 *  <table border="1" style="border-collapse: collapse;width:100%">
 *  <tr><th>Param Name</th><th>Description</th><th>Valid Values</th><th>Data Type</th><th>Required</th><th>Default Value</th></tr>
-*  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow for calculating CIII.</td>
+*  <tr><td><b>timeWindow</b></td><td>Defines the timeWindow (in seconds) for calculating CIII.</td>
 *      <td>Stringified Decimal</td><td>Decimal</td><td>False</td><td><font face="courier" size="-1">86400.0d (1 day)</font> </td></tr>
 *  <tr><td><b>smoothingFactor</b></td><td>Defines the smoothing factor to be used for precision.</td>
 *      <td>Stringified integer</td><td>Integer</td><td>False</td><td><font face="courier" size="-1">60</font> </td></tr>
@@ -119,6 +118,9 @@ send com.industry.analytics.Analytic("CIII", ["Input"], ["Output"], {}) to "";
 //and calculate the moving Customer Interrupted per Interruption Index within timeWindow of 60 seconds with smoothingFactor of 10 for precision. 
 //It publishes a Data event with the calculated value of CIII on the output channel "Output" after receiving every Data event. 
 send com.industry.analytics.Analytic("CIII", ["Input"], ["Output"], {"timeWindow": "60.0", "smoothingFactor":"10"}) to "";
+
+//Defines Data event for sending 10 interrupted customers on "Input" stream
+com.industry.analytics.Data("Input", "r", "Utility_ABC", 1.0, 10.0, "", 0.0,0.0, 0.0, {})
 </code></dd>
 *</dl>
 */
@@ -297,32 +299,36 @@ event CIII {
 	 */
 	action processData(Data dataIn) {
 		log "Processing " + dataIn.toString() at DEBUG;
-		
-		string sourceId := dataIn.sourceId;
-		if( not _bySourceId ) then {
-			sourceId := CONST_INTERNAL_ALL_SOURCES;
-		} 
-		//initialise Bucket system for 
-		if not _bucketSystem.hasKey(sourceId){
-			_bucketSystem.add(sourceId, BucketSystemBuilder.create()
-						        .totalSize(_timeWindow.toFloat())
-						        .bucketCount(_smoothingFactor)
-						        .toValue(getTimestamp)
-						        .updateBucket(addDataToBucket)
-						        .onBucketCreated(initBucket)
-						        .build());
+		if(dataIn.dValue > 0.0d) {
+			string sourceId := dataIn.sourceId;
+			if( not _bySourceId ) then {
+				sourceId := CONST_INTERNAL_ALL_SOURCES;
+			} 
+			//initialise Bucket system for 
+			if not _bucketSystem.hasKey(sourceId){
+				_bucketSystem.add(sourceId, BucketSystemBuilder.create()
+							        .totalSize(_timeWindow.toFloat())
+							        .bucketCount(_smoothingFactor)
+							        .toValue(getTimestamp)
+							        .updateBucket(addDataToBucket)
+							        .onBucketCreated(initBucket)
+							        .build());
+			}
+			
+			_bucketSystem[sourceId].add(dataIn);
+			
+			CIIIBucket value := <CIIIBucket>_bucketSystem[sourceId].reduce(calculateSumValues,new CIIIBucket);
+			
+			Data dataOut := dataIn.clone();
+
+			dataOut.dValue := value.sumCustomers/value.sumInterruptions.toDecimal();
+
+			dataOut.streamName := _outputDataName;
+			send dataOut to dataOut.streamName;
+		} else {
+			log "Data event contain either 0 or negative value for interrupted customers." at WARN;
 		}
-		
-		_bucketSystem[sourceId].add(dataIn);
-		
-		CIIIBucket value := <CIIIBucket>_bucketSystem[sourceId].reduce(calculateSumValues,new CIIIBucket);
-		
-		Data dataOut := dataIn.clone();
 
-		dataOut.dValue := value.sumCustomers/value.sumInterruptions.toDecimal();
-
-		dataOut.streamName := _outputDataName;
-		send dataOut to dataOut.streamName;
 	}
 	
 	/** Reset action

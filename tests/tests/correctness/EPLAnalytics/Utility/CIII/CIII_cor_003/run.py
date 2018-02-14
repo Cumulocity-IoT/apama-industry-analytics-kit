@@ -19,7 +19,7 @@ class PySysTest(AnalyticsBaseTest):
 						   condition='==1',
 						   timeout=5)
 		correlator.send('Events.evt')
-		self.waitForSignal('Output.evt', expr='com.industry.analytics.Data.*', condition='==10', timeout=5)
+		self.waitForSignal('Output.evt', expr='com.industry.analytics.Data.*', condition='==9', timeout=5)
 
 		
 	def validate(self):
