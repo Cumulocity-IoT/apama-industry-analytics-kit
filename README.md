@@ -7,6 +7,17 @@ The elements within the Industry Analytics Kit are referred to here as “Analyt
 
 <img src="https://user-images.githubusercontent.com/38696279/57368683-a71f1f80-7183-11e9-8300-ab8f8addae40.png"/>
 
+## Quickstart
+
+1. Download the [latest release](https://github.com/rpeach-sag/apama-industry-analytics-kit/releases)
+2. Follow the [deployment steps](https://rpeach-sag.github.io/apama-industry-analytics-kit/Industry%20Analytics%20Kit%20Deployment.html)
+
+## Documentation
+
+Full documentation is provided as part of the release download and is also available as a [hosted version](https://rpeach-sag.github.io/apama-industry-analytics-kit/).
+
+## Overview
+
 Analytics have to have the ability to listen for Data event so that they can use incoming raw data, 
 and the ability to send Data events to other Analytics or send them externally so that Apama Queries
 and other component can be used if required. In this way streaming networks of analytics can be defined.
