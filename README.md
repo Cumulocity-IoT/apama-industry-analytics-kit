@@ -14,7 +14,7 @@ The elements within the Industry Analytics Kit are referred to here as “Analyt
 
 ## Documentation
 
-Full documentation is provided as part of the release download and is also available as a [hosted version](https://rpeach-sag.github.io/apama-industry-analytics-kit/).
+Full documentation is provided as part of the release download and is also available as a [hosted version](https://softwareag.github.io/apama-industry-analytics-kit/).
 
 ## Overview
 
