@@ -106,3 +106,7 @@ so we can tell how much a data sources value is changing.
 *	Calculates the moving average (using the Average Analytic) of each data source in the chart at the bottom **(7)**.
 
 <img src="https://user-images.githubusercontent.com/38696279/57369895-ad62cb00-7186-11e9-8698-c7263ed127f8.png"/>
+
+------------------------------
+
+These tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.
