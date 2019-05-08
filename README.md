@@ -1,6 +1,6 @@
 # Industry Analytics Kit
 
-The Industry Analytics Toolkit consists of a set of re-usable and scalable “micro services” 
+The Industry Analytics Toolkit consists of a set of re-usable and scalable “micro services” for [Apama](http://www.apamacommunity.com/)
 that perform a range of streaming analytics, transformations, and detections over event data streams. 
 The scope of the analytics within the Toolkit is that they consume and generate defined “Data” events. 
 The elements within the Industry Analytics Kit are referred to here as “Analytics”.
