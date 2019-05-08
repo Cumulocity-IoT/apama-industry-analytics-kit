@@ -118,6 +118,12 @@ so we can tell how much a data sources value is changing.
 
 <img src="https://user-images.githubusercontent.com/38696279/57369895-ad62cb00-7186-11e9-8698-c7263ed127f8.png"/>
 
+## Drag'n'Drop Builder
+
+A [drag and drop builder](https://softwareag.github.io/apama-industry-analytics-kit-builder/) is also available.
+
+[<img src="https://user-images.githubusercontent.com/38696279/57377601-bf4e6900-719a-11e9-815f-e13bf3fab11f.png"/>](https://softwareag.github.io/apama-industry-analytics-kit-builder/)
+
 ------------------------------
 
 These tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.
