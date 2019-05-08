@@ -9,8 +9,8 @@ The elements within the Industry Analytics Kit are referred to here as “Analyt
 
 ## Quickstart
 
-1. Download the [latest release](https://github.com/rpeach-sag/apama-industry-analytics-kit/releases)
-2. Follow the [deployment steps](https://rpeach-sag.github.io/apama-industry-analytics-kit/Industry%20Analytics%20Kit%20Deployment.html)
+1. Download the [latest release](https://github.com/softwareag/apama-industry-analytics-kit/releases)
+2. Follow the [deployment steps](https://softwareag.github.io/apama-industry-analytics-kit/Industry%20Analytics%20Kit%20Deployment.html)
 
 ## Documentation
 
